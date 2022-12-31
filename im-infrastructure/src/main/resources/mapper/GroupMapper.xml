@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.GroupMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.Group">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="groupAccount" column="group_account" jdbcType="BIGINT"/>
+            <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+            <result property="groupAvatar" column="group_avatar" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="groupType" column="group_type" jdbcType="INTEGER"/>
+            <result property="qrcode" column="qrcode" jdbcType="VARCHAR"/>
+            <result property="memberCount" column="member_count" jdbcType="INTEGER"/>
+            <result property="groupMaster" column="group_master" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,group_account,group_name,
+        group_avatar,description,group_type,
+        qrcode,member_count,group_master,
+        create_time,update_time
+    </sql>
+</mapper>

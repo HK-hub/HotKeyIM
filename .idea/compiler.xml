@@ -7,7 +7,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="HotKeyIM" />
+        <module name="im-server" />
+        <module name="ruoyi-system" />
+        <module name="im-infrastructure" />
+        <module name="ruoyi-generator" />
+        <module name="im-generator" />
+        <module name="ruoyi-framework" />
+        <module name="im-domain" />
+        <module name="im-admin" />
+        <module name="im-service" />
+        <module name="ruoyi-common" />
+        <module name="ruoyi-quartz" />
+        <module name="im-common" />
+        <module name="ruoyi-admin" />
       </profile>
     </annotationProcessing>
   </component>

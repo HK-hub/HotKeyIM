@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.GroupSettingMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.GroupSetting">
+            <id property="groupId" column="group_id" jdbcType="BIGINT"/>
+            <result property="groupAccount" column="group_account" jdbcType="BIGINT"/>
+            <result property="position" column="position" jdbcType="VARCHAR"/>
+            <result property="memberCapacity" column="member_capacity" jdbcType="INTEGER"/>
+            <result property="findType" column="find_type" jdbcType="INTEGER"/>
+            <result property="joinType" column="join_type" jdbcType="INTEGER"/>
+            <result property="forbidSend" column="forbid_send" jdbcType="TINYINT"/>
+            <result property="announcement" column="announcement" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        group_id,group_account,position,
+        member_capacity,find_type,join_type,
+        forbid_send,announcement,create_time,
+        update_time
+    </sql>
+</mapper>

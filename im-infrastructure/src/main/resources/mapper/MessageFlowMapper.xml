@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.MessageFlowMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.MessageFlow">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="groupId" column="group_id" jdbcType="BIGINT"/>
+            <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
+            <result property="acceptorId" column="acceptor_id" jdbcType="BIGINT"/>
+            <result property="chatType" column="chat_type" jdbcType="INTEGER"/>
+            <result property="messageType" column="message_type" jdbcType="INTEGER"/>
+            <result property="messageId" column="message_id" jdbcType="BIGINT"/>
+            <result property="sendStatus" column="send_status" jdbcType="INTEGER"/>
+            <result property="signFlag" column="sign_flag" jdbcType="INTEGER"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,group_id,sender_id,
+        acceptor_id,chat_type,message_type,
+        message_id,send_status,sign_flag,
+        deleted,create_time,update_time
+    </sql>
+</mapper>

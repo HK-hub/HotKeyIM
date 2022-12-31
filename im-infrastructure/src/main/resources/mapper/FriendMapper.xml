@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.FriendMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.Friend">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="user_id" column="user_id" jdbcType="BIGINT"/>
+            <result property="friend_id" column="friend_id" jdbcType="BIGINT"/>
+            <result property="relation" column="relation" jdbcType="INTEGER"/>
+            <result property="group" column="group" jdbcType="VARCHAR"/>
+            <result property="remark_name" column="remark_name" jdbcType="VARCHAR"/>
+            <result property="remark_info" column="remark_info" jdbcType="VARCHAR"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,friend_id,
+        relation,group,remark_name,
+        remark_info,create_time,update_time
+    </sql>
+</mapper>

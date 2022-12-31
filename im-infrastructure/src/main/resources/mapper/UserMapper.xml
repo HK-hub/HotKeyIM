@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.User">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="account" column="account" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="bigAvatar" column="big_avatar" jdbcType="VARCHAR"/>
+            <result property="miniAvatar" column="mini_avatar" jdbcType="VARCHAR"/>
+            <result property="qrcode" column="qrcode" jdbcType="VARCHAR"/>
+            <result property="cid" column="cid" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,account,
+        password,phone,email,
+        big_avatar,mini_avatar,qrcode,
+        cid,create_time,update_time
+    </sql>
+    <!-- 更具用户可能存在的账号(账号，手机号，邮箱号)查询用户 -->
+    <select id="getUserByAccountOrPhoneOrEmail" resultType="com.hk.im.domain.entity.User">
+        select *
+        from tb_user
+        where
+            account = #{account} or
+            phone = #{account} or
+            emial = #{account}
+        limit 1;
+    </select>
+</mapper>

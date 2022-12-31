@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.GroupMemberMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.GroupMember">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="groupId" column="group_id" jdbcType="BIGINT"/>
+            <result property="groupAccount" column="group_account" jdbcType="BIGINT"/>
+            <result property="memberId" column="member_id" jdbcType="BIGINT"/>
+            <result property="memberUsername" column="member_username" jdbcType="VARCHAR"/>
+            <result property="memberRemarkName" column="member_remark_name" jdbcType="VARCHAR"/>
+            <result property="memberAvatar" column="member_avatar" jdbcType="VARCHAR"/>
+            <result property="memberRole" column="member_role" jdbcType="INTEGER"/>
+            <result property="groupCategory" column="group_category" jdbcType="VARCHAR"/>
+            <result property="gagTime" column="gag_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,group_id,group_account,
+        member_id,member_username,member_remark_name,
+        member_avatar,member_role,group_category,
+        gag_time,status,create_time,
+        update_time
+    </sql>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.ChatMessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.ChatMessage">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="messageFeature" column="message_feature" jdbcType="INTEGER"/>
+            <result property="messageType" column="message_type" jdbcType="INTEGER"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="extra" column="extra" jdbcType="OTHER"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,message_feature,message_type,
+        content,extra,deleted,
+        create_time,update_time
+    </sql>
+</mapper>

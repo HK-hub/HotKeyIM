@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.UserInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.UserInfo">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="qq" column="qq" jdbcType="VARCHAR"/>
+            <result property="wechat" column="wechat" jdbcType="VARCHAR"/>
+            <result property="github" column="github" jdbcType="VARCHAR"/>
+            <result property="dingtalk" column="dingtalk" jdbcType="VARCHAR"/>
+            <result property="openid" column="openid" jdbcType="VARCHAR"/>
+            <result property="wallet" column="wallet" jdbcType="DECIMAL"/>
+            <result property="lastTime" column="last_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="gender" column="gender" jdbcType="TINYINT"/>
+            <result property="age" column="age" jdbcType="INTEGER"/>
+            <result property="birthday" column="birthday" jdbcType="DATE"/>
+            <result property="constellation" column="constellation" jdbcType="VARCHAR"/>
+            <result property="campus" column="campus" jdbcType="VARCHAR"/>
+            <result property="major" column="major" jdbcType="VARCHAR"/>
+            <result property="job" column="job" jdbcType="VARCHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="interest" column="interest" jdbcType="VARCHAR"/>
+            <result property="tag" column="tag" jdbcType="VARCHAR"/>
+            <result property="signature" column="signature" jdbcType="VARCHAR"/>
+            <result property="addFriendPolicy" column="add_friend_policy" jdbcType="INTEGER"/>
+            <result property="addFriendQuestion" column="add_friend_question" jdbcType="VARCHAR"/>
+            <result property="addFriendAnswer" column="add_friend_answer" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,nickname,qq,
+        wechat,github,dingtalk,
+        openid,wallet,last_time,
+        status,gender,age,
+        birthday,constellation,campus,
+        major,job,city,
+        interest,tag,signature,
+        add_friend_policy,add_friend_question,add_friend_answer,
+        create_time,update_time
+    </sql>
+</mapper>
