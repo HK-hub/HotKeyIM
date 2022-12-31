@@ -22,6 +22,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <spring.boot.version>2.4.4</spring.boot.version>
+        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     </properties>
 
     <dependencyManagement>
@@ -80,16 +81,26 @@
             </dependency>-->
             <!-- 校验框架 -->
             <dependency>
-                <groupId>com.baidu.unbiz</groupId>
-                <artifactId>fluent-validator</artifactId>
-                <version>1.0.9</version>
+                <groupId>com.github.mvallim</groupId>
+                <artifactId>java-fluent-validator</artifactId>
+                <version>1.10.0</version>
             </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-mail</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
 
 
         </dependencies>
@@ -100,7 +111,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>1.18.14</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -108,7 +119,5 @@
             <version>1.15</version>
         </dependency>
     </dependencies>
-
-
 
 </project>

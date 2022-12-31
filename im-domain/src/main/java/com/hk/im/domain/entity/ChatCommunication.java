@@ -6,14 +6,18 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
-import lombok.Data;
+
+import lombok.*;
 
 /**
  * 
  * @TableName tb_chat_communication
  */
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 @TableName(value ="tb_chat_communication")
-@Data
 public class ChatCommunication implements Serializable {
     /**
      * 会话表id
@@ -110,80 +114,124 @@ public class ChatCommunication implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        ChatCommunication other = (ChatCommunication) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getBelongUserId() == null ? other.getBelongUserId() == null : this.getBelongUserId().equals(other.getBelongUserId()))
-            && (this.getSessionId() == null ? other.getSessionId() == null : this.getSessionId().equals(other.getSessionId()))
-            && (this.getSenderId() == null ? other.getSenderId() == null : this.getSenderId().equals(other.getSenderId()))
-            && (this.getAcceptorId() == null ? other.getAcceptorId() == null : this.getAcceptorId().equals(other.getAcceptorId()))
-            && (this.getGroupId() == null ? other.getGroupId() == null : this.getGroupId().equals(other.getGroupId()))
-            && (this.getLastMessageId() == null ? other.getLastMessageId() == null : this.getLastMessageId().equals(other.getLastMessageId()))
-            && (this.getLastMessageContent() == null ? other.getLastMessageContent() == null : this.getLastMessageContent().equals(other.getLastMessageContent()))
-            && (this.getLastSenderUsername() == null ? other.getLastSenderUsername() == null : this.getLastSenderUsername().equals(other.getLastSenderUsername()))
-            && (this.getLastSendTime() == null ? other.getLastSendTime() == null : this.getLastSendTime().equals(other.getLastSendTime()))
-            && (this.getSessionType() == null ? other.getSessionType() == null : this.getSessionType().equals(other.getSessionType()))
-            && (this.getSessionStatus() == null ? other.getSessionStatus() == null : this.getSessionStatus().equals(other.getSessionStatus()))
-            && (this.getUnreadCount() == null ? other.getUnreadCount() == null : this.getUnreadCount().equals(other.getUnreadCount()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+
+    public Long getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getBelongUserId() == null) ? 0 : getBelongUserId().hashCode());
-        result = prime * result + ((getSessionId() == null) ? 0 : getSessionId().hashCode());
-        result = prime * result + ((getSenderId() == null) ? 0 : getSenderId().hashCode());
-        result = prime * result + ((getAcceptorId() == null) ? 0 : getAcceptorId().hashCode());
-        result = prime * result + ((getGroupId() == null) ? 0 : getGroupId().hashCode());
-        result = prime * result + ((getLastMessageId() == null) ? 0 : getLastMessageId().hashCode());
-        result = prime * result + ((getLastMessageContent() == null) ? 0 : getLastMessageContent().hashCode());
-        result = prime * result + ((getLastSenderUsername() == null) ? 0 : getLastSenderUsername().hashCode());
-        result = prime * result + ((getLastSendTime() == null) ? 0 : getLastSendTime().hashCode());
-        result = prime * result + ((getSessionType() == null) ? 0 : getSessionType().hashCode());
-        result = prime * result + ((getSessionStatus() == null) ? 0 : getSessionStatus().hashCode());
-        result = prime * result + ((getUnreadCount() == null) ? 0 : getUnreadCount().hashCode());
-        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        return result;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", belongUserId=").append(belongUserId);
-        sb.append(", sessionId=").append(sessionId);
-        sb.append(", senderId=").append(senderId);
-        sb.append(", acceptorId=").append(acceptorId);
-        sb.append(", groupId=").append(groupId);
-        sb.append(", lastMessageId=").append(lastMessageId);
-        sb.append(", lastMessageContent=").append(lastMessageContent);
-        sb.append(", lastSenderUsername=").append(lastSenderUsername);
-        sb.append(", lastSendTime=").append(lastSendTime);
-        sb.append(", sessionType=").append(sessionType);
-        sb.append(", sessionStatus=").append(sessionStatus);
-        sb.append(", unreadCount=").append(unreadCount);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+    public Long getBelongUserId() {
+        return belongUserId;
+    }
+
+    public void setBelongUserId(Long belongUserId) {
+        this.belongUserId = belongUserId;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public Long getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(Long senderId) {
+        this.senderId = senderId;
+    }
+
+    public Long getAcceptorId() {
+        return acceptorId;
+    }
+
+    public void setAcceptorId(Long acceptorId) {
+        this.acceptorId = acceptorId;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
+    public Long getLastMessageId() {
+        return lastMessageId;
+    }
+
+    public void setLastMessageId(Long lastMessageId) {
+        this.lastMessageId = lastMessageId;
+    }
+
+    public String getLastMessageContent() {
+        return lastMessageContent;
+    }
+
+    public void setLastMessageContent(String lastMessageContent) {
+        this.lastMessageContent = lastMessageContent;
+    }
+
+    public String getLastSenderUsername() {
+        return lastSenderUsername;
+    }
+
+    public void setLastSenderUsername(String lastSenderUsername) {
+        this.lastSenderUsername = lastSenderUsername;
+    }
+
+    public Date getLastSendTime() {
+        return lastSendTime;
+    }
+
+    public void setLastSendTime(Date lastSendTime) {
+        this.lastSendTime = lastSendTime;
+    }
+
+    public Integer getSessionType() {
+        return sessionType;
+    }
+
+    public void setSessionType(Integer sessionType) {
+        this.sessionType = sessionType;
+    }
+
+    public Integer getSessionStatus() {
+        return sessionStatus;
+    }
+
+    public void setSessionStatus(Integer sessionStatus) {
+        this.sessionStatus = sessionStatus;
+    }
+
+    public Integer getUnreadCount() {
+        return unreadCount;
+    }
+
+    public void setUnreadCount(Integer unreadCount) {
+        this.unreadCount = unreadCount;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 }

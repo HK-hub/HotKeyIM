@@ -6,6 +6,7 @@ import com.hk.im.domain.dto.UserDTO;
 import com.hk.im.domain.entity.User;
 import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,7 +23,8 @@ import java.util.Objects;
  * @Version : 1.0
  */
 @Slf4j
-@RestController("/user")
+@RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Resource
@@ -57,14 +59,24 @@ public class UserController {
     }
 
 
+    /**
+     * 注册用户
+     * @param request
+     * @return
+     */
     @PostMapping("/register")
     public ResponseResult register(@RequestBody LoginOrRegisterRequest request) {
-        return this.userService.register(request);
+        ResponseResult result = this.userService.register(request);
+        if (BooleanUtils.isTrue(result.isSuccess())) {
+            // 注册成功
+            result.setMessage("注册用户成功!");
+        }
+        return result;
     }
 
 
     @PostMapping("/login")
-    public ResponseResult<UserDTO> login(LoginOrRegisterRequest request) {
+    public ResponseResult<UserDTO> login(@RequestBody LoginOrRegisterRequest request) {
 
         ResponseResult result = userService.login(request);
         return result;

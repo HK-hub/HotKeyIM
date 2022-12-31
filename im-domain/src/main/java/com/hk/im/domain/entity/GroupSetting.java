@@ -137,4 +137,84 @@ public class GroupSetting implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
+    public Long getGroupAccount() {
+        return groupAccount;
+    }
+
+    public void setGroupAccount(Long groupAccount) {
+        this.groupAccount = groupAccount;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Integer getMemberCapacity() {
+        return memberCapacity;
+    }
+
+    public void setMemberCapacity(Integer memberCapacity) {
+        this.memberCapacity = memberCapacity;
+    }
+
+    public Integer getFindType() {
+        return findType;
+    }
+
+    public void setFindType(Integer findType) {
+        this.findType = findType;
+    }
+
+    public Integer getJoinType() {
+        return joinType;
+    }
+
+    public void setJoinType(Integer joinType) {
+        this.joinType = joinType;
+    }
+
+    public Integer getForbidSend() {
+        return forbidSend;
+    }
+
+    public void setForbidSend(Integer forbidSend) {
+        this.forbidSend = forbidSend;
+    }
+
+    public String getAnnouncement() {
+        return announcement;
+    }
+
+    public void setAnnouncement(String announcement) {
+        this.announcement = announcement;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 }

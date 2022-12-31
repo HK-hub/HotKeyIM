@@ -1,36 +1,31 @@
 package com.hk.im.service.service.impl;
 
 import com.apifan.common.random.source.NumberSource;
-import com.apifan.common.random.source.OtherSource;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.AccountNumberGenerator;
 import com.hk.im.common.util.CustomValidator;
 import com.hk.im.common.util.NameUtil;
+import com.hk.im.domain.vo.UserVO;
 import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.dto.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.UserMapper;
+import com.hk.im.infrastructure.mapstruct.UserMapStructure;
 import com.hk.im.service.service.AuthorizationService;
 import com.hk.im.service.service.MailService;
 import com.hk.im.service.service.UserInfoService;
 import com.hk.im.service.service.UserService;
-import lombok.NonNull;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import java.util.Map;
 import java.util.Objects;
 
@@ -113,12 +108,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public ResponseResult login(LoginOrRegisterRequest loginRequest) {
 
         Integer type = loginRequest.getType();
+
         User user = null;
         // 密码登录
-        if (Objects.equals(type, LoginOrRegisterRequest.LoginType.PASSWORD)) {
+        if (Objects.equals(type, LoginOrRegisterRequest.LoginType.PASSWORD.ordinal())) {
 
             // 查询用户
             user = this.userManager.findUserByAccountOrPhoneOrEmail(loginRequest.getAccount());
+            if (Objects.isNull(user)) {
+                // 用户不存在
+                return ResponseResult.FAIL("该账号不存在或未绑定相关账号!");
+            }
+
             String password = loginRequest.getPassword();
             boolean checkpw = BCrypt.checkpw(password, user.getPassword());
 
@@ -129,7 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             }
 
         }
-        else if (Objects.equals(type, LoginOrRegisterRequest.LoginType.CODE)) {
+        else if (Objects.equals(type, LoginOrRegisterRequest.LoginType.CODE.ordinal())) {
             // 验证码登录
             // 参数校验
             String phone = loginRequest.getPhone();
@@ -187,10 +188,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String authToken = authorizationService.createAuthToken(user);
 
         // 组装信息，发布事件
-
-        // 响应登录结果
         UserInfo userInfo = userInfoService.getById(user.getId());
-        return ResponseResult.SUCCESS(Map.of("user", user,"userInfo", userInfo, "token", authToken));
+        UserVO userVO = UserMapStructure.INSTANCE.toVo(user, userInfo);
+        // 响应登录结果
+        return ResponseResult.SUCCESS(userVO.setToken(authToken));
     }
 
     /**
@@ -256,8 +257,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setEmail(email);
         userInfo.setNickname(user.getUsername());
         // 密码加盐加密
-        String salt = BCrypt.gensalt(UserConstants.USER_SALT_PREFIX);
-        user.setPassword(BCrypt.hashpw(user.getPassword(), salt));
+        String salt = BCrypt.gensalt();
+        user.setPassword(BCrypt.hashpw(request.getPassword(), salt));
         // 生成账号
         user.setAccount(String.valueOf(AccountNumberGenerator.nextAccount()));
 
@@ -266,7 +267,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 保存用户用户信息
         Boolean res = userManager.saveUserAndInfo(user, userInfo);
-        return result.setSuccess(res).setData(Map.entry(user, userInfo));
+        return result.setSuccess(res).setData(UserMapStructure.INSTANCE.toVo(user,userInfo));
     }
 
 

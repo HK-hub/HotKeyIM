@@ -32,7 +32,7 @@
         where
             account = #{account} or
             phone = #{account} or
-            emial = #{account}
+            email = #{account}
         limit 1;
     </select>
 </mapper>

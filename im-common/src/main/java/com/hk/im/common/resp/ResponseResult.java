@@ -27,8 +27,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-@ToString
 @NoArgsConstructor
+@ToString
 public class ResponseResult<T> {
 
 
@@ -43,7 +43,7 @@ public class ResponseResult<T> {
     // 返回数据
     private T data;
     // 响应时间
-    private LocalDateTime dateTime;
+    private LocalDateTime dateTime = LocalDateTime.now();
 
     // 静态返回对象
     public static ResponseResult SuccessResponse = new ResponseResult(ResultCode.SUCCESS, "ok");

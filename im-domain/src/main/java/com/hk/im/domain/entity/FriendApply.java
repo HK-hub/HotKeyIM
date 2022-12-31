@@ -121,4 +121,69 @@ public class FriendApply implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(Long senderId) {
+        this.senderId = senderId;
+    }
+
+    public Long getAcceptorId() {
+        return acceptorId;
+    }
+
+    public void setAcceptorId(Long acceptorId) {
+        this.acceptorId = acceptorId;
+    }
+
+    public Integer getApplyType() {
+        return applyType;
+    }
+
+    public void setApplyType(Integer applyType) {
+        this.applyType = applyType;
+    }
+
+    public String getApplyInfo() {
+        return applyInfo;
+    }
+
+    public void setApplyInfo(String applyInfo) {
+        this.applyInfo = applyInfo;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 }
