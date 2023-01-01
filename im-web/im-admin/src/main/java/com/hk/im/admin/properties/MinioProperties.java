@@ -1,7 +1,7 @@
-package com.hk.im.service.properties;
+package com.hk.im.admin.properties;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,44 +16,50 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "minio")
 public class MinioProperties {
 
     /**
-     * 是一个URL，域名，IPv4或者IPv6地址")
+     * 连接地址
      */
+    @Value("${minio.endpoint}")
     private String endpoint;
-
     /**
-     *     //"accessKey类似于用户ID，用于唯一标识你的账户"
+     * 用户名
      */
+    @Value("${minio.accessKey}")
     private String accessKey;
-
     /**
-     *     //"secretKey是你账户的密码"
+     * 密码
      */
+    @Value("${minio.secretKey}")
     private String secretKey;
 
     /**
      *     //"默认存储桶"
      */
+    @Value("${minio.bucketName}")
     private String bucketName;
 
     /**
      * 图片的最大大小
      */
+    @Value("${minio.imageSize}")
     private long imageSize;
 
     /**
      * 其他文件的最大大小
      */
+    @Value("${minio.fileSize}")
     private long fileSize;
 
 
     /**
      * nginx
      */
+    @Value("${minio.nginx}")
     private String nginx;
+
+
 
 
 }

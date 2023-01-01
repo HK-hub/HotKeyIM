@@ -1,7 +1,7 @@
 package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.service.properties.MinioProperties;
+import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.service.service.MinioService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;

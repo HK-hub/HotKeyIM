@@ -1,9 +1,9 @@
-package com.hk.im.service.service.impl;
+package com.hk.im.admin.service;
 
+import com.hk.im.admin.properties.MinioProperties;
+import com.hk.im.admin.util.MinioUtil;
 import com.hk.im.common.resp.UploadResponse;
-import com.hk.im.service.properties.MinioProperties;
 import com.hk.im.service.service.MinioService;
-import com.hk.im.service.util.MinioUtil;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;

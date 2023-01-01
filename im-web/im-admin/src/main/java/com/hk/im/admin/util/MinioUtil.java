@@ -1,13 +1,12 @@
-package com.hk.im.service.util;
+package com.hk.im.admin.util;
 
+import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.common.resp.UploadResponse;
-import com.hk.im.service.properties.MinioProperties;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.DeleteObject;
 import io.minio.messages.Item;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
