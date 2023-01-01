@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.dto.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
+import com.hk.im.domain.vo.UserVO;
 
 import javax.mail.MessagingException;
 
@@ -24,4 +25,8 @@ public interface UserService extends IService<User> {
     ResponseResult sendCode(String type, String account) ;
 
     ResponseResult register(LoginOrRegisterRequest request);
+
+    ResponseResult updateUserAndInfo(UserVO userVO);
+
+    ResponseResult getUserAndInfo(String id);
 }

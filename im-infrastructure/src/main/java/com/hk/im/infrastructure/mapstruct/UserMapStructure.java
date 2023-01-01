@@ -4,6 +4,7 @@ import com.hk.im.domain.vo.UserVO;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -23,6 +24,11 @@ public interface UserMapStructure {
 
     public UserVO toVo(User user, UserInfo userInfo);
 
+    public User toUser(UserVO userVO);
+
+    @Mapping(source = "userVO.username", target = "nickname")
+    @Mapping(source = "userVO.id", target = "userId")
+    public UserInfo toUserInfo(UserVO userVO);
 
 }
 

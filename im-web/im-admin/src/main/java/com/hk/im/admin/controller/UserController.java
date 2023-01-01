@@ -1,9 +1,11 @@
 package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.dto.LoginOrRegisterRequest;
 import com.hk.im.domain.dto.UserDTO;
 import com.hk.im.domain.entity.User;
+import com.hk.im.domain.vo.UserVO;
 import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
@@ -36,15 +38,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseResult<User> getUserById(@PathVariable(name = "id")String id) {
-        User user = userService.getById(id);
-        if (Objects.isNull(user)) {
-            user = new User();
-            user.setId(111111L);
-            user.setUsername("HK意境");
-        }
-
-        return ResponseResult.SUCCESS(user);
+    public ResponseResult getUserById(@PathVariable(name = "id") String id) {
+        ResponseResult result = userService.getUserAndInfo(id);
+        return result;
     }
 
     /**
@@ -76,14 +72,29 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseResult<UserDTO> login(@RequestBody LoginOrRegisterRequest request) {
+    public ResponseResult login(@RequestBody LoginOrRegisterRequest request) {
 
         ResponseResult result = userService.login(request);
         return result;
     }
 
 
+    /**
+     * 更新用户信息
+     * @param userVO
+     * @return
+     */
+    @PutMapping("/update/info")
+    public ResponseResult modifyUserInfo(@RequestBody UserVO userVO) {
 
+        ResponseResult result = this.userService.updateUserAndInfo(userVO);
+
+        if (BooleanUtils.isFalse(result.isSuccess())) {
+            // 更新失败
+            result.setResultCode(ResultCode.FAIL).setData("更新用户信息失败!");
+        }
+        return result;
+    }
 
 
 

@@ -4,6 +4,7 @@ import com.apifan.common.random.source.NumberSource;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.AccountNumberGenerator;
 import com.hk.im.common.util.CustomValidator;
 import com.hk.im.common.util.NameUtil;
@@ -19,11 +20,13 @@ import com.hk.im.service.service.AuthorizationService;
 import com.hk.im.service.service.MailService;
 import com.hk.im.service.service.UserInfoService;
 import com.hk.im.service.service.UserService;
+import lombok.NonNull;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -268,6 +271,60 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 保存用户用户信息
         Boolean res = userManager.saveUserAndInfo(user, userInfo);
         return result.setSuccess(res).setData(UserMapStructure.INSTANCE.toVo(user,userInfo));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult updateUserAndInfo(UserVO userVO) {
+
+        // 生成对象
+        User user = UserMapStructure.INSTANCE.toUser(userVO);
+        UserInfo userInfo = UserMapStructure.INSTANCE.toUserInfo(userVO);
+
+        // 更新用户
+        boolean userUpdateRes = this.updateById(user);
+        boolean uInfoUpdateRes = this.userInfoService.updateById(userInfo);
+
+        // 响应结果
+        ResponseResult result = new ResponseResult(ResultCode.FAIL);
+        if (BooleanUtils.isTrue(userUpdateRes && uInfoUpdateRes)) {
+            // 更新信息成功, 查询最新信息
+            userInfo = this.userInfoService.getById(userInfo.getUserId());
+            user = this.getById(user.getId());
+            result.setResultCode(ResultCode.SUCCESS);
+            result.setData(UserMapStructure.INSTANCE.toVo(user,userInfo));
+        }
+
+        return result;
+    }
+
+
+    /**
+     * 获取用户信息
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseResult getUserAndInfo(@NonNull String id) {
+
+        // 参数校验
+        if (StringUtils.isEmpty(id)) {
+            return ResponseResult.FAIL("请您选择正确的用户哦!");
+        }
+
+        // 查询用户
+        User user = this.getById(id);
+        if (Objects.isNull(user)) {
+            return ResponseResult.FAIL("用户不存在!");
+        }
+
+        // 组装查询用户信息
+        ResponseResult result = ResponseResult.SUCCESS();
+        UserVO userAndInfo = this.userManager.findUserAndInfo(id);
+
+        result.setData(userAndInfo);
+
+        return result;
     }
 
 

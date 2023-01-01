@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,6 +17,7 @@ import lombok.experimental.Accessors;
 @TableName(value ="tb_user")
 @Data
 @Accessors(chain = true)
+@NoArgsConstructor
 public class User implements Serializable {
     /**
      * 用户id

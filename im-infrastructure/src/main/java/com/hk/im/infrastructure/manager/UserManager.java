@@ -2,8 +2,10 @@ package com.hk.im.infrastructure.manager;
 
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
+import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapper.UserInfoMapper;
 import com.hk.im.infrastructure.mapper.UserMapper;
+import com.hk.im.infrastructure.mapstruct.UserMapStructure;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,6 +61,21 @@ public class UserManager {
         User user = userMapper.getUserByAccountOrPhoneOrEmail(value);
         return user;
     }
+
+
+    /**
+     * 根据用户ID 查询用户信息
+     * @param userId
+     * @return
+     */
+    public UserVO findUserAndInfo(String userId) {
+
+        User user = this.userMapper.selectById(userId);
+        UserInfo userInfo = this.userInfoMapper.selectById(userId);
+
+        return UserMapStructure.INSTANCE.toVo(user, userInfo);
+    }
+
 
 
 }
