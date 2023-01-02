@@ -35,4 +35,13 @@
             email = #{account}
         limit 1;
     </select>
+
+
+    <!-- 根据用户昵称模糊查询 -->
+    <select id="listAllByUsernameOrLike" resultType="com.hk.im.domain.entity.User">
+        select *
+        from tb_user
+        where username like concat( '%' , #{username}, '%')
+        limit #{currIndex}, #{pageSize};
+    </select>
 </mapper>

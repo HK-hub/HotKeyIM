@@ -1,10 +1,12 @@
 package com.hk.im.common.resp;
 
+import cn.hutool.core.collection.CollectionUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,4 +29,17 @@ public class PageResult<T> {
     private Long pageSize;
     private Long numOfElements;
     private List<T> rows;
+
+    public static <T> PageResult<T> SUCCESS(List<T> records, long current) {
+
+        PageResult<T> result = new PageResult<>();
+        result.setCurrentPage(current);
+        if (CollectionUtil.isEmpty(records)) {
+            records = new ArrayList<>();
+        }
+        result.setPageSize((long) records.size());
+        result.setRows(records);
+        return result;
+    }
+
 }

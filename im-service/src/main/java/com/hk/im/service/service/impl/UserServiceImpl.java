@@ -7,11 +7,10 @@ import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.consntant.UserConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
-import com.hk.im.common.resp.UploadResponse;
 import com.hk.im.common.util.*;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.domain.constant.UserConstants;
-import com.hk.im.domain.dto.LoginOrRegisterRequest;
+import com.hk.im.domain.request.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.infrastructure.event.user.event.UserUpdatedEvent;
@@ -28,7 +27,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StreamUtils;
 
 import javax.annotation.Resource;
 import java.awt.image.BufferedImage;
@@ -267,7 +265,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String salt = BCrypt.gensalt();
         user.setPassword(BCrypt.hashpw(request.getPassword(), salt));
         // 生成账号
-        user.setAccount(String.valueOf(AccountNumberGenerator.nextAccount()));
+        user.setAccount(AccountNumberGenerator.nextAccount());
         // 注册用户成功，生成二维码
         // 生成二维码
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

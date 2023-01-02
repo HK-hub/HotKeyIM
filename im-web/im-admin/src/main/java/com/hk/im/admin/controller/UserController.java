@@ -2,20 +2,24 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
-import com.hk.im.domain.dto.LoginOrRegisterRequest;
-import com.hk.im.domain.dto.UserDTO;
+import com.hk.im.common.util.AccountNumberGenerator;
+import com.hk.im.common.util.NameUtil;
+import com.hk.im.domain.request.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
+import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
+import com.hk.im.service.service.UserInfoService;
 import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * @author : HK意境
@@ -34,6 +38,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private UserInfoService userInfoService;
 
     @GetMapping
     public String echo() {
@@ -71,6 +77,42 @@ public class UserController {
             result.setMessage("注册用户成功!");
         }
         return result;
+    }
+
+
+    /**
+     * 生成用户
+     * @param request
+     * @return
+     */
+    @PostMapping("/generate")
+    public ResponseResult generate(@RequestBody LoginOrRegisterRequest request) {
+
+        // 参数校验
+        String nickname = request.getNickname();
+        String password = request.getPassword();
+
+        if (StringUtils.isEmpty(nickname) || StringUtils.isEmpty(nickname)) {
+            return ResponseResult.FAIL("用户名或密码不能为空哦!");
+        }
+
+        User user = new User();
+        user.setAccount(AccountNumberGenerator.nextAccount());
+        user.setUsername(NameUtil.getName());
+        user.setPassword(BCrypt.hashpw("123456hh",BCrypt.gensalt()));
+        user.setPhone(request.getPhone());
+        // InternetSource.getInstance().randomEmail(10)
+        user.setEmail(request.getEmail());
+
+        // 保存用户
+        this.userService.save(user);
+        // 保存用户inxi
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserId(user.getId());
+        userInfo.setNickname(user.getUsername());
+        userInfoService.save(userInfo);
+
+        return ResponseResult.SUCCESS(UserMapStructure.INSTANCE.toVo(user, userInfo));
     }
 
 

@@ -20,10 +20,10 @@ public class AccountNumberGenerator {
     // - 固定时间戳
     // - redis 递增数据
 
-    public static long nextAccount() {
+    public static String nextAccount() {
 
         long account = System.currentTimeMillis() / 1000;
-        return account;
+        return String.valueOf(account);
     }
 
 

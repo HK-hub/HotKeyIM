@@ -2,11 +2,10 @@ package com.hk.im.service.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.domain.dto.LoginOrRegisterRequest;
+import com.hk.im.domain.request.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.vo.UserVO;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.InputStream;
 

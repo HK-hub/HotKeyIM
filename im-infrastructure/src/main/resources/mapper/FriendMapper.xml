@@ -6,14 +6,14 @@
 
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.Friend">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="user_id" column="user_id" jdbcType="BIGINT"/>
-            <result property="friend_id" column="friend_id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="friendId" column="friend_id" jdbcType="BIGINT"/>
             <result property="relation" column="relation" jdbcType="INTEGER"/>
             <result property="group" column="group" jdbcType="VARCHAR"/>
-            <result property="remark_name" column="remark_name" jdbcType="VARCHAR"/>
-            <result property="remark_info" column="remark_info" jdbcType="VARCHAR"/>
-            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="remarkName" column="remark_name" jdbcType="VARCHAR"/>
+            <result property="remarkInfo" column="remark_info" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -21,4 +21,25 @@
         relation,group,remark_name,
         remark_info,create_time,update_time
     </sql>
+
+
+    <!-- 判断两个用户是否好友 -->
+    <select id="selectFriendByTowUser" resultType="com.hk.im.domain.entity.Friend">
+        select *
+        from tb_friend
+        where
+            (user_id = #{fromUserId} and friend_id = #{toUserId})
+            and (relation = 1 or relation = 3);
+    </select>
+
+    <!-- 判断两个用户是否具有某种关系f -->
+    <select id="selectTheRelationship" resultType="com.hk.im.domain.entity.Friend">
+        select *
+        from tb_friend
+        where
+            (user_id = #{fromUserId} and friend_id = #{toUserId})
+          and relation = #{relation}
+    </select>
+
+
 </mapper>

@@ -51,6 +51,12 @@ public class FriendApply implements Serializable {
     private Integer status;
 
     /**
+     * 签收：0.未签收，1.以签收
+     */
+    @TableField(value = "sign")
+    private Integer sign;
+
+    /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)

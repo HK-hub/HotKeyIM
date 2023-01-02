@@ -1,4 +1,4 @@
-package com.hk.im.domain.dto;
+package com.hk.im.domain.request;
 
 import lombok.Data;
 

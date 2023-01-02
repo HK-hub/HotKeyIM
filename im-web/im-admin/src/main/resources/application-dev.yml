@@ -46,3 +46,11 @@ spring:
         wall:
           config:
             multi-statement-allow: true
+# mybatis plus 日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+logging:
+  level:
+    com.chz.mapper: debug
