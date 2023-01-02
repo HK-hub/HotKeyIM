@@ -2,6 +2,7 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.FriendApply;
+import com.hk.im.domain.request.ApplyHandleRequest;
 import com.hk.im.domain.request.FriendApplyRequest;
 import com.hk.im.service.service.FriendApplyService;
 import org.springframework.web.bind.annotation.*;
@@ -68,9 +69,9 @@ public class FriendApplyController {
 
 
     @PostMapping("/handle/receive")
-    public ResponseResult handleReceiveApply(@RequestBody FriendApplyRequest request) {
+    public ResponseResult handleReceiveApply(@RequestBody ApplyHandleRequest request) {
 
-
+        return this.friendApplyService.handleFriendApply(request);
 
     }
 

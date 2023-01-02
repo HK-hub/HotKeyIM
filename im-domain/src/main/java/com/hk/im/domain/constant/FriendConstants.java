@@ -51,7 +51,6 @@ public class FriendConstants {
 
     // 好友添加申请状态：状态:0.忽略，1.待处理，2.同意，3.拒绝
     public static enum FriendApplyStatus {
-
         // 忽略
         IGNORE,
         // 待处理
@@ -60,6 +59,16 @@ public class FriendConstants {
         AGREE,
         // 拒绝
         REJECT,
+        ;
+    }
+
+
+    // 好友申请类型:申请类型：1.好友申请，2.加群申请
+    public static enum FriendApplyType {
+
+        DEFAULT,
+        FRIEND,
+        GROUP,
         ;
 
     }

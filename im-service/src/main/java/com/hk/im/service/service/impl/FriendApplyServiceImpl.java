@@ -5,17 +5,22 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.common.resp.PageResult;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.entity.*;
+import com.hk.im.domain.request.ApplyHandleRequest;
 import com.hk.im.domain.request.FriendApplyRequest;
 import com.hk.im.domain.request.FriendFindRequest;
 import com.hk.im.domain.vo.UserVO;
+import com.hk.im.infrastructure.event.friend.event.ApplyHandleEvent;
 import com.hk.im.infrastructure.event.friend.event.FriendApplyEvent;
 import com.hk.im.infrastructure.mapper.FriendApplyMapper;
+import com.hk.im.infrastructure.mapper.FriendMapper;
 import com.hk.im.infrastructure.mapper.UserMapper;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
 import com.hk.im.service.service.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
@@ -41,6 +46,8 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
 
     @Resource
     private FriendService friendService;
+    @Resource
+    private FriendMapper friendMapper;
     @Resource
     private FriendApplyService friendApplyService;
     @Resource
@@ -143,8 +150,11 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
         }
 
         // 检查好友列表
-        Friend friend = this.friendService.isFriendRelationship(fromUserId, toUserId);
-        if (Objects.nonNull(friend)) {
+        Friend positive = this.friendService.isFriendRelationship(fromUserId, toUserId);
+        Friend negative = this.friendService.isFriendRelationship(toUserId, fromUserId);
+
+        // 双向好友关系
+        if (Objects.nonNull(positive) && Objects.nonNull(negative)) {
             // 两人是好友，不能加
             return ResponseResult.FAIL("你们已经是好友关系了哦,无需重复添加!");
         }
@@ -190,7 +200,8 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
 
         // 发送加好友申请
         apply.setApplyInfo(request.getApplyInfo());
-        apply.setApplyType(applyPolicy.ordinal());
+        // 添加类型：
+        apply.setApplyType(FriendConstants.FriendApplyType.FRIEND.ordinal());
         // 如果已经存在申请记录但是，被拒绝了，或者被忽略了， 则重新申请
         apply.setStatus(status.ordinal());
 
@@ -271,6 +282,94 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
             applyList = Collections.EMPTY_LIST;
         }
         return ResponseResult.SUCCESS(applyList);
+    }
+
+
+    /**
+     * 处理好友申请消息
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult handleFriendApply(ApplyHandleRequest request) {
+
+        // 参数校验
+        Boolean preConditionCheck = Objects.isNull(request) || Objects.isNull(request.getSenderId())
+                || Objects.isNull(request.getAcceptorId()) || Objects.isNull(request.getOperation());
+        // 判断校验结果
+        if (BooleanUtils.isTrue(preConditionCheck)) {
+            return ResponseResult.FAIL("申请信息不完整!");
+        }
+
+        // 处理加好友处理
+        Integer type = request.getType();
+        Long senderId = request.getSenderId();
+        Long acceptorId = request.getAcceptorId();
+        if (Objects.equals(type, FriendConstants.FriendApplyType.FRIEND.ordinal())) {
+            // 加好友: 需要二次校验
+            // 看接收者好友列表里面是否有发起者
+            Friend positiveRelationShip = this.friendService.isFriendRelationship(senderId, acceptorId);
+            Friend negativeRelationShip = this.friendService.isFriendRelationship(senderId, acceptorId);
+            if (Objects.nonNull(positiveRelationShip) && Objects.nonNull(negativeRelationShip)) {
+                return ResponseResult.SUCCESS("你们已经是好友呢，请勿重复操作");
+            }
+
+            // 看接收者的申请操作
+            FriendConstants.FriendApplyStatus operation =
+                    FriendConstants.FriendApplyStatus.values()[request.getOperation()];
+
+            // 发布事件
+            applicationEventPublisher.publishEvent(new ApplyHandleEvent(this, request));
+
+            // 判断操作
+            ResponseResult result = null;
+            if (FriendConstants.FriendApplyStatus.REJECT.equals(operation)) {
+                // 拒绝申请: 发布事件，响应请求
+                result = ResponseResult.SUCCESS("您已拒绝该好友的申请");
+            } else if (FriendConstants.FriendApplyStatus.IGNORE.equals(operation)) {
+                // 拒绝申请: 发布事件，响应请求
+                result = ResponseResult.SUCCESS("您已忽略该好友的申请");
+            } else if (FriendConstants.FriendApplyStatus.AGREE.equals(operation)) {
+                // 同意添加为好友
+                // 不是好友，进行加好友操作
+                result = this.friendApplyService.toBeFriend(senderId, acceptorId);
+            }
+            return result;
+
+        } else if (Objects.equals(type, FriendConstants.FriendApplyType.GROUP.ordinal())) {
+            // 加群
+        }
+
+        // 不支持的操作
+        return ResponseResult.FAIL().setResultCode(ResultCode.NO_SUPPORT_OPERATION);
+    }
+
+
+    /**
+     * 成为好友
+     * @param senderId
+     * @param acceptorId
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult toBeFriend(Long senderId, Long acceptorId) {
+
+        // 接收者为主体
+        Friend acceptor = new Friend();
+        acceptor.setUserId(acceptorId);
+        acceptor.setFriendId(senderId);
+        acceptor.setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
+
+        // 发送者为受体
+        Friend sender = new Friend();
+        sender.setUserId(senderId);
+        sender.setFriendId(acceptorId);
+        sender.setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
+
+        this.friendService.saveBatch(List.of(acceptor, sender));
+
+        return ResponseResult.SUCCESS(acceptor).setMessage("您已同意好友申请");
     }
 
 

@@ -3,6 +3,7 @@ package com.hk.im.service.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.PageResult;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.ApplyHandleRequest;
 import com.hk.im.domain.request.FriendApplyRequest;
 import com.hk.im.domain.request.FriendFindRequest;
 import com.hk.im.domain.entity.FriendApply;
@@ -64,4 +65,19 @@ public interface FriendApplyService extends IService<FriendApply> {
      */
     ResponseResult getUserAllReceiveFriendApply(Long userId);
 
+
+    /**
+     * 处理加好友申请
+     * @param request
+     * @return
+     */
+    ResponseResult handleFriendApply(ApplyHandleRequest request);
+
+    /**
+     * 同意好友申请， 成为好友
+     * @param senderId
+     * @param acceptorId
+     * @return
+     */
+    ResponseResult toBeFriend(Long senderId, Long acceptorId);
 }

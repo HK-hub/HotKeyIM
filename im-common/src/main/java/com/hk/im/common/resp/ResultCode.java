@@ -34,7 +34,8 @@ public enum ResultCode {
     FAIL(false,-100,"fail"),
     //上传失败，上传文件不能为空
     SC_EXPECTATION_FAILED(false,-110,"file is empty"),
-    CHECK_CODE_SEND_FAILED(false, 103,"user check code send fail");
+    CHECK_CODE_SEND_FAILED(false, 103,"user check code send fail"),
+    NO_SUPPORT_OPERATION(false, 106, "no support operation"),;
 
 
 
