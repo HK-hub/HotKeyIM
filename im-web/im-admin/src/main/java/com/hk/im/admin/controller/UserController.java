@@ -6,12 +6,15 @@ import com.hk.im.domain.dto.LoginOrRegisterRequest;
 import com.hk.im.domain.dto.UserDTO;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.vo.UserVO;
+import com.hk.im.infrastructure.mapstruct.UserMapStructure;
 import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -94,6 +97,23 @@ public class UserController {
             result.setResultCode(ResultCode.FAIL).setData("更新用户信息失败!");
         }
         return result;
+    }
+
+
+    @PostMapping("/update/avatar")
+    public ResponseResult updateUserAvatar(@RequestParam("avatar") MultipartFile file, @RequestParam("userId") Long userId) {
+
+        // 获取User 对象
+        User user = this.userService.getById(userId);
+        ResponseResult result = new ResponseResult();
+        try {
+            result = this.userService.updateUserAvatar(file.getInputStream(), user);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return result.setResultCode(ResultCode.SERVER_BUSY);
+        }
+
     }
 
 

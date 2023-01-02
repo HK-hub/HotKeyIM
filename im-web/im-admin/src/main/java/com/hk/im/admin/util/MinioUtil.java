@@ -470,7 +470,7 @@ public class MinioUtil {
         log.info("file大小:{}", inputStream.available());
         this.uploadFile(bucketName, inputStream, fileName, MimeTypeEnum.VIDEO.mimeType);
 
-        String minioUrl = minioProperties.getEndpoint() + "/" + bucketName + "/" + fileName;
+        String minioUrl = minioProperties.getConsole() + "/" + bucketName + "/" + fileName;
         String nginxUrl = minioProperties.getNginx() + "/" + bucketName + "/" + fileName;
         return new UploadResponse(minioUrl, nginxUrl);
     }
@@ -614,7 +614,7 @@ public class MinioUtil {
     }
 
 
-    public static enum MimeTypeEnum {
+    public enum MimeTypeEnum {
         VIDEO("video/mp4");
 
         MimeTypeEnum(String mimeType) {

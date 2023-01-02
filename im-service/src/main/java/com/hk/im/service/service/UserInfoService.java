@@ -8,4 +8,7 @@ import com.hk.im.domain.entity.UserInfo;
  */
 public interface UserInfoService extends IService<UserInfo> {
 
+
+
+
 }

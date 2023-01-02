@@ -1,5 +1,6 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.service.service.MinioService;
@@ -45,7 +46,8 @@ public class MinioController {
         try {
             //文件名
             String fileName = file.getOriginalFilename();
-            String newFileName = System.currentTimeMillis() + "." + StringUtils.substringAfterLast(fileName, ".");
+            String newFileName = System.currentTimeMillis() + "." +
+                    StringUtils.substringAfterLast(fileName, ".");
             //类型
             String contentType = file.getContentType();
             // 返回文件外链
@@ -65,7 +67,7 @@ public class MinioController {
      * @return
      */
     @PostMapping("/upload/name")
-    public ResponseResult uploadFile(@RequestParam("file") MultipartFile file, String bucketName) throws IOException {
+    public ResponseResult uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("bucket") String bucketName) throws IOException {
 
         if (file.getSize() > 0) {
             String originalFilename = file.getOriginalFilename();
@@ -74,6 +76,8 @@ public class MinioController {
         }
         return ResponseResult.FAIL("文件不存在!");
     }
+
+
 
     /**
      * 删除
@@ -97,8 +101,14 @@ public class MinioController {
      * @return
      */
     @GetMapping("/info")
-    public ResponseResult getFileStatusInfo(@RequestParam("fileName") String fileName) {
-        String fileStatusInfo = minioService.getFileStatusInfo(minioProperties.getBucketName(), fileName);
+    public ResponseResult getFileStatusInfo(@RequestParam("fileName") String fileName,
+                                            @RequestParam(value = "bucket", required = false) String bucket) {
+        // 获取 bucket
+        if (StringUtils.isEmpty(bucket)) {
+            bucket = minioProperties.getBucketName();
+        }
+
+        String fileStatusInfo = minioService.getFileStatusInfo(bucket, fileName);
         if (StringUtils.isEmpty(fileStatusInfo)) {
             return ResponseResult.FAIL("文件：" + fileName +  "不存在");
         }
@@ -112,8 +122,15 @@ public class MinioController {
      * @return
      */
     @GetMapping("/url")
-    public String getPresignedObjectUrl(@RequestParam("fileName") String fileName) {
-        return minioService.getObjectUrl(minioProperties.getBucketName(), fileName);
+    public String getPresignedObjectUrl(@RequestParam("fileName") String fileName,
+                                        @RequestParam(value = "bucket", required = false) String bucket) {
+
+        // 获取 bucket
+        if (StringUtils.isEmpty(bucket)) {
+            bucket = minioProperties.getBucketName();
+        }
+
+        return minioService.getObjectUrl(bucket, fileName);
     }
 
     /**
@@ -123,9 +140,15 @@ public class MinioController {
      * @param response
      */
     @GetMapping("/download")
-    public void download(@RequestParam("fileName") String fileName, HttpServletResponse response) {
+    public void download(@RequestParam("fileName") String fileName,
+                         @RequestParam(value = "bucket", required = false) String bucket,
+                         HttpServletResponse response) {
         try {
-            InputStream fileInputStream = minioService.getObject(minioProperties.getBucketName(), fileName);
+            // 获取 bucket
+            if (StringUtils.isEmpty(bucket)) {
+                bucket = minioProperties.getBucketName();
+            }
+            InputStream fileInputStream = minioService.getObject(bucket, fileName);
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
             response.setContentType("application/force-download");
             response.setCharacterEncoding("UTF-8");
@@ -134,8 +157,5 @@ public class MinioController {
             log.error("下载失败");
         }
     }
-
-
-
 
 }

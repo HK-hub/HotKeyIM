@@ -106,8 +106,7 @@ public interface MinioService {
          *
          * @return
          */
-    public String putObject(InputStream inputStream, String bucketName, String objectName, String fileType);
-
+    public String putObject(InputStream inputStream, String bucketName, String objectName, String fileType) throws Exception;
 
 
 

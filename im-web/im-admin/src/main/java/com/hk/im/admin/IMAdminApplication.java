@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author : HK意境
@@ -16,8 +17,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @Modified :
  * @Version : 1.0
  */
+@EnableAsync
 @MapperScan("com.hk.im.infrastructure.mapper")
-@EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "com.hk.im")
 public class IMAdminApplication {
 

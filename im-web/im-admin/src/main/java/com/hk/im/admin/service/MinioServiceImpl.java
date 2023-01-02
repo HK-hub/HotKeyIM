@@ -123,17 +123,12 @@ public class MinioServiceImpl implements MinioService {
      * @return
      */
     @Override
-    public String putObject(InputStream inputStream, String bucketName, String objectName, String fileType) {
-        try {
-            if (!this.bucketExists(bucketName)) {
-                this.makeBucket(bucketName);
-            }
-            minioUtil.uploadFile(bucketName, inputStream, objectName, fileType);
-            return minioProperties.getEndpoint() + "/" + bucketName + "/" + objectName;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "上传失败";
+    public String putObject(InputStream inputStream, String bucketName, String objectName, String fileType) throws Exception {
+        if (!this.bucketExists(bucketName)) {
+            this.makeBucket(bucketName);
         }
+        minioUtil.uploadFile(bucketName, inputStream, objectName, fileType);
+        return minioProperties.getConsole() + "/" + bucketName + "/" + objectName;
     }
 
 
@@ -151,7 +146,7 @@ public class MinioServiceImpl implements MinioService {
                 this.makeBucket(bucketName);
             }
             minioUtil.uploadFile(bucketName, objectName, inputStream);
-            return minioProperties.getEndpoint() + "/" + bucketName + "/" + objectName;
+            return minioProperties.getConsole() + "/" + bucketName + "/" + objectName;
         } catch (Exception e) {
             e.printStackTrace();
             return "上传失败";

@@ -7,6 +7,8 @@ import com.hk.im.domain.entity.User;
 import com.hk.im.domain.vo.UserVO;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @ClassName : UserService
@@ -22,11 +24,15 @@ public interface UserService extends IService<User> {
 
     ResponseResult login(LoginOrRegisterRequest request);
 
-    ResponseResult sendCode(String type, String account) ;
+    ResponseResult sendCode(String type, String account);
 
     ResponseResult register(LoginOrRegisterRequest request);
 
     ResponseResult updateUserAndInfo(UserVO userVO);
 
     ResponseResult getUserAndInfo(String id);
+
+    ResponseResult updateUserAvatar(InputStream inputStream, User user) throws IOException;
+
+
 }

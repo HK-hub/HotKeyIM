@@ -23,6 +23,13 @@ public class MinioProperties {
      */
     @Value("${minio.endpoint}")
     private String endpoint;
+
+    /**
+     * console 地址
+     */
+    @Value("${minio.console}")
+    private String console;
+
     /**
      * 用户名
      */

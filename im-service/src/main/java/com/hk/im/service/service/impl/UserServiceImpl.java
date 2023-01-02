@@ -2,34 +2,40 @@ package com.hk.im.service.service.impl;
 
 import com.apifan.common.random.source.NumberSource;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.consntant.RedisConstants;
+import com.hk.im.common.consntant.UserConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
-import com.hk.im.common.util.AccountNumberGenerator;
-import com.hk.im.common.util.CustomValidator;
-import com.hk.im.common.util.NameUtil;
+import com.hk.im.common.resp.UploadResponse;
+import com.hk.im.common.util.*;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.dto.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
+import com.hk.im.infrastructure.event.user.event.UserUpdatedEvent;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.UserMapper;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
-import com.hk.im.service.service.AuthorizationService;
-import com.hk.im.service.service.MailService;
-import com.hk.im.service.service.UserInfoService;
-import com.hk.im.service.service.UserService;
+import com.hk.im.service.service.*;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StreamUtils;
 
 import javax.annotation.Resource;
-import java.util.Map;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -42,26 +48,32 @@ import java.util.Objects;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-    // 事务管理器
     @Resource
     private UserManager userManager;
     @Resource
     private UserInfoService userInfoService;
+    @Resource
+    private MinioService minioService;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private AuthorizationService authorizationService;
     @Resource
     private MailService mailService;
+    @Resource
+    private ApplicationEventPublisher applicationEventPublisher;
 
 
     /**
      * 发送验证码
-     * @param type 默认为登录注册
+     *
+     * @param type    默认为登录注册
      * @param account
+     *
      * @return
      */
     @Override
@@ -86,11 +98,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (BooleanUtils.isTrue(!invalidEmail)) {
             code = String.valueOf(NumberSource.getInstance().randomInt(1234, 9999));
             String content = "<h2>您的登录注册验证码如下：" + code + "</h2>";
-            mailService.sendSimpleMail("3161880795@qq.com", "Hot Key IM 官方",account,
-                    null,"Hot Key IM聊天应用-登陆注册验证码", content);
+            mailService.sendSimpleMail("3161880795@qq.com", "Hot Key IM 官方", account,
+                    null, "Hot Key IM聊天应用-登陆注册验证码", content);
 
             // 保存码
-            authorizationService.createAuthCode(account,code);
+            authorizationService.createAuthCode(account, code);
             System.out.println("您的验证码已经发送了：" + code);
         } else {
             // 发送手机号码
@@ -105,6 +117,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * 用户登录
      *
      * @param loginRequest
+     *
      * @return
      */
     @Override
@@ -132,8 +145,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 return ResponseResult.FAIL("账号或手机或邮箱或密码错误");
             }
 
-        }
-        else if (Objects.equals(type, LoginOrRegisterRequest.LoginType.CODE.ordinal())) {
+        } else if (Objects.equals(type, LoginOrRegisterRequest.LoginType.CODE.ordinal())) {
             // 验证码登录
             // 参数校验
             String phone = loginRequest.getPhone();
@@ -180,8 +192,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 return ResponseResult.FAIL("手机号或邮箱或验证码错误,请重试哦!");
             }
 
-        }
-        else {
+        } else {
             // 其他登录方式: 非法登录 or 第三方登录
             return ResponseResult.FAIL("目前暂不支持第三方登录!");
         }
@@ -221,26 +232,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 邮箱或手机号存在一个正确
         // 校验账户是否存在
-
+        User user = this.lambdaQuery().eq(User::getEmail, email).one();
+        if (Objects.nonNull(user)) {
+            // 用户已存在
+            return ResponseResult.FAIL("账户以存在，请勿重复注册!");
+        }
 
         // 获取验证码
         String code = null;
         if (BooleanUtils.isTrue(!emailInValid)) {
             // 邮箱有效
             code = stringRedisTemplate.opsForValue().get(RedisConstants.LOGIN_CODE_KEY + email);
-            User user = this.lambdaQuery().eq(User::getEmail, email).one();
-            if (Objects.nonNull(user)) {
-                // 用户已存在
-                return ResponseResult.FAIL("账户以存在，请勿重复注册!");
-            }
-
         } else {
             code = stringRedisTemplate.opsForValue().get(RedisConstants.LOGIN_CODE_KEY + phone);
-            User user = this.lambdaQuery().eq(User::getPhone, phone).one();
-            if (Objects.nonNull(user)) {
-                // 用户已存在
-                return ResponseResult.FAIL("账户以存在，请勿重复注册!");
-            }
         }
 
         // 账号不存在，注册
@@ -252,7 +256,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 验证码正确
         // User 用户-信息
-        User user = new User();
+        user = new User();
         UserInfo userInfo = new UserInfo();
         // 昵称
         user.setUsername(NameUtil.getName());
@@ -264,13 +268,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setPassword(BCrypt.hashpw(request.getPassword(), salt));
         // 生成账号
         user.setAccount(String.valueOf(AccountNumberGenerator.nextAccount()));
+        // 注册用户成功，生成二维码
+        // 生成二维码
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        QRCodeUtil.getQRCode(UserConstant.USER_QR_CODE + user.getAccount(), bos);
+        String qrcode = MinioConstant.USER_QR_CODE_PATH + MinioConstant.USER_QRCODE_PREFIX + user.getAccount();
+        // 上传二维码
+        String qrcodeUrl = this.minioService.putObject(StreamUtil.convertToInputStream(bos),
+                MinioConstant.BucketEnum.User.getBucket(), qrcode);
+        user.setQrcode(qrcodeUrl);
 
         // 注册结果
         ResponseResult result = new ResponseResult().setSuccess(false);
 
         // 保存用户用户信息
         Boolean res = userManager.saveUserAndInfo(user, userInfo);
-        return result.setSuccess(res).setData(UserMapStructure.INSTANCE.toVo(user,userInfo));
+
+
+        return result.setSuccess(res).setData(UserMapStructure.INSTANCE.toVo(user, userInfo));
     }
 
     @Override
@@ -292,7 +307,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userInfo = this.userInfoService.getById(userInfo.getUserId());
             user = this.getById(user.getId());
             result.setResultCode(ResultCode.SUCCESS);
-            result.setData(UserMapStructure.INSTANCE.toVo(user,userInfo));
+            result.setData(UserMapStructure.INSTANCE.toVo(user, userInfo));
         }
 
         return result;
@@ -301,7 +316,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 获取用户信息
+     *
      * @param id
+     *
      * @return
      */
     @Override
@@ -325,6 +342,62 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         result.setData(userAndInfo);
 
         return result;
+    }
+
+
+    /**
+     * 上传更新用户头像
+     *
+     * @param inputStream
+     * @param user
+     *
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ResponseResult updateUserAvatar(InputStream inputStream, User user) throws IOException {
+
+        // 校验参数
+        if (Objects.isNull(user) || StringUtils.isEmpty(String.valueOf(user.getId()))) {
+            return ResponseResult.FAIL("抱歉，你还未登录!");
+        }
+
+        // 文件大小
+        if (Objects.isNull(inputStream) || inputStream.available() == 0) {
+            return ResponseResult.FAIL("请选择头像图片哦!");
+        }
+
+        // 构造用户头像名称: public_userid_avatar_xxx
+        String bigAvatar = MinioConstant.USER_BIG_AVATAR_PREFIX + user.getId();
+        String miniAvatar = MinioConstant.USER_MINI_AVATAR_PREFIX + user.getId();
+        // objectName
+        String bigObjectName = MinioConstant.USER_AVATAR_PATH + bigAvatar + ".jpg";
+        String miniObjectName = MinioConstant.USER_AVATAR_PATH + miniAvatar + ".jpg";
+        // bucket
+        String bucket = MinioConstant.BucketEnum.User.getBucket();
+        try {
+            // 复制一份流
+            ByteArrayOutputStream outputStream = StreamUtil.copyInputStream(inputStream);
+
+            // 生成缩略图
+            BufferedImage bufferedImage = ThumbnailsUtil.changeSizeToBufferedImage(
+                    new ByteArrayInputStream(outputStream.toByteArray()),
+                    UserConstant.MINI_AVATAR_WIDTH, UserConstant.MINI_AVATAR_HEIGHT);
+
+            // 上传到 minio
+            String bigUrl = this.minioService.putObject(new ByteArrayInputStream(outputStream.toByteArray()), bucket, bigObjectName);
+            String miniUrl = this.minioService.putObject(StreamUtil.getImageStream(bufferedImage), bucket, miniObjectName);
+
+            // 发布用户更新头像事件：更新用户信息
+            user.setBigAvatar(bigUrl);
+            user.setMiniAvatar(miniUrl);
+            applicationEventPublisher.publishEvent(new UserUpdatedEvent(this, user));
+
+            return ResponseResult.SUCCESS(UserMapStructure.INSTANCE.toVo(user, null));
+        } catch (Exception e) {
+            log.error("update user avatar error", e);
+            return ResponseResult.FAIL("更新用户头像失败");
+        }
     }
 
 

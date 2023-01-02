@@ -169,3 +169,10 @@ docker  run -d --name minio-242 \
 minio/minio server http://47.108.146.24{0...2}/export{1...2} \
 --console-address ":9003"
 ```
+
+
+
+
+
+## 参考文章
+[基于Docker的Minio集群部署](https://blog.csdn.net/wu624218376/article/details/127522162)
