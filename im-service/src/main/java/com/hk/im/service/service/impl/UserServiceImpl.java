@@ -4,7 +4,6 @@ import com.apifan.common.random.source.NumberSource;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.consntant.RedisConstants;
-import com.hk.im.common.consntant.UserConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.*;
@@ -20,6 +19,7 @@ import com.hk.im.infrastructure.mapstruct.UserMapStructure;
 import com.hk.im.service.service.*;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
@@ -34,7 +34,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+
+import static net.sf.jsqlparser.util.validation.metadata.NamedObject.user;
 
 /**
  * @author : HK意境
@@ -269,7 +273,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 注册用户成功，生成二维码
         // 生成二维码
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        QRCodeUtil.getQRCode(UserConstant.USER_QR_CODE + user.getAccount(), bos);
+        QRCodeUtil.getQRCode(UserConstants.USER_QR_CODE + user.getAccount(), bos);
         String qrcode = MinioConstant.USER_QR_CODE_PATH + MinioConstant.USER_QRCODE_PREFIX + user.getAccount();
         // 上传二维码
         String qrcodeUrl = this.minioService.putObject(StreamUtil.convertToInputStream(bos),
@@ -344,6 +348,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     /**
+     * 批量获取用户信息
+     * @param idList
+     * @return
+     */
+    @Override
+    public ResponseResult getUserAndInfoList(List<Long> idList) {
+
+        // 参数校验
+        if (CollectionUtils.isEmpty(idList)) {
+            return ResponseResult.SUCCESS(Collections.emptyList());
+        }
+
+        List<UserVO> userVOList = this.userManager.findUserAndInfoList(idList);
+        return ResponseResult.SUCCESS(userVOList);
+    }
+
+
+    /**
      * 上传更新用户头像
      *
      * @param inputStream
@@ -380,7 +402,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             // 生成缩略图
             BufferedImage bufferedImage = ThumbnailsUtil.changeSizeToBufferedImage(
                     new ByteArrayInputStream(outputStream.toByteArray()),
-                    UserConstant.MINI_AVATAR_WIDTH, UserConstant.MINI_AVATAR_HEIGHT);
+                    UserConstants.MINI_AVATAR_WIDTH, UserConstants.MINI_AVATAR_HEIGHT);
 
             // 上传到 minio
             String bigUrl = this.minioService.putObject(new ByteArrayInputStream(outputStream.toByteArray()), bucket, bigObjectName);

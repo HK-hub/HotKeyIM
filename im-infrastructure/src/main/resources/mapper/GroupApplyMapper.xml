@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.GroupApplyMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.GroupApply">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
+            <result property="groupId" column="group_id" jdbcType="BIGINT"/>
+            <result property="handlerId" column="handler_id" jdbcType="BIGINT"/>
+            <result property="applyType" column="apply_type" jdbcType="INTEGER"/>
+            <result property="applyInfo" column="apply_info" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="sign" column="sign" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,sender_id,group_id,
+        handler_id,apply_type,apply_info,
+        status,sign,create_time,
+        update_time
+    </sql>
+</mapper>

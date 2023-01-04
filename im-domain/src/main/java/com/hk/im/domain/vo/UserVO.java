@@ -50,6 +50,11 @@ public class UserVO {
 
     private Integer wallet;
 
+    /**
+     * 用户状态：1.离线，2.在线，3.隐身,4.挂起，5.忙碌
+     */
+    private Integer status;
+
     private Integer gender;
 
     private Integer age;

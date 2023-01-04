@@ -6,11 +6,15 @@ import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapper.UserInfoMapper;
 import com.hk.im.infrastructure.mapper.UserMapper;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -77,6 +81,30 @@ public class UserManager {
         return UserMapStructure.INSTANCE.toVo(user, userInfo);
     }
 
+
+    /**
+     * 批量查询用户信息
+     * @param userIdList
+     * @return
+     */
+    public List<UserVO> findUserAndInfoList(List<Long> userIdList) {
+
+        List<User> userList = this.userMapper.selectBatchIds(userIdList);
+
+        if (CollectionUtils.isEmpty(userList)) {
+            return Collections.emptyList();
+        }
+
+        List<UserInfo> userInfoList = this.userInfoMapper.selectBatchIds(userIdList);
+        Map<Long, UserInfo> userInfoMap = userInfoList.stream().collect(Collectors.toMap(UserInfo::getUserId, value -> value));
+
+        List<UserVO> userVOList = userList.stream().map(user -> {
+            UserVO userVO = UserMapStructure.INSTANCE.toVo(user, userInfoMap.get(user.getId()));
+            return userVO;
+        }).toList();
+
+        return userVOList;
+    }
 
 
 }

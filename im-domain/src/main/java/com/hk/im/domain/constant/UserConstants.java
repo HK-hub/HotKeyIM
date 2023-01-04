@@ -19,4 +19,30 @@ public class UserConstants {
     // 缩略头像大小
     public static final int MINI_AVATAR_WIDTH = 100;
     public static final int MINI_AVATAR_HEIGHT = 100;
+
+    // 用户二维码
+    public static final String USER_QR_CODE = "USER_QR_CODE:";
+
+    // 黑名单
+    public static final String BLACK_LIST = "黑名单";
+
+
+    // 用户状态：1.离线，2.在线，3.隐身,4.挂起，5.忙碌
+    public static enum UserStatus {
+
+        DEFAULT,
+        // 1.在线
+        OFFLINE,
+        // 2.离线
+        ONLINE,
+        // 3.隐身
+        UNKNOWN,
+        // 4.挂起
+        SUSPEND,
+        // 5.忙碌
+        BUSY,
+
+    }
+
+
 }

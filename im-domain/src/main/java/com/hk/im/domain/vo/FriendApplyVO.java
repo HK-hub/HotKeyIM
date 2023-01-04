@@ -1,11 +1,7 @@
 package com.hk.im.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.time.LocalDateTime;
+import lombok.Data;
 
 /**
  * @author : HK意境
@@ -17,18 +13,18 @@ import java.time.LocalDateTime;
  * @Modified :
  * @Version : 1.0
  */
+@Data
 public class FriendApplyVO {
 
     private Long id;
 
-    private Long senderId;
+    private UserVO sender;
 
-    private Long acceptorId;
+    private UserVO acceptor;
 
     /**
      * 申请类型：1.好友申请，2.加群申请
      */
-    @TableField(value = "apply_type")
     private Integer applyType;
 
     private String applyInfo;
@@ -36,14 +32,15 @@ public class FriendApplyVO {
     /**
      * 状态:1.待处理，2.同意，3.拒绝
      */
-    @TableField(value = "status")
     private Integer status;
 
     /**
      * 签收：0.未签收，1.以签收
      */
-    @TableField(value = "sign")
     private Integer sign;
+
+
+
 
 
 

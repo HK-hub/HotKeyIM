@@ -44,7 +44,7 @@ public class Friend implements Serializable {
     /**
      * 分组:如果不是好友，默认临时会话
      */
-    @TableField(value = "group")
+    @TableField(value = "`group`")
     private String group;
 
     /**

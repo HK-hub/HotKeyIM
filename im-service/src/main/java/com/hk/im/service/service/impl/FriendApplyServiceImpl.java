@@ -11,12 +11,14 @@ import com.hk.im.domain.entity.*;
 import com.hk.im.domain.request.ApplyHandleRequest;
 import com.hk.im.domain.request.FriendApplyRequest;
 import com.hk.im.domain.request.FriendFindRequest;
+import com.hk.im.domain.vo.FriendApplyVO;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.event.friend.event.ApplyHandleEvent;
 import com.hk.im.infrastructure.event.friend.event.FriendApplyEvent;
 import com.hk.im.infrastructure.mapper.FriendApplyMapper;
 import com.hk.im.infrastructure.mapper.FriendMapper;
 import com.hk.im.infrastructure.mapper.UserMapper;
+import com.hk.im.infrastructure.mapstruct.FriendApplyMapStructure;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
 import com.hk.im.service.service.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -255,7 +257,21 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
             // 没有有效申请列表
             applyList = Collections.EMPTY_LIST;
         }
-        return ResponseResult.SUCCESS(applyList);
+
+        // 组装信息
+        List<Long> acceptorIdList = applyList.stream().map(FriendApply::getAcceptorId).toList();
+        List<UserVO> userAndInfoList = (List<UserVO>) this.userService.getUserAndInfoList(acceptorIdList).getData();
+        Map<Long, UserVO> userVOMap = userAndInfoList.stream().collect(Collectors.toMap(UserVO::getId, value -> value));
+
+        // 收集 acceptor
+        List<FriendApplyVO> friendApplyVOS = applyList.stream().map(apply -> {
+            FriendApplyVO applyVO = FriendApplyMapStructure.INSTANCE.toVO(apply,
+                    null, userVOMap.get(apply.getAcceptorId()));
+            return applyVO;
+        }).toList();
+
+
+        return ResponseResult.SUCCESS(friendApplyVOS);
     }
 
 
@@ -281,7 +297,21 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
             // 没有有效申请列表
             applyList = Collections.EMPTY_LIST;
         }
-        return ResponseResult.SUCCESS(applyList);
+
+
+        // 组装信息
+        List<Long> senderList = applyList.stream().map(FriendApply::getSenderId).toList();
+        List<UserVO> userAndInfoList = (List<UserVO>) this.userService.getUserAndInfoList(senderList).getData();
+        Map<Long, UserVO> userVOMap = userAndInfoList.stream().collect(Collectors.toMap(UserVO::getId, value -> value));
+
+        // 收集sender
+        List<FriendApplyVO> friendApplyVOS = applyList.stream().map(apply -> {
+            FriendApplyVO applyVO = FriendApplyMapStructure.INSTANCE.toVO(apply,
+                    userVOMap.get(apply.getSenderId()), null);
+            return applyVO;
+        }).toList();
+
+        return ResponseResult.SUCCESS(friendApplyVOS);
     }
 
 
@@ -369,7 +399,14 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
 
         this.friendService.saveBatch(List.of(acceptor, sender));
 
-        return ResponseResult.SUCCESS(acceptor).setMessage("您已同意好友申请");
+        // 组装用户信息
+        FriendApplyVO applyVO = new FriendApplyVO();
+        UserVO senderUser = (UserVO) this.userService.getUserAndInfo(String.valueOf(senderId)).getData();
+        UserVO acceptorUser = (UserVO) this.userService.getUserAndInfo(String.valueOf(acceptorId)).getData();
+        applyVO.setSender(senderUser);
+        applyVO.setAcceptor(acceptorUser);
+
+        return ResponseResult.SUCCESS(applyVO).setMessage("您已同意好友申请");
     }
 
 

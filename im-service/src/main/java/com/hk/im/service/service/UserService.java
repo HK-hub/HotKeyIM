@@ -8,6 +8,7 @@ import com.hk.im.domain.vo.UserVO;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @ClassName : UserService
@@ -30,6 +31,8 @@ public interface UserService extends IService<User> {
     ResponseResult updateUserAndInfo(UserVO userVO);
 
     ResponseResult getUserAndInfo(String id);
+
+    ResponseResult getUserAndInfoList(List<Long> idList);
 
     ResponseResult updateUserAvatar(InputStream inputStream, User user) throws IOException;
 
