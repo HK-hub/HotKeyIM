@@ -138,6 +138,26 @@ create table tb_group_member (
                                  update_time datetime comment '更新时间'
 );
 
+
+# 群申请
+-- auto-generated definition
+create table tb_group_apply
+(
+    id          bigint        not null comment 'id编号'
+        primary key,
+    sender_id   bigint        null comment '申请发起人',
+    group_id bigint        null comment '申请群号',
+    handler_id bigint comment '处理人id',
+    apply_type  int           null comment '申请类型：1.搜索加群，2.邀请入群，3.扫码加群',
+    apply_info  varchar(255)  null comment '申请说明信息,验证信息',
+    status      int           null comment '状态:1.待处理，2.同意，3.拒绝',
+    sign        int default 0 null comment '签收状态：0.未签收，1.已签收',
+    create_time datetime      null comment '创建时间',
+    update_time datetime      null comment '更新时间'
+);
+
+
+
 # 聊天消息表
 create table tb_chat_message (
                                  id long primary key comment '聊天消息表id',

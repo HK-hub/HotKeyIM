@@ -19,7 +19,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 @EnableAsync
 @MapperScan("com.hk.im.infrastructure.mapper")
-@SpringBootApplication(scanBasePackages = "com.hk.im")
+@SpringBootApplication(scanBasePackages = {"com.hk.im"})
 public class IMAdminApplication {
 
     public static void main(String[] args) {
