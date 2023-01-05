@@ -10,6 +10,7 @@
         <module name="chat-server" />
         <module name="ruoyi-system" />
         <module name="im-infrastructure" />
+        <module name="push-server" />
         <module name="ruoyi-generator" />
         <module name="im-generator" />
         <module name="ruoyi-framework" />
