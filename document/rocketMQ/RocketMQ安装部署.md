@@ -96,3 +96,4 @@ docker run -d \
 
 ## 6.参考文章
 [docker 安装 Rocketmq(namesrv broker 与可视化控制台 console)](https://blog.csdn.net/weixin_40461281/article/details/104115052)
+[SpringBoot——整合RocketMQ](https://www.jianshu.com/p/f7b59073ea01)

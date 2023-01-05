@@ -30,7 +30,7 @@ public interface UserService extends IService<User> {
 
     ResponseResult updateUserAndInfo(UserVO userVO);
 
-    ResponseResult getUserAndInfo(String id);
+    ResponseResult getUserAndInfo(Long id);
 
     ResponseResult getUserAndInfoList(List<Long> idList);
 

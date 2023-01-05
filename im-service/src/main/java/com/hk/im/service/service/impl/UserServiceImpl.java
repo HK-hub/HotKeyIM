@@ -324,10 +324,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public ResponseResult getUserAndInfo(@NonNull String id) {
+    public ResponseResult getUserAndInfo(@NonNull Long id) {
 
         // 参数校验
-        if (StringUtils.isEmpty(id)) {
+        if (StringUtils.isEmpty(String.valueOf(id))) {
             return ResponseResult.FAIL("请您选择正确的用户哦!");
         }
 

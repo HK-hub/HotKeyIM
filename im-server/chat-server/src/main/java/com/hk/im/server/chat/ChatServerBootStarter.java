@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -23,13 +24,14 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class ChatServerBootStarter implements ApplicationListener<ContextRefreshedEvent> {
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("IOC 容器准备完毕,准备创建Chat Server: {}", LocalDateTime.now());
-
         ApplicationContext parent = contextRefreshedEvent.getApplicationContext().getParent();
         if (Objects.isNull(parent)) {
             log.info("启动Chat Server: {}-{}", this.getClass(), LocalDateTime.now());
+            // hotKeyChatServer.runServer();
             HotKeyChatServer.getInstance().runServer();
         }
     }

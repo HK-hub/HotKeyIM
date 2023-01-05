@@ -35,8 +35,15 @@
     websocket.onopen = function () {
         console.log("已经与服务器建立连接。。。。。");
         // 发送连接消息
+        let connectMessage = {
+            userId: document.querySelector("#userId").value,
+            token: "token_fjogroehgotrnhktrjhkrjt",
+            extend: "extra"
+        }
         let message = {
-            senderId: document.querySelector("#userId").value
+            sequenceId: 1111,
+            messageType: 0,
+            messageContent: JSON.stringify(connectMessage)
         }
         websocket.send(JSON.stringify(message))
     };

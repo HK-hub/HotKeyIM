@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 
 /**
- * @ClassName : WebSocketMessageHandler
+ * @ClassName : ClientMessageHandler
  * @author : HK意境
  * @date : 2023/1/4 18:52
  * @description : 处理监听 Text 文本事件
@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @ChannelHandler.Sharable
-@Component
 public class WebSocketCloseHandler extends SimpleChannelInboundHandler<CloseWebSocketFrame> {
 
 	@Override

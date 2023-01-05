@@ -1,6 +1,5 @@
 package com.hk.im.server.chat.handler;
 
-
 import com.hk.im.server.chat.message.GroupJoinRequestMessage;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;

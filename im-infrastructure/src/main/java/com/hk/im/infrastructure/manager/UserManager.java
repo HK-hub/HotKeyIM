@@ -73,7 +73,7 @@ public class UserManager {
      * @param userId
      * @return
      */
-    public UserVO findUserAndInfo(String userId) {
+    public UserVO findUserAndInfo(Long userId) {
 
         User user = this.userMapper.selectById(userId);
         UserInfo userInfo = this.userInfoMapper.selectById(userId);

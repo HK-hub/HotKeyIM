@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseResult getUserById(@PathVariable(name = "id") String id) {
+    public ResponseResult getUserById(@PathVariable(name = "id") Long id) {
         ResponseResult result = userService.getUserAndInfo(id);
         return result;
     }

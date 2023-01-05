@@ -401,8 +401,8 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
 
         // 组装用户信息
         FriendApplyVO applyVO = new FriendApplyVO();
-        UserVO senderUser = (UserVO) this.userService.getUserAndInfo(String.valueOf(senderId)).getData();
-        UserVO acceptorUser = (UserVO) this.userService.getUserAndInfo(String.valueOf(acceptorId)).getData();
+        UserVO senderUser = (UserVO) this.userService.getUserAndInfo(senderId).getData();
+        UserVO acceptorUser = (UserVO) this.userService.getUserAndInfo(acceptorId).getData();
         applyVO.setSender(senderUser);
         applyVO.setAcceptor(acceptorUser);
 

@@ -54,3 +54,10 @@ mybatis-plus:
 logging:
   level:
     com.chz.mapper: debug
+
+
+# rocketMQ
+rocketmq:
+  name-server: 47.108.146.141:9876
+  producer:
+    group: hkim-producer-group
