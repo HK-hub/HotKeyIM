@@ -26,6 +26,7 @@ public interface FriendApplyMapStructure {
     @Mapping(source = "friendApply.id", target = "id")
     @Mapping(source = "sender", target = "sender")
     @Mapping(source = "acceptor", target = "acceptor")
+    @Mapping(source = "friendApply.status", target = "status")
     public FriendApplyVO toVO(FriendApply friendApply, UserVO sender, UserVO acceptor);
 
 

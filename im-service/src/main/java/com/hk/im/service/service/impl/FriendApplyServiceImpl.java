@@ -51,8 +51,6 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
     @Resource
     private FriendMapper friendMapper;
     @Resource
-    private FriendApplyService friendApplyService;
-    @Resource
     private GroupService groupService;
     @Resource
     private UserInfoService userInfoService;
@@ -192,7 +190,7 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
         }
 
         // 检查是否有申请记录
-        FriendApply apply = this.friendApplyService.getFriendApply(fromUserId, toUserId);
+        FriendApply apply = this.getFriendApply(fromUserId, toUserId);
         if (Objects.isNull(apply)) {
             // 没有申请记录
             apply = new FriendApply();
@@ -362,7 +360,7 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
             } else if (FriendConstants.FriendApplyStatus.AGREE.equals(operation)) {
                 // 同意添加为好友
                 // 不是好友，进行加好友操作
-                result = this.friendApplyService.toBeFriend(senderId, acceptorId);
+                result = this.toBeFriend(senderId, acceptorId);
             }
             return result;
 
