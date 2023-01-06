@@ -29,7 +29,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public String createAuthToken(User user) {
         String token = UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(RedisConstants.LOGIN_USER_KEY+user.getId(), token);
+        stringRedisTemplate.opsForValue().set(RedisConstants.LOGIN_USER_KEY+user.getId(), token,
+                RedisConstants.ACCESS_TOKEN_TTL, TimeUnit.SECONDS);
         return token;
     }
 

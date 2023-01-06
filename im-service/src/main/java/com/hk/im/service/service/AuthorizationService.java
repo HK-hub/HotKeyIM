@@ -15,14 +15,14 @@ import com.hk.im.domain.entity.User;
 public interface AuthorizationService {
 
     /**
-     * 为用户创建 token
+     * 为用户创建 accessToken
      * @param user
      * @return
      */
     public String createAuthToken(User user);
 
     /**
-     * 删除用户 token
+     * 删除用户 accessToken
      * @param user
      * @return
      */

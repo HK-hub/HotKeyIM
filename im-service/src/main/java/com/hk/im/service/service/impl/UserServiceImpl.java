@@ -38,8 +38,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static net.sf.jsqlparser.util.validation.metadata.NamedObject.user;
-
 /**
  * @author : HK意境
  * @ClassName : UserServiceImpl
@@ -207,7 +205,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserInfo userInfo = userInfoService.getById(user.getId());
         UserVO userVO = UserMapStructure.INSTANCE.toVo(user, userInfo);
         // 响应登录结果
-        return ResponseResult.SUCCESS(userVO.setToken(authToken));
+        return ResponseResult.SUCCESS(userVO.setAccessToken(authToken));
     }
 
     /**
@@ -237,7 +235,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = this.lambdaQuery().eq(User::getEmail, email).one();
         if (Objects.nonNull(user)) {
             // 用户已存在
-            return ResponseResult.FAIL("账户以存在，请勿重复注册!");
+            return ResponseResult.FAIL("账户已存在，请勿重复注册!");
         }
 
         // 获取验证码
@@ -261,9 +259,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user = new User();
         UserInfo userInfo = new UserInfo();
         // 昵称
-        user.setUsername(NameUtil.getName());
-        user.setPhone(phone);
-        user.setEmail(email);
+        String nickname = request.getNickname();
+        if (StringUtils.isEmpty(nickname)) {
+            nickname = NameUtil.getName();
+        }
+        user.setUsername(nickname);
+        // 校验邮箱或手机号正确性
+        if (BooleanUtils.isTrue(!emailInValid)) {
+            // 邮箱有效
+            user.setEmail(email);
+        }
+        if (BooleanUtils.isTrue(!mobileInvalid)) {
+            // 手机号有效
+            user.setPhone(phone);
+        }
         userInfo.setNickname(user.getUsername());
         // 密码加盐加密
         String salt = BCrypt.gensalt();

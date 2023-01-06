@@ -20,7 +20,7 @@ public class ConnectMessage extends WebSocketMessage {
     // 当前用户id
     private Long userId;
 
-    // 当前请求连接的用户的 token
+    // 当前请求连接的用户的 accessToken
     private String token;
 
     // 扩展信息

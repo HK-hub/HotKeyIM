@@ -7,6 +7,7 @@ import com.hk.im.common.util.NameUtil;
 import com.hk.im.domain.request.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
+import com.hk.im.domain.request.SendCodeRequest;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
 import com.hk.im.service.service.UserInfoService;
@@ -32,6 +33,7 @@ import java.io.IOException;
  * @Version : 1.0
  */
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -54,11 +56,13 @@ public class UserController {
 
     /**
      * 发送验证码
-     * @param type：验证码用途，1.登录注册，2.找回密码，3.修改密码
+     * @param request 验证码用途，1.登录注册，2.找回密码，3.修改密码
      * @return
      */
-    @PostMapping("/code/{type}")
-    public ResponseResult sendCode(@PathVariable(name = "type", required = false) String type, String account) {
+    @PostMapping("/code")
+    public ResponseResult sendCode(@RequestBody SendCodeRequest request) {
+        String account = request.getAccount();
+        String type = request.getType();
         log.info("parameter:{},{}", type, account);
         return this.userService.sendCode(type, account);
     }
@@ -78,6 +82,8 @@ public class UserController {
         }
         return result;
     }
+
+
 
 
     /**
@@ -123,6 +129,17 @@ public class UserController {
         return result;
     }
 
+
+    /**
+     * 忘记密码
+     * @param request
+     * @return
+     */
+    @PostMapping("/forget")
+    public ResponseResult forget(@RequestBody LoginOrRegisterRequest request) {
+
+        return ResponseResult.FAIL().setResultCode(ResultCode.NO_SUPPORT_OPERATION);
+    }
 
     /**
      * 更新用户信息

@@ -23,8 +23,8 @@ public enum ResultCode {
     NOT_FOUND(false,404, "not found"),
     //账号或者密码错误
     ACCOUNT_PASSWORDS_ERROR(false,101,"account or password error"),
-    //token 校验不合法
-    TOKEN_ERROR(false,108,"token is illegal or invalid"),
+    //accessToken 校验不合法
+    TOKEN_ERROR(false,108,"accessToken is illegal or invalid"),
 
     REMOTE_INTERFACE_ERROR(false,700, "接口调用异常"),
     // 服务器错误
