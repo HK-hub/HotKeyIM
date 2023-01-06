@@ -26,7 +26,7 @@ public class WebSocketMessage implements Serializable {
     protected int messageType;
 
     // 消息体
-    protected Object messageData;
+    protected String messageData;
 
     /**
      * 获取消息类型

@@ -1,6 +1,7 @@
 package com.hk.im.server.chat.server.handler.websocket;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.message.WebSocketMessage;
 import com.hk.im.domain.message.control.ConnectMessage;
@@ -94,7 +95,7 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<TextWebSoc
 		}
 
 		// 消息转发
-		this.dispatch(ctx,msg, message, actionType);
+		this.dispatch(ctx, msg, message, actionType);
 		// 日志记录
 	}
 
@@ -106,16 +107,20 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<TextWebSoc
 	 * @param message
 	 */
 	private void dispatch(ChannelHandlerContext ctx, TextWebSocketFrame msg, WebSocketMessage message, MessageConstants.MessageActionType actionType) {
+		// 文本数据
+		String text = msg.text();
+		// 转换为 JsonObject
+		JSONObject jsonObject = JSON.parseObject(text);
 
 		// 消息转发
 		if (MessageConstants.MessageActionType.CONNECT.equals(actionType)) {
 			// 连接请求：
-			ConnectMessage connectMessage = (ConnectMessage) message.getMessageData();
+			ConnectMessage connectMessage = jsonObject.getObject("messageContent", ConnectMessage.class);
 			log.info("用户:{}, 请求连接Chat Server", connectMessage);
 			// 添加 channel 到 manager
 			UserChannelManager.add(connectMessage.getUserId(), ctx.channel());
 			// 发布事件或消息
-
+			
 		}
 		// 业务层处理数据
 		// 响应客户端

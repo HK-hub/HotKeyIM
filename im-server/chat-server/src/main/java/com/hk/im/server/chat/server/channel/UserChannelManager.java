@@ -110,7 +110,7 @@ public class UserChannelManager {
                 // 构造消息
                 WebSocketMessage webSocketMessage = new WebSocketMessage()
                         .setMessageType(typeEnum.ordinal())
-                        .setMessageData(message);
+                        .setMessageData(JSON.toJSONString(message));
                 String jsonString = JSON.toJSONString(webSocketMessage);
                 TextWebSocketFrame textWebSocketFrame = new TextWebSocketFrame(jsonString);
                 // 发送消息
@@ -132,7 +132,7 @@ public class UserChannelManager {
         // 构造消息
         WebSocketMessage webSocketMessage = new WebSocketMessage()
                 .setMessageType(typeEnum.ordinal())
-                .setMessageData(message);
+                .setMessageData(JSON.toJSONString(message));
         String jsonString = JSON.toJSONString(webSocketMessage);
         TextWebSocketFrame textWebSocketFrame = new TextWebSocketFrame(jsonString);
         // 发送消息

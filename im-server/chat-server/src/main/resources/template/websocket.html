@@ -43,8 +43,9 @@
         let message = {
             sequenceId: 1111,
             messageType: 0,
-            messageContent: JSON.stringify(connectMessage)
+            messageContent: connectMessage
         }
+        console.log(JSON.stringify(message))
         websocket.send(JSON.stringify(message))
     };
 
