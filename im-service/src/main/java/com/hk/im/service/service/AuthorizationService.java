@@ -34,5 +34,21 @@ public interface AuthorizationService {
      * @param code
      * @return
      */
-    String createAuthCode(String user, String code);
+    public String createAuthCode(String type, String user, String code);
+
+    /**
+     * 获取用户的验证码
+     * @param key
+     * @return
+     */
+    public String getAuthCode(String key);
+
+    /**
+     * 认证用户
+     * @param token
+     * @return
+     */
+    public User authUserByToken(String token);
+
+
 }

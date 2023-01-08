@@ -23,12 +23,11 @@ public class UserVO {
 
     private Long id;
 
-
     // accessToken 凭证
     private String accessToken;
 
-    // 凭证过期时间
-    private Long expiresIn;
+    // 凭证过期时间: 1小时=3600 秒
+    private Long expiresIn = 3600L;
 
     private String username;
 

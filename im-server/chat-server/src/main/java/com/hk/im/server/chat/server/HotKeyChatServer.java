@@ -35,6 +35,7 @@ public class HotKeyChatServer {
     private EventLoopGroup workerGroup = null;
     private ServerBootstrap serverBootstrap = null;
     private Channel serverChannel = null;
+    private ChannelFuture channelFuture = null;
 
     public HotKeyChatServer() {
         this.initServer();
@@ -90,7 +91,9 @@ public class HotKeyChatServer {
             this.serverChannel = channelFuture.channel();
             // 服务启动成功
             log.info("websocket 服务启动，ip={},port={}", MetaDataConfig.address, MetaDataConfig.port);
-            channelFuture.channel().closeFuture().sync();
+            ChannelFuture closeFuture = channelFuture.channel().closeFuture();
+            this.channelFuture = closeFuture;
+            closeFuture.sync();
         }catch(Exception e){
             e.printStackTrace();
             log.error("hot key chat server error...",e);

@@ -47,10 +47,15 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.11</version>
         </dependency>
+        <!-- 引入jwt-->
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.7.17</version>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
         </dependency>
     </dependencies>
 

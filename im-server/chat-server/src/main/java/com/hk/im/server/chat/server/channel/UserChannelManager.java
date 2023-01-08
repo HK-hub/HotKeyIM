@@ -36,8 +36,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class UserChannelManager {
 
     // 保存用户与其对应的channel: 使用 <set>集合是为了支持多端登录
-    private static final Map<Long, Set<Channel>> userChannelMap = new ConcurrentHashMap<>();
-    private static ChannelGroup clientChannels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    public static final Map<Long, Set<Channel>> userChannelMap = new ConcurrentHashMap<>();
+    public static ChannelGroup clientChannelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     // 并发加锁
     private static final Lock lock = new ReentrantLock();
 
@@ -56,6 +56,7 @@ public class UserChannelManager {
             }
             channels.add(channel);
             userChannelMap.put(userId, channels);
+            clientChannelGroup.add(channel);
         }catch(Exception e){
             e.printStackTrace();
         }finally {
@@ -70,10 +71,12 @@ public class UserChannelManager {
     public static void remove(@NonNull Channel channel) {
         userChannelMap.entrySet().stream().filter(entry -> entry.getValue().contains(channel))
                 .forEach(entry -> entry.getValue().remove(channel));
+        clientChannelGroup.remove(channel);
     }
 
     public static void clearAll() {
         userChannelMap.clear();
+        clientChannelGroup.clear();
     }
 
 

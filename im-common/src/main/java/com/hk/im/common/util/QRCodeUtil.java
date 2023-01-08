@@ -1,7 +1,5 @@
 package com.hk.im.common.util;
 
-import cn.hutool.core.codec.Base64;
-import cn.hutool.core.util.StrUtil;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -10,6 +8,8 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileSystemView;
@@ -351,10 +351,10 @@ public class QRCodeUtil {
         try {
             ImageIO.write(bufferedImage, IMAGE_FORMAT, os);
         } catch (IOException e) {
-            log.error("[生成二维码，错误{}]", e);
+            log.error("[生成二维码，错误]", e);
         }
         // 转出即可直接使用
-        return String.format(BASE64_IMAGE, Base64.encode(os.toByteArray()));
+        return String.format(BASE64_IMAGE, Base64.encodeBase64(os.toByteArray()));
     }
 
     /**
@@ -371,7 +371,7 @@ public class QRCodeUtil {
      */
     public static BufferedImage createQRCode(String content, Integer width, Integer height, String logoUrl,
                                              Integer logoWidth, Integer logoHeight) {
-        if (StrUtil.isNotBlank(content)) {
+        if (StringUtils.isNotBlank(content)) {
             HashMap<EncodeHintType, Comparable> hints = new HashMap<>(4);
             // 指定字符编码为utf-8
             hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
@@ -388,7 +388,7 @@ public class QRCodeUtil {
                         bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
                     }
                 }
-                if (StrUtil.isNotBlank(logoUrl)) {
+                if (StringUtils.isNotBlank(logoUrl)) {
                     insertLogo(bufferedImage, width, height, logoUrl, logoWidth, logoHeight);
                 }
                 return bufferedImage;

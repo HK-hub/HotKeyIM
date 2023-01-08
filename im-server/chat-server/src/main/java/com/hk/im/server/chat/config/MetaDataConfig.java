@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author : HK意境
@@ -52,6 +53,13 @@ public class MetaDataConfig {
      * Only in Linux environments can this be set to true
      */
     public static boolean epoll = false;
+
+    // 读空闲时间: 1小时
+    public static int READ_IDEL_TIME_OUT = 60;
+    public static int WRITE_IDEL_TIME_OUT;
+    public static int ALL_IDEL_TIME_OUT;
+    public static TimeUnit timeUnit = TimeUnit.MINUTES;
+
 
     private static final Properties properties;
     static {

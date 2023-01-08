@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<style>
+    textarea {
+        width: 80%;
+        height: 280px;
+    }
+</style>
+
+
+<body>
+<label for="userId">发送者</label>
+<input type="text" id="userId">
+<br>
+<label for="receiverId">接收者</label>
+<input type="text" id="receiverId">
+<br>
+<label for="sent">发送消息</label>
+<input type="text" id="sent" placeholder="请输入信息。。。。">
+<button onclick="sendMessage()">发送</button>
+<br><br>
+<label for="sendHistory">发送历史</label>
+<textarea id="sendHistory"></textarea>
+<br>
+<label for="message">接收历史：</label>
+<textarea id="message"></textarea>
+
+<script>
+    alert("开始...")
+    let websocket = new WebSocket("ws://localhost:9870/channel");
+    websocket.onopen = function () {
+        console.log(websocket.url);
+        console.log("已经与服务器建立连接。。。。。");
+    };
+    websocket.onmessage = function (map) {
+        let old = document.querySelector("#message").value;
+        console.log('接收：'+ map.data)
+        document.querySelector("#message").value = old + "\r\n" +map.data;
+    };
+
+</script>
+</body>
+</html>

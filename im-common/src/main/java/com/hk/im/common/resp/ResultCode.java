@@ -25,6 +25,7 @@ public enum ResultCode {
     ACCOUNT_PASSWORDS_ERROR(false,101,"account or password error"),
     //accessToken 校验不合法
     TOKEN_ERROR(false,108,"accessToken is illegal or invalid"),
+    TOKEN_INVALIDATE(false, 107, "token is invalid, you need login again"),
 
     REMOTE_INTERFACE_ERROR(false,700, "接口调用异常"),
     // 服务器错误
@@ -35,7 +36,8 @@ public enum ResultCode {
     //上传失败，上传文件不能为空
     SC_EXPECTATION_FAILED(false,-110,"file is empty"),
     CHECK_CODE_SEND_FAILED(false, 103,"user check code send fail"),
-    NO_SUPPORT_OPERATION(false, 106, "no support operation"),;
+    NO_SUPPORT_OPERATION(false, 106, "no support operation"),
+    ;
 
 
 

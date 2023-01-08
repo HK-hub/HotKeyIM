@@ -24,6 +24,7 @@ import javax.annotation.Resource;
  * @Version : 1.0
  */
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/find")
 public class FriendFindController {

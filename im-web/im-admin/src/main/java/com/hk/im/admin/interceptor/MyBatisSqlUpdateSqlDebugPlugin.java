@@ -18,7 +18,7 @@ public class MyBatisSqlUpdateSqlDebugPlugin implements Interceptor {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
         Object parameter = invocation.getArgs()[1];
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
-        log.info("=====> SQL日志Update操作:\n " + boundSql.getSql() + "\r\n" + boundSql.getParameterMappings().toString());
+        log.info("=====> SQL日志Update操作:\n " + boundSql.getSql());
         Object obj = invocation.proceed();
         return obj;
     }

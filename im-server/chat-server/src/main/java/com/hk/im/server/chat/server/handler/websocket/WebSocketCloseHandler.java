@@ -29,13 +29,13 @@ public class WebSocketCloseHandler extends SimpleChannelInboundHandler<CloseWebS
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		super.channelInactive(ctx);
 		log.info("链接断开：{}", ctx.channel().remoteAddress());
+		super.channelInactive(ctx);
 	}
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		super.channelActive(ctx);
 		log.info("链接创建：{}", ctx.channel().remoteAddress());
+		super.channelActive(ctx);
 	}
 
 

@@ -35,6 +35,7 @@ public class RedisConstants {
 
     // 验证码缓存 key
     public static final String LOGIN_CODE_KEY = "login:code:";
+    public static final String MODIFY_PASSWORD_KEY = "modify:password:";
     public static final Long LOGIN_CODE_TTL = 2L;
 
     // 用户token 缓存key

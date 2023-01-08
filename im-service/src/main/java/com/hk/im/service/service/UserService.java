@@ -2,6 +2,7 @@ package com.hk.im.service.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.ForgetAccountRequest;
 import com.hk.im.domain.request.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.vo.UserVO;
@@ -36,5 +37,9 @@ public interface UserService extends IService<User> {
 
     ResponseResult updateUserAvatar(InputStream inputStream, User user) throws IOException;
 
+    // 找回密码或修改密码
+    ResponseResult forgetOrUpdatePassword(ForgetAccountRequest request);
 
+    // 退出登录
+    ResponseResult logout(LoginOrRegisterRequest request);
 }

@@ -1,12 +1,17 @@
 package com.hk.im.service.service.impl;
 
 import com.hk.im.common.consntant.RedisConstants;
+import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.common.util.JWTUtils;
+import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.entity.User;
 import com.hk.im.service.service.AuthorizationService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -28,15 +33,24 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public String createAuthToken(User user) {
-        String token = UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(RedisConstants.LOGIN_USER_KEY+user.getId(), token,
+        String token = JWTUtils.createToken(String.valueOf(user.getId()));
+        String key = RedisConstants.LOGIN_USER_KEY + user.getId();
+        stringRedisTemplate.opsForValue().set(key, token,
                 RedisConstants.ACCESS_TOKEN_TTL, TimeUnit.SECONDS);
         return token;
     }
 
+
+    /**
+     * 删除用户 token
+     * @param user
+     * @return
+     */
     @Override
     public String deleteAuthToken(User user) {
-        return null;
+        String key = RedisConstants.LOGIN_USER_KEY + user.getId();
+        this.stringRedisTemplate.delete(key);
+        return key;
     }
 
 
@@ -47,8 +61,45 @@ public class AuthorizationServiceImpl implements AuthorizationService {
      * @return
      */
     @Override
-    public String createAuthCode(String user, String code) {
-        stringRedisTemplate.opsForValue().set(RedisConstants.LOGIN_CODE_KEY+user, code, 10, TimeUnit.MINUTES);
+    public String createAuthCode(String type, String user, String code) {
+        if (Objects.equals(type, UserConstants.FIND_PASSWORD)) {
+            stringRedisTemplate.opsForValue().set(RedisConstants.MODIFY_PASSWORD_KEY+user, code, 10, TimeUnit.MINUTES);
+        } else if (Objects.equals(type,UserConstants.LOGIN_OR_REGISTER)) {
+            stringRedisTemplate.opsForValue().set(RedisConstants.LOGIN_CODE_KEY+user, code, 10, TimeUnit.MINUTES);
+        }
         return code;
+    }
+
+
+    /**
+     * 获取用户的验证码
+     * @param key
+     * @return
+     */
+    @Override
+    public String getAuthCode(String key) {
+        return stringRedisTemplate.opsForValue().get(key);
+    }
+
+
+    @Override
+    public User authUserByToken(String token) {
+
+        String userId = JWTUtils.validateToken(token);
+        if (StringUtils.isEmpty(userId)) {
+            // token 验证错误
+            return null;
+        }
+
+        // 验证是否和当前用户token 一致
+        String key = RedisConstants.LOGIN_USER_KEY + userId;
+        String redisToken = this.stringRedisTemplate.opsForValue().get(key);
+
+        if (!Objects.equals(token, redisToken)) {
+            // 用户token 验证错误
+            return null;
+        }
+
+        return new User().setId(Long.valueOf(userId));
     }
 }

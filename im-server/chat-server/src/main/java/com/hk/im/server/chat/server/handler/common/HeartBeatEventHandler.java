@@ -1,5 +1,6 @@
 package com.hk.im.server.chat.server.handler.common;
 
+import com.hk.im.server.chat.server.channel.UserChannelManager;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleState;
@@ -39,6 +40,8 @@ public class HeartBeatEventHandler extends ChannelDuplexHandler {
      */
     private void doReadIdleStateEvent(ChannelHandlerContext ctx) {
         // 释放连接
+        log.info("读空闲事件发生，断开连接:{}", ctx.channel().id().asLongText());
+        UserChannelManager.remove(ctx.channel());
         ctx.channel().close();
     }
 

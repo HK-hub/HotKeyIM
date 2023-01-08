@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class NoSupportMessage extends WebSocketMessage {
 
     private final String option = "抱歉，你的操作不合法或操作数据出现错误";
-
     private final LocalDateTime time = LocalDateTime.now();
 
     public NoSupportMessage() {

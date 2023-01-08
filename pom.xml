@@ -21,8 +21,9 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring.boot.version>2.4.6</spring.boot.version>
+        <spring.boot.version>2.6.8</spring.boot.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <netty.version>4.1.75.Final</netty.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -34,11 +35,12 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring.boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.4.3.4</version>
+                <version>3.5.2</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

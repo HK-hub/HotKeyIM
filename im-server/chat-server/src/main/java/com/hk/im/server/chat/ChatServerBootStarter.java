@@ -32,7 +32,9 @@ public class ChatServerBootStarter implements ApplicationListener<ContextRefresh
         if (Objects.isNull(parent)) {
             log.info("启动Chat Server: {}-{}", this.getClass(), LocalDateTime.now());
             // hotKeyChatServer.runServer();
-            HotKeyChatServer.getInstance().runServer();
+            new Thread(() -> {
+                HotKeyChatServer.getInstance().runServer();
+            }).start();
         }
     }
 }

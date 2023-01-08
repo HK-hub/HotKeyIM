@@ -5,6 +5,7 @@ import com.hk.im.domain.entity.FriendApply;
 import com.hk.im.domain.request.ApplyHandleRequest;
 import com.hk.im.domain.request.FriendApplyRequest;
 import com.hk.im.service.service.FriendApplyService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,6 +20,8 @@ import javax.annotation.Resource;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/apply")
 public class FriendApplyController {
@@ -63,8 +66,8 @@ public class FriendApplyController {
      * @return
      */
     @GetMapping("/user/receive")
-    public ResponseResult getUserAllReceiveApply(@RequestParam("userId") Long userId) {
-        return this.friendApplyService.getUserAllReceiveFriendApply(userId);
+    public ResponseResult getUserAllReceiveApply(@RequestParam("userId") String userId) {
+        return this.friendApplyService.getUserAllReceiveFriendApply(Long.valueOf(userId));
     }
 
 

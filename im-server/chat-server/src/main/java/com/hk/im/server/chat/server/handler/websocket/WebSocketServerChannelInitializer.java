@@ -10,6 +10,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 public class WebSocketServerChannelInitializer extends ChannelInitializer<SocketChannel> {
 
     // 维护与客户端的通道
@@ -32,35 +34,19 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<Socket
     protected void initChannel(SocketChannel ch) throws Exception {
         this.ch = ch;
         ChannelPipeline pipeline = ch.pipeline();
-        // 用来判断是否是 读空闲时间过长，或者写空闲时间过长
-        // 30分钟 内没有收到 channel 的数据，就会触发一个事件
-        ch.pipeline().addLast(new IdleStateHandler(30,
-                0, 0, TimeUnit.SECONDS));
-
-        // ChannelDuplexHandler 可以同时作为入站和出战处理器
-        ch.pipeline().addLast(new HeartBeatEventHandler());
-        pipeline.addLast(new HttpServerCodec());
-        pipeline.addLast(new ChunkedWriteHandler());
-        pipeline.addLast(new HttpObjectAggregator(65536));
-        pipeline.addLast(new ChannelInboundHandlerAdapter() {
-            @Override
-            public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                if(msg instanceof FullHttpRequest) {
-                    FullHttpRequest fullHttpRequest = (FullHttpRequest) msg;
-                    String uri = fullHttpRequest.uri();
-                    if (!uri.equals(MetaDataConfig.path)) {
-                        // 访问的路径不是 websocket的端点地址，响应404
-                        ctx.channel().writeAndFlush(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND))
-                                .addListener(ChannelFutureListener.CLOSE);
-                        return ;
-                    }
-                }
-                super.channelRead(ctx, msg);
-            }
-        });
-        pipeline.addLast(new WebSocketServerCompressionHandler());
-        pipeline.addLast(new WebSocketServerProtocolHandler(MetaDataConfig.path, null, true, MetaDataConfig.maxFrameSize));
-        pipeline.addLast(new ClientMessageHandler());
+        // 用来判断是否是 读空闲时间过长，或者写空闲时间过长,30分钟 内没有收到 channel 的数据，就会触发一个事件
+        pipeline.addLast(new IdleStateHandler(MetaDataConfig.READ_IDEL_TIME_OUT, 0, 0, TimeUnit.MINUTES));
+        // 心跳处理器，ChannelDuplexHandler 可以同时作为入站和出战处理器
+        pipeline.addLast(new HeartBeatEventHandler());
+        pipeline.addLast("http-codec",new HttpServerCodec());
+        // 以块的形式写入
+        pipeline.addLast("chunked-write", new ChunkedWriteHandler());
+        pipeline.addLast("aggregator",new HttpObjectAggregator(65536));
+        // 压缩websocket 报文
+        // pipeline.addLast(new WebSocketServerCompressionHandler());
+        // 将自定义的 WebSocketFrame 放在 WebSocketServerProtocolHandler 前解决 netty 不支持 uri 上带参数的问题，造成的 websocket 连接失败
+        pipeline.addLast("client-message-handler",new ClientMessageHandler());
+        pipeline.addLast(new WebSocketServerProtocolHandler(MetaDataConfig.path, null, true));
         pipeline.addLast(new WebSocketCloseHandler());
     }
 }

@@ -4,6 +4,7 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.AccountNumberGenerator;
 import com.hk.im.common.util.NameUtil;
+import com.hk.im.domain.request.ForgetAccountRequest;
 import com.hk.im.domain.request.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
@@ -49,10 +50,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseResult getUserById(@PathVariable(name = "id") Long id) {
-        ResponseResult result = userService.getUserAndInfo(id);
+    public ResponseResult getUserById(@PathVariable(name = "id") String id) {
+        ResponseResult result = userService.getUserAndInfo(Long.valueOf(id));
         return result;
     }
+
+
+
 
     /**
      * 发送验证码
@@ -82,8 +86,6 @@ public class UserController {
         }
         return result;
     }
-
-
 
 
     /**
@@ -131,14 +133,25 @@ public class UserController {
 
 
     /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @PostMapping("/logout")
+    public ResponseResult logout(@RequestBody LoginOrRegisterRequest request) {
+
+        ResponseResult result = userService.logout(request);
+        return result;
+    }
+
+    /**
      * 忘记密码
      * @param request
      * @return
      */
     @PostMapping("/forget")
-    public ResponseResult forget(@RequestBody LoginOrRegisterRequest request) {
-
-        return ResponseResult.FAIL().setResultCode(ResultCode.NO_SUPPORT_OPERATION);
+    public ResponseResult forget(@RequestBody ForgetAccountRequest request) {
+        return this.userService.forgetOrUpdatePassword(request);
     }
 
     /**

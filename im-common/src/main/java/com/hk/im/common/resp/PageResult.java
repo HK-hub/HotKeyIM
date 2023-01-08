@@ -1,9 +1,9 @@
 package com.hk.im.common.resp;
 
-import cn.hutool.core.collection.CollectionUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class PageResult<T> {
 
         PageResult<T> result = new PageResult<>();
         result.setCurrentPage(current);
-        if (CollectionUtil.isEmpty(records)) {
+        if (CollectionUtils.isEmpty(records)) {
             records = new ArrayList<>();
         }
         result.setPageSize((long) records.size());

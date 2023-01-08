@@ -1,12 +1,14 @@
 package com.hk.im.service.service.impl;
 
 import com.apifan.common.random.source.NumberSource;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.*;
+import com.hk.im.domain.request.ForgetAccountRequest;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.request.LoginOrRegisterRequest;
@@ -97,14 +99,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 如果是邮箱
         if (BooleanUtils.isTrue(!invalidEmail)) {
             code = String.valueOf(NumberSource.getInstance().randomInt(1234, 9999));
+            String subject = null;
+            // 确定主题
+            if (Objects.equals(type, UserConstants.FIND_PASSWORD)) {
+                subject = "Hot Key IM聊天应用-找回账号验证码";
+            } else if (Objects.equals(type, UserConstants.LOGIN_OR_REGISTER)) {
+                subject = "Hot Key IM聊天应用-登陆注册验证码";
+            } else {
+                // 非法类型
+                return ResponseResult.FAIL("对不起，您的操作非法!");
+            }
             String content = "<h2>您的登录注册验证码如下：" + code + "</h2>";
             mailService.sendSimpleMail("3161880795@qq.com", "Hot Key IM 官方", account,
-                    null, "Hot Key IM聊天应用-登陆注册验证码", content);
+                    null, subject, content);
 
             // 保存码
-            authorizationService.createAuthCode(account, code);
+            authorizationService.createAuthCode(type, account, code);
             System.out.println("您的验证码已经发送了：" + code);
         } else {
+            // TODO
             // 发送手机号码
             return ResponseResult.FAIL("暂不支持此操作!");
         }
@@ -201,7 +214,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 设置token
         String authToken = authorizationService.createAuthToken(user);
 
-        // 组装信息，发布事件
+        // TODO 组装信息，发布事件：删除验证码，推送消息
         UserInfo userInfo = userInfoService.getById(user.getId());
         UserVO userVO = UserMapStructure.INSTANCE.toVo(user, userInfo);
         // 响应登录结果
@@ -283,7 +296,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 生成二维码
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         QRCodeUtil.getQRCode(UserConstants.USER_QR_CODE + user.getAccount(), bos);
-        String qrcode = MinioConstant.USER_QR_CODE_PATH + MinioConstant.USER_QRCODE_PREFIX + user.getAccount();
+        String qrcode = MinioConstant.USER_QR_CODE_PATH + MinioConstant.USER_QRCODE_PREFIX + user.getAccount() + ".jpg";
         // 上传二维码
         String qrcodeUrl = this.minioService.putObject(StreamUtil.convertToInputStream(bos),
                 MinioConstant.BucketEnum.User.getBucket(), qrcode);
@@ -358,7 +371,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 批量获取用户信息
+     *
      * @param idList
+     *
      * @return
      */
     @Override
@@ -427,6 +442,92 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             log.error("update user avatar error", e);
             return ResponseResult.FAIL("更新用户头像失败");
         }
+    }
+
+
+    /**
+     * 找回密码或修改密码
+     *
+     * @param request
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult forgetOrUpdatePassword(ForgetAccountRequest request) {
+
+        // 参数校验
+        Integer type = request.getType();
+        String account = request.getAccount();
+        String newPassword = request.getNewPassword();
+        if (StringUtils.isEmpty(newPassword)) {
+            return ResponseResult.FAIL("输入的新密码不能为空哦!");
+        }
+
+        // 校验参数
+        boolean invalidMobile = CustomValidator.invalidMobile(account);
+        boolean invalidEmail = CustomValidator.invalidEmail(account);
+        if (invalidEmail && invalidMobile) {
+            // 非法邮箱 非法手机号 -> 为账号类型
+            return ResponseResult.FAIL("请输入正确的手机号或邮箱");
+        }
+
+        Boolean res = null;
+        // 根据动作类型执行操作
+        if (ForgetAccountRequest.ActionTypeEnum.FORGET.ordinal() == type) {
+            // 忘记密码: 需要验证码，邮箱/手机号，新密码
+            User user = this.userManager.findUserByAccountOrPhoneOrEmail(request.getAccount());
+            if (Objects.isNull(user)) {
+                // 用户不存在
+                return ResponseResult.FAIL("用户不存在或未绑定相关账号!").setMessage("用户不存在或未绑定相关账号!");
+            }
+
+            // 比较验证码
+            String authCode = this.authorizationService.getAuthCode(RedisConstants.MODIFY_PASSWORD_KEY + account);
+            if (!Objects.equals(authCode, request.getCode())) {
+                // 验证不匹配
+                return ResponseResult.FAIL("您输入的验证码错误!").setMessage("您输入的验证码错误!");
+            }
+
+            // 修改密码
+            LambdaUpdateChainWrapper<User> updateWrapper = this.lambdaUpdate();
+            String hashpw = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+            if (BooleanUtils.isTrue(!invalidEmail)) {
+                // 绑定邮箱
+                res = updateWrapper.eq(User::getEmail, account)
+                        .set(User::getPassword, hashpw).update();
+            } else if (BooleanUtils.isTrue(!invalidMobile)) {
+                res = updateWrapper.eq(User::getPhone, account)
+                        .set(User::getPassword, hashpw).update();
+            }
+
+        } else if (ForgetAccountRequest.ActionTypeEnum.MODIFY.ordinal() == type) {
+            // 修改密码
+
+        }
+
+        if (BooleanUtils.isTrue(res)) {
+            // 修改密码成功
+            return ResponseResult.SUCCESS("修改密码成功!").setMessage("修改密码成功!");
+        }
+
+        return ResponseResult.FAIL("修改密码失败!").setMessage("修改密码失败!");
+    }
+
+
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult logout(LoginOrRegisterRequest request) {
+
+        // 发布事件，消息
+
+        // 删除 token
+        this.authorizationService.deleteAuthToken(null);
+
+        return null;
     }
 
 
