@@ -38,6 +38,16 @@ public class FriendFindController {
 
 
     /**
+     * 好友，群聊推荐
+     * @return
+     */
+    @GetMapping("/recommend")
+    public ResponseResult recommendFriendAndGroup() {
+        return ResponseResult.FAIL("新功能请等待!");
+    }
+
+
+    /**
      * 好友发现
      * @param request
      * @return
@@ -52,6 +62,24 @@ public class FriendFindController {
         }
 
         return ResponseResult.SUCCESS(pageResult);
+    }
+
+
+    /**
+     * 搜索用户，只返回精确匹配的一个
+     * @param request
+     * @return
+     */
+    @GetMapping("/friend/search")
+    public ResponseResult searchFriend(@RequestBody FriendFindRequest request) {
+
+        log.info("request={}", request);
+        PageResult pageResult = this.friendApplyService.findFriendAccountOrName(request);
+        if (CollectionUtils.isEmpty(pageResult.getRows())) {
+            return ResponseResult.FAIL("没有找到符合搜索条件的用户或对方设置了账号搜索限制!");
+        }
+        Object o = pageResult.getRows().get(0);
+        return ResponseResult.SUCCESS(o);
     }
 
 

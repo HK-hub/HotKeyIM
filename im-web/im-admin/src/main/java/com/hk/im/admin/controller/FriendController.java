@@ -1,13 +1,15 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.admin.util.UserContextHolder;
+import com.hk.im.common.error.ApiException;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.entity.User;
+import com.hk.im.domain.request.ModifyFriendInfoRequest;
 import com.hk.im.service.service.FriendService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.net.http.HttpRequest;
 
 /**
  * @author : HK意境
@@ -27,7 +29,6 @@ public class FriendController {
     private FriendService friendService;
 
 
-
     /**
      * 获取用户的好友列表
      * @param userId
@@ -38,6 +39,52 @@ public class FriendController {
 
         return this.friendService.getUserFriendList(userId);
     }
+
+    /**
+     * 修改好友信息：备注，备注信息，分组
+     * @return
+     */
+    @PostMapping("/modify/remark")
+    public ResponseResult modifyFriendInfo(@RequestBody ModifyFriendInfoRequest request) {
+        return this.friendService.updateFriendInfo(request);
+    }
+
+
+    /**
+     * 修改好友分组信息
+     * @param request
+     * @return
+     */
+    @PostMapping("/modify/group")
+    public ResponseResult modifyFriendGroup(@RequestBody ModifyFriendInfoRequest request) {
+        return this.friendService.updateFriendInfo(request);
+    }
+
+    /**
+     * 删除好友
+     * @param friendId
+     * @return
+     */
+    @DeleteMapping("/remove")
+    public ResponseResult removeFriend(@RequestParam("userId") String friendId) {
+        // 获取当前用户
+        User user = UserContextHolder.get();
+        ResponseResult result = null;
+        try {
+            result = this.friendService.removeFriend(friendId, user);
+        } catch (ApiException e) {
+            result = ResponseResult.FAIL(e.getMessage()).setMessage("删除好友失败!");
+        }
+        return result;
+    }
+
+
+    // 修改好友状态
+
+
+
+    // 查看好友聊天记录
+
 
 
 

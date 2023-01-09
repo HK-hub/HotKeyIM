@@ -2,11 +2,14 @@ package com.hk.im.service.service.impl;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hk.im.common.error.ApiException;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.User;
+import com.hk.im.domain.request.ModifyFriendInfoRequest;
 import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapper.FriendMapper;
@@ -16,15 +19,17 @@ import com.hk.im.service.service.FriendService;
 import com.hk.im.service.service.UserService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @ClassName : FriendServiceImpl
  * @author : HK意境
+ * @ClassName : FriendServiceImpl
  * @date : 2023/1/2 16:48
  * @description :
  * @Todo :
@@ -34,7 +39,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
-    implements FriendService {
+        implements FriendService {
 
     @Resource
     private FriendMapper friendMapper;
@@ -43,8 +48,10 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 是否好友关系
+     *
      * @param fromUserId
      * @param toUserId
+     *
      * @return Friend
      */
     @Override
@@ -57,8 +64,10 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 是否黑名单
+     *
      * @param fromUserId
      * @param toUserId
+     *
      * @return
      */
     @Override
@@ -68,9 +77,11 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 是否具有某种关系
+     *
      * @param fromUserId
      * @param toUserId
      * @param relation
+     *
      * @return
      */
     @Override
@@ -81,7 +92,9 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 获取好友列表：注意分组，排序规则, 备注等
+     *
      * @param userId
+     *
      * @return
      */
     @Override
@@ -135,7 +148,9 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 获取用户的黑名单列表
+     *
      * @param userId
+     *
      * @return
      */
     @Override
@@ -162,7 +177,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
             Map<Long, Friend> friendMap = blackerList.stream().collect(Collectors.toMap(Friend::getFriendId, value -> value));
 
             List<FriendVO> list = blackerVOList.stream().map(
-                    blackerVO -> FriendMapStructure.INSTANCE.toVO(friendMap.get(blackerVO.getId()), blackerVO))
+                            blackerVO -> FriendMapStructure.INSTANCE.toVO(friendMap.get(blackerVO.getId()), blackerVO))
                     .sorted(Comparator.comparingInt(FriendVO::getStatus)).toList();
 
             result = ResponseResult.SUCCESS(list);
@@ -170,6 +185,89 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
         return result;
 
+    }
+
+
+    /**
+     * 修改好友信息
+     *
+     * @param request
+     *
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ResponseResult updateFriendInfo(ModifyFriendInfoRequest request) {
+
+        // 验证登录情况
+
+        // 参数校验
+        String ownerId = request.getUserId();
+        String friendId = request.getFriendId();
+        Integer op = request.getAction();
+
+        if (StringUtils.isEmpty(ownerId) || StringUtils.isEmpty(friendId)) {
+            // 主体缺失
+            return ResponseResult.FAIL(ResultCode.BAD_REQUEST).setMessage("请选择正确的好友!");
+        }
+
+        Boolean update = null;
+                // 判断操作类型
+        ModifyFriendInfoRequest.Action action = ModifyFriendInfoRequest.Action.values()[op];
+        if (Objects.equals(action, ModifyFriendInfoRequest.Action.remarkName)) {
+            // 修改好友备注信息，备注名称
+            update = this.lambdaUpdate()
+                    .eq(Friend::getUserId, request.getUserId())
+                    .eq(Friend::getFriendId, request.getFriendId())
+                    .set(StringUtils.isNotBlank(request.getRemarkName()), Friend::getRemarkName, request.getRemarkName())
+                    .set(StringUtils.isNotBlank(request.getRemarkDescription()), Friend::getRemarkInfo, request.getRemarkDescription())
+                    .update();
+        } else if(Objects.equals(action, ModifyFriendInfoRequest.Action.group)) {
+            // 修改好友分组
+            update = this.lambdaUpdate()
+                    .eq(Friend::getUserId, request.getUserId())
+                    .eq(Friend::getFriendId, request.getFriendId())
+                    .set(StringUtils.isNotBlank(request.getGroup()), Friend::getGroup,request.getGroup())
+                    .update();
+        }
+
+        if (BooleanUtils.isFalse(update)) {
+            return ResponseResult.FAIL("更新好友此信息失败").setMessage("更新好友此信息失败");
+        }
+
+        // 更新成功
+        return ResponseResult.SUCCESS("更新好友信息成功");
+    }
+
+
+    /**
+     * 删除好友: 双向, 聊天记录，会话表等
+     * @param friendId
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ResponseResult removeFriend(String friendId, User user) throws ApiException {
+
+        // 参数校验
+        if (Objects.isNull(user) || Objects.isNull(user.getId())) {
+            return ResponseResult.FAIL("抱歉您还未登录或登录过期了!");
+        }
+        if (StringUtils.isEmpty(friendId)) {
+            return ResponseResult.FAIL("请选择需要删除的好友!");
+        }
+
+        // 删除双向好友关系
+        Integer relations = this.friendMapper.deleteByUserIdAndFriendId(user.getId(), Long.valueOf(friendId));
+        // 如果 删除受影响的行数不是2，则说明删除过多，应该回滚
+        if (relations != 2) {
+            // 执行回滚
+            throw new ApiException(ResultCode.SERVER_BUSY);
+        }
+
+        // 发布消息，事件：删除聊天记录:
+
+        return ResponseResult.SUCCESS("删除好友成功!").setMessage("删除好友成功!");
     }
 
 

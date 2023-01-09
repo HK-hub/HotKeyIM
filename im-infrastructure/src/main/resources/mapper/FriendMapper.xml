@@ -22,6 +22,15 @@
         remark_info,create_time,update_time
     </sql>
 
+    <!-- 删除好友：双向 -->
+    <delete id="deleteByUserIdAndFriendId">
+        delete from tb_friend
+        where
+            (user_id = #{userId} and friend_id = #{friendId})
+            or
+            (user_id = #{friendId} and friend_id = #{userId})
+    </delete>
+
     <!-- 判断两个用户是否好友 -->
     <select id="selectFriendByTowUser" resultType="com.hk.im.domain.entity.Friend">
         select <include refid="Base_Column_List"/>

@@ -30,12 +30,19 @@ public class GroupController {
     private GroupService groupService;
 
 
+    /**
+     * 创建群聊
+     * @param request
+     * @return
+     */
     @PostMapping("/create")
     public ResponseResult createGroup(@RequestBody CreateGroupRequest request) {
 
 
         return ResponseResult.SUCCESS("");
     }
+
+
 
 
 

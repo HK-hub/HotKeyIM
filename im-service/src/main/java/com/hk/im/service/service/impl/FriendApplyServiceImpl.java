@@ -76,12 +76,14 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
         if (Objects.isNull(request) || StringUtils.isEmpty(request.getSearchKey())) {
             return PageResult.SUCCESS(null, request.getCurrentPage());
         }
+        int currentPage = request.getCurrentPage();
+        int pageSize = request.getPageSize() == 0 ? 20 : request.getPageSize();
 
         // 账号查找
         User byAccount = this.userMapper.getUserByAccountOrPhoneOrEmail(request.getSearchKey());
         // 昵称查找
         Page<User> userPage = this.userService.lambdaQuery().like(User::getUsername, request.getSearchKey())
-                .page(Page.of(request.getCurrentPage(), request.getPageSize()));
+                .page(Page.of(request.getCurrentPage(), pageSize));
         List<User> userList = userPage.getRecords();
 
         // 组装好友查询列表

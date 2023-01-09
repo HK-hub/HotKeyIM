@@ -87,11 +87,16 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<WebSocketF
         if (StringUtils.contains(uri, ":")) {
             // Map<String, String> urlParams = getUrlParams(uri);
             uri = URLDecoder.decode(uri, StandardCharsets.UTF_8);
-            String[] split = uri.split(":");
-            path = split[0];
-            token = split[1];
-            log.info("request url params:token={}", token);
-            request.setUri(path);
+            try{
+                String[] split = uri.split(":");
+                path = split[0];
+                token = split[1];
+                log.info("request url params:token={}", token);
+                request.setUri(path);
+            }catch(Exception e){
+                e.printStackTrace();
+                ctx.close();
+            }
         }
 
         // 验证 usi

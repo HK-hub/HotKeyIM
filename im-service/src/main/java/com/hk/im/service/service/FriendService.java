@@ -1,13 +1,24 @@
 package com.hk.im.service.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hk.im.common.error.ApiException;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.entity.Friend;
+import com.hk.im.domain.entity.User;
+import com.hk.im.domain.request.ModifyFriendInfoRequest;
 import org.apache.ibatis.annotations.Param;
 
+
 /**
- *
+ * @ClassName : FriendService
+ * @author : HK意境
+ * @date : 2023/1/9 19:48
+ * @description :
+ * @Todo :
+ * @Bug :
+ * @Modified :
+ * @Version : 1.0
  */
 public interface FriendService extends IService<Friend> {
 
@@ -51,4 +62,17 @@ public interface FriendService extends IService<Friend> {
      */
     ResponseResult getUserBlackList(Long userId);
 
+    /**
+     * 修改好友信息
+     * @param request
+     * @return
+     */
+    ResponseResult updateFriendInfo(ModifyFriendInfoRequest request);
+
+    /**
+     * 删除好友
+     * @param friendId
+     * @return
+     */
+    ResponseResult removeFriend(String friendId, User user) throws ApiException;
 }
