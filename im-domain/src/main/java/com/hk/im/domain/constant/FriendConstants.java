@@ -29,6 +29,8 @@ public class FriendConstants {
         CAREFUL,
         // 删除
         DELETED,
+        // 置顶
+        TOP
         ;
 
     }

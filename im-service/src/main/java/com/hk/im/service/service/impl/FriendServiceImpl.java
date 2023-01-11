@@ -10,6 +10,7 @@ import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.ModifyFriendInfoRequest;
+import com.hk.im.domain.request.ModifyFriendStatusRequest;
 import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapper.FriendMapper;
@@ -268,6 +269,39 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
         // 发布消息，事件：删除聊天记录:
 
         return ResponseResult.SUCCESS("删除好友成功!").setMessage("删除好友成功!");
+    }
+
+
+    /**
+     * 修改好友状态
+     * @param request
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ResponseResult updateFriendStatus(ModifyFriendStatusRequest request) {
+
+        // 参数校验
+        String friendId = request.getFriendId();
+        Integer status = request.getStatus();
+        String userId = request.getUserId();
+
+        if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(friendId)) {
+            return ResponseResult.FAIL("请选择正确的好友!");
+        }
+        // 获取需要修改的状态
+        FriendConstants.FriendRelationship relationship = FriendConstants.FriendRelationship.values()[status];
+        // 更新关系
+        boolean update = this.lambdaUpdate()
+                .eq(Friend::getUserId, userId)
+                .eq(Friend::getFriendId, friendId)
+                .set(Friend::getRelation, relationship.ordinal())
+                .update();
+        if (BooleanUtils.isFalse(update)) {
+            return ResponseResult.FAIL("修改好友关系失败!").setResultCode(ResultCode.SERVER_BUSY);
+        }
+
+        return ResponseResult.SUCCESS(update).setMessage("修改成功!");
     }
 
 

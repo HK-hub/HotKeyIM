@@ -7,6 +7,7 @@ import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.ModifyFriendInfoRequest;
+import com.hk.im.domain.request.ModifyFriendStatusRequest;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -75,4 +76,11 @@ public interface FriendService extends IService<Friend> {
      * @return
      */
     ResponseResult removeFriend(String friendId, User user) throws ApiException;
+
+    /**
+     * 修改好友状态：例如，拉黑，置顶，特别关心等
+     * @param request
+     * @return
+     */
+    ResponseResult updateFriendStatus(ModifyFriendStatusRequest request);
 }

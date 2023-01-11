@@ -5,6 +5,7 @@ import com.hk.im.common.error.ApiException;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.ModifyFriendInfoRequest;
+import com.hk.im.domain.request.ModifyFriendStatusRequest;
 import com.hk.im.service.service.FriendService;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,13 +80,15 @@ public class FriendController {
     }
 
 
-    // 修改好友状态
-
-
-
-    // 查看好友聊天记录
-
-
+    /**
+     * 修改好友状态
+     * @param request
+     * @return
+     */
+    @PostMapping("/modify/state")
+    public ResponseResult modifyFriendState(@RequestBody ModifyFriendStatusRequest request) {
+        return this.friendService.updateFriendStatus(request);
+    }
 
 
 }
