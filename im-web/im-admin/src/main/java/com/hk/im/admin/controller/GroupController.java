@@ -37,9 +37,7 @@ public class GroupController {
      */
     @PostMapping("/create")
     public ResponseResult createGroup(@RequestBody CreateGroupRequest request) {
-
-
-        return ResponseResult.SUCCESS("");
+        return this.groupService.createGroup(request);
     }
 
 

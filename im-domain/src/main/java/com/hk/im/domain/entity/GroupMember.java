@@ -5,13 +5,15 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 
  * @TableName tb_group_member
  */
-@TableName(value ="tb_group_member")
 @Data
+@TableName(value ="tb_group_member")
+@Accessors(chain = true)
 public class GroupMember implements Serializable {
     /**
      * id
@@ -165,107 +167,4 @@ public class GroupMember implements Serializable {
         return sb.toString();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
-
-    public Long getGroupAccount() {
-        return groupAccount;
-    }
-
-    public void setGroupAccount(Long groupAccount) {
-        this.groupAccount = groupAccount;
-    }
-
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
-    }
-
-    public String getMemberUsername() {
-        return memberUsername;
-    }
-
-    public void setMemberUsername(String memberUsername) {
-        this.memberUsername = memberUsername;
-    }
-
-    public String getMemberRemarkName() {
-        return memberRemarkName;
-    }
-
-    public void setMemberRemarkName(String memberRemarkName) {
-        this.memberRemarkName = memberRemarkName;
-    }
-
-    public String getMemberAvatar() {
-        return memberAvatar;
-    }
-
-    public void setMemberAvatar(String memberAvatar) {
-        this.memberAvatar = memberAvatar;
-    }
-
-    public Integer getMemberRole() {
-        return memberRole;
-    }
-
-    public void setMemberRole(Integer memberRole) {
-        this.memberRole = memberRole;
-    }
-
-    public String getGroupCategory() {
-        return groupCategory;
-    }
-
-    public void setGroupCategory(String groupCategory) {
-        this.groupCategory = groupCategory;
-    }
-
-    public LocalDateTime getGagTime() {
-        return gagTime;
-    }
-
-    public void setGagTime(LocalDateTime gagTime) {
-        this.gagTime = gagTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
 }

@@ -2,6 +2,8 @@ package com.hk.im.domain.constant;
 
 import lombok.Getter;
 
+import static com.hk.im.domain.constant.GroupConstants.GroupCategory.*;
+
 /**
  * @author : HK意境
  * @ClassName : GroupConstants
@@ -14,17 +16,52 @@ import lombok.Getter;
  */
 public class GroupConstants {
 
-
-
-    // 群聊分类
+    /**
+     * 群聊分类
+     * 群类型:0.未知，1.兴趣爱好，2.行业交流，3.生活休闲，3.学习考试，4.娱乐游戏，5.置业安家，6.品牌产品，7.粉丝，8.同学同事，9.家校师生
+     */
     @Getter
     public enum GroupCategory {
+        DEFAULT("unknown"),
+        INTERESTING("interesting"),
+        INDUSTRY("industry"),
+        LIFE_AND_LEISURE("life"),
+        LEARN_AND_EXAM("learn"),
+        ENTERTAINMENT("entertainment"),
+        HOMELAND("homeland"),
+        BRAND_PRODUCT("brand product"),
+        FANS("fans"),
+        CLASSMATES_AND_COLLEAGUES("classmates and colleagues"),
+        PARENTS_CAMPUS_TEACHER_STUDENT("teacher and student")
         ;
         private String category;
 
         GroupCategory(String category) {
             this.category = category;
         }
+    }
+
+    /**
+     * 获取群聊类型
+     * @param category
+     * @return
+     */
+    public static GroupCategory getGroupCategory(String category) {
+
+        GroupCategory type = switch (category) {
+            case "未知" -> DEFAULT;
+            case "兴趣爱好" -> INTERESTING;
+            case "行业交流" -> INDUSTRY;
+            case "生活休闲" -> LIFE_AND_LEISURE;
+            case "学习考试" -> LEARN_AND_EXAM;
+            case "娱乐游戏" -> ENTERTAINMENT;
+            case "品牌产品" -> BRAND_PRODUCT;
+            case "粉丝" -> FANS;
+            case "同学同事" -> CLASSMATES_AND_COLLEAGUES;
+            case "家校师生" -> PARENTS_CAMPUS_TEACHER_STUDENT;
+        };
+
+        return type;
     }
 
 
