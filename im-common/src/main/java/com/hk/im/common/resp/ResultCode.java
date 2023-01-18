@@ -17,6 +17,7 @@ public enum ResultCode {
     //未认证
     UNAUTHENTICATED(false, 102, "unauthenticated") ,
     USER_HAS_EXITS(false,104,"user has exits"),
+    NO_SUCH_USER(false, 105, "no such user"),
     //资源禁止访问, 可以用来控制权限
     FORBIDDEN(false,403,"no permission"),
     // 资源未找到

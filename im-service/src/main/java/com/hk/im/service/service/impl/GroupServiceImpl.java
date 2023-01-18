@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.GroupConstants;
+import com.hk.im.domain.constant.GroupMemberConstants;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.CreateGroupRequest;
+import com.hk.im.domain.request.SetGroupAdministratorRequest;
 import com.hk.im.infrastructure.mapper.GroupMapper;
 import com.hk.im.service.service.GroupMemberService;
 import com.hk.im.service.service.GroupService;
@@ -39,7 +41,9 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     /**
      * 创建群聊
+     *
      * @param request
+     *
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -86,8 +90,10 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     /**
      * 添加群成员
+     *
      * @param id
      * @param groupMembers
+     *
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -127,6 +133,125 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
         return result;
     }
+
+
+    /**
+     * 设置群管理员
+     *
+     * @param request
+     *
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult setGroupAdministrator(SetGroupAdministratorRequest request) {
+
+        // 校验参数
+        String groupId = request.getGroupId();
+        String memberId = request.getMemberId();
+        Boolean set = request.getSet();
+
+        if (StringUtils.isEmpty(groupId)) {
+            return ResponseResult.FAIL("请选择正确的群聊!").setResultCode(ResultCode.BAD_REQUEST);
+        }
+        if (StringUtils.isEmpty(memberId)) {
+            return ResponseResult.FAIL("请选择正确的群员!").setResultCode(ResultCode.BAD_REQUEST);
+        }
+        if (Objects.isNull(set)) {
+            return ResponseResult.FAIL("请选择为该群员执行的操作!!").setResultCode(ResultCode.BAD_REQUEST);
+        }
+
+        // 权限认证: 只有群主才能取消，设置群员为管理员
+        Group group = this.getById(groupId);
+        if (Objects.isNull(group)) {
+            return ResponseResult.FAIL("请选择正确的群聊!").setResultCode(ResultCode.BAD_REQUEST);
+        }
+
+        // 是否为群主
+        Long groupMaster = group.getGroupMaster();
+        if (!StringUtils.equals(request.getMasterId(), String.valueOf(groupMaster))) {
+            // 不是群主-> 无权操作
+            return ResponseResult.FAIL("抱歉您没有权限执行此操作!").setResultCode(ResultCode.UNAUTHENTICATED);
+        }
+
+        // 是群主，群主不能设置、取消自己
+        if (StringUtils.equals(String.valueOf(groupMaster), memberId)) {
+            // 不能操作自己
+            return ResponseResult.FAIL("抱歉您已经是群主呢!").setResultCode(ResultCode.NO_SUPPORT_OPERATION);
+        }
+
+        // 是否存在此群员
+        GroupMember member = this.groupMemberService.getById(memberId);
+        if (Objects.isNull(member)) {
+            // 不存在此群员
+            return ResponseResult.FAIL("抱歉此用户不是该群成员哦!").setResultCode(ResultCode.NO_SUCH_USER);
+        }
+
+        // 根据操作进行设置
+        ResponseResult result = null;
+        if (BooleanUtils.isTrue(set)) {
+            // 设置为管理员
+            result = this.addGroupAdministrator(request);
+        } else {
+            // 取消管理员
+            result = this.removeGroupAdministrator(request);
+        }
+
+        // TODO 更新管理员设置, 发布事件，消息，提送服务
+
+        // 响应结果
+        return result;
+    }
+
+
+    /**
+     * 添加管理员
+     *
+     * @param request
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult addGroupAdministrator(SetGroupAdministratorRequest request) {
+
+        // 检查是否已经是管理员了
+        String memberId = request.getMemberId();
+        GroupMember member = this.groupMemberService.getById(memberId);
+
+        // 角色
+        Integer memberRole = member.getMemberRole();
+        GroupMemberConstants.GroupMemberRole role = GroupMemberConstants.GroupMemberRole.values()[memberRole];
+        // 已经是管理员或群主
+        if (GroupMemberConstants.GroupMemberRole.ADMIN == role ||
+                GroupMemberConstants.GroupMemberRole.MASTER == role) {
+            return ResponseResult.FAIL("已经是群管理员呢!");
+        }
+
+        // 未知：非群员，等
+        if (!Objects.equals(GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal(), memberRole)) {
+            // 不是管理员，群主，普通群员
+            return ResponseResult.FAIL("该用户身份未知!");
+        }
+
+        // 普通成员
+        ResponseResult result = ResponseResult.FAIL("设置管理员失败!").setMessage("设置管理员失败!");
+        // 设置为管理员
+        member.setMemberRole(GroupMemberConstants.GroupMemberRole.ADMIN.ordinal());
+        boolean update = this.groupMemberService.updateById(member);
+        if (BooleanUtils.isTrue(update)) {
+            result = ResponseResult.SUCCESS(member).setMessage("设置管理员成功!");
+        }
+        // TODO 更新管理员设置, 发布事件，消息，提送服务
+
+        return result;
+    }
+
+    @Override
+    public ResponseResult removeGroupAdministrator(SetGroupAdministratorRequest request) {
+        return null;
+    }
+
+
 }
 
 

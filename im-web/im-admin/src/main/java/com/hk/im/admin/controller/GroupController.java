@@ -2,12 +2,10 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.CreateGroupRequest;
+import com.hk.im.domain.request.SetGroupAdministratorRequest;
 import com.hk.im.service.service.GroupService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -22,6 +20,7 @@ import javax.annotation.Resource;
  * @Version : 1.0
  */
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/group")
 public class GroupController {
@@ -40,6 +39,18 @@ public class GroupController {
         return this.groupService.createGroup(request);
     }
 
+
+    /**
+     * 设置群管理员, 取消群管理员
+     * @param request
+     * @return
+     */
+    @PostMapping("/set/admin")
+    public ResponseResult setGroupAdministrator(@RequestBody SetGroupAdministratorRequest request) {
+
+        return this.groupService.setGroupAdministrator(request);
+
+    }
 
 
 

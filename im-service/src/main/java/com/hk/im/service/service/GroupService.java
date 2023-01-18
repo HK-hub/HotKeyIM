@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.request.CreateGroupRequest;
+import com.hk.im.domain.request.SetGroupAdministratorRequest;
 
 import java.util.List;
 
@@ -33,4 +34,29 @@ public interface GroupService extends IService<Group> {
      * @return
      */
     ResponseResult addGroupMember(Long id, List<Long> groupMembers);
+
+
+    /**
+     * 设置群聊管理员
+     * @param request
+     * @return
+     */
+    ResponseResult setGroupAdministrator(SetGroupAdministratorRequest request);
+
+    /**
+     * 添加群聊管理员
+     * @param request
+     * @return
+     */
+    ResponseResult addGroupAdministrator(SetGroupAdministratorRequest request);
+
+
+    /**
+     * 取消群聊管理员
+     * @param request
+     * @return
+     */
+    ResponseResult removeGroupAdministrator(SetGroupAdministratorRequest request);
+
+
 }
