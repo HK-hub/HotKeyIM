@@ -246,9 +246,49 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         return result;
     }
 
+
+    /**
+     * 取消/移除管理员
+     * @param request
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResponseResult removeGroupAdministrator(SetGroupAdministratorRequest request) {
-        return null;
+
+        // 是否存在该群员
+        GroupMember groupMember = this.groupMemberService.getById(request.getMemberId());
+        if (Objects.isNull(groupMember)) {
+            return ResponseResult.FAIL("该用户不是群聊成员!").setResultCode(ResultCode.NO_SUCH_USER);
+        }
+
+        // 是否已经是管理员
+        if (!Objects.equals(groupMember.getMemberRole(), GroupMemberConstants.GroupMemberRole.ADMIN.ordinal())) {
+            // 不是管理员
+            return ResponseResult.FAIL("抱歉,该用户不是管理员!").setResultCode(ResultCode.NO_SUPPORT_OPERATION);
+        }
+
+        // 是否取消自己(群主)
+        Group group = this.getById(request.getGroupId());
+        if (Objects.equals(request.getMemberId(), String.valueOf(group.getGroupMaster()))) {
+            // 操作群主自己：请通过转让群等操作，群主不支持取消自己得管理员
+            return ResponseResult.FAIL("抱歉,您是群主不能取消自己的身份!").setResultCode(ResultCode.NO_SUPPORT_OPERATION);
+        }
+
+        // 取消管理员
+        boolean update = this.groupMemberService.updateById(
+                groupMember.setMemberRole(
+                        GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal()));
+
+        // 构造响应数据
+        if (BooleanUtils.isFalse(update)) {
+            // 更新失败
+            return ResponseResult.FAIL("取消管理员失败!").setResultCode(ResultCode.SERVER_BUSY);
+        }
+
+        // TODO 发布事件，消息
+
+        return ResponseResult.SUCCESS(groupMember).setMessage("取消管理员成功!");
     }
 
 
