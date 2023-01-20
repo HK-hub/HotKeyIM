@@ -1,10 +1,12 @@
 package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.service.service.GroupMemberService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author : HK意境
@@ -26,15 +28,14 @@ public class GroupMemberController {
 
 
     /**
-     * 移除群成员
-     * @param memberId
+     * 移除群成员/ 踢出群聊
+     * @param request
      * @return
      */
     @DeleteMapping("/remove")
-    public ResponseResult removeGroupMember(@RequestParam("memberId") String memberId) {
+    public ResponseResult removeGroupMember(@NotNull @RequestBody RemoveGroupMemberRequest request) {
 
-
-        return null;
+        return this.groupMemberService.removeGroupMember(request);
     }
 
 

@@ -38,7 +38,7 @@ public enum ResultCode {
     SC_EXPECTATION_FAILED(false,-110,"file is empty"),
     CHECK_CODE_SEND_FAILED(false, 103,"user check code send fail"),
     NO_SUPPORT_OPERATION(false, 106, "no support operation"),
-    ;
+    NO_PERMISSION(false, 109 , "no permission"),;
 
 
 
