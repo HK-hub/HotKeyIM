@@ -5,27 +5,44 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.GroupMemberConstants;
 import com.hk.im.domain.entity.GroupMember;
+import com.hk.im.domain.entity.User;
+import com.hk.im.domain.request.InviteGroupMemberRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.infrastructure.mapper.GroupMemberMapper;
 import com.hk.im.service.service.GroupMemberService;
+import com.hk.im.service.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
- *
+ * @author : HK意境
+ * @ClassName : GroupMemberServiceImpl
+ * @date : 2023/1/21 22:05
+ * @description :
+ * @Todo :
+ * @Bug :
+ * @Modified :
+ * @Version : 1.0
  */
+@Slf4j
 @Service
-public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, GroupMember>
-    implements GroupMemberService {
+public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, GroupMember> implements GroupMemberService {
+
+    @Resource
+    private UserService userService;
 
 
     /**
      * 踢出群聊
+     *
      * @param request
+     *
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -71,6 +88,76 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
 
         // 响应数据
         return ResponseResult.SUCCESS(groupMember).setMessage("移除该成员成功!");
+    }
+
+
+    /**
+     * 邀请用户加群
+     *
+     * @param request
+     *
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult inviteGroupMember(InviteGroupMemberRequest request) {
+
+        // 参数校验
+        String inviteeId = request.getInviteeId();
+        String groupId = request.getGroupId();
+        String inviterId = request.getInviterId();
+
+        // 参数不合法
+        if (StringUtils.isEmpty(inviteeId) || StringUtils.isEmpty(groupId) || StringUtils.isEmpty(inviterId)) {
+            return ResponseResult.FAIL("请求参数不完整!").setResultCode(ResultCode.BAD_REQUEST);
+        }
+
+        // 邀请者是否本群成员
+        GroupMember inviter = this.getById(inviterId);
+        if (Objects.isNull(inviter)) {
+            // 邀请者不是本群群员，不能发起邀请用户
+            return ResponseResult.FAIL("抱歉，您不是本群成员，无法邀请其他用户").setResultCode(ResultCode.NO_SUPPORT_OPERATION);
+        }
+
+        // 被邀请者是否已经成为群员
+        GroupMember invitee = this.getById(inviteeId);
+        if (Objects.nonNull(invitee)) {
+            // 被邀请者已经是群成员
+            return ResponseResult.FAIL("该用户已经是群成员了，无需重复邀请!").setResultCode(ResultCode.SERVER_BUSY);
+        }
+
+        // 是否有权限：按照群聊的加群方式，审核方式确定
+        Integer role = inviter.getMemberRole();
+        GroupMemberConstants.GroupMemberRole groupMemberRole = GroupMemberConstants.GroupMemberRole.values()[role];
+
+        // 2. 普通成员邀请：如果加群审核方式为无需审核，则直接拉入群聊；如果需要审核则进行审核
+        // 1. 群主邀请，管理员邀请-> 直接将人拉入群聊
+        if (Objects.equals(groupMemberRole, GroupMemberConstants.GroupMemberRole.SIMPLE) ||
+                Objects.equals(groupMemberRole, GroupMemberConstants.GroupMemberRole.DEFAULT)) {
+            // 普通用户：需要根据加群规则确定
+
+            // TODO 推送消息: 推送审核消息
+        }
+
+        // 拉入群聊
+        User inviteeUser = this.userService.getById(inviteeId);
+        GroupMember member = new GroupMember();
+        member.setMemberAvatar(inviteeUser.getMiniAvatar())
+                .setMemberUsername(inviteeUser.getUsername())
+                .setMemberId(Long.valueOf(inviteeId))
+                .setGroupId(Long.valueOf(groupId))
+                .setMemberRole(GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal());
+        boolean save = this.save(member);
+
+        // 拉入群聊结果
+        if (BooleanUtils.isFalse(save)) {
+            // 拉人失败
+            return ResponseResult.FAIL("邀请加入群聊失败!").setResultCode(ResultCode.SERVER_BUSY);
+        }
+
+        // TODO 拉入群聊成功，发送消息，推送消息: XXX加入群聊
+
+        return ResponseResult.SUCCESS("成功邀请该用户加入群聊!");
     }
 }
 

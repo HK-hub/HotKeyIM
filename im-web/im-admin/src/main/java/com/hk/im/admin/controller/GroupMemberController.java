@@ -1,6 +1,7 @@
 package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.InviteGroupMemberRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.service.service.GroupMemberService;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,20 @@ public class GroupMemberController {
 
         return this.groupMemberService.removeGroupMember(request);
     }
+
+
+    /**
+     * 邀请用户加群
+     * @param request
+     * @return
+     */
+    @PostMapping("/invite")
+    public ResponseResult inviteGroupMember(@NotNull @RequestBody InviteGroupMemberRequest request) {
+
+        return this.groupMemberService.inviteGroupMember(request);
+    }
+
+
 
 
 

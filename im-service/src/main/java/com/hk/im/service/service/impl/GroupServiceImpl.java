@@ -27,7 +27,14 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- *
+ * @ClassName : GroupServiceImpl
+ * @author : HK意境
+ * @date : 2023/1/21 21:58
+ * @description :
+ * @Todo :
+ * @Bug :
+ * @Modified :
+ * @Version : 1.0
  */
 @Service
 public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements GroupService {
