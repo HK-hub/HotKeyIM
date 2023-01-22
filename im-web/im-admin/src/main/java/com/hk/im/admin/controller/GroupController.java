@@ -2,6 +2,7 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.CreateGroupRequest;
+import com.hk.im.domain.request.ModifyGroupInfoRequest;
 import com.hk.im.domain.request.SetGroupAdministratorRequest;
 import com.hk.im.service.service.GroupService;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,15 @@ public class GroupController {
     }
 
 
+    /**
+     * 修改群信息
+     * @param request
+     * @return
+     */
+    @PutMapping("/info")
+    public ResponseResult modifyGroupInfo(@RequestBody ModifyGroupInfoRequest request) {
+        return this.groupService.updateGroupInfo(request);
+    }
 
 
 }

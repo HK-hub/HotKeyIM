@@ -24,4 +24,12 @@
         qrcode,member_count,group_master,
         create_time,update_time
     </sql>
+    <!-- 修改群聊信息 -->
+    <update id="updateGroupInfo">
+        update tb_group
+        set
+        <where>
+
+        </where>
+    </update>
 </mapper>

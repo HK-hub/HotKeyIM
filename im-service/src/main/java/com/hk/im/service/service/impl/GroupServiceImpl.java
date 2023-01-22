@@ -9,6 +9,7 @@ import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.CreateGroupRequest;
+import com.hk.im.domain.request.ModifyGroupInfoRequest;
 import com.hk.im.domain.request.SetGroupAdministratorRequest;
 import com.hk.im.infrastructure.mapper.GroupMapper;
 import com.hk.im.service.service.GroupMemberService;
@@ -299,6 +300,18 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     }
 
 
+    /**
+     * 修改群聊信息
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult updateGroupInfo(ModifyGroupInfoRequest request) {
+
+        Integer effected = this.groupMapper.updateGroupInfo(request);
+        return null;
+    }
 
 
 }

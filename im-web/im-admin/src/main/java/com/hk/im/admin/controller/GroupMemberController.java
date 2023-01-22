@@ -2,6 +2,7 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.InviteGroupMemberRequest;
+import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.service.service.GroupMemberService;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,15 @@ public class GroupMemberController {
     }
 
 
+    /**
+     * 修改群里成员备注名称
+     * @param request
+     * @return
+     */
+    @PutMapping("/remark")
+    public ResponseResult modifyMemberRemarkName(@NotNull @RequestBody MemberRemarkNameRequest request) {
+        return this.groupMemberService.updateMemberRemarkName(request);
+    }
 
 
 

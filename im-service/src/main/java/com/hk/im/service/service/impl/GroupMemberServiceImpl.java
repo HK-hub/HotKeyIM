@@ -7,6 +7,7 @@ import com.hk.im.domain.constant.GroupMemberConstants;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.InviteGroupMemberRequest;
+import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.infrastructure.mapper.GroupMemberMapper;
 import com.hk.im.service.service.GroupMemberService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,7 +38,8 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
 
     @Resource
     private UserService userService;
-
+    @Resource
+    private GroupMemberMapper groupMemberMapper;
 
     /**
      * 踢出群聊
@@ -59,7 +62,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         }
 
         // 权限校验
-        GroupMember operatorMember = this.getById(operatorId);
+        GroupMember operatorMember = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, operatorId);
         if (Objects.isNull(operatorMember)) {
             // 操作者不是群员
             return ResponseResult.FAIL("操作者非该群成员!").setResultCode(ResultCode.NO_SUCH_USER);
@@ -72,7 +75,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         }
 
         // 被踢出者是否是群员
-        GroupMember groupMember = this.getById(memberId);
+        GroupMember groupMember = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, operatorId);
         if (Objects.isNull(groupMember)) {
             return ResponseResult.FAIL("该成员不是群成员!").setResultCode(ResultCode.NO_SUCH_USER);
         }
@@ -113,14 +116,14 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         }
 
         // 邀请者是否本群成员
-        GroupMember inviter = this.getById(inviterId);
+        GroupMember inviter = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, inviterId);
         if (Objects.isNull(inviter)) {
             // 邀请者不是本群群员，不能发起邀请用户
             return ResponseResult.FAIL("抱歉，您不是本群成员，无法邀请其他用户").setResultCode(ResultCode.NO_SUPPORT_OPERATION);
         }
 
         // 被邀请者是否已经成为群员
-        GroupMember invitee = this.getById(inviteeId);
+        GroupMember invitee = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, inviteeId);
         if (Objects.nonNull(invitee)) {
             // 被邀请者已经是群成员
             return ResponseResult.FAIL("该用户已经是群成员了，无需重复邀请!").setResultCode(ResultCode.SERVER_BUSY);
@@ -134,7 +137,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         // 1. 群主邀请，管理员邀请-> 直接将人拉入群聊
         if (Objects.equals(groupMemberRole, GroupMemberConstants.GroupMemberRole.SIMPLE) ||
                 Objects.equals(groupMemberRole, GroupMemberConstants.GroupMemberRole.DEFAULT)) {
-            // 普通用户：需要根据加群规则确定
+            // TODO 普通用户：需要根据加群规则确定
 
             // TODO 推送消息: 推送审核消息
         }
@@ -158,6 +161,66 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         // TODO 拉入群聊成功，发送消息，推送消息: XXX加入群聊
 
         return ResponseResult.SUCCESS("成功邀请该用户加入群聊!");
+    }
+
+
+    /**
+     * 更新群员备注名
+     *
+     * @param request
+     *
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ResponseResult updateMemberRemarkName(MemberRemarkNameRequest request) {
+
+        // 参数校验
+        String groupId = request.getGroupId();
+        String memberId = request.getMemberId();
+        String operatorId = request.getOperatorId();
+        String newRemarkName = request.getNewRemarkName();
+        if (StringUtils.isEmpty(groupId) || StringUtils.isEmpty(memberId)
+                || StringUtils.isEmpty(operatorId) || StringUtils.isEmpty(newRemarkName)) {
+            // 请求参数不完整
+            return ResponseResult.FAIL().setResultCode(ResultCode.BAD_REQUEST);
+        }
+
+        // 群员和操作者是否群员
+        GroupMember member = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, operatorId);
+        if (Objects.isNull(member)) {
+            return ResponseResult.FAIL("该用户不是群员!");
+        }
+        // 操作者：只能为群主，管理员，自己。其他人不能修改他人昵称
+        GroupMember operator = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId,operatorId);
+        if (Objects.isNull(operator)) {
+            // 操作者不是群员
+            return ResponseResult.FAIL("抱歉您不是该群成员!");
+        }
+
+        // 是否有权限: 1.群主可以修改任何人的昵称；2.管理员可以修改普通成员的昵称；3.普通成员只能修改自己的昵称
+        GroupMemberConstants.GroupMemberRole operatorRole = GroupMemberConstants.GroupMemberRole.values()[operator.getMemberRole()];
+        GroupMemberConstants.GroupMemberRole memberRole = GroupMemberConstants.GroupMemberRole.values()[member.getMemberRole()];
+
+        // 如果 operatorRole < memberRole 则无权限操作
+        if (operatorRole.ordinal() < memberRole.ordinal()) {
+            return ResponseResult.FAIL("抱歉您无权修改该群员群昵称!");
+        }
+
+        // 修改群昵称
+        boolean update = this.lambdaUpdate().eq(GroupMember::getGroupId, groupId)
+                .eq(GroupMember::getMemberId, memberId)
+                .set(GroupMember::getMemberRemarkName, newRemarkName)
+                .update();
+
+        // 封装结果数据
+        if (BooleanUtils.isFalse(update)) {
+            return ResponseResult.FAIL("修改群员群昵称失败!");
+        }
+
+        // TODO 推送消息，发布事件
+
+        return ResponseResult.SUCCESS("修改群员群昵称成功!");
     }
 }
 

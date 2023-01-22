@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.request.InviteGroupMemberRequest;
+import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
 
 /**
@@ -31,4 +32,11 @@ public interface GroupMemberService extends IService<GroupMember> {
      * @return
      */
     ResponseResult inviteGroupMember(InviteGroupMemberRequest request);
+
+    /**
+     * 跟新群聊成员备注名
+     * @param request
+     * @return
+     */
+    ResponseResult updateMemberRemarkName(MemberRemarkNameRequest request);
 }
