@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.SequenceMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.Sequence">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="participantId" column="participant_id" jdbcType="BIGINT"/>
+            <result property="communicationId" column="communication_id" jdbcType="BIGINT"/>
+            <result property="max" column="max" jdbcType="BIGINT"/>
+            <result property="step" column="step" jdbcType="INTEGER"/>
+            <result property="segment" column="segment" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,participant_id,
+        communication_id,max,step,
+        segment
+    </sql>
+</mapper>

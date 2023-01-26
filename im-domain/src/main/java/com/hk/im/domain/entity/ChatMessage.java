@@ -25,6 +25,12 @@ public class ChatMessage implements Serializable {
     private Long id;
 
     /**
+     * 消息序列号，为发号器分配的id号
+     */
+    @TableField(value = "sequence")
+    private Long sequence;
+
+    /**
      * 消息属性：0.默认，1.离线消息，2.漫游消息，3.同步消息，4.透传消息，5.控制消息
      */
     @TableField(value = "message_feature")

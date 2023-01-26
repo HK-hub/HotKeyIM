@@ -78,6 +78,26 @@
 既然以及看过了关于消息ID的生成策略思考，那么接下来看看如何才能较为满意的实现把：
 
 首先我们需要数据库的支持，Leaf 算法是基于数据库的：
+```sql
+# 会话消息ID生产器
+CREATE TABLE `tb_sequence` (
+   `id` BIGINT NOT NULL primary key AUTO_INCREMENT,
+   `name` VARCHAR(64) NOT NULL comment '标识业务类型',
+   participant_id bigint not null comment '会话参与者',
+   communication_id bigint not null comment '会话发起者',
+   max bigint unsigned comment '下一次将要申请的号段起始位置',
+   step int default 1 comment '递增步长',
+   segment int default 1000 comment '号段大小'
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create index idx_p_c on tb_sequence(participant_id, communication_id);
+```
+
+执行以上SQL 并且编写对应的实体，Mapper，Service 就可以进行操控了，但是我们想要使用该发号器还需要我们设计一些东西：
+1. 提供获取id 的接口
+2. 维护会话的发号器: 考虑如何存储每个会话的发号器，
+
+
 
 
 

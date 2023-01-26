@@ -57,6 +57,12 @@ public class MessageFlow implements Serializable {
     private Long messageId;
 
     /**
+     * 消息序列号
+     */
+    @TableField(value = "sequence")
+    private Long sequence;
+
+    /**
      * 消息发送状态：1.发送中，2.已发送，3.发送失败,4.草稿，
      */
     @TableField(value = "send_status")

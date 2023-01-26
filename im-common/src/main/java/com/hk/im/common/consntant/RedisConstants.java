@@ -73,6 +73,11 @@ public class RedisConstants {
     public static final Integer SHOP_GEO_DISTANCE = 5000;
     public static final String USER_SIGN_KEY = "sign:";
 
+    // 会话
+    public static final String COMMUNICATION_KEY = "communication:";
+    // sequence 发号器
+    public static final String SEQUENCE_KEY = "sequence:";
+
 
     /**
      * 判断 key 值是否存在于 redis 中

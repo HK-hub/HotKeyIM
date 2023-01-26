@@ -70,8 +70,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="GroupApply" />
-                  <option name="tableName" value="tb_group_apply" />
+                  <option name="className" value="Sequence" />
+                  <option name="tableName" value="tb_sequence" />
                 </TableUIInfo>
               </list>
             </option>

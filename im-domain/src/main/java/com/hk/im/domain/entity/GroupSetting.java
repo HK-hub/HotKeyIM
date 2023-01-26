@@ -56,6 +56,12 @@ public class GroupSetting implements Serializable {
     private Integer forbidSend;
 
     /**
+     * 是否允许临时会话
+     */
+    @TableField(value = "enable_temporary")
+    private Boolean enableTemporary;
+
+    /**
      * 群最新公告
      */
     @TableField(value = "announcement")
