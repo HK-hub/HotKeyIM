@@ -6,6 +6,7 @@ import com.hk.im.common.error.ApiException;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.JWTUtils;
 import com.hk.im.domain.entity.User;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @Component
 public class UserTokenInterceptor implements HandlerInterceptor {
 
@@ -70,7 +72,7 @@ public class UserTokenInterceptor implements HandlerInterceptor {
 
         // 给当前 threadLocal 设置用户
         UserContextHolder.set(new User().setId(Long.valueOf(userId)));
-
+        log.info("user token={}, userId={}",token, userId);
         return true;
     }
 

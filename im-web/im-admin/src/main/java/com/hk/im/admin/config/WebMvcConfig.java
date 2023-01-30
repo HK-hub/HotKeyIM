@@ -25,6 +25,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new UserTokenInterceptor(this.stringRedisTemplate))
                 // .addPathPatterns("/user/**")
                 .addPathPatterns("/info/**")
+                // 发现好友
+                //.addPathPatterns("")
                 //开放登录, 注册，忘记密码, 验证码, 生产用户
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/logout")

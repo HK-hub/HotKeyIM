@@ -33,7 +33,8 @@ public class FriendFindRequest {
     // 群类型
     private String groupType;
 
-
+    // 当前搜索用户
+    private String operatorId;
     // 分页信息：当前第几页
     private int currentPage;
     // 当前页多少条

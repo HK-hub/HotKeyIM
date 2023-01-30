@@ -133,7 +133,7 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
      * @return
      */
     @Override
-    public ResponseResult nextId(Long communicationId, Long participantId) {
+    public synchronized ResponseResult nextId(Long communicationId, Long participantId) {
 
         // Redis 中只存储发号器的计数， Caffeine 中存储发号器
         String key = RedisConstants.COMMUNICATION_KEY + RedisConstants.SEQUENCE_KEY + communicationId + "-" + participantId;
@@ -163,7 +163,6 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
 
         // 更新cache, 重置过期时间
         sequenceCache.put(key, sequence.setCurrent(increment));
-
         // TODO 发送事件，异步刷新发号器: buffer 计算
         applicationContext.publishEvent(new RefreshSequenceEvent(this, sequence));
 

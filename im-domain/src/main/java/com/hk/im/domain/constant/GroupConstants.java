@@ -59,6 +59,7 @@ public class GroupConstants {
             case "粉丝" -> FANS;
             case "同学同事" -> CLASSMATES_AND_COLLEAGUES;
             case "家校师生" -> PARENTS_CAMPUS_TEACHER_STUDENT;
+            default -> DEFAULT;
         };
 
         return type;

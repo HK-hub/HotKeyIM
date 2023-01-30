@@ -122,6 +122,11 @@
             <artifactId>commons-codec</artifactId>
             <version>1.15</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.ifeilong</groupId>
+            <artifactId>feilong</artifactId>
+            <version>3.4.1</version>
+        </dependency>
     </dependencies>
 
 </project>

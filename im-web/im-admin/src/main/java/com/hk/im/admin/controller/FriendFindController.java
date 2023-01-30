@@ -1,9 +1,13 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.admin.util.UserContextHolder;
 import com.hk.im.common.resp.PageResult;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.request.FriendApplyRequest;
 import com.hk.im.domain.request.FriendFindRequest;
+import com.hk.im.domain.response.FriendSearchResponse;
+import com.hk.im.domain.vo.UserVO;
 import com.hk.im.service.service.FriendApplyService;
 import com.hk.im.service.service.FriendService;
 import com.hk.im.service.service.UserService;
@@ -12,6 +16,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * @author : HK意境
@@ -48,11 +53,11 @@ public class FriendFindController {
 
 
     /**
-     * 好友发现
+     * 账户搜索用户，只返回精确匹配的一个
      * @param request
      * @return
      */
-    @GetMapping("/friend/account")
+    @PostMapping("/friend/account")
     public ResponseResult findFriendAccountOrName(@RequestBody FriendFindRequest request) {
 
         log.info("request={}", request);
@@ -60,13 +65,19 @@ public class FriendFindController {
         if (CollectionUtils.isEmpty(pageResult.getRows())) {
             return ResponseResult.FAIL("没有找到符合搜索条件的用户或对方设置了账号搜索限制!");
         }
-
-        return ResponseResult.SUCCESS(pageResult);
+        UserVO userVO = (UserVO) pageResult.getRows().get(0);
+        FriendSearchResponse response = new FriendSearchResponse().setUser(userVO).setStatus(1);
+        Friend relationship = this.friendService.isFriendRelationship(Long.valueOf(request.getOperatorId()), userVO.getId());
+        if (Objects.nonNull(relationship)) {
+            // 不是好友关系
+            response.setStatus(2);
+        }
+        return ResponseResult.SUCCESS(response);
     }
 
 
     /**
-     * 搜索用户，只返回精确匹配的一个
+     * 关键字搜索发现好友：返回好友集合
      * @param request
      * @return
      */
@@ -78,16 +89,16 @@ public class FriendFindController {
         if (CollectionUtils.isEmpty(pageResult.getRows())) {
             return ResponseResult.FAIL("没有找到符合搜索条件的用户或对方设置了账号搜索限制!");
         }
-        Object o = pageResult.getRows().get(0);
-        return ResponseResult.SUCCESS(o);
-    }
 
+        return ResponseResult.SUCCESS(pageResult);
+    }
 
     /**
      * 群发现
      * @param request
      * @return
      */
+
     @GetMapping("/group/account")
     public ResponseResult findGroupAccountOrName(@RequestBody FriendFindRequest request) {
         // 分页查询
