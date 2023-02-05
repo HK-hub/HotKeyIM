@@ -1,6 +1,12 @@
 # Hot Key IM
-
-
+## 系统设计
+本课题基于Web的即时通讯平台系将采用前后端分离的开发模式，客户端采用Vue.js框架进行开发，实现跨平台与响应式的客户端展示界面；
+在实现即时通讯上使用Netty网络编程框架作为即时通讯服务器，使用Spring Boot实现其余REST风格的功能，
+并且将Netty 交付给Spring进行统一管理；在Chat Server和Push Server中引入RocketMQ作为消息分发服务；
+应用的数据支持采用MySQL关系型数据库进行结构化数据存储，使用Redis对用户信息，会话等数据进行缓存。
+采用Neo4j图数据库实现好友社交网络图谱的构建，并且以此提供推荐服务，搜索模块功能使用Elastic Search进行好友，聊天记录的搜索。
+![](.README_images/a46c891b.png)
+![](.README_images/c1a9a21d.png)
 
 ### 数据存储设计
 #### 数据库设计
@@ -215,3 +221,15 @@ create table tb_chat_communication (
 5. [设计聊天系统概论](https://www.midlane.top/wiki/pages/viewpage.action?pageId=21659855)
 6. [IM系统海量消息数据是怎么存储的](http://blog.itpub.net/31556438/viewspace-2639412/)
 7. [聊天应用的架构，协议，数据存储的设计](https://github.com/xmcy0011/CoffeeChat/blob/master/docs/02-%E6%9E%B6%E6%9E%84%E5%92%8C%E5%8D%8F%E8%AE%AE%E8%AE%BE%E8%AE%A1.md)
+8. [IM API接口实现参考](https://doc.rentsoft.cn:8000/swagger/index.html#/%E7%94%A8%E6%88%B7%E7%9B%B8%E5%85%B3)
+9. [IM API接口设计参考](https://doc.rentsoft.cn/#/uniapp_v2/sdk_integrate/group)
+10. [群聊系统的架构设计](https://donggeitnote.com/2022/01/08/im-architecture/)
+11. []()
+12. []()
+13. []()
+14. []()
+15. []()
+16. []()
+17. []()
+18. []()
+19. []()
