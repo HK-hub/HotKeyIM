@@ -407,11 +407,16 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
         sender.setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
 
         // 设置分组
-        ResponseResult groupResult = this.friendGroupService.getUserDefaultGroup(acceptorId);
-        if (BooleanUtils.isTrue(groupResult.isSuccess())) {
-            FriendGroup defaultGroup = (FriendGroup) groupResult.getData();
-            acceptor.setGroupId(defaultGroup.getId());
-            sender.setGroupId(defaultGroup.getId());
+        // 获取acceptor 分组
+        ResponseResult acceptorGroupResult = this.friendGroupService.getUserDefaultGroup(acceptorId);
+        // 获取sender 分组
+        ResponseResult senderGroupResult = this.friendGroupService.getUserDefaultGroup(senderId);
+        if (BooleanUtils.isTrue(acceptorGroupResult.isSuccess() || senderGroupResult.isSuccess())) {
+            FriendGroup acceptorGroup = (FriendGroup) acceptorGroupResult.getData();
+            FriendGroup senderGroup = (FriendGroup) senderGroupResult.getData();
+            // 互相设置分组
+            acceptor.setGroupId(acceptorGroup.getId());
+            sender.setGroupId(senderGroup.getId());
         }
 
         this.friendService.saveBatch(List.of(acceptor, sender));

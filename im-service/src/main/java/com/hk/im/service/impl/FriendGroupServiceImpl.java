@@ -30,15 +30,17 @@ public class FriendGroupServiceImpl extends ServiceImpl<FriendGroupMapper, Frien
 
     /**
      * 获取用户默认分组
-     * @param acceptorId
+     * @param userId
      * @return
      */
     @Override
-    public ResponseResult getUserDefaultGroup(Long acceptorId) {
-        FriendGroup defaultGroup = this.lambdaQuery().eq(FriendGroup::getUserId, acceptorId).one();
+    public ResponseResult getUserDefaultGroup(Long userId) {
+        FriendGroup defaultGroup = this.lambdaQuery().eq(FriendGroup::getUserId, userId)
+                .eq(FriendGroup::getName,"默认分组")
+                .one();
         if (Objects.isNull(defaultGroup)) {
             // 默认分组不存在，创建一个
-            defaultGroup = new FriendGroup().setUserId(acceptorId).setName("默认分组");
+            defaultGroup = new FriendGroup().setUserId(userId).setName("默认分组");
             this.save(defaultGroup);
         }
         return ResponseResult.SUCCESS(defaultGroup);
