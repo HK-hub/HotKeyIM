@@ -13,6 +13,7 @@ import com.hk.im.domain.request.FriendApplyRequest;
 import com.hk.im.domain.request.FriendFindRequest;
 import com.hk.im.domain.vo.FriendApplyVO;
 import com.hk.im.domain.vo.UserVO;
+import com.hk.im.infrastructure.event.friend.event.AddFriendSuccessEvent;
 import com.hk.im.infrastructure.event.friend.event.ApplyHandleEvent;
 import com.hk.im.infrastructure.event.friend.event.FriendApplyEvent;
 import com.hk.im.infrastructure.mapper.FriendApplyMapper;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -60,6 +62,8 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
     private UserMapper userMapper;
     @Resource
     private ApplicationEventPublisher applicationEventPublisher;
+    @Resource
+    private FriendGroupService friendGroupService;
 
 
     /**
@@ -308,6 +312,7 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
         List<FriendApplyVO> friendApplyVOS = applyList.stream().map(apply -> {
             FriendApplyVO applyVO = FriendApplyMapStructure.INSTANCE.toVO(apply,
                     userVOMap.get(apply.getSenderId()), null);
+
             return applyVO;
         }).toList();
 
@@ -324,8 +329,8 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
     public ResponseResult handleFriendApply(ApplyHandleRequest request) {
 
         // 参数校验
-        Boolean preConditionCheck = Objects.isNull(request) || Objects.isNull(request.getSenderId())
-                || Objects.isNull(request.getAcceptorId()) || Objects.isNull(request.getOperation());
+        Boolean preConditionCheck = Objects.isNull(request) || Objects.isNull(request.getApplyId())
+                || Objects.isNull(request.getHandlerId()) || Objects.isNull(request.getOperation());
         // 判断校验结果
         if (BooleanUtils.isTrue(preConditionCheck)) {
             return ResponseResult.FAIL("申请信息不完整!");
@@ -333,8 +338,10 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
 
         // 处理加好友处理
         Integer type = request.getType();
-        Long senderId = request.getSenderId();
-        Long acceptorId = request.getAcceptorId();
+        String applyId = request.getApplyId();
+        FriendApply apply = this.getById(applyId);
+        Long senderId = apply.getSenderId();
+        Long acceptorId = apply.getAcceptorId();
         if (Objects.equals(type, FriendConstants.FriendApplyType.FRIEND.ordinal())) {
             // 加好友: 需要二次校验
             // 看接收者好友列表里面是否有发起者
@@ -363,6 +370,8 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
                 // 同意添加为好友
                 // 不是好友，进行加好友操作
                 result = this.toBeFriend(senderId, acceptorId);
+                // 发布事件：成为好友
+                applicationEventPublisher.publishEvent(new AddFriendSuccessEvent(this, apply));
             }
             return result;
 
@@ -396,6 +405,14 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
         sender.setUserId(senderId);
         sender.setFriendId(acceptorId);
         sender.setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
+
+        // 设置分组
+        ResponseResult groupResult = this.friendGroupService.getUserDefaultGroup(acceptorId);
+        if (BooleanUtils.isTrue(groupResult.isSuccess())) {
+            FriendGroup defaultGroup = (FriendGroup) groupResult.getData();
+            acceptor.setGroupId(defaultGroup.getId());
+            sender.setGroupId(defaultGroup.getId());
+        }
 
         this.friendService.saveBatch(List.of(acceptor, sender));
 

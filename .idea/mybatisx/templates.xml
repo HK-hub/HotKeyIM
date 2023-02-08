@@ -27,8 +27,8 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Mapper" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.java" />
-                  <option name="modulePath" value="$PROJECT_DIR$/im-domain" />
-                  <option name="packageName" value="${domain.basePackage}.mapper" />
+                  <option name="modulePath" value="$PROJECT_DIR$/im-infrastructure" />
+                  <option name="packageName" value="com.hk.im.infrastructure.mapper" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
                   <option name="basePath" value="src/main/resources" />
@@ -37,7 +37,7 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Mapper" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.xml" />
-                  <option name="modulePath" value="$PROJECT_DIR$/im-domain" />
+                  <option name="modulePath" value="$PROJECT_DIR$/im-infrastructure" />
                   <option name="packageName" value="mapper" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
@@ -47,8 +47,8 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}ServiceImpl" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}ServiceImpl.java" />
-                  <option name="modulePath" value="$PROJECT_DIR$/im-domain" />
-                  <option name="packageName" value="${domain.basePackage}.service.impl" />
+                  <option name="modulePath" value="$PROJECT_DIR$/im-service" />
+                  <option name="packageName" value="com.hk.im.service.impl" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
                   <option name="basePath" value="${domain.basePath}" />
@@ -57,8 +57,8 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Service" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Service.java" />
-                  <option name="modulePath" value="$PROJECT_DIR$/im-domain" />
-                  <option name="packageName" value="${domain.basePackage}.service" />
+                  <option name="modulePath" value="$PROJECT_DIR$/im-service" />
+                  <option name="packageName" value="com.hk.im.service" />
                 </ModuleInfoGo>
               </list>
             </option>
@@ -70,8 +70,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Sequence" />
-                  <option name="tableName" value="tb_sequence" />
+                  <option name="className" value="FriendGroup" />
+                  <option name="tableName" value="tb_friend_group" />
                 </TableUIInfo>
               </list>
             </option>

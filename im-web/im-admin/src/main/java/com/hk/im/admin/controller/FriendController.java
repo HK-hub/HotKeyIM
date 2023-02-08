@@ -42,6 +42,16 @@ public class FriendController {
     }
 
     /**
+     * 获取用户的好友列表V2版本
+     * @param userId
+     * @return
+     */
+    @GetMapping("/list/v2")
+    public ResponseResult getUserFriendListV2(@RequestParam("userId") Long userId) {
+        return this.friendService.getUserFriendListV2(userId);
+    }
+
+    /**
      * 修改好友信息：备注，备注信息，分组
      * @return
      */

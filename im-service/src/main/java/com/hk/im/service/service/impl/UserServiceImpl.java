@@ -14,6 +14,7 @@ import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.request.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
+import com.hk.im.infrastructure.event.user.event.UserRegisterEvent;
 import com.hk.im.infrastructure.event.user.event.UserUpdatedEvent;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.UserMapper;
@@ -21,6 +22,7 @@ import com.hk.im.infrastructure.mapstruct.UserMapStructure;
 import com.hk.im.service.service.*;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Response;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -307,9 +309,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 保存用户用户信息
         Boolean res = userManager.saveUserAndInfo(user, userInfo);
+        if (BooleanUtils.isFalse(res)) {
+            // 注册失败
+            return ResponseResult.FAIL("抱歉，注册失败!");
+        }
+
+        // TODO 注册成功，发布事件
+        this.applicationEventPublisher.publishEvent(new UserRegisterEvent(this,user));
 
 
-        return result.setSuccess(res).setData(UserMapStructure.INSTANCE.toVo(user, userInfo));
+        result.setMessage("注册用户成功!");
+        result.setData(UserMapStructure.INSTANCE.toVo(user, userInfo));
+        return result.setSuccess(res);
     }
 
     @Override

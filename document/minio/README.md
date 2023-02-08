@@ -93,7 +93,7 @@ minio/minio server http://47.108.146.24{0...2}/export{1...2} --console-address "
 注意，如果此时启动错误，请使用 `docker logs 容器名` 命令查看具体的启动日志
 
 如果出现错误，请停止，移除容器
-```xml
+```shell
 docker stop 容器id #暂停容器
 docker rm 容器id #删除停止的容器
 ```

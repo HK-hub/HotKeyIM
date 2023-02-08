@@ -48,6 +48,12 @@ public class Friend implements Serializable {
     private String group;
 
     /**
+     * 分组id
+     */
+    @TableField(value = "group_id")
+    private Long groupId;
+
+    /**
      * 备注姓名
      */
     @TableField(value = "remark_name")

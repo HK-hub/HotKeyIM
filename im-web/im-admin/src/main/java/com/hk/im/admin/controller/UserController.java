@@ -80,10 +80,6 @@ public class UserController {
     @PostMapping("/register")
     public ResponseResult register(@RequestBody LoginOrRegisterRequest request) {
         ResponseResult result = this.userService.register(request);
-        if (BooleanUtils.isTrue(result.isSuccess())) {
-            // 注册成功
-            result.setMessage("注册用户成功!");
-        }
         return result;
     }
 

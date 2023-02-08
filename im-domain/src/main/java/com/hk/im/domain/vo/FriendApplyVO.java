@@ -3,6 +3,8 @@ package com.hk.im.domain.vo;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * @author : HK意境
  * @ClassName : FriendApplyVO
@@ -39,6 +41,8 @@ public class FriendApplyVO {
      */
     private Integer sign;
 
+    // 申请时间
+    private LocalDateTime createTime;
 
 
 

@@ -8,14 +8,17 @@ import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.entity.Friend;
+import com.hk.im.domain.entity.FriendGroup;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.ModifyFriendInfoRequest;
 import com.hk.im.domain.request.ModifyFriendStatusRequest;
+import com.hk.im.domain.response.FriendListResponse;
 import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapper.FriendMapper;
 import com.hk.im.infrastructure.mapstruct.FriendMapStructure;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
+import com.hk.im.service.service.FriendGroupService;
 import com.hk.im.service.service.FriendService;
 import com.hk.im.service.service.UserService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -46,6 +49,8 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
     private FriendMapper friendMapper;
     @Resource
     private UserService userService;
+    @Resource
+    private FriendGroupService friendGroupService;
 
     /**
      * 是否好友关系
@@ -144,6 +149,52 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
         // 返回数据
         return ResponseResult.SUCCESS(sortedFriendMap);
+    }
+
+    /**
+     * 获取用户好友列表V2 版本: 只返回好友列表
+     * @param userId
+     * @return
+     */
+    @Override
+    public ResponseResult getUserFriendListV2(Long userId) {
+        LambdaQueryChainWrapper<Friend> queryWrapper = this.lambdaQuery();
+
+        // 好友状态为：1.好友，3.特别关心
+        List<Friend> friendList = queryWrapper.eq(Friend::getUserId, userId)
+                .and(wrapper -> {
+                    wrapper.eq(Friend::getRelation, FriendConstants.FriendRelationship.FRIEND.ordinal())
+                            .or()
+                            .eq(Friend::getRelation, FriendConstants.FriendRelationship.CAREFUL.ordinal());
+                }).list();
+
+        // 根据 friendId 查询好友用户信息 UserVO
+        List<Long> friendIdList = friendList.stream().map(Friend::getFriendId).toList();
+        // 批量查询好友信息
+        ResponseResult result = this.userService.getUserAndInfoList(friendIdList);
+        if (BooleanUtils.isFalse(result.isSuccess())) {
+            return ResponseResult.FAIL("查询好友信息失败");
+        }
+        // 组装响应数据：<group, List<FriendVO>>
+        List<UserVO> userVOList = (List<UserVO>) result.getData();
+        // 转换为 <id, userVO> 集合
+        Map<Long, UserVO> userVOMap = userVOList.stream().collect(Collectors.toMap(UserVO::getId, value -> value));
+
+        // 构造 friendList
+        List<FriendVO> friendVOList = friendList.stream().map(friend ->
+                        FriendMapStructure.INSTANCE.toVO(friend, userVOMap.get(friend.getFriendId())))
+                .collect(Collectors.toList());
+
+        // 构建分组集合
+        ResponseResult groupResult = this.friendGroupService.getUserAllGroup(userId);
+        if (BooleanUtils.isFalse(groupResult.isSuccess())) {
+            return ResponseResult.FAIL("查询好友信息失败");
+        }
+        List<FriendGroup> groupList = (List<FriendGroup>) groupResult.getData();
+
+        // 响应数据
+        return ResponseResult.SUCCESS(new FriendListResponse()
+                .setFriendList(friendVOList).setGroupList(groupList));
     }
 
 

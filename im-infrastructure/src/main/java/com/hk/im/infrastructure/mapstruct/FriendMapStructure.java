@@ -26,6 +26,7 @@ public interface FriendMapStructure {
 
     @Mapping(source = "friend.id", target = "id")
     @Mapping(source = "userVO", target = "friend")
+    @Mapping(source = "friend.groupId", target = "groupId")
     @Mapping(source = "userVO.status", target = "status", defaultValue = "2")
     public FriendVO toVO(Friend friend, UserVO userVO);
 

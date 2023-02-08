@@ -5,6 +5,7 @@ import com.hk.im.common.error.ApiException;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.entity.Friend;
+import com.hk.im.domain.entity.FriendGroup;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.ModifyFriendInfoRequest;
 import com.hk.im.domain.request.ModifyFriendStatusRequest;
@@ -55,6 +56,13 @@ public interface FriendService extends IService<Friend> {
      */
     ResponseResult getUserFriendList(Long userId);
 
+    /**
+     * 获取用户好友列表V2 版本: 只返回好友列表
+     * @param userId
+     * @return
+     */
+    ResponseResult getUserFriendListV2(Long userId);
+
 
     /**
      * 获取用户的黑名单列表
@@ -83,4 +91,5 @@ public interface FriendService extends IService<Friend> {
      * @return
      */
     ResponseResult updateFriendStatus(ModifyFriendStatusRequest request);
+
 }

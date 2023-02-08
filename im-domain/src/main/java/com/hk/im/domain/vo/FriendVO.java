@@ -56,6 +56,11 @@ public class FriendVO {
     private String group;
 
     /**
+     * 分组id
+     */
+    private String groupId;
+
+    /**
      * 备注姓名
      */
     private String remarkName;
