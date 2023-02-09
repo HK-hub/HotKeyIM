@@ -356,6 +356,33 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
     }
 
 
+    /**
+     * 获取用户指定分组好友
+     * @param userId
+     * @param groupId
+     * @return
+     */
+    @Override
+    public ResponseResult getUserFriendByGroup(Long userId, Long groupId) {
+
+        // 参数校验
+        if (Objects.isNull(userId) || Objects.isNull(groupId)) {
+            return ResponseResult.FAIL();
+        }
+
+        // 获取好友
+        List<Friend> list = this.lambdaQuery()
+                .eq(Friend::getUserId, userId)
+                .eq(Friend::getGroupId, groupId)
+                .list();
+        if (CollectionUtils.isEmpty(list)) {
+            list = Collections.emptyList();
+        }
+        // 响应
+        return ResponseResult.SUCCESS(list);
+    }
+
+
 }
 
 
