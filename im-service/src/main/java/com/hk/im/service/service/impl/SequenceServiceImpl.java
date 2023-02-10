@@ -1,14 +1,12 @@
 package com.hk.im.service.service.impl;
 
 
-import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.entity.Friend;
-import com.hk.im.domain.entity.GroupSetting;
 import com.hk.im.domain.entity.Sequence;
 import com.hk.im.infrastructure.event.communication.event.RefreshSequenceEvent;
 import com.hk.im.infrastructure.mapper.SequenceMapper;
@@ -66,8 +64,8 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
 
         // 数据库是否存在
         Sequence sequence = this.lambdaQuery()
-                .eq(Sequence::getCommunicationId, communicationId)
-                .eq(Sequence::getParticipantId, participantId)
+                .eq(Sequence::getSenderId, communicationId)
+                .eq(Sequence::getReceiverId, participantId)
                 .one();
         if (Objects.isNull(sequence)) {
             // 会话发号器不存在，查看好友关系，群聊关系决定是否创建发号器
@@ -104,8 +102,8 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
         String name = communicationId + "-" + participantId;
         Sequence sequence = new Sequence()
                 .setName(name)
-                .setCommunicationId(communicationId)
-                .setParticipantId(participantId)
+                .setSenderId(communicationId)
+                .setReceiverId(participantId)
                 .setMax(1001L)
                 .setCurrent(0L);
         boolean save = this.save(sequence);

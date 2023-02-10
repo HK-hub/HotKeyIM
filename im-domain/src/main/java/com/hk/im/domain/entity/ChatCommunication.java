@@ -8,15 +8,16 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 /**
  * 
  * @TableName tb_chat_communication
  */
-@Getter
-@Setter
+@Data
 @EqualsAndHashCode
 @ToString
+@Accessors(chain = true)
 @TableName(value ="tb_chat_communication")
 public class ChatCommunication implements Serializable {
     /**
@@ -47,7 +48,7 @@ public class ChatCommunication implements Serializable {
      * 接收者id
      */
     @TableField(value = "acceptor_id")
-    private Long acceptorId;
+    private Long receiverId;
 
     /**
      * 群聊id,用于扩展群内@消息
@@ -114,124 +115,4 @@ public class ChatCommunication implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getBelongUserId() {
-        return belongUserId;
-    }
-
-    public void setBelongUserId(Long belongUserId) {
-        this.belongUserId = belongUserId;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public Long getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(Long senderId) {
-        this.senderId = senderId;
-    }
-
-    public Long getAcceptorId() {
-        return acceptorId;
-    }
-
-    public void setAcceptorId(Long acceptorId) {
-        this.acceptorId = acceptorId;
-    }
-
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
-
-    public Long getLastMessageId() {
-        return lastMessageId;
-    }
-
-    public void setLastMessageId(Long lastMessageId) {
-        this.lastMessageId = lastMessageId;
-    }
-
-    public String getLastMessageContent() {
-        return lastMessageContent;
-    }
-
-    public void setLastMessageContent(String lastMessageContent) {
-        this.lastMessageContent = lastMessageContent;
-    }
-
-    public String getLastSenderUsername() {
-        return lastSenderUsername;
-    }
-
-    public void setLastSenderUsername(String lastSenderUsername) {
-        this.lastSenderUsername = lastSenderUsername;
-    }
-
-    public Date getLastSendTime() {
-        return lastSendTime;
-    }
-
-    public void setLastSendTime(Date lastSendTime) {
-        this.lastSendTime = lastSendTime;
-    }
-
-    public Integer getSessionType() {
-        return sessionType;
-    }
-
-    public void setSessionType(Integer sessionType) {
-        this.sessionType = sessionType;
-    }
-
-    public Integer getSessionStatus() {
-        return sessionStatus;
-    }
-
-    public void setSessionStatus(Integer sessionStatus) {
-        this.sessionStatus = sessionStatus;
-    }
-
-    public Integer getUnreadCount() {
-        return unreadCount;
-    }
-
-    public void setUnreadCount(Integer unreadCount) {
-        this.unreadCount = unreadCount;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
 }

@@ -9,7 +9,7 @@
             <result property="belongUserId" column="belong_user_id" jdbcType="BIGINT"/>
             <result property="sessionId" column="session_id" jdbcType="VARCHAR"/>
             <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
-            <result property="acceptorId" column="acceptor_id" jdbcType="BIGINT"/>
+            <result property="receiverId" column="receiver_id" jdbcType="BIGINT"/>
             <result property="groupId" column="group_id" jdbcType="BIGINT"/>
             <result property="lastMessageId" column="last_message_id" jdbcType="BIGINT"/>
             <result property="lastMessageContent" column="last_message_content" jdbcType="VARCHAR"/>
@@ -24,7 +24,7 @@
 
     <sql id="Base_Column_List">
         id,belong_user_id,session_id,
-        sender_id,acceptor_id,group_id,
+        sender_id,receiver_id,group_id,
         last_message_id,last_message_content,last_sender_username,
         last_send_time,session_type,session_status,
         unread_count,create_time,update_time

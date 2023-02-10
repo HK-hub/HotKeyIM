@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -20,6 +22,8 @@ import lombok.experimental.Accessors;
  */
 @TableName(value ="tb_sequence")
 @Data
+@ToString
+@EqualsAndHashCode
 @Accessors(chain = true)
 public class Sequence implements Serializable {
     /**
@@ -35,16 +39,27 @@ public class Sequence implements Serializable {
     private String name;
 
     /**
-     * 会话参与者
+     * 业务描述
      */
-    @TableField(value = "participant_id")
-    private Long participantId;
+    private String description;
 
     /**
-     * 会话发起者
+     * 会话id
      */
-    @TableField(value = "communication_id")
-    private Long communicationId;
+    @TableField(value = "session_id")
+    private Long sessionId;
+
+    /**
+     * 会话参与者, 消息接收者
+     */
+    @TableField(value = "receiver_id")
+    private Long receiverId;
+
+    /**
+     * 会话发起者: 消息发送者
+     */
+    @TableField(value = "sender_id")
+    private Long senderId;
 
     /**
      * 下一次将要申请的号段起始位置
@@ -63,6 +78,13 @@ public class Sequence implements Serializable {
      */
     @TableField(value = "segment")
     private Integer segment;
+
+    /**
+     * 号段大小
+     */
+    @TableField(value = "version")
+    private Long version;
+
 
     /**
      * 创建时间
@@ -86,56 +108,4 @@ public class Sequence implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Sequence other = (Sequence) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getParticipantId() == null ? other.getParticipantId() == null : this.getParticipantId().equals(other.getParticipantId()))
-            && (this.getCommunicationId() == null ? other.getCommunicationId() == null : this.getCommunicationId().equals(other.getCommunicationId()))
-            && (this.getMax() == null ? other.getMax() == null : this.getMax().equals(other.getMax()))
-            && (this.getStep() == null ? other.getStep() == null : this.getStep().equals(other.getStep()))
-            && (this.getSegment() == null ? other.getSegment() == null : this.getSegment().equals(other.getSegment()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getParticipantId() == null) ? 0 : getParticipantId().hashCode());
-        result = prime * result + ((getCommunicationId() == null) ? 0 : getCommunicationId().hashCode());
-        result = prime * result + ((getMax() == null) ? 0 : getMax().hashCode());
-        result = prime * result + ((getStep() == null) ? 0 : getStep().hashCode());
-        result = prime * result + ((getSegment() == null) ? 0 : getSegment().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", participantId=").append(participantId);
-        sb.append(", communicationId=").append(communicationId);
-        sb.append(", max=").append(max);
-        sb.append(", step=").append(step);
-        sb.append(", segment=").append(segment);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

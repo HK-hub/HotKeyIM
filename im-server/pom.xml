@@ -15,6 +15,7 @@
     <modules>
         <module>chat-server</module>
         <module>push-server</module>
+        <module>server-common</module>
     </modules>
 
     <properties>

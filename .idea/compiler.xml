@@ -16,6 +16,7 @@
         <module name="ruoyi-framework" />
         <module name="im-domain" />
         <module name="im-admin" />
+        <module name="server-common" />
         <module name="im-service" />
         <module name="ruoyi-common" />
         <module name="ruoyi-quartz" />

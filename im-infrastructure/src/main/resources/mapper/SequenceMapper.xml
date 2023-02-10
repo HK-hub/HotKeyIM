@@ -7,16 +7,19 @@
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.Sequence">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="participantId" column="participant_id" jdbcType="BIGINT"/>
-            <result property="communicationId" column="communication_id" jdbcType="BIGINT"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="sessionId" column="session_id" jdbcType="BIGINT"/>
+            <result property="receiverId" column="receiver_id" jdbcType="BIGINT"/>
+            <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
             <result property="max" column="max" jdbcType="BIGINT"/>
             <result property="step" column="step" jdbcType="INTEGER"/>
             <result property="segment" column="segment" jdbcType="INTEGER"/>
+            <result property="version" column="version" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,participant_id,
-        communication_id,max,step,
-        segment
+        id,name,description,session_id,receiver_id,
+        sender_id,max,step,
+        segment,version,create_time,update_time
     </sql>
 </mapper>

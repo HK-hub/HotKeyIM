@@ -20,17 +20,14 @@ public class UserAvatarTest {
      * 生成随机默认头像保存在本地
      */
     @Test
-    public void getPng(){
-        for (int i = 0; i < 10; i++) {
+    public void getPng() {
+        for (int i = 0; i < 15; i++) {
             String avatar = AvatarUtil.generateAvatar();
-            System.out.println(avatar);
-            String bigAvatar = AvatarUtil.generateBigAvatar(200);
-            System.out.println(bigAvatar);
-            System.out.println(AvatarUtil.getBigAvatar(avatar));
+            System.out.println(i + "." + avatar);
+            System.out.println(i + "." + AvatarUtil.getBigAvatar(avatar));
             System.out.println("--------------------------------");
         }
     }
-
 
 
 }

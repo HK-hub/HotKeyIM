@@ -9,9 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>push-server</artifactId>
-
-    <description>消息推送服务</description>
+    <artifactId>server-common</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -20,27 +18,22 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
         </dependency>
         <dependency>
-            <groupId>com.hk.im.common</groupId>
-            <artifactId>im-common</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hk.im.infrastructure</groupId>
-            <artifactId>im-infrastructure</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hk.im</groupId>
-            <artifactId>im-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hk.im</groupId>
-            <artifactId>server-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.20</version>
         </dependency>
     </dependencies>
 

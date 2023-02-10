@@ -178,32 +178,6 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<WebSocketF
         }
     }
 
-    /**
-     * 获取 http 请求，上的uri 参数
-     *
-     * @param url
-     *
-     * @return
-     */
-    private static Map<String, String> getUrlParams(String url) {
-        Map<String, String> map = new HashMap<>();
-        url = url.replace("?", ";");
-        if (!url.contains(";")) {
-            return map;
-        }
-        if (url.split(";").length > 0) {
-            String[] arr = url.split(";")[1].split("&");
-            for (String s : arr) {
-                String key = s.split("=")[0];
-                String value = s.split("=")[1];
-                map.put(key, value);
-            }
-            return map;
-
-        } else {
-            return map;
-        }
-    }
 
     /**
      * 建立连接
