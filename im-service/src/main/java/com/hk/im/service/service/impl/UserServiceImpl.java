@@ -303,6 +303,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String qrcodeUrl = this.minioService.putObject(StreamUtil.convertToInputStream(bos),
                 MinioConstant.BucketEnum.User.getBucket(), qrcode);
         user.setQrcode(qrcodeUrl);
+        // 设置用户头像
+        String miniAvatar = AvatarUtil.generateAvatar();
+        user.setMiniAvatar(miniAvatar);
+        user.setBigAvatar(AvatarUtil.getBigAvatar(miniAvatar));
 
         // 注册结果
         ResponseResult result = new ResponseResult().setSuccess(false);
