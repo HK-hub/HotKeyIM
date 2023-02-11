@@ -47,7 +47,7 @@ public class ChatCommunication implements Serializable {
     /**
      * 接收者id
      */
-    @TableField(value = "acceptor_id")
+    @TableField(value = "receiver_id")
     private Long receiverId;
 
     /**

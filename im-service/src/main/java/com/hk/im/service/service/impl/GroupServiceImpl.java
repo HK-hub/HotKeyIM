@@ -23,13 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * @ClassName : GroupServiceImpl
  * @author : HK意境
+ * @ClassName : GroupServiceImpl
  * @date : 2023/1/21 21:58
  * @description :
  * @Todo :
@@ -257,7 +258,9 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     /**
      * 取消/移除管理员
+     *
      * @param request
+     *
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -302,7 +305,9 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     /**
      * 修改群聊信息
+     *
      * @param request
+     *
      * @return
      */
     @Override
@@ -310,6 +315,34 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     public ResponseResult updateGroupInfo(ModifyGroupInfoRequest request) {
 
         Integer effected = this.groupMapper.updateGroupInfo(request);
+        return null;
+    }
+
+
+    /**
+     * 获取用户加入群组列表
+     *
+     * @param userId
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult getUserJoinGroupList(String userId) {
+
+        // 获取用户作为群员的的群列表
+        List<GroupMember> memberList = this.groupMemberService.lambdaQuery()
+                .eq(GroupMember::getMemberId, userId)
+                .list();
+        if (CollectionUtils.isEmpty(memberList)) {
+            // 用户没有加入群
+            memberList = Collections.emptyList();
+        }
+        // 加入的群聊id
+        List<Long> groupIdList = memberList.stream().map(GroupMember::getGroupId).toList();
+        // 查询群聊
+        List<Group> groupList = this.listByIds(groupIdList);
+
+
         return null;
     }
 

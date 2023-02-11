@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @Version : 1.0
  */
 @Slf4j
+@Deprecated
 public class MessageIdGenerator {
 
 

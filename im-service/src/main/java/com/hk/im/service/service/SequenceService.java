@@ -20,12 +20,11 @@ public interface SequenceService extends IService<Sequence> {
 
     /**
      * 获取一个会话发号器
-     * @param communicationId
-     * @param participantId
+     * @param senderId
+     * @param receiverId
      * @return
      */
-    public ResponseResult getSequence(Long communicationId, Long participantId);
-
+    public ResponseResult getSequence(Long senderId, Long receiverId);
 
     /**
      * 创建会话器

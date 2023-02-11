@@ -29,6 +29,18 @@ public class CommunicationController {
 
 
     /**
+     * 获取用户会话列表
+     * @param userId
+     * @return
+     */
+    @GetMapping("/list")
+    public ResponseResult getCommunicationList(@RequestParam("userId") String userId) {
+        log.info("getCommunicationList, request user={}", userId);
+        return this.chatCommunicationService.getUserCommunicationList(Long.valueOf(userId));
+    }
+
+
+    /**
      * 创建会话: 如果会话存在，则直接返回会话
      * @param request
      * @return

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 
@@ -12,6 +13,7 @@ import lombok.Data;
  */
 @TableName(value ="tb_message_flow")
 @Data
+@Accessors(chain = true)
 public class MessageFlow implements Serializable {
     /**
      * 聊天消息表id
@@ -35,7 +37,7 @@ public class MessageFlow implements Serializable {
      * 消息接收者id(用户id或群id)
      */
     @TableField(value = "acceptor_id")
-    private Long acceptorId;
+    private Long receiverId;
 
     /**
      * 会话类型:1.个人聊天,2.群聊，3.系统消息,
@@ -59,7 +61,7 @@ public class MessageFlow implements Serializable {
     /**
      * 消息序列号
      */
-    @TableField(value = "sequence")
+    @TableField(value = "`sequence`")
     private Long sequence;
 
     /**
@@ -110,7 +112,7 @@ public class MessageFlow implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getGroupId() == null ? other.getGroupId() == null : this.getGroupId().equals(other.getGroupId()))
             && (this.getSenderId() == null ? other.getSenderId() == null : this.getSenderId().equals(other.getSenderId()))
-            && (this.getAcceptorId() == null ? other.getAcceptorId() == null : this.getAcceptorId().equals(other.getAcceptorId()))
+            && (this.getReceiverId() == null ? other.getReceiverId() == null : this.getReceiverId().equals(other.getReceiverId()))
             && (this.getChatType() == null ? other.getChatType() == null : this.getChatType().equals(other.getChatType()))
             && (this.getMessageType() == null ? other.getMessageType() == null : this.getMessageType().equals(other.getMessageType()))
             && (this.getMessageId() == null ? other.getMessageId() == null : this.getMessageId().equals(other.getMessageId()))
@@ -128,7 +130,7 @@ public class MessageFlow implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getGroupId() == null) ? 0 : getGroupId().hashCode());
         result = prime * result + ((getSenderId() == null) ? 0 : getSenderId().hashCode());
-        result = prime * result + ((getAcceptorId() == null) ? 0 : getAcceptorId().hashCode());
+        result = prime * result + ((getReceiverId() == null) ? 0 : getReceiverId().hashCode());
         result = prime * result + ((getChatType() == null) ? 0 : getChatType().hashCode());
         result = prime * result + ((getMessageType() == null) ? 0 : getMessageType().hashCode());
         result = prime * result + ((getMessageId() == null) ? 0 : getMessageId().hashCode());
@@ -149,7 +151,7 @@ public class MessageFlow implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", groupId=").append(groupId);
         sb.append(", senderId=").append(senderId);
-        sb.append(", acceptorId=").append(acceptorId);
+        sb.append(", receiverId=").append(receiverId);
         sb.append(", chatType=").append(chatType);
         sb.append(", messageType=").append(messageType);
         sb.append(", messageId=").append(messageId);
@@ -188,12 +190,12 @@ public class MessageFlow implements Serializable {
         this.senderId = senderId;
     }
 
-    public Long getAcceptorId() {
-        return acceptorId;
+    public Long getReceiverId() {
+        return receiverId;
     }
 
-    public void setAcceptorId(Long acceptorId) {
-        this.acceptorId = acceptorId;
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
     }
 
     public Integer getChatType() {

@@ -24,4 +24,20 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
      * @return
      */
     ResponseResult createChatCommunication(CreateCommunicationRequest request);
+
+    /**
+     * 获取会话
+     * @param senderId
+     * @param receiverId
+     * @return
+     */
+    ResponseResult getChatCommunication(Long senderId, Long receiverId);
+
+
+    /**
+     * 获取用户会话列表
+     * @param userId
+     * @return
+     */
+    ResponseResult getUserCommunicationList(Long userId);
 }

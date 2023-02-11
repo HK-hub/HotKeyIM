@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author : HK意境
- * @ClassName : SequeceBO
+ * @ClassName : SequenceBO
  * @date : 2023/1/26 21:22
  * @description :
  * @Todo :
@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class SequeceBO {
+public class SequenceBO {
 
     /**
      * 群聊id, 用户群临时会话策略
@@ -24,9 +24,13 @@ public class SequeceBO {
     /**
      * 如果为群聊那么则此处为 groupId
      */
-    private Long communicationId;
+    private Long senderId;
 
-    private Long participantId;
+    private Long receiverId;
+
+    private Long current;
+
+    private Long max;
 
 
 }

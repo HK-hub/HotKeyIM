@@ -6,13 +6,12 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
-import com.hk.im.domain.entity.Friend;
-import com.hk.im.domain.entity.Sequence;
+import com.hk.im.domain.constant.CommunicationConstants;
+import com.hk.im.domain.entity.*;
+import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.infrastructure.event.communication.event.RefreshSequenceEvent;
 import com.hk.im.infrastructure.mapper.SequenceMapper;
-import com.hk.im.service.service.FriendService;
-import com.hk.im.service.service.GroupSettingService;
-import com.hk.im.service.service.SequenceService;
+import com.hk.im.service.service.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -36,45 +35,47 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> implements SequenceService {
 
-    @Resource(name = "sequenceCache")
-    private Cache<String, Sequence> sequenceCache;
+    @Resource
+    private MessageFlowService messageFlowService;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private FriendService friendService;
     @Resource
-    private GroupSettingService groupSettingService;
+    private SequenceMapper sequenceMapper;
     @Resource
     private ApplicationContext applicationContext;
 
 
+
     /**
      * 获取一个发号器
-     * @param communicationId
-     * @param participantId
+     *
+     * @param senderId
+     * @param receiverId
+     *
      * @return
      */
     @Override
-    public ResponseResult getSequence(Long communicationId, Long participantId) {
+    @Deprecated
+    public ResponseResult getSequence(Long senderId, Long receiverId) {
 
         // 参数校验
-        if (Objects.isNull(communicationId) || Objects.isNull(participantId)) {
+        if (Objects.isNull(senderId) || Objects.isNull(receiverId)) {
             return ResponseResult.FAIL("会话参数不完整!").setResultCode(ResultCode.BAD_REQUEST);
         }
 
         // 数据库是否存在
-        Sequence sequence = this.lambdaQuery()
-                .eq(Sequence::getSenderId, communicationId)
-                .eq(Sequence::getReceiverId, participantId)
-                .one();
+        Sequence sequence = this.sequenceMapper.selectSessionSequence(senderId, receiverId);
+
         if (Objects.isNull(sequence)) {
             // 会话发号器不存在，查看好友关系，群聊关系决定是否创建发号器
-            Friend relationship = this.friendService.isFriendRelationship(communicationId, participantId);
+            Friend relationship = this.friendService.isFriendRelationship(senderId, receiverId);
             if (Objects.isNull(relationship)) {
                 // 非好友关系 -> 可能群聊发起的临时会话
                 return ResponseResult.FAIL("抱歉，你们不是好友!");
             }
-            ResponseResult result = this.createSequence(communicationId, participantId);
+            ResponseResult result = this.createSequence(senderId, receiverId);
             if (result.isSuccess()) {
                 sequence = (Sequence) result.getData();
             }
@@ -85,86 +86,62 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
 
     /**
      * 创建一个会话发号器
-     * @param communicationId
-     * @param participantId
+     *
+     * @param senderId
+     * @param receiverId
+     *
      * @return
      */
     @Override
+    @Deprecated
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult createSequence(Long communicationId, Long participantId) {
+    public ResponseResult createSequence(Long senderId, Long receiverId) {
 
-        // 参数校验
-        if (Objects.isNull(communicationId) || Objects.isNull(participantId)) {
-            return ResponseResult.FAIL("会话参数不完整!").setResultCode(ResultCode.BAD_REQUEST);
-        }
-
-        // 会话不存在，创建会话
-        String name = communicationId + "-" + participantId;
-        Sequence sequence = new Sequence()
-                .setName(name)
-                .setSenderId(communicationId)
-                .setReceiverId(participantId)
-                .setMax(1001L)
-                .setCurrent(0L);
-        boolean save = this.save(sequence);
-        if (BooleanUtils.isFalse(save)) {
-            // 创建失败
-            return ResponseResult.FAIL("创建会话失败!").setResultCode(ResultCode.SERVER_BUSY);
-        }
-
-        // 将会话保存到 缓存 中
-        String key = RedisConstants.COMMUNICATION_KEY + RedisConstants.SEQUENCE_KEY + communicationId + "-" + participantId;
-        sequenceCache.put(key, sequence);
-        stringRedisTemplate.opsForValue()
-                .set(key, String.valueOf(sequence.getCurrent()), 60, TimeUnit.MINUTES);
-
-        return ResponseResult.SUCCESS(sequence);
+      return null;
     }
 
 
     /**
-     * 获取下一个会话消息ID
+     * 获取下一个消息消息ID
      *
-     * @param communicationId 会话主要人id: 可以为群id
-     * @param participantId   会话参与人id
+     * @param senderId 会话主要人id: 可以为群id
+     * @param receiverId   会话参与人id
      *
      * @return
      */
     @Override
-    public synchronized ResponseResult nextId(Long communicationId, Long participantId) {
+    public synchronized ResponseResult nextId(Long senderId, Long receiverId) {
 
         // Redis 中只存储发号器的计数， Caffeine 中存储发号器
-        String key = RedisConstants.COMMUNICATION_KEY + RedisConstants.SEQUENCE_KEY + communicationId + "-" + participantId;
+        String name = senderId < receiverId ? senderId + "-" + receiverId : receiverId + "-" + senderId;
+        String key = RedisConstants.COMMUNICATION_KEY + RedisConstants.SEQUENCE_KEY + name;
 
-        // 获取缓存中的 sequence 发号器
-        Sequence sequence = sequenceCache.getIfPresent(key);
-        if (Objects.isNull(sequence)) {
-            // 已经过期或不存在, 从数据库中获取
-            ResponseResult result = this.getSequence(communicationId, participantId);
-            if (BooleanUtils.isFalse(result.isSuccess())) {
-                return result.setResultCode(ResultCode.SERVER_BUSY);
+        // 缓存中是否存在会话
+        Boolean exists = stringRedisTemplate.hasKey(key);
+        if (BooleanUtils.isFalse(exists)) {
+            // 会话不存在,查询最大消息Id ,进行设置
+            MessageFlow messageFlow = this.messageFlowService.getCommunicationMaxMessageSequence(senderId, receiverId);
+            if (Objects.isNull(messageFlow)) {
+                messageFlow = new MessageFlow().setSequence(0L);
             }
-            sequence = (Sequence) result.getData();
-            // 更新缓存
-            sequenceCache.put(key, sequence);
+            // 设置自增缓存
+            this.stringRedisTemplate.opsForValue()
+                    .set(key, String.valueOf(messageFlow.getSequence() + 1000), 120, TimeUnit.MINUTES);
         }
 
         // 按照步长自增
-        Long increment = stringRedisTemplate.opsForValue().increment(key, sequence.getStep());
-        if (Objects.isNull(increment)) {
-            // redis 还不存在该会话
-            // 设置 sequence
-            increment = sequence.getMax();
-            stringRedisTemplate.opsForValue()
-                    .set(key, String.valueOf(increment), 60, TimeUnit.MINUTES);
+        Long nextId = stringRedisTemplate.opsForValue().increment(key);
+        if (Objects.isNull(nextId)) {
+            // 自增失败
+            return ResponseResult.FAIL().setResultCode(ResultCode.SERVER_ERROR);
         }
 
         // 更新cache, 重置过期时间
-        sequenceCache.put(key, sequence.setCurrent(increment));
         // TODO 发送事件，异步刷新发号器: buffer 计算
-        applicationContext.publishEvent(new RefreshSequenceEvent(this, sequence));
+        this.applicationContext.publishEvent(new RefreshSequenceEvent(this,
+                new Sequence().setSenderId(senderId).setReceiverId(receiverId)));
 
-        return ResponseResult.SUCCESS(increment);
+        return ResponseResult.SUCCESS(nextId);
     }
 }
 

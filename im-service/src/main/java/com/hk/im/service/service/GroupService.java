@@ -66,4 +66,12 @@ public interface GroupService extends IService<Group> {
      * @return
      */
     ResponseResult updateGroupInfo(ModifyGroupInfoRequest request);
+
+
+    /**
+     * 获取用户加入群组列表
+     * @param userId
+     * @return
+     */
+    ResponseResult getUserJoinGroupList(String userId);
 }

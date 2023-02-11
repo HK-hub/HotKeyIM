@@ -42,6 +42,18 @@ public class GroupController {
 
 
     /**
+     * 获取用户加入群组
+     * @param userId
+     * @return
+     */
+    @GetMapping("/list")
+    public ResponseResult userJoinGroupList(@RequestParam("userId") String userId) {
+
+        return this.groupService.getUserJoinGroupList(userId);
+    }
+
+
+    /**
      * 设置群管理员, 取消群管理员
      * @param request
      * @return
