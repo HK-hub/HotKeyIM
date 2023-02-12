@@ -1,17 +1,16 @@
 package com.hk.im.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author : HK意境
  * @ClassName : GroupVO
  * @date : 2023/2/11 18:22
- * @description :
+ * @description : 群聊信息，群成员，群设置，群公告，群申请
  * @Todo :
  * @Bug :
  * @Modified :
@@ -69,8 +68,14 @@ public class GroupVO {
      */
     private LocalDateTime createTime;
 
+    // 群成员
+    private List<GroupMemberVO> groupMemberList;
 
+    // 群设置
+    private GroupSettingVO groupSetting;
 
+    // 群公告
+    private List<GroupAnnouncementVO> groupAnnouncementList;
 
 
 }

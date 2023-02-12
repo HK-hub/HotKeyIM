@@ -15,6 +15,7 @@
             <result property="memberRole" column="member_role" jdbcType="INTEGER"/>
             <result property="groupCategory" column="group_category" jdbcType="VARCHAR"/>
             <result property="gagTime" column="gag_time" jdbcType="TIMESTAMP"/>
+            <result property="lastAckMessage" column="last_ack_message" jdbcType="BIGINT"/>
             <result property="status" column="status" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
@@ -24,7 +25,7 @@
         id,group_id,group_account,
         member_id,member_username,member_remark_name,
         member_avatar,member_role,group_category,
-        gag_time,status,create_time,
+        gag_time,last_ack_message,status,create_time,
         update_time
     </sql>
     <select id="getGroupMemberByGroupIdAndMemberId" resultType="com.hk.im.domain.entity.GroupMember">

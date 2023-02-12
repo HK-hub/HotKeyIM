@@ -1,0 +1,9 @@
+${AnsiColor.BLUE}__    __    ______   .___________. __  ___  ___________    ____  __  .___  ___.
+${AnsiColor.BRIGHT_RED}|  |  |  |  /  __  \  |           ||  |/  / |   ____\   \  /   / |  | |   \/   |
+${AnsiColor.BRIGHT_RED}|  |__|  | |  |  |  | `---|  |----`|  '  /  |  |__   \   \/   /  |  | |  \  /  |
+${AnsiColor.BRIGHT_YELLOW}|   __   | |  |  |  |     |  |     |    <   |   __|   \_    _/   |  | |  |\/|  |
+${AnsiColor.BRIGHT_YELLOW}|  |  |  | |  `--'  |     |  |     |  .  \  |  |____    |  |     |  | |  |  |  |
+${AnsiColor.BRIGHT_RED}|__|  |__|  \______/      |__|     |__|\__\ |_______|   |__|     |__| |__|  |__|
+${AnsiColor.BLACK}
+HotKeyIM 0.5.1
+Powered by Spring Boot ${spring-boot.version}

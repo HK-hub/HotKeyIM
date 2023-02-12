@@ -13,6 +13,7 @@ import lombok.Data;
 @TableName(value ="tb_group_setting")
 @Data
 public class GroupSetting implements Serializable {
+
     /**
      * 群id
      */

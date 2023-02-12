@@ -76,6 +76,12 @@ public class GroupMember implements Serializable {
     private LocalDateTime gagTime;
 
     /**
+     * 全员最后确认收到消息id
+     */
+    @TableField(value = "last_ack_message")
+    private Long lastAckMessage;
+
+    /**
      * 群状态：1.加群，2.退群，3.群黑名单(前提是已经被踢出群聊)
      */
     @TableField(value = "status")

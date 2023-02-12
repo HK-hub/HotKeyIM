@@ -341,7 +341,11 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         List<Long> groupIdList = memberList.stream().map(GroupMember::getGroupId).toList();
         // 查询群聊
         List<Group> groupList = this.listByIds(groupIdList);
+        // 组装群聊列表
+        groupList.stream().map(group -> {
+            // 查询群员
 
+        })
 
         return null;
     }
