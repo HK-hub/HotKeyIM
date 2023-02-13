@@ -48,7 +48,6 @@ public class GroupController {
      */
     @GetMapping("/list")
     public ResponseResult userJoinGroupList(@RequestParam("userId") String userId) {
-
         return this.groupService.getUserJoinGroupList(userId);
     }
 
@@ -75,6 +74,8 @@ public class GroupController {
     public ResponseResult modifyGroupInfo(@RequestBody ModifyGroupInfoRequest request) {
         return this.groupService.updateGroupInfo(request);
     }
+
+
 
 
 }

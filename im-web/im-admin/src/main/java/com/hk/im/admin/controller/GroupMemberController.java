@@ -2,6 +2,7 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.InviteGroupMemberRequest;
+import com.hk.im.domain.request.JoinGroupRequest;
 import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.service.service.GroupMemberService;
@@ -28,6 +29,11 @@ public class GroupMemberController {
     @Resource
     private GroupMemberService groupMemberService;
 
+
+    @PostMapping("/join")
+    public ResponseResult joinGroup(@RequestBody JoinGroupRequest request) {
+        return this.groupMemberService.joinGroup(request);
+    }
 
     /**
      * 移除群成员/ 踢出群聊

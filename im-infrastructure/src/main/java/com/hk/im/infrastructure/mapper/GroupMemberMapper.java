@@ -5,6 +5,8 @@ import com.hk.im.domain.entity.GroupMember;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @Entity com.hk.im.domain.entity.GroupMember
  */
@@ -13,6 +15,9 @@ public interface GroupMemberMapper extends BaseMapper<GroupMember> {
 
     // 根据memberId 和 gourpId 查询群聊成员
     public GroupMember getGroupMemberByGroupIdAndMemberId(@Param("groupId") String groupId, @Param("memberId") String memberId);
+
+    // 获取群聊成员列表
+    List<GroupMember> selectGroupMemberList(@Param("groupId") Long groupId);
 
     // 修改用户昵称
 

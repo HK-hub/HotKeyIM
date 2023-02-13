@@ -1,24 +1,30 @@
 package com.hk.im.service.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.feilong.core.util.CollectionsUtil;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.GroupMemberConstants;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.InviteGroupMemberRequest;
+import com.hk.im.domain.request.JoinGroupRequest;
 import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
+import com.hk.im.domain.vo.GroupMemberVO;
 import com.hk.im.infrastructure.mapper.GroupMemberMapper;
+import com.hk.im.infrastructure.mapstruct.GroupMemberMapStructure;
 import com.hk.im.service.service.GroupMemberService;
 import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -221,6 +227,67 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         // TODO 推送消息，发布事件
 
         return ResponseResult.SUCCESS("修改群员群昵称成功!");
+    }
+
+    /**
+     * 获取群聊成员列表
+     * @param groupId
+     * @return
+     */
+    @Override
+    public List<GroupMemberVO> getGroupMemberList(Long groupId) {
+
+        List<GroupMember> groupMemberList = this.groupMemberMapper.selectGroupMemberList(groupId);
+        if (CollectionUtils.isEmpty(groupMemberList)) {
+            groupMemberList = Collections.emptyList();
+        }
+        // 转换
+        List<GroupMemberVO> memberVOList = groupMemberList.stream()
+                .map(GroupMemberMapStructure.INSTANCE::toVO)
+                .toList();
+        return memberVOList;
+    }
+
+    /**
+     * 无条件加入群聊
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult joinGroup(JoinGroupRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getUserId()) || StringUtils.isEmpty(request.getGroupId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 参数校验失败
+            return ResponseResult.FAIL().setResultCode(ResultCode.BAD_REQUEST);
+        }
+        String groupId = request.getGroupId();
+        String userId = request.getUserId();
+
+        // 查看是否已经加入群聊
+        GroupMember member = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, userId);
+        if (Objects.nonNull(member)) {
+            // 已经加入群聊
+            return ResponseResult.FAIL("你已经是群聊成员，无需重复加入!")
+                    .setMessage("你已经是群聊成员，无需重复加入!");
+        }
+
+        // 不是群员，加群
+        User user = this.userService.getById(userId);
+        member = new GroupMember()
+                .setGroupId(Long.valueOf(groupId))
+                .setMemberId(Long.valueOf(userId))
+                .setMemberUsername(user.getUsername())
+                .setMemberAvatar(user.getMiniAvatar())
+                .setMemberRole(GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal())
+                .setMemberRemarkName(user.getUsername());
+        // 加群
+        boolean save = this.save(member);
+        if (BooleanUtils.isFalse(save)) {
+            return ResponseResult.FAIL("加群失败");
+        }
+        return ResponseResult.SUCCESS("加入群聊成功!");
     }
 }
 

@@ -25,7 +25,7 @@ public interface GroupMapStructure {
 
     public static final GroupMapStructure INSTANCE = Mappers.getMapper(GroupMapStructure.class);
 
-    public GroupVO toVO(Group group, List<GroupMemberVO> member, List<GroupSettingVO> setting,
+    public GroupVO toVO(Group group, List<GroupMemberVO> member, GroupSettingVO setting,
                         List<GroupAnnouncementVO> announcement);
 
 

@@ -35,4 +35,8 @@
             group_id = #{groupId} and member_id = #{memberId}
         </where>
     </select>
+
+    <select id="selectGroupMemberList" resultType="com.hk.im.domain.entity.GroupMember">
+        select * from tb_group_member where group_id = #{groupId};
+    </select>
 </mapper>

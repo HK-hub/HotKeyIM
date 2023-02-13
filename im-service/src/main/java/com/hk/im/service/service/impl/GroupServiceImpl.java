@@ -7,14 +7,18 @@ import com.hk.im.domain.constant.GroupConstants;
 import com.hk.im.domain.constant.GroupMemberConstants;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.GroupMember;
+import com.hk.im.domain.entity.GroupSetting;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.CreateGroupRequest;
 import com.hk.im.domain.request.ModifyGroupInfoRequest;
 import com.hk.im.domain.request.SetGroupAdministratorRequest;
+import com.hk.im.domain.vo.GroupAnnouncementVO;
+import com.hk.im.domain.vo.GroupMemberVO;
+import com.hk.im.domain.vo.GroupSettingVO;
+import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.infrastructure.mapper.GroupMapper;
-import com.hk.im.service.service.GroupMemberService;
-import com.hk.im.service.service.GroupService;
-import com.hk.im.service.service.UserService;
+import com.hk.im.infrastructure.mapstruct.GroupMapStructure;
+import com.hk.im.service.service.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -46,6 +50,10 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     @Resource
     private GroupMemberService groupMemberService;
     @Resource
+    private GroupSettingService groupSettingService;
+    @Resource
+    private GroupAnnouncementService groupAnnouncementService;
+    @Resource
     private UserService userService;
 
     /**
@@ -73,16 +81,28 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
         // 准备数据
         GroupConstants.GroupCategory groupCategory = GroupConstants.getGroupCategory(request.getCategory());
-
+        // 群聊
         Group group = new Group();
         group.setGroupName(groupName)
                 .setDescription(request.getDescription())
                 .setGroupType(groupCategory.ordinal())
                 .setMemberCount(request.getInitialGroupMembers().size());
+        // 群设置
+        GroupSetting setting = new GroupSetting();
 
         // 创建群聊
         boolean save = this.save(group);
-        if (BooleanUtils.isFalse(save)) {
+        // 创建群设置
+        setting.setGroupId(group.getId())
+                .setFindType(1)
+                .setJoinType(1)
+                .setEnableTemporary(true)
+                .setForbidSend(0)
+                .setMemberCapacity(200);
+
+        boolean settingSave = this.groupSettingService.save(setting);
+
+        if (BooleanUtils.isFalse(save) || BooleanUtils.isFalse(settingSave)) {
             // 创建群聊失败
             return ResponseResult.FAIL("创建群聊失败!").setResultCode(ResultCode.SERVER_BUSY);
         }
@@ -341,14 +361,27 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         List<Long> groupIdList = memberList.stream().map(GroupMember::getGroupId).toList();
         // 查询群聊
         List<Group> groupList = this.listByIds(groupIdList);
+
         // 组装群聊列表
-        groupList.stream().map(group -> {
+        List<GroupVO> groupVOList = groupList.stream().map(group -> {
             // 查询群员
+            List<GroupMemberVO> memberVOList = this.groupMemberService.getGroupMemberList(group.getId());
+            // 查询群设置
+            GroupSettingVO settingVO = this.groupSettingService.getGroupSetting(group.getId());
+            // 查询群公告
+            List<GroupAnnouncementVO> announcementVOList = this.groupAnnouncementService.getGroupAnnouncementList(group.getId());
+            // 组装数据
+            GroupVO groupVO = GroupMapStructure.INSTANCE.toVO(group, memberVOList, settingVO, announcementVOList);
+            // 响应数据
+            return groupVO;
+        }).toList();
 
-        })
-
-        return null;
+        // 响应数据
+        return ResponseResult.SUCCESS(groupVOList);
     }
+
+
+
 
 
 }
