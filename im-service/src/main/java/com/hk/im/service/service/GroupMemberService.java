@@ -57,4 +57,11 @@ public interface GroupMemberService extends IService<GroupMember> {
      * @return
      */
     ResponseResult joinGroup(JoinGroupRequest request);
+
+    /**
+     * 获取用户管理群聊
+     * @param userId
+     * @return
+     */
+    List<GroupMember> getMemberManageGroups(Long userId);
 }

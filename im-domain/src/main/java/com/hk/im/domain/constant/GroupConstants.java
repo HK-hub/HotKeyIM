@@ -21,7 +21,7 @@ public class GroupConstants {
      * 群类型:0.未知，1.兴趣爱好，2.行业交流，3.生活休闲，3.学习考试，4.娱乐游戏，5.置业安家，6.品牌产品，7.粉丝，8.同学同事，9.家校师生
      */
     @Getter
-    public enum GroupCategory {
+    public static enum GroupCategory {
         DEFAULT("unknown"),
         INTERESTING("interesting"),
         INDUSTRY("industry"),
@@ -39,6 +39,21 @@ public class GroupConstants {
         GroupCategory(String category) {
             this.category = category;
         }
+    }
+
+    /**
+     * 加群方式：1.允许任何人everybody,2.需要验证verification, 3.回答问题，4.不允许人加群nobody,
+     */
+    public static enum GroupJoinType {
+        DEFAULT,
+        // 允许任何人
+        EVERYBODY,
+        // 需要验证
+        VERIFICATION,
+        // 回答问题
+        ANSWER,
+        // 不允许任何人加群
+        NOBODY,
     }
 
     /**

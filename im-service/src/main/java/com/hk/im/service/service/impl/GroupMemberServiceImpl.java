@@ -289,6 +289,22 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         }
         return ResponseResult.SUCCESS("加入群聊成功!");
     }
+
+
+    /**
+     * 获取用户管理群聊
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<GroupMember> getMemberManageGroups(Long userId) {
+
+        List<GroupMember> groupMemberList =  this.groupMemberMapper.selectGroupManageGroupList(userId);
+        if (CollectionUtils.isEmpty(groupMemberList)) {
+            groupMemberList = Collections.emptyList();
+        }
+        return groupMemberList;
+    }
 }
 
 

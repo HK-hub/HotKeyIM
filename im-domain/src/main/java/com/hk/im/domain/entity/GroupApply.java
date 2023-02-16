@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 
@@ -14,11 +15,12 @@ import lombok.Data;
  */
 @TableName(value ="tb_group_apply")
 @Data
+@Accessors(chain = true)
 public class GroupApply implements Serializable {
     /**
      * id编号
      */
-    @TableId(value = "id")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -56,6 +58,12 @@ public class GroupApply implements Serializable {
      */
     @TableField(value = "status")
     private Integer status;
+
+    /**
+     * 处理回执信息
+     */
+    @TableField(value = "handle_info")
+    private String handleInfo;
 
     /**
      * 签收状态：0.未签收，1.已签收

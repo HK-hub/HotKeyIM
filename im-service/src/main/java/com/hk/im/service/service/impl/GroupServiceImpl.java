@@ -26,10 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -381,7 +378,27 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     }
 
 
+    /**
+     * 获取用户管理群聊
+     * @param userId
+     * @return
+     */
+    @Override
+    public ResponseResult getUserManageGroups(Long userId) {
+        List<GroupMember> memberManageGroups = this.groupMemberService.getMemberManageGroups(userId);
 
+        // 收集groupId 集合
+        Set<Long> groupIdList = memberManageGroups.stream()
+                .map(GroupMember::getGroupId).collect(Collectors.toSet());
+
+        // 查询群聊集合
+        List<Group> groupList = this.listByIds(groupIdList);
+        if (CollectionUtils.isEmpty(groupList)) {
+            groupList = Collections.emptyList();
+        }
+
+        return ResponseResult.SUCCESS(groupIdList);
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.hk.im.domain.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -48,6 +49,16 @@ public class GroupSettingVO {
      * 加群方式：1.允许任何人everybody,2.需要验证verification, 3.不允许人加群nobody
      */
     private Integer joinType;
+
+    /**
+     * 加群问题
+     */
+    private String problem;
+
+    /**
+     * 加群问题答案
+     */
+    private String answer;
 
     /**
      * 全员禁言

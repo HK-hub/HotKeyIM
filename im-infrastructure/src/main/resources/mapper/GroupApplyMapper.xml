@@ -12,6 +12,7 @@
             <result property="applyType" column="apply_type" jdbcType="INTEGER"/>
             <result property="applyInfo" column="apply_info" jdbcType="VARCHAR"/>
             <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="handleInfo" column="handle_info" jdbcType="VARCHAR"/>
             <result property="sign" column="sign" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
@@ -20,7 +21,7 @@
     <sql id="Base_Column_List">
         id,sender_id,group_id,
         handler_id,apply_type,apply_info,
-        status,sign,create_time,
+        status,handle_info,sign,create_time,
         update_time
     </sql>
 </mapper>

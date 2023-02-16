@@ -53,6 +53,18 @@ public class GroupSetting implements Serializable {
     private Integer joinType;
 
     /**
+     * 加群问题
+     */
+    @TableField(value = "problem")
+    private String problem;
+
+    /**
+     * 加群问题答案
+     */
+    @TableField(value = "answer")
+    private String answer;
+
+    /**
      * 全员禁言: 分钟数
      */
     @TableField(value = "forbid_send")

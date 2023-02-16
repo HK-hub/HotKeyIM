@@ -1,8 +1,8 @@
 package com.hk.im.domain.request;
 
 import lombok.Data;
+import lombok.NonNull;
 import lombok.experimental.Accessors;
-import org.springframework.lang.NonNull;
 
 /**
  * @author : HK意境
@@ -15,13 +15,11 @@ import org.springframework.lang.NonNull;
  * @Version : 1.0
  */
 @Data
-@Accessors
+@Accessors(chain = true)
 public class JoinGroupRequest {
 
-    @NonNull
     private String userId;
 
-    @NonNull
     private String groupId;
 
     // 加群申请
@@ -30,6 +28,6 @@ public class JoinGroupRequest {
     // 申请处理者
     private String handlerId;
 
-    // 处理结果：1.同意，2.拒绝
+    // 处理结果：1.同意，2.拒绝,3.待处理
     private Integer operation;
 }
