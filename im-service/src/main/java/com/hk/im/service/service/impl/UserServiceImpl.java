@@ -215,6 +215,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 登录成功
         // 设置token
         String authToken = authorizationService.createAuthToken(user);
+        // 设置在线状态信息
 
         // TODO 组装信息，发布事件：删除验证码，推送消息
         UserInfo userInfo = userInfoService.getById(user.getId());

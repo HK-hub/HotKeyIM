@@ -64,4 +64,22 @@ public interface GroupMemberService extends IService<GroupMember> {
      * @return
      */
     List<GroupMember> getMemberManageGroups(Long userId);
+
+    /**
+     * 获取用户可以邀请加入群聊的好友列表
+     * @param userId
+     * @param groupId
+     * @return
+     */
+    ResponseResult getUserEnableInviteFriends(String userId, String groupId);
+
+
+    /**
+     * 是否群聊成员
+     * @param groupId
+     * @param friendId
+     * @return
+     */
+    boolean isGroupMember(Long groupId,Long friendId);
+
 }

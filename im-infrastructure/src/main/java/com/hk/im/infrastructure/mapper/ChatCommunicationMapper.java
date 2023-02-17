@@ -24,9 +24,6 @@ public interface ChatCommunicationMapper extends BaseMapper<ChatCommunication> {
     public ChatCommunication selectCommunication(@Param("senderId") Long senderId, @Param("receiverId") Long receiverId);
 
 
-
-
-
 }
 
 

@@ -1,14 +1,23 @@
 package com.hk.im.service.service.impl;
 
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.entity.ChatCommunication;
+import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.request.CreateCommunicationRequest;
+import com.hk.im.domain.vo.ChatCommunicationVO;
+import com.hk.im.domain.vo.FriendVO;
+import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.infrastructure.mapper.ChatCommunicationMapper;
+import com.hk.im.infrastructure.mapstruct.CommunicationMapStructure;
 import com.hk.im.service.service.ChatCommunicationService;
+import com.hk.im.service.service.FriendService;
+import com.hk.im.service.service.GroupService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +49,10 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
     private ChatCommunicationMapper chatCommunicationMapper;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-
+    @Resource
+    private FriendService friendService;
+    @Resource
+    private GroupService groupService;
 
     /**
      * 创建会话
@@ -53,7 +66,7 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
 
         // 参数校验
         boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getType()) || StringUtils.isEmpty(request.getReceiverId());
-        if (BooleanUtils.isFalse(true)) {
+        if (BooleanUtils.isTrue(preCheck)) {
             // 参数校验失败
             return ResponseResult.FAIL("参数校验失败!");
         }
@@ -69,28 +82,42 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         Long senderId = Long.valueOf(userId);
 
         // 获取会话，判断会话是否存在
-        ResponseResult talkResult = this.getChatCommunication(senderId,
+        boolean talkResult = this.existsChatCommunication(senderId,
                 receiverId);
-        if (BooleanUtils.isTrue(talkResult.isSuccess())) {
+        if (BooleanUtils.isTrue(talkResult)) {
             // 会话已经存在
-            return talkResult;
+            return ResponseResult.SUCCESS("会话已经存在了!");
         }
 
         // 会话不存在，创建
         Integer type = request.getType();
-        ChatCommunication communication = new ChatCommunication()
-                //.setBelongUserId(senderId)
+        ChatCommunication talkOne = new ChatCommunication()
+                .setBelongUserId(senderId)
                 .setSenderId(senderId)
                 .setReceiverId(receiverId)
                 .setSessionType(type);
+
         // 设置会话类型
         CommunicationConstants.SessionType sessionType = CommunicationConstants.SessionType.values()[type];
         if (sessionType == CommunicationConstants.SessionType.GROUP) {
-            communication.setGroupId(receiverId);
+            talkOne.setGroupId(receiverId);
+        } else if (sessionType == CommunicationConstants.SessionType.PRIVATE){
+            // 好友会话类型
+            // 查看是否存在
+            boolean exists = this.existsChatCommunication(receiverId, senderId);
+            if (BooleanUtils.isFalse(exists)) {
+                // 会话不存在，创建会话
+                ChatCommunication talkTwo = new ChatCommunication()
+                        .setBelongUserId(receiverId)
+                        .setSenderId(receiverId)
+                        .setReceiverId(senderId)
+                        .setSessionType(type);
+                this.save(talkTwo);
+            }
         }
 
         // 保存
-        boolean save = this.save(communication);
+        boolean save = this.save(talkOne);
         if (BooleanUtils.isFalse(save)) {
             // 保存失败
             return ResponseResult.FAIL();
@@ -103,7 +130,25 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         // 设置到 redis 缓存
         this.stringRedisTemplate.opsForValue().set(key, String.valueOf(0), 120, TimeUnit.MINUTES);
 
-        return ResponseResult.SUCCESS(communication);
+        return ResponseResult.SUCCESS(talkOne);
+    }
+
+
+    /**
+     * 判断会话是否存在
+     * @param senderId
+     * @param receiverId
+     * @return
+     */
+    @Override
+    public boolean existsChatCommunication(Long senderId, Long receiverId) {
+        // 判断是否存在
+        boolean exists = this.lambdaQuery()
+                .eq(ChatCommunication::getSenderId, senderId)
+                .eq(ChatCommunication::getReceiverId, receiverId)
+                .exists();
+
+        return exists;
     }
 
     /**
@@ -135,6 +180,7 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
     @Override
     public ResponseResult getUserCommunicationList(Long userId) {
 
+        // 获取原始会话数据
         List<ChatCommunication> communicationList = this.lambdaQuery()
                 .eq(ChatCommunication::getSenderId, userId)
                 .or(wrapper -> {
@@ -145,6 +191,34 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         if (CollectionUtils.isEmpty(communicationList)) {
             communicationList = Collections.emptyList();
         }
+
+        // 组装 friend和group 信息
+        List<ChatCommunicationVO> voList = communicationList.stream().map(talk -> {
+            // 数据容器
+            FriendVO friend = null;
+            GroupVO group = null;
+            Integer sessionType = talk.getSessionType();
+            if (sessionType == CommunicationConstants.SessionType.PRIVATE.ordinal()) {
+                // 好友私聊
+                friend = this.friendService.getUserFriendById(userId, talk.getReceiverId());
+            } else if (sessionType == CommunicationConstants.SessionType.GROUP.ordinal()) {
+                // 群聊
+                group = this.groupService.getGroupVOById(talk.getReceiverId());
+            }
+            // 组合
+            return CommunicationMapStructure.INSTANCE.toVO(talk, friend, group);
+        }).toList();
+
+        // TODO 排序: 置顶->跟新时间->免打扰->名称
+        Comparator<ChatCommunicationVO> comparator = Comparator.comparing(ChatCommunicationVO::getTop).reversed()
+                .thenComparing(ChatCommunicationVO::getUpdateTime).reversed()
+                .thenComparing(ChatCommunicationVO::getDisturb)
+                .thenComparing(ChatCommunicationVO::getUnreadCount).reversed()
+                .thenComparing(ChatCommunicationVO::getOnline).reversed();
+        // 进行排序
+        voList = voList.stream().sorted(comparator).toList();
+
+        // 响应数据
         return ResponseResult.SUCCESS(communicationList);
     }
 }

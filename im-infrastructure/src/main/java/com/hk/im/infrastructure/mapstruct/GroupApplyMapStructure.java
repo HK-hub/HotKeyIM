@@ -5,6 +5,7 @@ import com.hk.im.domain.vo.GroupApplyVO;
 import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.domain.vo.UserVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -23,6 +24,10 @@ public interface GroupApplyMapStructure {
     public static GroupApplyMapStructure INSTANCE = Mappers.getMapper(GroupApplyMapStructure.class);
 
 
+    @Mapping(source = "groupApply.id", target = "id")
+    @Mapping(source = "groupApply.status", target = "status")
+    @Mapping(source = "groupApply.createTime", target = "createTime")
+    @Mapping(source = "userVO", target = "senderVO")
     public GroupApplyVO toVO(GroupApply groupApply, GroupVO groupVO, UserVO userVO);
 
 

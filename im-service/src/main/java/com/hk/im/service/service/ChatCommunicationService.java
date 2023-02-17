@@ -26,6 +26,14 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
     ResponseResult createChatCommunication(CreateCommunicationRequest request);
 
     /**
+     * 判断会话是否存在
+     * @param senderId
+     * @param receiverId
+     * @return
+     */
+    boolean existsChatCommunication(Long senderId, Long receiverId);
+
+    /**
      * 获取会话
      * @param senderId
      * @param receiverId

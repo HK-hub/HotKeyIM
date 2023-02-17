@@ -45,6 +45,8 @@ public class FriendVO {
      */
     private Integer status;
 
+    private Boolean online;
+
     /**
      * 状态：0.陌生人(临时会话)，1.好友，2.黑名单，3.特别关心(置顶)，4.删除
      */
@@ -60,6 +62,10 @@ public class FriendVO {
      */
     private String groupId;
 
+    private String nickname;
+
+    private String avatar;
+
     /**
      * 备注姓名
      */
@@ -69,6 +75,22 @@ public class FriendVO {
      * 备注信息
      */
     private String remarkInfo;
+
+    /**
+     * 是否机器人：0.否，1.是
+     */
+    private Boolean robot;
+
+
+    /**
+     * 是否消息免打扰：0.否，1.是
+     */
+    private Boolean disturb;
+
+    /**
+     * 是否置顶: 0.否，1.是
+     */
+    private Boolean top;
 
 }
 

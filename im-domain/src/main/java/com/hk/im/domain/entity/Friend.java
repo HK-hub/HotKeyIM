@@ -53,6 +53,20 @@ public class Friend implements Serializable {
     @TableField(value = "group_id")
     private Long groupId;
 
+
+    /**
+     * 好友头像
+     */
+    @TableField(value = "avatar")
+    private String avatar;
+
+    /**
+     * 好友昵称
+     */
+    @TableField(value = "nickname")
+    private String nickname;
+
+
     /**
      * 备注姓名
      */
@@ -64,6 +78,25 @@ public class Friend implements Serializable {
      */
     @TableField(value = "remark_info")
     private String remarkInfo;
+
+    /**
+     * 是否机器人：0.否，1.是
+     */
+    @TableField(value = "robot")
+    private Boolean robot;
+
+
+    /**
+     * 是否消息免打扰：0.否，1.是
+     */
+    @TableField(value = "disturb")
+    private Boolean disturb;
+
+    /**
+     * 是否置顶: 0.否，1.是
+     */
+    @TableField(value = "top")
+    private Boolean top;
 
     /**
      * 创建时间

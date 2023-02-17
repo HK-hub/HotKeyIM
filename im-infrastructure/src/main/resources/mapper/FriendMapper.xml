@@ -10,16 +10,21 @@
             <result property="friendId" column="friend_id" jdbcType="BIGINT"/>
             <result property="relation" column="relation" jdbcType="INTEGER"/>
             <result property="group" column="`group`" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
             <result property="remarkName" column="remark_name" jdbcType="VARCHAR"/>
             <result property="remarkInfo" column="remark_info" jdbcType="VARCHAR"/>
+            <result property="robot" column="robot" jdbcType="BOOLEAN"/>
+            <result property="disturb" column="disturb" jdbcType="BOOLEAN"/>
+            <result property="top" column="top" jdbcType="BOOLEAN"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,user_id,friend_id,
-        relation,`group`,remark_name,
-        remark_info,create_time,update_time
+        relation,`group`,avatar,nickname,remark_name,
+        remark_info,robot,disturb,top,create_time,update_time
     </sql>
 
     <!-- 删除好友：双向 -->

@@ -1,20 +1,25 @@
 package com.hk.im.service.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.feilong.core.util.CollectionsUtil;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.GroupMemberConstants;
+import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.InviteGroupMemberRequest;
 import com.hk.im.domain.request.JoinGroupRequest;
 import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
+import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.GroupMemberVO;
+import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.infrastructure.mapper.GroupMemberMapper;
+import com.hk.im.infrastructure.mapstruct.FriendMapStructure;
 import com.hk.im.infrastructure.mapstruct.GroupMemberMapStructure;
+import com.hk.im.service.service.FriendService;
 import com.hk.im.service.service.GroupMemberService;
+import com.hk.im.service.service.GroupService;
 import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -46,6 +51,10 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
     private UserService userService;
     @Resource
     private GroupMemberMapper groupMemberMapper;
+    @Resource
+    private GroupService groupService;
+    @Resource
+    private FriendService friendService;
 
     /**
      * 踢出群聊
@@ -304,6 +313,60 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
             groupMemberList = Collections.emptyList();
         }
         return groupMemberList;
+    }
+
+
+    /**
+     * 获取用户可以加入群聊的好友列表
+     * @param userId
+     * @param groupId
+     * @return
+     */
+    @Override
+    public ResponseResult getUserEnableInviteFriends(String userId, String groupId) {
+
+        // 参数校验
+        if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(groupId)) {
+            // 校验失败
+            return ResponseResult.FAIL().setResultCode(ResultCode.BAD_REQUEST);
+        }
+
+        // 判断群聊是否存在
+        GroupVO groupVO = this.groupService.getGroupVOById(Long.valueOf(groupId));
+        if (Objects.isNull(groupVO)) {
+            // 群聊不存在，所有好友都可以邀请
+            List<Friend> friendList = this.friendService.lambdaQuery()
+                    .eq(Friend::getUserId, userId).list();
+            // 转换
+            /*List<FriendVO> friendVOList = friendList.stream()
+                    .map(friend -> FriendMapStructure.INSTANCE.toVO(friend, null))
+                    .toList();*/
+            // 响应
+            return ResponseResult.SUCCESS(friendList);
+        }
+
+        // 获取可以加入群聊好友列表
+        List<Friend> friends = this.friendService.getAllEnableInviteFriends(groupId, userId);
+
+        return ResponseResult.SUCCESS(friends);
+    }
+
+
+    /**
+     * 是否是群聊成员
+     * @param groupId
+     * @param friendId
+     * @return
+     */
+    @Override
+    public boolean isGroupMember(Long groupId, Long friendId) {
+
+        boolean exists = this.lambdaQuery()
+                .eq(GroupMember::getGroupId, groupId)
+                .eq(GroupMember::getMemberId, friendId)
+                .exists();
+
+        return exists;
     }
 }
 

@@ -5,25 +5,27 @@
 <mapper namespace="com.hk.im.infrastructure.mapper.GroupMapper">
 
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.Group">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="groupAccount" column="group_account" jdbcType="BIGINT"/>
-            <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
-            <result property="groupAvatar" column="group_avatar" jdbcType="VARCHAR"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
-            <result property="groupType" column="group_type" jdbcType="INTEGER"/>
-            <result property="qrcode" column="qrcode" jdbcType="VARCHAR"/>
-            <result property="memberCount" column="member_count" jdbcType="INTEGER"/>
-            <result property="groupMaster" column="group_master" jdbcType="BIGINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="groupAccount" column="group_account" jdbcType="BIGINT"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="groupAvatar" column="group_avatar" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="groupType" column="group_type" jdbcType="INTEGER"/>
+        <result property="qrcode" column="qrcode" jdbcType="VARCHAR"/>
+        <result property="memberCount" column="member_count" jdbcType="INTEGER"/>
+        <result property="groupMaster" column="group_master" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,group_account,group_name,
+        id
+        ,group_account,group_name,
         group_avatar,description,group_type,
         qrcode,member_count,group_master,
         create_time,update_time
     </sql>
+
     <!-- 修改群聊信息 -->
     <update id="updateGroupInfo">
         update tb_group
@@ -32,4 +34,17 @@
 
         </where>
     </update>
+
+    <!-- 通过关键字查询群聊 -->
+    <select id="searchGroupByKeyword" resultType="com.hk.im.domain.entity.Group">
+        select * from tb_group
+        where id = #{keyword} or group_account like #{keyword}
+        or group_name like #{keyword} or description like #{keyword}
+        <if test="categoryList != null and categoryList.size() > 0">
+            or
+            <foreach collection="categoryList" item="item" index="index" open="(" close=")" separator="or">
+                group_type = item
+            </foreach>
+        </if>
+    </select>
 </mapper>

@@ -1,6 +1,12 @@
 package com.hk.im.domain.constant;
 
+import com.beust.jcommander.internal.Lists;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.hk.im.domain.constant.GroupConstants.GroupCategory.*;
 
@@ -56,6 +62,17 @@ public class GroupConstants {
         NOBODY,
     }
 
+    public static enum GroupFindType {
+
+        DEFAULT,
+        // 发现群方式：1.公开群(支持搜索群名称，群号，群二维码，邀请)，
+        PUBLIC,
+        // 2.不公开群(不支持搜索群名称，支持搜索群号，群二维码，邀请)，
+        PRIVATE,
+        // 3.邀请制(只能通过成员邀请)
+        INVITE,
+    }
+
     /**
      * 获取群聊类型
      * @param category
@@ -80,6 +97,23 @@ public class GroupConstants {
         return type;
     }
 
+
+    // 群聊类型
+    // 群类型:0.未知，1.兴趣爱好，2.行业交流，3.生活休闲，3.学习考试，4.娱乐游戏，5.置业安家，6.品牌产品，7.粉丝，8.同学同事，9.家校师生
+    public static final String[] groupCategory = {"兴趣爱好", "行业交流","生活休闲", "学习考试", "娱乐游戏", "置业安家", "品牌产品", "粉丝", "同学同事", "家校师生"};
+
+    public static List<Integer> getMatchGroupCategory(String keyword) {
+        ArrayList<Integer> list = new ArrayList<>();
+        Pattern pattern = Pattern.compile(keyword);
+        for (int i = 0; i < groupCategory.length; i++) {
+            String category = groupCategory[i];
+            Matcher matcher = pattern.matcher(category);
+            if (matcher.matches()) {
+                list.add(i);
+            }
+        }
+        return list;
+    }
 
 
 }

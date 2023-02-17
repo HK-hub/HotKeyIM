@@ -2,13 +2,17 @@ package com.hk.im.admin.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.hk.im.admin.interceptor.EmptyListPlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author : HK意境
@@ -40,9 +44,18 @@ public class MybatisPlusConfig implements MetaObjectHandler {
     //分页插件
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){
-        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
-        return mybatisPlusInterceptor;
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 分页插件
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        // 空集合插件
+        interceptor.addInnerInterceptor(emptyListPlugin());
+        return interceptor;
     }
+
+    @Bean
+    public EmptyListPlugin emptyListPlugin() {
+        return new EmptyListPlugin();
+    }
+
 
 }

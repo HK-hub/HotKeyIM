@@ -18,8 +18,14 @@
             <result property="sessionType" column="session_type" jdbcType="INTEGER"/>
             <result property="sessionStatus" column="session_status" jdbcType="INTEGER"/>
             <result property="unreadCount" column="unread_count" jdbcType="INTEGER"/>
+            <result property="draft" column="draft" jdbcType="VARCHAR"/>
+            <result property="top" column="top" jdbcType="BOOLEAN"/>
+            <result property="robot" column="robot" jdbcType="BOOLEAN"/>
+            <result property="disturb" column="disturb" jdbcType="BOOLEAN"/>
+            <result property="online" column="onlie" jdbcType="BOOLEAN"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -27,6 +33,7 @@
         sender_id,receiver_id,group_id,
         last_message_id,last_message_content,last_sender_username,
         last_send_time,session_type,session_status,
-        unread_count,create_time,update_time
+        unread_count,draft,top,robot,disturb,onlie,
+        create_time,update_time,deleted
     </sql>
 </mapper>

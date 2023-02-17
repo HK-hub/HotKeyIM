@@ -70,5 +70,15 @@ public class GroupMemberController {
     }
 
 
+    /**
+     * 获取用户可以邀请进入群聊的好友列表
+     * @param userId
+     * @param groupId
+     * @return
+     */
+    @GetMapping("/enable/invite")
+    public ResponseResult enableInviteFriends(String userId, String groupId) {
+        return this.groupMemberService.getUserEnableInviteFriends(userId, groupId);
+    }
 
 }

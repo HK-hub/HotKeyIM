@@ -55,6 +55,10 @@ public class RedisConstants {
     public static final String CACHE_SHOP_KEY = "cache:shop:";
     // 店铺类型缓存 key
     public static final String CACHE_SHOP_TYPE_KEY = "cache:shop:type:";
+    // 群聊缓存key
+    public static final String CACHE_GROUP_KEY = "cache:group:";
+    // 群聊缓存过期时间
+    public static final Long CACHE_GROUP_TTL = 10L;
     // 店铺下单锁key
     public static final String LOCK_SHOP_KEY = "lock:shop:";
     public static final Long LOCK_SHOP_TTL = 10L;

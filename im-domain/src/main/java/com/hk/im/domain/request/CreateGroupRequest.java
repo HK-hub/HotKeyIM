@@ -29,6 +29,10 @@ public class CreateGroupRequest {
     // 按照分类创建
     private String category;
 
+    // 群聊头像
+    private String avatar;
+
+
     // 描述信息
     private String description;
 

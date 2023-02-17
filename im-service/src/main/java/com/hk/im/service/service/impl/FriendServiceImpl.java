@@ -18,12 +18,11 @@ import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapper.FriendMapper;
 import com.hk.im.infrastructure.mapstruct.FriendMapStructure;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
-import com.hk.im.service.service.FriendGroupService;
-import com.hk.im.service.service.FriendService;
-import com.hk.im.service.service.UserService;
+import com.hk.im.service.service.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +50,11 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
     private UserService userService;
     @Resource
     private FriendGroupService friendGroupService;
+    @Resource
+    private AuthorizationService authorizationService;
+    @Resource
+    private GroupMemberService groupMemberService;
+
 
     /**
      * 是否好友关系
@@ -380,6 +384,55 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
         }
         // 响应
         return ResponseResult.SUCCESS(list);
+    }
+
+
+    /**
+     * 获取指定好友VO
+     * @param userId
+     * @param friendId
+     * @return
+     */
+    @Override
+    public FriendVO getUserFriendById(Long userId, Long friendId) {
+
+        Friend friend = this.friendMapper.selectFriendByTowUser(userId, friendId);
+        // TODO 获取VO 信息
+        // 1. 获取在线状态
+        Boolean userOnlineStatus = this.authorizationService.getUserOnlineStatus(friendId);
+        // 2.转换
+        FriendVO friendVO = FriendMapStructure.INSTANCE.toVO(friend, null);
+        // 3.设置在线状态
+        friendVO.setOnline(userOnlineStatus);
+
+        return friendVO;
+    }
+
+
+    /**
+     * 检索出用户可以邀请的全部好友
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Friend> getAllEnableInviteFriends(String groupId, String userId) {
+
+        // 1. 检索所有好友
+        List<Friend> friendList = this.friendMapper.selectAllFriends(userId);
+
+        // 2. 好友中没有加入群聊的
+        List<Friend> enableInviteFriendList = friendList.stream()
+                .filter(friend -> {
+                    boolean isMember = this.groupMemberService.isGroupMember(Long.valueOf(groupId), friend.getFriendId());
+                    // 不是群员，添加进入可邀请列表
+                    return !isMember;
+                }).sorted(Comparator.comparing(Friend::getTop).reversed()
+                        .thenComparing(Friend::getUpdateTime).reversed()
+                        .thenComparing(Friend::getRemarkName, String.CASE_INSENSITIVE_ORDER)
+                        .thenComparing(Friend::getNickname, String.CASE_INSENSITIVE_ORDER))
+                .toList();
+
+        return enableInviteFriendList;
     }
 
 

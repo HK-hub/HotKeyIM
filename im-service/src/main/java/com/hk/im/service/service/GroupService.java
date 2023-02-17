@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.request.CreateGroupRequest;
+import com.hk.im.domain.request.FriendFindRequest;
 import com.hk.im.domain.request.ModifyGroupInfoRequest;
 import com.hk.im.domain.request.SetGroupAdministratorRequest;
+import com.hk.im.domain.vo.GroupVO;
 
 import java.util.List;
 
@@ -82,4 +84,20 @@ public interface GroupService extends IService<Group> {
      * @return
      */
     ResponseResult getUserManageGroups(Long userId);
+
+
+    /**
+     * 通过关键字查询群聊
+     * @param request
+     * @return
+     */
+    List<Group> searchGroupsByKeyword(FriendFindRequest request);
+
+
+    /**
+     * 获取指定群聊GroupVO
+     * @param groupId
+     * @return
+     */
+    GroupVO getGroupVOById(Long groupId);
 }

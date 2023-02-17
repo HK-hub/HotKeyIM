@@ -41,6 +41,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
 
+
+
     /**
      * 删除用户 token
      * @param user
@@ -101,5 +103,20 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
 
         return new User().setId(Long.valueOf(userId));
+    }
+
+
+    /**
+     * 获取用户在线状态
+     * @param userId
+     * @return
+     */
+    @Override
+    public Boolean getUserOnlineStatus(Long userId) {
+        String key = RedisConstants.LOGIN_USER_KEY + userId;
+        // 判断  token 是否存在
+        Boolean exists = this.stringRedisTemplate.hasKey(key);
+
+        return exists;
     }
 }

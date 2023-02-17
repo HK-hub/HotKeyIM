@@ -1,13 +1,14 @@
 package com.hk.im.admin.controller;
 
-import com.hk.im.admin.util.UserContextHolder;
 import com.hk.im.common.resp.PageResult;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.request.FriendApplyRequest;
 import com.hk.im.domain.request.FriendFindRequest;
+import com.hk.im.domain.request.UserFindPolicyRequest;
 import com.hk.im.domain.response.FriendSearchResponse;
 import com.hk.im.domain.vo.UserVO;
+import com.hk.im.service.service.FindService;
 import com.hk.im.service.service.FriendApplyService;
 import com.hk.im.service.service.FriendService;
 import com.hk.im.service.service.UserService;
@@ -20,7 +21,7 @@ import java.util.Objects;
 
 /**
  * @author : HK意境
- * @ClassName : FriendFindController
+ * @ClassName : FindController
  * @date : 2023/1/2 13:46
  * @description : 好友发现，好友添加
  * @Todo :
@@ -32,7 +33,7 @@ import java.util.Objects;
 @CrossOrigin
 @RestController
 @RequestMapping("/find")
-public class FriendFindController {
+public class FindController {
 
     @Resource
     private UserService service;
@@ -40,6 +41,8 @@ public class FriendFindController {
     private FriendService friendService;
     @Resource
     private FriendApplyService friendApplyService;
+    @Resource
+    private FindService findService;
 
 
     /**
@@ -98,7 +101,6 @@ public class FriendFindController {
      * @param request
      * @return
      */
-
     @GetMapping("/group/account")
     public ResponseResult findGroupAccountOrName(@RequestBody FriendFindRequest request) {
         // 分页查询
@@ -118,6 +120,28 @@ public class FriendFindController {
     @PostMapping("/friend/apply")
     public ResponseResult friendApply(@RequestBody FriendApplyRequest request) {
         return this.friendApplyService.applyToBeFriend(request);
+    }
+
+
+    /**
+     * 查询群聊服务
+     * @param request
+     * @return
+     */
+    @GetMapping("/group/search")
+    public ResponseResult searchGroup(@RequestBody FriendFindRequest request) {
+        return this.findService.searchForGroup(request);
+    }
+
+
+    /**
+     * 公开群组
+     * @param request
+     * @return
+     */
+    @GetMapping("/group/public")
+    public ResponseResult publicGroup(@RequestBody UserFindPolicyRequest request) {
+        return this.findService.getPublicGroups(request);
     }
 
 

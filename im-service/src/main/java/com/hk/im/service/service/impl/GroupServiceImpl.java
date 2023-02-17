@@ -10,6 +10,7 @@ import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.GroupSetting;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.CreateGroupRequest;
+import com.hk.im.domain.request.FriendFindRequest;
 import com.hk.im.domain.request.ModifyGroupInfoRequest;
 import com.hk.im.domain.request.SetGroupAdministratorRequest;
 import com.hk.im.domain.vo.GroupAnnouncementVO;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -380,7 +382,9 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     /**
      * 获取用户管理群聊
+     *
      * @param userId
+     *
      * @return
      */
     @Override
@@ -398,6 +402,53 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         }
 
         return ResponseResult.SUCCESS(groupIdList);
+    }
+
+
+    /**
+     * 通过关键字查询群聊
+     *
+     * @param request
+     *
+     * @return
+     */
+    @Override
+    public List<Group> searchGroupsByKeyword(FriendFindRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getSearchKey());
+
+        // 查询关键字
+        String searchKey = request.getSearchKey();
+        // 模糊查询匹配
+        List<Integer> matchCategoryList = GroupConstants.getMatchGroupCategory(searchKey);
+
+        // 查询群聊
+        List<Group> groupList = this.groupMapper.searchGroupByKeyword(searchKey, matchCategoryList);
+
+        // 响应
+        if (CollectionUtils.isEmpty(groupList)) {
+            groupList = Collections.emptyList();
+        }
+
+        return groupList;
+    }
+
+
+    /**
+     * 获取指定id群聊GroupVO
+     *
+     * @param receiverId
+     *
+     * @return
+     */
+    @Override
+    public GroupVO getGroupVOById(Long receiverId) {
+
+        Group group = this.getById(receiverId);
+        GroupVO groupVO = GroupMapStructure.INSTANCE.toVO(group, null, null, null);
+        // 响应：注意判空
+        return groupVO;
     }
 
 

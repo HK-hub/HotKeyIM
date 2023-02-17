@@ -51,4 +51,12 @@ public interface AuthorizationService {
     public User authUserByToken(String token);
 
 
+    /**
+     * 获取用户在线状态
+     * @param userId
+     * @return
+     */
+    public Boolean getUserOnlineStatus(Long userId);
+
+
 }

@@ -394,16 +394,23 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult toBeFriend(Long senderId, Long acceptorId) {
 
+        UserVO senderUser = (UserVO) this.userService.getUserAndInfo(senderId).getData();
+        UserVO acceptorUser = (UserVO) this.userService.getUserAndInfo(acceptorId).getData();
+
         // 接收者为主体
         Friend acceptor = new Friend();
         acceptor.setUserId(acceptorId);
         acceptor.setFriendId(senderId);
+        acceptor.setNickname(senderUser.getUsername());
+        acceptor.setRemarkName(senderUser.getUsername());
         acceptor.setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
 
         // 发送者为受体
         Friend sender = new Friend();
         sender.setUserId(senderId);
         sender.setFriendId(acceptorId);
+        sender.setNickname(acceptorUser.getUsername());
+        sender.setRemarkName(acceptorUser.getUsername());
         sender.setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
 
         // 设置分组
@@ -423,8 +430,6 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
 
         // 组装用户信息
         FriendApplyVO applyVO = new FriendApplyVO();
-        UserVO senderUser = (UserVO) this.userService.getUserAndInfo(senderId).getData();
-        UserVO acceptorUser = (UserVO) this.userService.getUserAndInfo(acceptorId).getData();
         applyVO.setSender(senderUser);
         applyVO.setAcceptor(acceptorUser);
 
