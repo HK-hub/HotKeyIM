@@ -121,12 +121,12 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
     public ResponseResult inviteGroupMember(InviteGroupMemberRequest request) {
 
         // 参数校验
-        String inviteeId = request.getInviteeId();
+        List<String> inviteeIds = request.getInviteeIds();
         String groupId = request.getGroupId();
         String inviterId = request.getInviterId();
 
         // 参数不合法
-        if (StringUtils.isEmpty(inviteeId) || StringUtils.isEmpty(groupId) || StringUtils.isEmpty(inviterId)) {
+        if (CollectionUtils.isEmpty(inviteeIds) || StringUtils.isEmpty(groupId) || StringUtils.isEmpty(inviterId)) {
             return ResponseResult.FAIL("请求参数不完整!").setResultCode(ResultCode.BAD_REQUEST);
         }
 
@@ -138,10 +138,13 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         }
 
         // 被邀请者是否已经成为群员
-        GroupMember invitee = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, inviteeId);
-        if (Objects.nonNull(invitee)) {
-            // 被邀请者已经是群成员
-            return ResponseResult.FAIL("该用户已经是群成员了，无需重复邀请!").setResultCode(ResultCode.SERVER_BUSY);
+        for (String inviteeId : inviteeIds) {
+            GroupMember invitee = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, inviteeId);
+            if (Objects.nonNull(invitee)) {
+                // 被邀请者已经是群成员
+                String message = "用户:" + invitee.getMemberUsername() + ",已经是群成员了，无需重复邀请!";
+                return ResponseResult.FAIL(message).setResultCode(ResultCode.SERVER_BUSY);
+            }
         }
 
         // 是否有权限：按照群聊的加群方式，审核方式确定
@@ -158,14 +161,20 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         }
 
         // 拉入群聊
-        User inviteeUser = this.userService.getById(inviteeId);
-        GroupMember member = new GroupMember();
-        member.setMemberAvatar(inviteeUser.getMiniAvatar())
-                .setMemberUsername(inviteeUser.getUsername())
-                .setMemberId(Long.valueOf(inviteeId))
-                .setGroupId(Long.valueOf(groupId))
-                .setMemberRole(GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal());
-        boolean save = this.save(member);
+        List<User> inviteeUsers = this.userService.listByIds(inviteeIds);
+        List<GroupMember> inviteeMemberList = inviteeUsers.stream().map(inviteeUser -> {
+            GroupMember member = new GroupMember();
+            member.setMemberAvatar(inviteeUser.getMiniAvatar())
+                    .setMemberUsername(inviteeUser.getUsername())
+                    .setMemberRemarkName(inviteeUser.getUsername())
+                    .setMemberId(inviteeUser.getId())
+                    .setGroupId(Long.valueOf(groupId))
+                    .setMemberRole(GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal());
+            return member;
+        }).toList();
+
+        // 批量拉入
+        boolean save = this.saveBatch(inviteeMemberList);
 
         // 拉入群聊结果
         if (BooleanUtils.isFalse(save)) {
@@ -175,7 +184,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
 
         // TODO 拉入群聊成功，发送消息，推送消息: XXX加入群聊
 
-        return ResponseResult.SUCCESS("成功邀请该用户加入群聊!");
+        return ResponseResult.SUCCESS("成功邀请用户加入群聊!");
     }
 
 
@@ -367,6 +376,24 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
                 .exists();
 
         return exists;
+    }
+
+
+    /**
+     * 获取群聊指定聊群员
+     * @param groupId
+     * @param memberId
+     * @return
+     */
+    @Override
+    public GroupMember getTheGroupMember(String groupId, String memberId) {
+
+        GroupMember member = this.lambdaQuery()
+                .eq(GroupMember::getGroupId, groupId)
+                .eq(GroupMember::getMemberId, memberId)
+                .one();
+
+        return member;
     }
 }
 

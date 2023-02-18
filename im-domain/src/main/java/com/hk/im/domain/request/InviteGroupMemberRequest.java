@@ -3,6 +3,8 @@ package com.hk.im.domain.request;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * @author : HK意境
  * @ClassName : InviteGroupMemberRequest
@@ -18,7 +20,7 @@ import lombok.experimental.Accessors;
 public class InviteGroupMemberRequest {
 
     // 被邀请者：invitee
-    private String inviteeId;
+    private List<String> inviteeIds;
 
     // 邀请者：inviter
     private String inviterId;

@@ -62,7 +62,6 @@ public class MinioUtil {
      *
      * @return boolean
      */
-
     public boolean bucketExists(String bucketName) throws Exception {
         return minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
     }

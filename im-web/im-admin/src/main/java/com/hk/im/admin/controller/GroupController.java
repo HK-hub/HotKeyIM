@@ -42,6 +42,16 @@ public class GroupController {
 
 
     /**
+     * 获取群聊详细信息
+     * @param groupId
+     * @return
+     */
+    @GetMapping("/detail")
+    public ResponseResult getGroupDetail(@RequestParam String groupId, @RequestParam String userId) {
+        return this.groupService.getGroupDetailInfo(groupId, userId);
+    }
+
+    /**
      * 获取用户加入群组
      * @param userId
      * @return
@@ -50,6 +60,7 @@ public class GroupController {
     public ResponseResult userJoinGroupList(@RequestParam("userId") String userId) {
         return this.groupService.getUserJoinGroupList(userId);
     }
+
 
 
     /**

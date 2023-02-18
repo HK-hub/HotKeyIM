@@ -82,4 +82,11 @@ public interface GroupMemberService extends IService<GroupMember> {
      */
     boolean isGroupMember(Long groupId,Long friendId);
 
+    /**
+     * 获取群聊指定聊群员
+     * @param groupId
+     * @param memberId
+     * @return
+     */
+    GroupMember getTheGroupMember(String groupId, String memberId);
 }

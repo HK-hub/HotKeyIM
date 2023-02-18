@@ -16,10 +16,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -436,13 +433,16 @@ public class QRCodeUtil {
      *
      * @throws IOException
      */
-    public static void getQRCode(String content, OutputStream output) {
+    public static InputStream getQRCode(String content, OutputStream output) {
         BufferedImage image = createQRCode(content, CODE_WIDTH, CODE_HEIGHT, null, null, null);
         try {
             ImageIO.write(image, IMAGE_FORMAT, output);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // 返回一个输出流
+        ByteArrayInputStream inputStream = StreamUtil.convertToInputStream(output);
+        return inputStream;
     }
 
     /**

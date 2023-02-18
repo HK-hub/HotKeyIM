@@ -5,11 +5,13 @@ import com.hk.im.domain.request.InviteGroupMemberRequest;
 import com.hk.im.domain.request.JoinGroupRequest;
 import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
+import com.hk.im.domain.vo.GroupMemberVO;
 import com.hk.im.service.service.GroupMemberService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author : HK意境
@@ -64,7 +66,7 @@ public class GroupMemberController {
      * @param request
      * @return
      */
-    @PutMapping("/remark")
+    @PostMapping("/remark")
     public ResponseResult modifyMemberRemarkName(@NotNull @RequestBody MemberRemarkNameRequest request) {
         return this.groupMemberService.updateMemberRemarkName(request);
     }
@@ -79,6 +81,19 @@ public class GroupMemberController {
     @GetMapping("/enable/invite")
     public ResponseResult enableInviteFriends(String userId, String groupId) {
         return this.groupMemberService.getUserEnableInviteFriends(userId, groupId);
+    }
+
+
+    /**
+     * 获取群聊群成员列表
+     * @param groupId
+     * @return
+     */
+    @GetMapping("/group/list")
+    public ResponseResult getGroupMemberList(@RequestParam String groupId) {
+
+        List<GroupMemberVO> groupMemberList = this.groupMemberService.getGroupMemberList(Long.valueOf(groupId));
+        return ResponseResult.SUCCESS(groupMemberList);
     }
 
 }

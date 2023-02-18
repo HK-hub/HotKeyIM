@@ -22,6 +22,7 @@ import java.net.http.HttpRequest;
  * @Modified :
  * @Version : 1.0
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/friend")
 public class FriendController {

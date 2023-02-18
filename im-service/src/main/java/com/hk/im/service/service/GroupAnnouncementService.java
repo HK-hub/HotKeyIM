@@ -24,4 +24,11 @@ public interface GroupAnnouncementService extends IService<GroupAnnouncement> {
      * @return
      */
     List<GroupAnnouncementVO> getGroupAnnouncementList(Long groupId);
+
+    /**
+     * 获取群聊最新公告
+     * @param groupId
+     * @return
+     */
+    GroupAnnouncement getGroupLatestAnnouncement(String groupId);
 }

@@ -100,4 +100,12 @@ public interface GroupService extends IService<Group> {
      * @return
      */
     GroupVO getGroupVOById(Long groupId);
+
+    /**
+     * 获取群聊详细信息
+     * @param groupId
+     * @param memberId
+     * @return
+     */
+    ResponseResult getGroupDetailInfo(String groupId, String memberId);
 }

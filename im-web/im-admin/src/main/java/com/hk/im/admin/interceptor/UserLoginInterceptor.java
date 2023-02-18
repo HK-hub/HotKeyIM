@@ -1,5 +1,6 @@
 package com.hk.im.admin.interceptor;
 
+
 import com.hk.im.admin.util.UserContextHolder;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.error.ApiException;
@@ -9,7 +10,6 @@ import com.hk.im.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,47 +30,45 @@ import java.util.concurrent.TimeUnit;
  * @Version : 1.0
  */
 @Slf4j
-public class UserTokenInterceptor implements HandlerInterceptor {
+public class UserLoginInterceptor implements HandlerInterceptor {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        //http的header中获得token
-        String token = request.getHeader(JWTUtils.USER_LOGIN_TOKEN);
+        // 获取 token
+        String authorization = request.getHeader(JWTUtils.USER_LOGIN_TOKEN);
+        log.info("requeset interceptor:{},token={}", request.getHeaderNames(), authorization);
+
+        // 验证是否登录
         //token不存在
-        if (StringUtils.isEmpty(token)) {
+        if (StringUtils.isEmpty(authorization)) {
             throw new ApiException().setMessage("对不起您还未登录或登录已过期!");
         }
+
         //验证token
-        String userId = JWTUtils.validateToken(token);
+        String userId = JWTUtils.validateToken(authorization);
         if (StringUtils.isEmpty(userId)) {
             throw new ApiException(ResultCode.TOKEN_INVALIDATE);
         }
 
-
         // 验证是否和当前用户token 一致
         String key = RedisConstants.LOGIN_USER_KEY + userId;
-        String redisToken = stringRedisTemplate.opsForValue().get(key);
-        if (!Objects.equals(redisToken, token)) {
+        String redisToken = this.stringRedisTemplate.opsForValue().get(key);
+        if (!Objects.equals(redisToken, authorization)) {
             // 不一致
             throw new ApiException(ResultCode.TOKEN_INVALIDATE);
         }
 
-        //更新token有效时间 (如果需要更新其实就是产生一个新的token)
-        if (JWTUtils.isNeedUpdate(token)) {
-            String newToken = JWTUtils.createToken(userId);
-            stringRedisTemplate.opsForValue().set(key, token,
-                    RedisConstants.ACCESS_TOKEN_TTL, TimeUnit.SECONDS);
-            response.setHeader(JWTUtils.USER_LOGIN_TOKEN, newToken);
-        }
+        // 刷新 token 过期时间
+        this.stringRedisTemplate.expire(key, 2, TimeUnit.MINUTES);
 
         // 给当前 threadLocal 设置用户
         UserContextHolder.set(new User().setId(Long.valueOf(userId)));
-        log.info("requeset:{},token={},user={}", request, token, userId);
+        log.info("requeset:{},token={},user={}", request, authorization, userId);
+
         return true;
     }
 

@@ -49,6 +49,25 @@ public class GroupAnnouncementServiceImpl extends ServiceImpl<GroupAnnouncementM
 
         return announcementVOList;
     }
+
+
+    /**
+     * 获取群聊最新公告
+     * @param groupId
+     * @return
+     */
+    @Override
+    public GroupAnnouncement getGroupLatestAnnouncement(String groupId) {
+
+        GroupAnnouncement latest = this.lambdaQuery()
+                .eq(GroupAnnouncement::getGroupId, groupId)
+                .orderByDesc(GroupAnnouncement::getUpdateTime)
+                .one();
+        return latest;
+    }
+
+
+
 }
 
 

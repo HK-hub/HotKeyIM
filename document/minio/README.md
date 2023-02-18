@@ -75,7 +75,7 @@ docker pull minio/minio
 ### 启动MinIO镜像
 这里指定该MinIO节点的ipd地址为`47.108.146.240`，指定了MinIO 集群节点的映射挂载存储文件为 `/data/minio/node250/export1`
 
-这里我们设置MinIO的管理员账号密码为：`minio`,`minio@zy.com`
+这里我们设置MinIO的管理员账号密码为：`admin`,`minio@zy.com`
 ```shell
 docker run -d --name minio-240 \
 -p 9000:9000 \

@@ -1,23 +1,22 @@
 package com.hk.im.service.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
+import com.hk.im.common.util.AccountNumberGenerator;
+import com.hk.im.common.util.QRCodeUtil;
 import com.hk.im.domain.constant.GroupConstants;
 import com.hk.im.domain.constant.GroupMemberConstants;
-import com.hk.im.domain.entity.Group;
-import com.hk.im.domain.entity.GroupMember;
-import com.hk.im.domain.entity.GroupSetting;
-import com.hk.im.domain.entity.User;
+import com.hk.im.domain.entity.*;
 import com.hk.im.domain.request.CreateGroupRequest;
 import com.hk.im.domain.request.FriendFindRequest;
 import com.hk.im.domain.request.ModifyGroupInfoRequest;
 import com.hk.im.domain.request.SetGroupAdministratorRequest;
-import com.hk.im.domain.vo.GroupAnnouncementVO;
-import com.hk.im.domain.vo.GroupMemberVO;
-import com.hk.im.domain.vo.GroupSettingVO;
-import com.hk.im.domain.vo.GroupVO;
+import com.hk.im.domain.vo.*;
 import com.hk.im.infrastructure.mapper.GroupMapper;
+import com.hk.im.infrastructure.mapstruct.GroupDetailMapStructure;
 import com.hk.im.infrastructure.mapstruct.GroupMapStructure;
 import com.hk.im.service.service.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -27,6 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -54,6 +55,8 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     private GroupAnnouncementService groupAnnouncementService;
     @Resource
     private UserService userService;
+    @Resource
+    private MinioService minioService;
 
     /**
      * 创建群聊
@@ -78,14 +81,25 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
             request.setInitialGroupMembers(new ArrayList<>());
         }
 
+        // 群主设置
+        request.getInitialGroupMembers().add(masterId);
+
         // 准备数据
         GroupConstants.GroupCategory groupCategory = GroupConstants.getGroupCategory(request.getCategory());
         // 群聊
         Group group = new Group();
         group.setGroupName(groupName)
+                .setGroupAccount(Long.valueOf(AccountNumberGenerator.nextAccount()))
                 .setDescription(request.getDescription())
+                .setGroupMaster(masterId)
                 .setGroupType(groupCategory.ordinal())
+                // 初始成员 + 创建者(群主)
                 .setMemberCount(request.getInitialGroupMembers().size());
+        // 设置群聊二维码
+        InputStream inputStream = QRCodeUtil.getQRCode(JSON.toJSONString(group), new ByteArrayOutputStream());
+        String qrcodeUrl = this.minioService.putObject(inputStream, MinioConstant.BucketEnum.Group.getBucket(),
+                MinioConstant.getGroupQrcodePath(group.getGroupAccount()));
+        group.setQrcode(qrcodeUrl);
         // 群设置
         GroupSetting setting = new GroupSetting();
 
@@ -146,7 +160,13 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
                     .setGroupCategory(GroupConstants.GroupCategory.values()[group.getGroupType()].getCategory())
                     .setMemberId(userId)
                     .setMemberAvatar(user.getMiniAvatar())
-                    .setMemberUsername(user.getUsername());
+                    .setMemberUsername(user.getUsername())
+                    .setMemberRole(GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal());
+            // 群员身份设置
+            if (Objects.equals(userId, group.getGroupMaster())) {
+                // 群主
+                groupMember.setMemberRole(GroupMemberConstants.GroupMemberRole.MASTER.ordinal());
+            }
             return groupMember;
         }).toList();
 
@@ -449,6 +469,38 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         GroupVO groupVO = GroupMapStructure.INSTANCE.toVO(group, null, null, null);
         // 响应：注意判空
         return groupVO;
+    }
+
+
+    /**
+     * 获取群聊详细信息
+     * @param groupId
+     * @return
+     */
+    @Override
+    public ResponseResult getGroupDetailInfo(String groupId, String memberId) {
+
+        Group group = this.getById(groupId);
+        GroupDetailVO groupDetailVO = GroupDetailMapStructure.INSTANCE.toVO(group);
+
+        // 设置群内昵称
+        GroupMember groupMember = this.groupMemberService.getTheGroupMember(groupId, memberId);
+        if (Objects.isNull(groupMember)) {
+            // 不是群聊成员
+            return ResponseResult.FAIL("抱歉该用户不是群聊成员!");
+        }
+        groupDetailVO.setVisitCard(groupMember.getMemberRemarkName());
+
+        // 设置群公告
+        GroupAnnouncement announcement = this.groupAnnouncementService.getGroupLatestAnnouncement(groupId);
+        if (Objects.isNull(announcement)) {
+            // 暂无群公告
+            announcement = new GroupAnnouncement().setContent("暂无群公告!");
+        }
+        groupDetailVO.setNotice(announcement.getContent());
+
+        // 响应
+        return ResponseResult.SUCCESS(groupDetailVO);
     }
 
 

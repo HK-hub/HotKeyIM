@@ -21,16 +21,25 @@ public class MinioConstant {
     // 用户二维码地址
     public static final String USER_QRCODE_PREFIX = AccessPolicyEnum.PUBLIC.policy + ResourceNamePrefixEnum.QRCODE.prefix;
     // 用户头像空间
-    public static final String USER_AVATAR_PATH = "/avatar/";
+    public static final String USER_AVATAR_PATH = "/user/avatar/";
     // 用户二维码
-    public static final String USER_QR_CODE_PATH = "/qrcode/";
+    public static final String USER_QR_CODE_PATH = "/user/qrcode/";
+    // 群聊文件，二维码
+    public static final String GROUP_PATH = "/group/";
+    // 群聊头像
+    public static final String GROUP_AVATAR_PATH = "/group/avatar/";
+    // 群二维码
+    public static final String GROUP_QRCODE_PATH = "/qrcode/";
+    // 群聊文件
+    public static final String GROUP_FILE_PATH = "/group/file/";
 
 
     @Getter
     public enum BucketEnum {
 
         System("system"),
-        User("user");
+        User("user"),
+        Group("group"),
         ;
         private String bucket;
 
@@ -89,6 +98,8 @@ public class MinioConstant {
         BIG_AVATAR("avatar_big_"),
         // 二维码
         QRCODE("qrcode_"),
+        // 文件
+        FILE("file_"),
         ;
 
         private String prefix;
@@ -96,6 +107,15 @@ public class MinioConstant {
         ResourceNamePrefixEnum(String prefix) {
             this.prefix = prefix;
         }
+    }
+
+    /**
+     * 获取群聊二维码路径
+     * @param groupAccount
+     * @return
+     */
+    public static String getGroupQrcodePath(Long groupAccount) {
+        return GROUP_QRCODE_PATH + AccessPolicyEnum.PUBLIC.policy + ResourceNamePrefixEnum.QRCODE.prefix + groupAccount + ".jpg";
     }
 
 }

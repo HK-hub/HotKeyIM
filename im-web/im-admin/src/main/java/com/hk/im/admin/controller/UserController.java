@@ -1,9 +1,11 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.admin.util.UserContextHolder;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.AccountNumberGenerator;
 import com.hk.im.common.util.NameUtil;
+import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.request.ForgetAccountRequest;
 import com.hk.im.domain.request.LoginOrRegisterRequest;
 import com.hk.im.domain.entity.User;
@@ -11,6 +13,7 @@ import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.domain.request.SendCodeRequest;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
+import com.hk.im.service.service.FriendService;
 import com.hk.im.service.service.UserInfoService;
 import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author : HK意境
@@ -43,6 +47,8 @@ public class UserController {
     private UserService userService;
     @Resource
     private UserInfoService userInfoService;
+    @Resource
+    private FriendService friendService;
 
     @GetMapping
     public String echo() {
@@ -55,7 +61,32 @@ public class UserController {
         return result;
     }
 
+    /**
+     * 搜索用户
+     * @param userId
+     * @return
+     */
+    @GetMapping("/id")
+    public ResponseResult searchUserById(@RequestParam("userId") String userId) {
+        // 查询用户
+        ResponseResult result = userService.getUserAndInfo(Long.valueOf(userId));
+        if (BooleanUtils.isFalse(result.isSuccess())) {
+            return result;
+        }
 
+        // 查询当前用登录用户与搜索用户之间关系
+        User user = UserContextHolder.get();
+        Friend relationship = this.friendService.isFriendRelationship(Long.valueOf(userId), user.getId());
+
+        // 设置好友关系
+        UserVO searchUser = (UserVO) result.getData();
+        searchUser.setStatus(2);
+        if (Objects.isNull(relationship)) {
+            // 不是好友关系
+            searchUser.setStatus(1);
+        }
+        return result;
+    }
 
 
     /**

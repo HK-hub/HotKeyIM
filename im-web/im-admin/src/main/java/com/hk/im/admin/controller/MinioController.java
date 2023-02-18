@@ -4,7 +4,9 @@ import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.service.service.MinioService;
+import io.minio.messages.Bucket;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +17,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author : HK意境
@@ -27,6 +31,7 @@ import java.io.InputStream;
  * @Version : 1.0
  */
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/minio")
 public class MinioController {
@@ -78,6 +83,30 @@ public class MinioController {
     }
 
 
+    /**
+     * 获取所有 bucket
+     * @return
+     */
+    @GetMapping("/bucket/list")
+    public ResponseResult getBuckets() {
+        List<Bucket> buckets = this.minioService.listBuckets();
+        if (CollectionUtils.isEmpty(buckets)) {
+            buckets = Collections.emptyList();
+        }
+        return ResponseResult.SUCCESS(buckets);
+    }
+
+
+    /**
+     * 获取bucket下所有文件
+     * @param bucket
+     * @return
+     */
+    @GetMapping("/files")
+    public ResponseResult getBucketAllFile(@RequestParam("bucket") String bucket) {
+        List<String> fileNames = this.minioService.listObjectNames(bucket);
+        return ResponseResult.SUCCESS(fileNames);
+    }
 
     /**
      * 删除

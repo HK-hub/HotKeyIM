@@ -297,12 +297,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setAccount(AccountNumberGenerator.nextAccount());
         // 注册用户成功，生成二维码
         // 生成二维码
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        QRCodeUtil.getQRCode(UserConstants.USER_QR_CODE + user.getAccount(), bos);
+        InputStream inputStream = QRCodeUtil.getQRCode(UserConstants.USER_QR_CODE + user.getAccount(),
+                new ByteArrayOutputStream());
         String qrcode = MinioConstant.USER_QR_CODE_PATH + MinioConstant.USER_QRCODE_PREFIX + user.getAccount() + ".jpg";
         // 上传二维码
-        String qrcodeUrl = this.minioService.putObject(StreamUtil.convertToInputStream(bos),
-                MinioConstant.BucketEnum.User.getBucket(), qrcode);
+        String qrcodeUrl = this.minioService.putObject(inputStream, MinioConstant.BucketEnum.User.getBucket(), qrcode);
         user.setQrcode(qrcodeUrl);
         // 设置用户头像
         String miniAvatar = AvatarUtil.generateAvatar();

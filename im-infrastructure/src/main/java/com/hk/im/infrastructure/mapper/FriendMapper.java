@@ -22,7 +22,7 @@ public interface FriendMapper extends BaseMapper<Friend> {
     public Integer deleteByUserIdAndFriendId(@Param("userId") Long userId, @Param("friendId") Long friendId);
 
     // 检索所有可以邀请好友
-    @Select("select * from tb_friend where user_id = #{userId} and group != '黑名单'")
+    @Select("select * from tb_friend where user_id = #{userId} and `group` != '黑名单'")
     List<Friend> selectAllFriends(@Param("userId") String userId);
 }
 
