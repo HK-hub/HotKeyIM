@@ -112,7 +112,7 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<WebSocketF
         User user = authorizationService.authUserByToken(token);
         if (Objects.isNull(user)) {
             // 认证失败
-            log.info("this websocket owner is not authorized", ctx.channel().id().asLongText());
+            log.info("this websocket owner is not authorized:{}", ctx.channel().id().asLongText());
             ctx.channel().close();
         }
 

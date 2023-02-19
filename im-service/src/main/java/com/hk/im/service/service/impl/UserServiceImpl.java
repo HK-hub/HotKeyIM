@@ -318,7 +318,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return ResponseResult.FAIL("抱歉，注册失败!");
         }
 
-        // TODO 注册成功，发布事件
+        // TODO 注册成功，发布事件: 添加自己为好友
         this.applicationEventPublisher.publishEvent(new UserRegisterEvent(this,user));
 
 

@@ -1,11 +1,14 @@
 package com.hk.im.infrastructure.event.user.listener;
 
+import com.hk.im.domain.constant.FriendConstants;
+import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.FriendGroup;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.infrastructure.event.user.event.UserRegisterEvent;
 import com.hk.im.infrastructure.event.user.event.UserUpdatedEvent;
 import com.hk.im.infrastructure.mapper.FriendGroupMapper;
+import com.hk.im.infrastructure.mapper.FriendMapper;
 import com.hk.im.infrastructure.mapper.UserInfoMapper;
 import com.hk.im.infrastructure.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +38,8 @@ public class UserEventListener {
     private UserInfoMapper userInfoMapper;
     @Resource
     private FriendGroupMapper friendGroupMapper;
+    @Resource
+    private FriendMapper friendMapper;
 
     /**
      * 用户更新事件
@@ -72,6 +77,17 @@ public class UserEventListener {
         UserInfo userInfo = this.userInfoMapper.getUserInfoByUserId(user.getId());
         String signature = "你好,我是" + user.getUsername() + ",请多指教";
         this.userInfoMapper.updateById(userInfo.setSignature(signature));
+
+        // 添加自己为好友
+        Friend friend = new Friend()
+                .setFriendId(user.getId())
+                .setUserId(user.getId())
+                .setRemarkName(user.getUsername())
+                .setNickname(user.getUsername())
+                .setAvatar(user.getMiniAvatar())
+                .setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
+        // 保存：
+        this.friendMapper.insert(friend);
 
     }
 

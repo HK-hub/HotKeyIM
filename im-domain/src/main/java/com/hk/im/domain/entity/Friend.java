@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * @TableName tb_friend
@@ -15,6 +16,7 @@ import lombok.ToString;
 @TableName(value = "tb_friend")
 @Data
 @ToString
+@Accessors(chain = true)
 @EqualsAndHashCode
 public class Friend implements Serializable {
     /**

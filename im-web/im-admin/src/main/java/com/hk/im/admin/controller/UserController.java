@@ -50,10 +50,6 @@ public class UserController {
     @Resource
     private FriendService friendService;
 
-    @GetMapping
-    public String echo() {
-        return "hello world";
-    }
 
     @GetMapping("/{id}")
     public ResponseResult getUserById(@PathVariable(name = "id") String id) {

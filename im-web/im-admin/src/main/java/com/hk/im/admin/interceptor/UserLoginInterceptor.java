@@ -10,6 +10,7 @@ import com.hk.im.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,8 +39,17 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        /**
+         * 前后端分离有时候会有两次请求，第一次为OPTIONS请求，默认会拦截所有请求，
+         * 但是第一次请求又获取不到jwt，所以会出错。
+         * https://www.cnblogs.com/lyh233/p/14472245.html
+         */
+        if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
+            return true;
+        }
+
         // 获取 token
-        String authorization = request.getHeader(JWTUtils.USER_LOGIN_TOKEN);
+        String authorization = request.getHeader("Authorization");
         log.info("requeset interceptor:{},token={}", request.getHeaderNames(), authorization);
 
         // 验证是否登录
@@ -63,15 +73,15 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         }
 
         // 刷新 token 过期时间
-        this.stringRedisTemplate.expire(key, 2, TimeUnit.MINUTES);
+        this.stringRedisTemplate.expire(key, RedisConstants.ACCESS_TOKEN_TTL, TimeUnit.SECONDS);
 
         // 给当前 threadLocal 设置用户
         UserContextHolder.set(new User().setId(Long.valueOf(userId)));
         log.info("requeset:{},token={},user={}", request, authorization, userId);
 
+        // 放行
         return true;
     }
-
 
 
     @Override

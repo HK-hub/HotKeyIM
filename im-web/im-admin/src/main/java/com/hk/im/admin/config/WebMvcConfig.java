@@ -1,7 +1,6 @@
 package com.hk.im.admin.config;
 
 import com.hk.im.admin.interceptor.UserLoginInterceptor;
-import com.hk.im.admin.interceptor.UserTokenInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,8 +32,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     }
 
+
+
+    // 跨域支持方法
     static final String ORIGINS[] = {"GET", "POST", "PUT", "DELETE", "TRANCE", "HEAD", "OPTIONS"};
 
+    /**
+     * 跨域配置
+     * @param registry
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -42,12 +48,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .allowedMethods(ORIGINS)
                 .maxAge(3600);
-    }
-
-
-    @Bean
-    public UserTokenInterceptor userTokenInterceptor() {
-        return new UserTokenInterceptor();
     }
 
 
