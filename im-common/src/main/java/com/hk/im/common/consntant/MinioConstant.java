@@ -27,7 +27,7 @@ public class MinioConstant {
     // 群聊文件，二维码
     public static final String GROUP_PATH = "/group/";
     // 群聊头像
-    public static final String GROUP_AVATAR_PATH = "/group/avatar/";
+    public static final String GROUP_AVATAR_PATH = "/avatar/";
     // 群二维码
     public static final String GROUP_QRCODE_PATH = "/qrcode/";
     // 群聊文件
@@ -93,6 +93,8 @@ public class MinioConstant {
     @Getter
     public enum ResourceNamePrefixEnum {
 
+        // 头像
+        GROUP_AVATAR("group_avatar_"),
         // 迷你头像
         MINI_AVATAR("avatar_mini_"),
         BIG_AVATAR("avatar_big_"),
@@ -116,6 +118,17 @@ public class MinioConstant {
      */
     public static String getGroupQrcodePath(Long groupAccount) {
         return GROUP_QRCODE_PATH + AccessPolicyEnum.PUBLIC.policy + ResourceNamePrefixEnum.QRCODE.prefix + groupAccount + ".jpg";
+    }
+
+
+    /**
+     * 获取群聊头像路径
+     * @param groupAccount
+     * @return
+     */
+    public static String getGroupAvatarPath(String groupAccount) {
+        return GROUP_AVATAR_PATH + AccessPolicyEnum.PUBLIC.policy + ResourceNamePrefixEnum.GROUP_AVATAR.prefix
+                + groupAccount + ".png";
     }
 
 }

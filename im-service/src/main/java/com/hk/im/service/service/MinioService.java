@@ -1,6 +1,8 @@
 package com.hk.im.service.service;
 
+import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.UploadResponse;
+import com.hk.im.domain.request.UploadAvatarRequest;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
@@ -195,4 +197,12 @@ public interface MinioService {
      * @return
      */
     String getObjectUrl(String bucketName, String objectName);
+
+
+    /**
+     * 上传头像
+     * @param request
+     * @return
+     */
+    ResponseResult uploadAvatar(UploadAvatarRequest request);
 }

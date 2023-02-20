@@ -183,9 +183,10 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         // 获取原始会话数据
         List<ChatCommunication> communicationList = this.lambdaQuery()
                 .eq(ChatCommunication::getSenderId, userId)
-                .or(wrapper -> {
+                // TODO 此处已经修改为双向会话关系
+                /*.or(wrapper -> {
                     wrapper.eq(ChatCommunication::getReceiverId, userId);
-                })
+                })*/
                 .orderByDesc(ChatCommunication::getUpdateTime)
                 .list();
         if (CollectionUtils.isEmpty(communicationList)) {
@@ -209,6 +210,24 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
             return CommunicationMapStructure.INSTANCE.toVO(talk, friend, group);
         }).toList();
 
+        // 设置其余属性
+        voList.forEach(vo -> {
+            Integer sessionType = vo.getSessionType();
+            if (sessionType == CommunicationConstants.SessionType.PRIVATE.ordinal()) {
+                // 好友
+                vo.setReceiverName(StringUtils.isEmpty(vo.getFriendVO().getRemarkName())
+                        ? vo.getFriendVO().getNickname() : vo.getFriendVO().getRemarkName());
+                // 头像
+                vo.setAvatar(vo.getFriendVO().getAvatar());
+            } else if (sessionType == CommunicationConstants.SessionType.GROUP.ordinal()) {
+                // 群聊
+                vo.setReceiverName(vo.getGroupVO().getGroupName());
+                // 头像
+                vo.setAvatar(vo.getGroupVO().getGroupAvatar());
+            }
+        });
+
+
         // TODO 排序: 置顶->跟新时间->免打扰->名称
         Comparator<ChatCommunicationVO> comparator = Comparator.comparing(ChatCommunicationVO::getTop).reversed()
                 .thenComparing(ChatCommunicationVO::getUpdateTime).reversed()
@@ -219,7 +238,7 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         voList = voList.stream().sorted(comparator).toList();
 
         // 响应数据
-        return ResponseResult.SUCCESS(communicationList);
+        return ResponseResult.SUCCESS(voList);
     }
 }
 

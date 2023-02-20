@@ -20,7 +20,7 @@ public class UserSetting implements Serializable {
     /**
      * 主键
      */
-    @TableField(value = "id")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

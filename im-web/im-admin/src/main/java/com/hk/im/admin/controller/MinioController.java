@@ -1,8 +1,8 @@
 package com.hk.im.admin.controller;
 
-import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.admin.properties.MinioProperties;
+import com.hk.im.domain.request.UploadAvatarRequest;
 import com.hk.im.service.service.MinioService;
 import io.minio.messages.Bucket;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +63,18 @@ public class MinioController {
             log.error("上传失败");
             return ResponseResult.FAIL("文件:"+file.getOriginalFilename() + " 上传失败!");
         }
+    }
+
+
+    /**
+     * 上传头像
+     * @param request
+     * @return
+     */
+    @PostMapping("/upload/avatar")
+    public ResponseResult uploadAvatar(UploadAvatarRequest request) {
+
+        return this.minioService.uploadAvatar(request);
     }
 
     /**

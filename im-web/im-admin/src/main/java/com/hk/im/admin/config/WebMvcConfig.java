@@ -1,5 +1,6 @@
 package com.hk.im.admin.config;
 
+import com.hk.im.admin.interceptor.LogInterceptor;
 import com.hk.im.admin.interceptor.UserLoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
+        // log 拦截器
+        registry.addInterceptor(logInterceptor())
+                .addPathPatterns("/**");
+        // token 拦截器
         registry.addInterceptor(userLoginInterceptor())
                 .addPathPatterns("/**")
                 //开放登录, 注册，忘记密码, 验证码, 生产用户
@@ -54,6 +60,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public UserLoginInterceptor userLoginInterceptor() {
         return new UserLoginInterceptor();
+    }
+
+
+    @Bean
+    public LogInterceptor logInterceptor() {
+        return new LogInterceptor();
     }
 
 }

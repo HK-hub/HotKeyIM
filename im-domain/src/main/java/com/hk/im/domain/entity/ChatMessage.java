@@ -12,11 +12,9 @@ import lombok.*;
  * @TableName tb_chat_message
  */
 @TableName(value ="tb_chat_message")
-@Getter
-@Setter
+@Data
 @EqualsAndHashCode
 @ToString
-@Data
 public class ChatMessage implements Serializable {
     /**
      * 聊天消息表id
@@ -77,67 +75,4 @@ public class ChatMessage implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getMessageFeature() {
-        return messageFeature;
-    }
-
-    public void setMessageFeature(Integer messageFeature) {
-        this.messageFeature = messageFeature;
-    }
-
-    public Integer getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(Integer messageType) {
-        this.messageType = messageType;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Object getExtra() {
-        return extra;
-    }
-
-    public void setExtra(Object extra) {
-        this.extra = extra;
-    }
-
-    public Integer getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Integer deleted) {
-        this.deleted = deleted;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
 }

@@ -44,10 +44,19 @@ public class ChatCommunicationVO {
      */
     private Long senderId;
 
+    private String senderName;
+
     /**
      * 接收者id
      */
     private Long receiverId;
+
+    private String receiverName;
+
+    /**
+     * 接收者头像
+     */
+    private String avatar;
 
     private FriendVO friendVO;
 

@@ -2,20 +2,27 @@ package com.hk.im.admin.service;
 
 import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.admin.util.MinioUtil;
+import com.hk.im.common.consntant.MinioConstant;
+import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.UploadResponse;
+import com.hk.im.domain.request.UploadAvatarRequest;
 import com.hk.im.service.service.MinioService;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -149,7 +156,7 @@ public class MinioServiceImpl implements MinioService {
             return minioProperties.getConsole() + "/" + bucketName + "/" + objectName;
         } catch (Exception e) {
             e.printStackTrace();
-            return "上传失败";
+            return null;
         }
     }
 
@@ -317,6 +324,55 @@ public class MinioServiceImpl implements MinioService {
             e.printStackTrace();
             return "";
         }
+    }
+
+
+    /**
+     * 上传头像
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult uploadAvatar(UploadAvatarRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getTargetId()) || Objects.isNull(request.getFile()) || Objects.isNull(request.getType());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 上传路径
+        String bucket = null;
+        String objectName = null;
+        String url = null;
+
+        // 判断头像类型
+        UploadAvatarRequest.AvatarType type = UploadAvatarRequest.AvatarType.values()[request.getType()];
+        if (type == UploadAvatarRequest.AvatarType.USER) {
+            // 用户头像
+
+        } else {
+            // 群聊头像
+            bucket = MinioConstant.BucketEnum.Group.getBucket();
+            objectName = MinioConstant.getGroupAvatarPath(request.getTargetId());
+        }
+
+        // 上传头像
+        try {
+            url = this.putObject(request.getFile().getInputStream(), bucket, objectName);
+        } catch (IOException e) {
+            // 异常失败
+            return ResponseResult.FAIL(e.getMessage());
+        }
+
+        if (Objects.isNull(url)) {
+            // 上传失败
+            return ResponseResult.FAIL("上传头像失败!");
+        }
+
+        // 上传成功
+        return ResponseResult.SUCCESS(url);
     }
 
 
