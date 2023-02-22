@@ -32,6 +32,15 @@ public interface MessageFlowMapper extends BaseMapper<MessageFlow> {
     @Select("select * from tb_message_flow where receiver_id = #{receiverId} order by sequence desc limit 1")
     MessageFlow selectGroupMaxMessageSequence(@Param("senderId") Long senderId, @Param("receiverId") Long receiverId);
 
+    /**
+     * 获取最新的一条消息
+     * @param senderId
+     * @param receiverId
+     * @return
+     */
+    @Select("select * from tb_message_flow where sender_id = #{senderId} " +
+            "and receiver_id = #{receiverId} order by sequence desc limit 1")
+    MessageFlow getPrivateLatestMessageRecord(@Param("senderId") String senderId, @Param("receiverId") String receiverId);
 }
 
 

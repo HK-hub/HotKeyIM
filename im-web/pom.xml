@@ -15,6 +15,7 @@
 
     <modules>
         <module>im-admin</module>
+        <module>im-system</module>
     </modules>
 
 

@@ -1,4 +1,4 @@
-package com.hk.im.admin.util;
+package com.hk.im.domain.context;
 
 import com.hk.im.domain.entity.User;
 

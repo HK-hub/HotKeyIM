@@ -1,10 +1,10 @@
 package com.hk.im.admin.controller;
 
-import com.hk.im.admin.util.UserContextHolder;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.AccountNumberGenerator;
 import com.hk.im.common.util.NameUtil;
+import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.request.ForgetAccountRequest;
 import com.hk.im.domain.request.LoginOrRegisterRequest;

@@ -20,6 +20,8 @@ import java.util.Map;
 public class MessageConstants {
 
     public static final Map<Integer, Class<? extends WebSocketMessage>> MESSAGE_CLASSES_MAP = new HashMap<>();
+    // 默认一页聊天记录数
+    public static final Integer DEFAULT_RECORDS_LIMIT = 30;
 
     public static enum MessageActionType {
 

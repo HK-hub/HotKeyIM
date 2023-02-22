@@ -4,14 +4,16 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.*;
 
 /**
  * 
  * @TableName tb_chat_message
  */
-@TableName(value ="tb_chat_message")
+@TableName(value ="tb_chat_message", autoResultMap = true)
 @Data
 @EqualsAndHashCode
 @ToString
@@ -50,8 +52,8 @@ public class ChatMessage implements Serializable {
     /**
      * 扩展字段，一般使用JSON字符串存储,可以用户回复消息，@消息，超文本消息，卡片消息，视频消息等
      */
-    @TableField(value = "extra")
-    private Object extra;
+    @TableField(value = "extra", typeHandler = JacksonTypeHandler.class)
+    private Map<String, Object> extra;
 
     /**
      * 是否删除该条聊天记录,0.false, 1.ture

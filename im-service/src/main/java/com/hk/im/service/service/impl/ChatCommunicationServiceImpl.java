@@ -95,7 +95,9 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
                 .setBelongUserId(senderId)
                 .setSenderId(senderId)
                 .setReceiverId(receiverId)
-                .setSessionType(type);
+                .setSessionType(type)
+                .setRobot(false).setTop(false).setDisturb(false).setOnline(false)
+                .setUnreadCount(0);
 
         // 设置会话类型
         CommunicationConstants.SessionType sessionType = CommunicationConstants.SessionType.values()[type];
@@ -130,8 +132,51 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         // 设置到 redis 缓存
         this.stringRedisTemplate.opsForValue().set(key, String.valueOf(0), 120, TimeUnit.MINUTES);
 
-        return ResponseResult.SUCCESS(talkOne);
+        // 构造响应数据
+        ChatCommunicationVO communicationVO = this.convertToVO(Long.valueOf(userId), talkOne);
+
+        return ResponseResult.SUCCESS(communicationVO);
     }
+
+
+    /**
+     * 转换为 VO
+     * @param userId
+     * @param talk
+     * @return
+     */
+    private ChatCommunicationVO convertToVO(Long userId, ChatCommunication talk) {
+        // 数据容器
+        FriendVO friend = null;
+        GroupVO group = null;
+        Integer sessionType = talk.getSessionType();
+        if (sessionType == CommunicationConstants.SessionType.PRIVATE.ordinal()) {
+            // 好友私聊
+            friend = this.friendService.getUserFriendById(userId, talk.getReceiverId());
+        } else if (sessionType == CommunicationConstants.SessionType.GROUP.ordinal()) {
+            // 群聊
+            group = this.groupService.getGroupVOById(talk.getReceiverId());
+        }
+        // 组合
+        ChatCommunicationVO vo = CommunicationMapStructure.INSTANCE.toVO(talk, friend, group);
+
+        // 设置其余属性
+        if (sessionType == CommunicationConstants.SessionType.PRIVATE.ordinal()) {
+            // 好友
+            vo.setReceiverName(StringUtils.isEmpty(vo.getFriendVO().getRemarkName())
+                    ? vo.getFriendVO().getNickname() : vo.getFriendVO().getRemarkName());
+            // 头像
+            vo.setAvatar(vo.getFriendVO().getAvatar());
+        } else if (sessionType == CommunicationConstants.SessionType.GROUP.ordinal()) {
+            // 群聊
+            vo.setReceiverName(vo.getGroupVO().getGroupName());
+            // 头像
+            vo.setAvatar(vo.getGroupVO().getGroupAvatar());
+        }
+
+        return vo;
+    }
+
 
 
     /**

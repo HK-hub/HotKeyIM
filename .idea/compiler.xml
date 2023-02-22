@@ -21,6 +21,7 @@
         <module name="ruoyi-common" />
         <module name="ruoyi-quartz" />
         <module name="im-common" />
+        <module name="im-system" />
         <module name="ruoyi-admin" />
       </profile>
     </annotationProcessing>

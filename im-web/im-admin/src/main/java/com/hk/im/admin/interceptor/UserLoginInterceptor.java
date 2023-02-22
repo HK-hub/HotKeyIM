@@ -1,11 +1,10 @@
 package com.hk.im.admin.interceptor;
 
-
-import com.hk.im.admin.util.UserContextHolder;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.error.ApiException;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.JWTUtils;
+import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

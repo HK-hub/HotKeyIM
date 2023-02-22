@@ -1,0 +1,230 @@
+2023-02-21 00:04:47.523  INFO 60524 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:9230,id=907841fffe2e6da0-0000ec6c-00000006-178067a141c3d031-c66c0b50
+2023-02-21 00:04:47.534  INFO 60524 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:9230
+2023-02-21 03:04:52.967  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 03:04:52.980  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 03:04:52.994  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 03:04:52.994  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:41:49.192  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:41:49.192  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:41:49.193  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:41:49.193  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:41:49.985  INFO 60524 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:13727
+2023-02-21 10:41:49.985  INFO 60524 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:13727
+2023-02-21 10:41:49.987  INFO 60524 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : request:uri=/channel:,headers=http://localhost:3000,method=GET
+2023-02-21 10:41:49.987  INFO 60524 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : the FullHttpRequest new uri=/channel:
+2023-02-21 10:41:49.987  INFO 60524 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : the websocket path is error: expect /channel:, but provide /channel
+2023-02-21 10:41:49.989  INFO 60524 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : this websocket owner is not authorized:907841fffe2e6da0-0000ec6c-0000000a-05948cfeb070a5a0-6f0702ac
+2023-02-21 10:41:50.126  INFO 60524 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:13727,id=907841fffe2e6da0-0000ec6c-0000000a-05948cfeb070a5a0-6f0702ac
+2023-02-21 10:41:50.126  INFO 60524 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:13727
+2023-02-21 10:41:52.332  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:41:55.333  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:41:58.199  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:42:01.201  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:42:04.202  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:42:07.204  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:42:10.205  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:42:13.205  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:42:16.208  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:42:19.209  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:42:22.210  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:42:25.212  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 10:42:28.213  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 10:42:31.214  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:51.257  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:51.261  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:51.262  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:51.264  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:54.274  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.410  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.413  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.417  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.424  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.424  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.427  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.429  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.431  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.433  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.439  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.440  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.443  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.445  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.447  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.448  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.452  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.453  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.464  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.464  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.466  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.469  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.471  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.473  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.475  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.477  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.479  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.479  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.482  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.484  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.485  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.487  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.489  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.490  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.492  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.493  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.495  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.496  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.497  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.499  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.500  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.502  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.503  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.504  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.505  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.506  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.508  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.509  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.511  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.512  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.525  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.525  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.528  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.529  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.532  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.537  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.538  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.541  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.543  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.544  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.548  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.550  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.552  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.552  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.560  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.561  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.563  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.565  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.567  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.569  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.593  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.598  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:12:55.599  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:12:55.602  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:13:22.878  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:13:25.879  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:13:52.878  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:13:55.879  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:14:22.879  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:14:25.881  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 12:14:52.879  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-02-21 12:14:55.880  INFO 60524 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-02-21 22:52:31.066  INFO 69672 --- [main] com.hk.im.admin.IMAdminApplication       : Starting IMAdminApplication using Java 17.0.2 on DESKTOP-PICLGLQ with PID 69672 (F:\JavaCode\HotKeyIM\im-web\im-admin\target\classes started by HK意境 in F:\JavaCode\HotKeyIM)
+2023-02-21 22:52:31.091  INFO 69672 --- [main] com.hk.im.admin.IMAdminApplication       : The following 1 profile is active: "dev"
+2023-02-21 22:52:35.095 ERROR 69672 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+java.lang.IllegalStateException: Error processing condition on org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration.lettuceClientResources
+	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:60) ~[spring-boot-autoconfigure-2.5.3.jar:2.5.3]
+	at org.springframework.context.annotation.ConditionEvaluator.shouldSkip(ConditionEvaluator.java:108) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod(ConfigurationClassBeanDefinitionReader.java:193) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:153) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:129) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:343) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:746) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:745) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:420) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1317) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-2.6.8.jar:2.6.8]
+	at com.hk.im.admin.IMAdminApplication.main(IMAdminApplication.java:27) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [org.springframework.boot.actuate.autoconfigure.metrics.redis.LettuceMetricsAutoConfiguration] from ClassLoader [jdk.internal.loader.ClassLoaders$AppClassLoader@63947c6b]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:485) ~[spring-core-5.3.20.jar:5.3.20]
+	at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:361) ~[spring-core-5.3.20.jar:5.3.20]
+	at org.springframework.util.ReflectionUtils.getUniqueDeclaredMethods(ReflectionUtils.java:418) ~[spring-core-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.lambda$getTypeForFactoryMethod$2(AbstractAutowireCapableBeanFactory.java:765) ~[spring-beans-5.3.20.jar:5.3.20]
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1740) ~[na:na]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getTypeForFactoryMethod(AbstractAutowireCapableBeanFactory.java:764) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:703) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:674) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1670) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:570) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:542) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.boot.autoconfigure.condition.OnBeanCondition.collectBeanNamesForType(OnBeanCondition.java:238) ~[spring-boot-autoconfigure-2.5.3.jar:2.5.3]
+	at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getBeanNamesForType(OnBeanCondition.java:231) ~[spring-boot-autoconfigure-2.5.3.jar:2.5.3]
+	at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getBeanNamesForType(OnBeanCondition.java:221) ~[spring-boot-autoconfigure-2.5.3.jar:2.5.3]
+	at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchingBeans(OnBeanCondition.java:169) ~[spring-boot-autoconfigure-2.5.3.jar:2.5.3]
+	at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchOutcome(OnBeanCondition.java:144) ~[spring-boot-autoconfigure-2.5.3.jar:2.5.3]
+	at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:47) ~[spring-boot-autoconfigure-2.5.3.jar:2.5.3]
+	... 17 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: org/springframework/boot/autoconfigure/data/redis/ClientResourcesBuilderCustomizer
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3402) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2504) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:467) ~[spring-core-5.3.20.jar:5.3.20]
+	... 33 common frames omitted
+Caused by: java.lang.ClassNotFoundException: org.springframework.boot.autoconfigure.data.redis.ClientResourcesBuilderCustomizer
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 37 common frames omitted
+
+2023-02-21 22:52:35.098  WARN 69672 --- [main] o.s.boot.SpringApplication               : Unable to close ApplicationContext
+
+java.lang.IllegalStateException: Failed to introspect Class [org.springframework.boot.actuate.autoconfigure.metrics.redis.LettuceMetricsAutoConfiguration] from ClassLoader [jdk.internal.loader.ClassLoaders$AppClassLoader@63947c6b]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:485) ~[spring-core-5.3.20.jar:5.3.20]
+	at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:361) ~[spring-core-5.3.20.jar:5.3.20]
+	at org.springframework.util.ReflectionUtils.getUniqueDeclaredMethods(ReflectionUtils.java:418) ~[spring-core-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.lambda$getTypeForFactoryMethod$2(AbstractAutowireCapableBeanFactory.java:765) ~[spring-beans-5.3.20.jar:5.3.20]
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1740) ~[na:na]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getTypeForFactoryMethod(AbstractAutowireCapableBeanFactory.java:764) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:703) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:674) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1670) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:570) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:542) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:667) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:659) ~[spring-beans-5.3.20.jar:5.3.20]
+	at org.springframework.context.support.AbstractApplicationContext.getBeansOfType(AbstractApplicationContext.java:1300) ~[spring-context-5.3.18.jar:5.3.18]
+	at org.springframework.boot.SpringApplication.getExitCodeFromMappedException(SpringApplication.java:878) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.getExitCodeFromException(SpringApplication.java:866) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.handleExitCode(SpringApplication.java:853) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:793) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:317) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1317) ~[spring-boot-2.6.8.jar:2.6.8]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-2.6.8.jar:2.6.8]
+	at com.hk.im.admin.IMAdminApplication.main(IMAdminApplication.java:27) ~[classes/:na]
+Caused by: java.lang.NoClassDefFoundError: org/springframework/boot/autoconfigure/data/redis/ClientResourcesBuilderCustomizer
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3402) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2504) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:467) ~[spring-core-5.3.20.jar:5.3.20]
+	... 21 common frames omitted
+Caused by: java.lang.ClassNotFoundException: org.springframework.boot.autoconfigure.data.redis.ClientResourcesBuilderCustomizer
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 25 common frames omitted
+
+2023-02-21 22:53:30.904  INFO 70008 --- [main] com.hk.im.admin.IMAdminApplication       : Starting IMAdminApplication using Java 17.0.2 on DESKTOP-PICLGLQ with PID 70008 (F:\JavaCode\HotKeyIM\im-web\im-admin\target\classes started by HK意境 in F:\JavaCode\HotKeyIM)
+2023-02-21 22:53:30.907  INFO 70008 --- [main] com.hk.im.admin.IMAdminApplication       : The following 1 profile is active: "dev"
+2023-02-21 22:53:31.738  INFO 70008 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-02-21 22:53:31.742  INFO 70008 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-02-21 22:53:31.799  INFO 70008 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
+2023-02-21 22:53:32.639  INFO 70008 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2023-02-21 22:53:32.652  INFO 70008 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-21 22:53:32.653  INFO 70008 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-02-21 22:53:32.824  INFO 70008 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/admin]  : Initializing Spring embedded WebApplicationContext
+2023-02-21 22:53:32.824  INFO 70008 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1876 ms
+2023-02-21 22:53:33.073  INFO 70008 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2023-02-21 22:53:33.586  INFO 70008 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2023-02-21 22:53:35.463  INFO 70008 --- [main] c.h.i.server.chat.config.MetaDataConfig  : address:localhost
+2023-02-21 22:53:35.464  INFO 70008 --- [main] c.h.i.server.chat.config.MetaDataConfig  : port:9870
+2023-02-21 22:53:35.464  INFO 70008 --- [main] c.h.i.server.chat.config.MetaDataConfig  : serializer:Json
+2023-02-21 22:53:35.464  INFO 70008 --- [main] c.h.i.server.chat.config.MetaDataConfig  : path:/channel
+2023-02-21 22:53:36.500  INFO 70008 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path '/admin'
+2023-02-21 22:53:36.505  INFO 70008 --- [main] c.h.i.server.chat.ChatServerBootStarter  : IOC 容器准备完毕,准备创建Chat Server: 2023-02-21T22:53:36.505093900
+2023-02-21 22:53:36.505  INFO 70008 --- [main] c.h.i.server.chat.ChatServerBootStarter  : 启动Chat Server: class com.hk.im.server.chat.ChatServerBootStarter-2023-02-21T22:53:36.505093900
+2023-02-21 22:53:36.510  INFO 70008 --- [main] com.hk.im.admin.IMAdminApplication       : Started IMAdminApplication in 6.083 seconds (JVM running for 6.882)
+2023-02-21 22:53:36.621  INFO 70008 --- [Thread-6] c.h.i.s.chat.server.HotKeyChatServer     : websocket 服务启动，ip=localhost,port=9870

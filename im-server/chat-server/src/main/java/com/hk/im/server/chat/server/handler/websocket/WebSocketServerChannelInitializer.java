@@ -41,7 +41,8 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<Socket
         pipeline.addLast("http-codec",new HttpServerCodec());
         // 以块的形式写入
         pipeline.addLast("chunked-write", new ChunkedWriteHandler());
-        pipeline.addLast("aggregator",new HttpObjectAggregator(65536));
+        // 对 HttpMessage 进行聚合处理，
+        pipeline.addLast("aggregator",new HttpObjectAggregator(1024 * 64));
         // 压缩websocket 报文
         // pipeline.addLast(new WebSocketServerCompressionHandler());
         // 将自定义的 WebSocketFrame 放在 WebSocketServerProtocolHandler 前解决 netty 不支持 uri 上带参数的问题，造成的 websocket 连接失败

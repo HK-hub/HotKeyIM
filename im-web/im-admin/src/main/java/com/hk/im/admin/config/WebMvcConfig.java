@@ -34,7 +34,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/**/register")
                 .excludePathPatterns("/**/forget")
                 .excludePathPatterns("/**/code")
-                .excludePathPatterns("/**/generate");
+                .excludePathPatterns("/**/generate")
+                // 开发系统监控
+                .excludePathPatterns("/**/actuator/**");
+
 
     }
 

@@ -9,7 +9,7 @@
             <result property="messageFeature" column="message_feature" jdbcType="INTEGER"/>
             <result property="messageType" column="message_type" jdbcType="INTEGER"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="extra" column="extra" jdbcType="OTHER"/>
+            <result property="extra" column="extra" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
             <result property="deleted" column="deleted" jdbcType="TINYINT"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
