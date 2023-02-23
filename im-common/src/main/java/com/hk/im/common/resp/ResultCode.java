@@ -12,6 +12,8 @@ public enum ResultCode {
     REDIRECT(true,301, "redirect"),
     //请求语法错误，请求参数错误
     BAD_REQUEST(false, 400 ,"request parameters error"),
+    // 不合法的 请求头
+    ILLEGAL_HEADER(false, 40002, "illegal request header"),
     //未授权
     UNAUTHORIZED(false,401,"unauthorized"),
     //未认证

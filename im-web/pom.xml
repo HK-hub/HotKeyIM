@@ -16,6 +16,7 @@
     <modules>
         <module>im-admin</module>
         <module>im-system</module>
+        <module>web-common</module>
     </modules>
 
 

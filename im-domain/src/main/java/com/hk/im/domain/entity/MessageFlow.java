@@ -36,7 +36,7 @@ public class MessageFlow implements Serializable {
     /**
      * 消息接收者id(用户id或群id)
      */
-    @TableField(value = "acceptor_id")
+    @TableField(value = "receiver_id")
     private Long receiverId;
 
     /**
