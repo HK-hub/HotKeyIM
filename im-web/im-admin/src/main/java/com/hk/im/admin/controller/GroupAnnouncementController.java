@@ -1,9 +1,8 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.GroupAnnouncementService;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.domain.entity.GroupAnnouncement;
 import com.hk.im.domain.request.GroupAnnouncementRequest;
-import com.hk.im.service.service.GroupAnnouncementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

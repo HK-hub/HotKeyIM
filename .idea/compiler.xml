@@ -12,6 +12,7 @@
         <module name="im-infrastructure" />
         <module name="push-server" />
         <module name="ruoyi-generator" />
+        <module name="im-client" />
         <module name="im-generator" />
         <module name="web-common" />
         <module name="ruoyi-framework" />

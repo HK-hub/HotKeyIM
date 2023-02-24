@@ -22,13 +22,18 @@ public class MessageConstants {
     public static final Map<Integer, Class<? extends WebSocketMessage>> MESSAGE_CLASSES_MAP = new HashMap<>();
     // 默认一页聊天记录数
     public static final Integer DEFAULT_RECORDS_LIMIT = 30;
+    public static final String CONSUMER_GROUP = "hkim-producer-group";
+    //
+    public static final String CHAT_MESSAGE_TAG = "chat-message-tag";
 
+
+    // 消息动作类型
     public static enum MessageActionType {
 
         // 连接初始化消息
         CONNECT,
         // 普通聊天消息
-        SIMPLE_CHAT,
+        CHAT,
         // 好友上下线状态
         ONLINE_STATUS,
         // 好友申请消息
@@ -44,10 +49,89 @@ public class MessageConstants {
 
     }
 
+
+    // 聊天消息类型
+    public static enum ChatMessageType {
+
+        // 默认
+        DEFAULT,
+        // 普通文本消息
+        TEXT,
+        // 图片消息
+        IMAGE,
+        // 代码消息
+        CODE,
+        // 语音消息
+        VOICE,
+        // 视频消息
+        VIDEO,
+        // 文件消息
+        FILE,
+        // 红包消息: 在紅包裡裝錢的用意就是要祝福收到的人在新的一年中平安吉祥、好運連連，所以英文就直接稱之為 lucky money
+        MONEY,
+        // 链接消息: link
+        LINK,
+        // 卡片消息
+        CARD,
+        // 语音通话
+        VOICE_CALL,
+        // 视频通话
+        VIDEO_CALL,
+        // 分享屏幕
+        SCREEN_SHARE,
+        // 白板演示
+        WHITEBOARD,
+        // 屏幕控制
+        SCREEN_CONTROL,
+    }
+
+
+    // 消息特性
+    /**
+     * 消息属性：0.默认，1.离线消息，2.漫游消息，3.同步消息，4.透传消息，5.控制消息
+     */
+    public enum MessageFeature {
+
+        DEFAULT,
+        OFFLINE,
+        ROAMING,
+        SYNC,
+        TRANSPARENT,
+        CONTROL,
+
+    }
+
+
     static {
         MESSAGE_CLASSES_MAP.put(MessageActionType.CONNECT.ordinal(), ConnectMessage.class);
         MESSAGE_CLASSES_MAP.put(MessageActionType.NO_SUPPORT.ordinal(), NoSupportMessage.class);
 
     }
 
+
+    /**
+     * 消息签收状态：签收状态：1.未读，2.已读，3.忽略，4.撤回，5.删除
+     */
+    public enum SignStatsEnum {
+
+        UNKOWN,
+        UNREAD,
+        READ,
+        IGNORE,
+        REVOKE,
+        DELETED,
+
+    }
+
+
+    // 消息发送状态：1.发送中，2.已发送，3.发送失败,4.草稿，
+    public enum SendStatusEnum {
+
+        UNKOWN,
+        SENDING,
+        SENDED,
+        FAIL,
+        DRAFT,
+
+    }
 }

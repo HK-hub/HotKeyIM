@@ -1,5 +1,8 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.FriendService;
+import com.hk.im.client.service.UserInfoService;
+import com.hk.im.client.service.UserService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.AccountNumberGenerator;
@@ -13,9 +16,6 @@ import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.domain.request.SendCodeRequest;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
-import com.hk.im.service.service.FriendService;
-import com.hk.im.service.service.UserInfoService;
-import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;

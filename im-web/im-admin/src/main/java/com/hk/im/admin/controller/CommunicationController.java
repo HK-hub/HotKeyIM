@@ -1,8 +1,8 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.ChatCommunicationService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.CreateCommunicationRequest;
-import com.hk.im.service.service.ChatCommunicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

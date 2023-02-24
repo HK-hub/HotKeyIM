@@ -25,11 +25,14 @@ public interface MessageMapStructure {
     @Mapping(source = "message.id", target = "id")
     @Mapping(source = "message.id", target = "messageId")
     @Mapping(source = "flow.id", target = "messageFlowId")
-    @Mapping(source = "message.messageType", target = "messageType")
+    @Mapping(source = "message.messageActionType", target = "messageActionType")
     @Mapping(source = "message.sequence", target = "sequence")
     @Mapping(source = "message.createTime", target = "createTime")
     @Mapping(source = "message.updateTime", target = "updateTime")
     @Mapping(source = "message.deleted", target = "deleted")
     public MessageBO toBO(MessageFlow flow, ChatMessage message);
+
+
+
 
 }

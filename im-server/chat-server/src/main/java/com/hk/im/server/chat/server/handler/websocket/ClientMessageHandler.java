@@ -1,12 +1,9 @@
 package com.hk.im.server.chat.server.handler.websocket;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.message.WebSocketMessage;
-import com.hk.im.domain.message.control.ConnectMessage;
-import com.hk.im.domain.message.system.NoSupportMessage;
 import com.hk.im.server.chat.config.MetaDataConfig;
 import com.hk.im.server.chat.server.channel.UserChannelManager;
 import com.hk.im.server.chat.util.SpringUtils;
@@ -14,23 +11,14 @@ import com.hk.im.service.service.AuthorizationService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.websocketx.*;
-import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.Text;
 
-import java.net.URI;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**

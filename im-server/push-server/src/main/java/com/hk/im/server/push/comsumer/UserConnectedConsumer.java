@@ -1,8 +1,10 @@
 package com.hk.im.server.push.comsumer;
 
+import com.hk.im.client.service.UserService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.constant.MessageConstants;
+import com.hk.im.domain.constant.MessageQueueConstants;
 import com.hk.im.domain.message.control.ConnectMessage;
-import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
@@ -21,7 +23,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "HKIMConsumerGroup", topic = "userConnectTopic")
+@RocketMQMessageListener(consumerGroup = "${rocketmq.producer.group}", topic = MessageQueueConstants.CONNECT_MESSAGE_TAG)
 public class UserConnectedConsumer implements RocketMQListener<ConnectMessage> {
 
     @Resource
@@ -33,7 +35,7 @@ public class UserConnectedConsumer implements RocketMQListener<ConnectMessage> {
      */
     @Override
     public void onMessage(ConnectMessage connectMessage) {
-        log.info("onMessage: {}",connectMessage);
+        log.info("rocketMQ onMessage: {}",connectMessage);
         ResponseResult userAndInfo = userService.getUserAndInfo(connectMessage.getUserId());
         log.info("connected user:{}",userAndInfo.getData());
 

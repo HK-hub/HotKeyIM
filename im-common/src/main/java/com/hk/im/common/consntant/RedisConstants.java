@@ -81,6 +81,8 @@ public class RedisConstants {
     public static final String COMMUNICATION_KEY = "communication:";
     // sequence 发号器
     public static final String SEQUENCE_KEY = "sequence:";
+    // 会话消息id 发号器 ttl : 8 小时 = 3600 * 8
+    public static final long SEQUENCE_TTL = 3600 * 8;
 
 
     /**

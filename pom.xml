@@ -16,6 +16,7 @@
         <module>im-service</module>
         <module>im-infrastructure</module>
         <module>im-web</module>
+        <module>im-client</module>
     </modules>
 
     <properties>

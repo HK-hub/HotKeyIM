@@ -23,7 +23,10 @@ public class WebSocketMessage implements Serializable {
     protected long sequenceId;
 
     // 消息action类型
-    protected int messageType;
+    protected Integer messageActionType;
+
+    // 聊天消息类型
+    protected Integer chatMessageType;
 
     // 消息体
     protected String messageData;
@@ -33,8 +36,10 @@ public class WebSocketMessage implements Serializable {
      * @return
      */
     public int getMessageActionType() {
-        return this.messageType;
+        return this.messageActionType;
     }
 
-
+    public Class getMessageClassType() {
+        return this.getClass();
+    }
 }

@@ -1,5 +1,9 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.FindService;
+import com.hk.im.client.service.FriendApplyService;
+import com.hk.im.client.service.FriendService;
+import com.hk.im.client.service.UserService;
 import com.hk.im.common.resp.PageResult;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Friend;
@@ -8,10 +12,6 @@ import com.hk.im.domain.request.FriendFindRequest;
 import com.hk.im.domain.request.UserFindPolicyRequest;
 import com.hk.im.domain.response.FriendSearchResponse;
 import com.hk.im.domain.vo.UserVO;
-import com.hk.im.service.service.FindService;
-import com.hk.im.service.service.FriendApplyService;
-import com.hk.im.service.service.FriendService;
-import com.hk.im.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.web.bind.annotation.*;

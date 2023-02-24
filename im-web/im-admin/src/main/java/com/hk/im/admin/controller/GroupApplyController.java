@@ -1,9 +1,9 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.GroupApplyService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.ApplyHandleRequest;
 import com.hk.im.domain.request.CreateGroupApplyRequest;
-import com.hk.im.service.service.GroupApplyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;

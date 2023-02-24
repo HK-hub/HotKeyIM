@@ -81,7 +81,7 @@ public class MessageBO {
     /**
      * 是否删除该条聊天记录,0.false, 1.ture
      */
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间

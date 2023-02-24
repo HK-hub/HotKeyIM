@@ -1,12 +1,12 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.GroupMemberService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.InviteGroupMemberRequest;
 import com.hk.im.domain.request.JoinGroupRequest;
 import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.domain.vo.GroupMemberVO;
-import com.hk.im.service.service.GroupMemberService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

@@ -21,7 +21,7 @@ public class NoSupportMessage extends WebSocketMessage {
     private final LocalDateTime time = LocalDateTime.now();
 
     public NoSupportMessage() {
-        this.messageType = MessageConstants.MessageActionType.NO_SUPPORT.ordinal();
+        this.messageActionType = MessageConstants.MessageActionType.NO_SUPPORT.ordinal();
     }
 
     @Override

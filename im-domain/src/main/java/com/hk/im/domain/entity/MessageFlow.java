@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,6 +15,7 @@ import lombok.experimental.Accessors;
 @TableName(value ="tb_message_flow")
 @Data
 @Accessors(chain = true)
+@EqualsAndHashCode
 public class MessageFlow implements Serializable {
     /**
      * 聊天消息表id
@@ -80,7 +82,7 @@ public class MessageFlow implements Serializable {
      * 是否删除该条聊天记录,0.false, 1.ture
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间
@@ -97,72 +99,6 @@ public class MessageFlow implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        MessageFlow other = (MessageFlow) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getGroupId() == null ? other.getGroupId() == null : this.getGroupId().equals(other.getGroupId()))
-            && (this.getSenderId() == null ? other.getSenderId() == null : this.getSenderId().equals(other.getSenderId()))
-            && (this.getReceiverId() == null ? other.getReceiverId() == null : this.getReceiverId().equals(other.getReceiverId()))
-            && (this.getChatType() == null ? other.getChatType() == null : this.getChatType().equals(other.getChatType()))
-            && (this.getMessageType() == null ? other.getMessageType() == null : this.getMessageType().equals(other.getMessageType()))
-            && (this.getMessageId() == null ? other.getMessageId() == null : this.getMessageId().equals(other.getMessageId()))
-            && (this.getSendStatus() == null ? other.getSendStatus() == null : this.getSendStatus().equals(other.getSendStatus()))
-            && (this.getSignFlag() == null ? other.getSignFlag() == null : this.getSignFlag().equals(other.getSignFlag()))
-            && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
-    }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getGroupId() == null) ? 0 : getGroupId().hashCode());
-        result = prime * result + ((getSenderId() == null) ? 0 : getSenderId().hashCode());
-        result = prime * result + ((getReceiverId() == null) ? 0 : getReceiverId().hashCode());
-        result = prime * result + ((getChatType() == null) ? 0 : getChatType().hashCode());
-        result = prime * result + ((getMessageType() == null) ? 0 : getMessageType().hashCode());
-        result = prime * result + ((getMessageId() == null) ? 0 : getMessageId().hashCode());
-        result = prime * result + ((getSendStatus() == null) ? 0 : getSendStatus().hashCode());
-        result = prime * result + ((getSignFlag() == null) ? 0 : getSignFlag().hashCode());
-        result = prime * result + ((getDeleted() == null) ? 0 : getDeleted().hashCode());
-        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", groupId=").append(groupId);
-        sb.append(", senderId=").append(senderId);
-        sb.append(", receiverId=").append(receiverId);
-        sb.append(", chatType=").append(chatType);
-        sb.append(", messageType=").append(messageType);
-        sb.append(", messageId=").append(messageId);
-        sb.append(", sendStatus=").append(sendStatus);
-        sb.append(", signFlag=").append(signFlag);
-        sb.append(", deleted=").append(deleted);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 
 }

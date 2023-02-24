@@ -1,9 +1,9 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.MinioService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.domain.request.UploadAvatarRequest;
-import com.hk.im.service.service.MinioService;
 import io.minio.messages.Bucket;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

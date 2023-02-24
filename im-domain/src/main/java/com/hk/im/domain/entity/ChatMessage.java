@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 /**
  * 
@@ -15,8 +16,7 @@ import lombok.*;
  */
 @TableName(value ="tb_chat_message", autoResultMap = true)
 @Data
-@EqualsAndHashCode
-@ToString
+@Accessors(chain = true)
 public class ChatMessage implements Serializable {
     /**
      * 聊天消息表id
@@ -59,7 +59,7 @@ public class ChatMessage implements Serializable {
      * 是否删除该条聊天记录,0.false, 1.ture
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间

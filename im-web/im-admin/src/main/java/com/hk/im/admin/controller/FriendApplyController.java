@@ -1,10 +1,9 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.FriendApplyService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.FriendApply;
 import com.hk.im.domain.request.ApplyHandleRequest;
-import com.hk.im.domain.request.FriendApplyRequest;
-import com.hk.im.service.service.FriendApplyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

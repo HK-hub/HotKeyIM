@@ -1,9 +1,10 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.ChatMessageService;
+import com.hk.im.client.service.MessageFlowService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.TalkRecordsRequest;
-import com.hk.im.service.service.ChatMessageService;
-import com.hk.im.service.service.MessageFlowService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,18 @@ public class MessageController {
     public ResponseResult getLastCommunicationRecords(TalkRecordsRequest request) {
 
         return this.messageFlowService.getLatestTalkRecords(request);
+    }
+
+
+    /**
+     * 发送普通文本消息
+     * @param message
+     * @return
+     */
+    @PostMapping("/send/text")
+    public ResponseResult sendTextMessage(@RequestBody TextMessage message) {
+
+        return this.messageFlowService.sendTextMessage(message);
     }
 
 

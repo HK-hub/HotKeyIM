@@ -1,10 +1,10 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.GroupService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.CreateGroupRequest;
 import com.hk.im.domain.request.ModifyGroupInfoRequest;
 import com.hk.im.domain.request.SetGroupAdministratorRequest;
-import com.hk.im.service.service.GroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
