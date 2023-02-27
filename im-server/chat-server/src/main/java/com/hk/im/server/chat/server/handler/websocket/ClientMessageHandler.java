@@ -2,24 +2,15 @@ package com.hk.im.server.chat.server.handler.websocket;
 
 import com.alibaba.fastjson2.JSON;
 import com.hk.im.domain.constant.MessageConstants;
-import com.hk.im.domain.entity.User;
 import com.hk.im.domain.message.WebSocketMessage;
-import com.hk.im.server.chat.config.MetaDataConfig;
-import com.hk.im.server.chat.server.channel.UserChannelManager;
-import com.hk.im.server.chat.util.SpringUtils;
-import com.hk.im.service.service.AuthorizationService;
+import com.hk.im.server.chat.server.handler.dispatch.HandlerDispatcher;
+import com.hk.im.server.common.channel.UserChannelManager;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.websocketx.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 /**
  * @author : HK意境
@@ -39,8 +30,8 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<WebSocketF
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // 消息分发
-        this.dispatch(ctx, msg);
-        super.channelRead(ctx, msg);
+        HandlerDispatcher.dispatch(ctx,msg);
+        super.channelRead(ctx,msg);
     }
 
 
@@ -49,98 +40,6 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<WebSocketF
 
     }
 
-    /**
-     * 连接处理
-     * BUG: 这里request.uri() 是请求路径上得参数，参数被编码了，需要自己转码
-     *
-     * @param ctx
-     * @param msg
-     */
-    private void doConnect(ChannelHandlerContext ctx, Object msg) {
-        // 第一次的连接请求，请求升级为Websocket
-        FullHttpRequest request = (FullHttpRequest) msg;
-        if (Objects.isNull(request)) {
-            ctx.close();
-        }
-        String uri = request.uri();
-        log.info("request:uri={},headers={},method={}", uri, request.headers().get("Origin"), request.method());
-        if (StringUtils.isEmpty(request.headers().get("Origin"))) {
-            log.info("request origin is empty");
-            ctx.close();
-        }
-
-        // 处理请求参数
-        String path = null;
-        String token = null;
-        if (StringUtils.contains(uri, ":")) {
-            // Map<String, String> urlParams = getUrlParams(uri);
-            uri = URLDecoder.decode(uri, StandardCharsets.UTF_8);
-            try{
-                String[] split = uri.split(":");
-                path = split[0];
-                token = split[1];
-                log.info("request url params:token={}", token);
-                request.setUri(path);
-            }catch(Exception e){
-                e.printStackTrace();
-                ctx.close();
-            }
-        }
-
-        // 验证 usi
-        log.info("the FullHttpRequest new uri={}", request.uri());
-        if (!Objects.equals(request.uri(), MetaDataConfig.path)) {
-            // 请求路径错误: 关闭连接
-            log.info("the websocket path is error: expect {}, but provide {}", request.uri(), MetaDataConfig.path);
-            ctx.channel().close();
-        }
-
-        // 认证处理
-        AuthorizationService authorizationService = SpringUtils.getBean(AuthorizationService.class);
-        User user = authorizationService.authUserByToken(token);
-        if (Objects.isNull(user)) {
-            // 认证失败
-            log.info("this websocket owner is not authorized:{}", ctx.channel().id().asLongText());
-            ctx.channel().close();
-        }
-
-        // 添加 channel
-        UserChannelManager.add(user.getId(), ctx.channel());
-        // 认证成功，发布事件消息
-
-    }
-
-
-    /**
-     * 做消息的分发处理
-     *
-     * @param ctx
-     * @param msg
-     */
-    private void dispatch(ChannelHandlerContext ctx, Object msg) {
-        // 连接建立请求
-        if (msg instanceof FullHttpRequest) {
-            this.doConnect(ctx, msg);
-        } else if (msg instanceof TextWebSocketFrame) {
-            // 业务消息
-            this.process(ctx, msg);
-        }
-    }
-
-
-    /**
-     * 处理业务消息
-     * @param ctx
-     * @param msg
-     */
-    private void process(ChannelHandlerContext ctx, Object msg) {
-
-    }
-
-
-    private void dispatch(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
-
-    }
 
     /**
      * 校验数据类型和action

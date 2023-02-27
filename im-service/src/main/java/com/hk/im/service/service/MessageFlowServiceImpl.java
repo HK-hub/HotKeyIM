@@ -3,10 +3,7 @@ package com.hk.im.service.service;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hk.im.client.service.ChatMessageService;
-import com.hk.im.client.service.GroupService;
-import com.hk.im.client.service.MessageFlowService;
-import com.hk.im.client.service.SequenceService;
+import com.hk.im.client.service.*;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.bo.MessageBO;
@@ -16,10 +13,18 @@ import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.MessageFlow;
+import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.domain.message.chat.TextMessage;
+import com.hk.im.domain.po.PrivateRecordsSelectPO;
 import com.hk.im.domain.request.TalkRecordsRequest;
+import com.hk.im.domain.vo.FriendVO;
+import com.hk.im.domain.vo.MessageVO;
+import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
+import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.MessageFlowMapper;
+import com.hk.im.infrastructure.mapper.UserInfoMapper;
+import com.hk.im.infrastructure.mapper.UserMapper;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
@@ -35,8 +40,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @ClassName : MessageFlowServiceImpl
  * @author : HK意境
+ * @ClassName : MessageFlowServiceImpl
  * @date : 2023/2/22 10:15
  * @description :
  * @Todo :
@@ -55,17 +60,21 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     @Resource
     private ChatMessageService chatMessageService;
     @Resource
-    private ApplicationContext  applicationContext;
+    private ApplicationContext applicationContext;
     @Resource
     private SequenceService sequenceService;
     @Resource
-    private TransactionTemplate transactionTemplate;
+    private UserManager userManager;
+    @Resource
+    private FriendService friendService;
 
 
     /**
      * 获取会话最大消息Sequence
+     *
      * @param senderId
      * @param receiverId
+     *
      * @return
      */
     @Override
@@ -89,7 +98,9 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
     /**
      * 获取最新聊天信息记录
+     *
      * @param request
+     *
      * @return
      */
     @Override
@@ -97,7 +108,7 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
         // 参数校验
         boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getReceiverId())
-                ||Objects.isNull(request.getTalkType()) || Objects.isNull(request.getLimit());
+                || Objects.isNull(request.getTalkType()) || Objects.isNull(request.getLimit()) || Objects.isNull(request.getAnchor());
         if (BooleanUtils.isTrue(preCheck)) {
             // 校验失败
             return ResponseResult.FAIL().setResultCode(ResultCode.BAD_REQUEST);
@@ -106,59 +117,55 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
         // 需要获取的聊天记录数
         Integer limit = request.getLimit();
         // 检验登录用户
-        String userId = request.getUserId();
-        if (StringUtils.isEmpty(userId)) {
+        Long senderId =  null;
+        if (StringUtils.isEmpty(request.getSenderId())) {
             // 没有传输 userId, 通过 UserContextHolder 获取
-            userId = String.valueOf(UserContextHolder.get().getId());
+            request.setSenderId(String.valueOf(UserContextHolder.get().getId()));
         }
-        String receiverId = request.getReceiverId();
+        senderId = Long.valueOf(request.getSenderId());
+        Long receiverId = Long.valueOf(request.getReceiverId());
+
+        // 查询用户
+        UserVO senderVO = this.userManager.findUserAndInfo(senderId);
+        FriendVO friendVO = this.friendService.getUserFriendById(senderId, receiverId);
+
         // 获取聊天类型
         Integer talkType = request.getTalkType();
 
-        List<MessageFlow> messageFlowList = Collections.emptyList();
         // 根据聊天类型获取聊天记录
+        List<MessageFlow> messageFlowList = Collections.emptyList();
+        PrivateRecordsSelectPO selectPO = new PrivateRecordsSelectPO().setSenderId(senderId)
+                .setReceiverId(receiverId)
+                .setSequence(request.getSequence()).setLimit(limit);
         if (CommunicationConstants.SessionType.PRIVATE.ordinal() == talkType) {
             // 好友私聊
             // 获取聊天记录流水
-            messageFlowList = this.lambdaQuery()
-                    .eq(MessageFlow::getReceiverId, receiverId)
-                    .eq(MessageFlow::getSenderId, userId)
-                    .orderByDesc(MessageFlow::getSequence)
-                    .last(" limit " + limit)
-                    .list();
+            messageFlowList = this.messageFlowMapper.selectPrivateRecordsByAnchor(selectPO);
         } else if (CommunicationConstants.SessionType.GROUP.ordinal() == talkType) {
             // 群聊
             // 获取聊天记录流水
-            messageFlowList = this.lambdaQuery()
-                    .eq(MessageFlow::getGroupId, receiverId)
-                    .or(wrapper -> {
-                        wrapper.eq(MessageFlow::getReceiverId, receiverId);
-                    })
-                    .orderByDesc(MessageFlow::getSequence)
-                    .last(" limit " + limit)
-                    .list();
+            messageFlowList = this.messageFlowMapper.selectGroupRecordsByAnchor(selectPO);
         }
-
         // 转换为MessageB: 查询消息体
-        List<MessageBO> messageBOList = messageFlowList.stream().map(flow -> {
+        List<MessageVO> messageVOList = messageFlowList.stream().map(flow -> {
             // 查询消息体
             ChatMessage message = this.chatMessageService.getById(flow.getMessageId());
             // 转换为 MessageBO
             MessageBO messageBO = MessageMapStructure.INSTANCE.toBO(flow, message);
-            return messageBO;
+            // 转换为MessageVO
+            return MessageMapStructure.INSTANCE.boToVO(messageBO, senderVO ,friendVO);
         }).toList();
 
-
         // 响应数据
-        return ResponseResult.SUCCESS(messageBOList);
+        return ResponseResult.SUCCESS(messageVOList);
     }
-
 
     /**
      * 分页获取聊天记录
+     *
      * @param request
-     * @return
-     * TODO
+     *
+     * @return TODO
      */
     @Override
     public ResponseResult getTalkRecordsByPage(TalkRecordsRequest request) {
@@ -218,7 +225,9 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
     /**
      * 发送文本消息
+     *
      * @param message
+     *
      * @return
      */
     @Override
@@ -271,7 +280,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
                 // 消息签收状态
                 .setSignFlag(MessageConstants.SignStatsEnum.UNREAD.ordinal())
                 // 消息发送状态
-                .setSendStatus(MessageConstants.SendStatusEnum.SENDING.ordinal());
+                .setSendStatus(MessageConstants.SendStatusEnum.SENDING.ordinal())
+                .setDeleted(Boolean.FALSE);
 
         // 保存消息和消息流水
         MessageBO messageBO = doSaveMessageAndFlow(chatMessage, messageFlow);
@@ -296,7 +306,9 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
     /**
      * 保存消息和消息流水
+     *
      * @param message
+     *
      * @return
      */
     @Override
@@ -311,7 +323,9 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
         }
 
         // 设置消息流水
-        flow.setCreateTime(message.getCreateTime()).setUpdateTime(message.getUpdateTime())
+        flow.setMessageId(message.getId())
+                .setCreateTime(message.getCreateTime())
+                .setUpdateTime(message.getUpdateTime())
                 .setSendStatus(MessageConstants.SendStatusEnum.SENDED.ordinal());
         Integer chatType = flow.getChatType();
         if (chatType == CommunicationConstants.SessionType.GROUP.ordinal()) {
@@ -326,11 +340,12 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
             return null;
         }
 
+
+        // 更新会话状态
+
         // 响应DTO
         return MessageMapStructure.INSTANCE.toBO(flow, message);
     }
-
-
 
 
 }

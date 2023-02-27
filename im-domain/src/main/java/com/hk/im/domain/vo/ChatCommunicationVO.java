@@ -85,7 +85,7 @@ public class ChatCommunicationVO {
     /**
      * 最后消息发送时间
      */
-    private Date lastSendTime;
+    private LocalDateTime lastSendTime;
 
     /**
      * 回话类型(1.个人聊天，2.群聊消息，3.系统消息,4.控制消息)

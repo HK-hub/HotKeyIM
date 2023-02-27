@@ -1,6 +1,6 @@
 package com.hk.im.server.chat.server.handler.common;
 
-import com.hk.im.server.chat.server.channel.UserChannelManager;
+import com.hk.im.server.common.channel.UserChannelManager;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleState;

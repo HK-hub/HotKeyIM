@@ -3,6 +3,7 @@ package com.hk.im.domain.message.control;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.message.WebSocketMessage;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author : HK意境
@@ -15,6 +16,7 @@ import lombok.Data;
  * @Version : 1.0
  */
 @Data
+@Accessors(chain = true)
 public class ConnectMessage extends WebSocketMessage {
 
     // 当前用户id

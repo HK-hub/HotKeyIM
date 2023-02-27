@@ -31,13 +31,7 @@ public class CustomProtocolChatChannelInitializer extends ChannelInitializer<Nio
     // 可重用，无状态，可共享处理器
     LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
     MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
-    LoginRequestMessageHandler LOGIN_HANDLER = new LoginRequestMessageHandler();
-    ChatRequestMessageHandler CHAT_HANDLER = new ChatRequestMessageHandler();
-    GroupCreateRequestMessageHandler GROUP_CREATE_HANDLER = new GroupCreateRequestMessageHandler();
-    GroupJoinRequestMessageHandler GROUP_JOIN_HANDLER = new GroupJoinRequestMessageHandler();
-    GroupMembersRequestMessageHandler GROUP_MEMBER_HANDLER = new GroupMembersRequestMessageHandler();
-    GroupQuitRequestMessageHandler GROUP_QUIT_HANDLER = new GroupQuitRequestMessageHandler();
-    GroupChatRequestMessageHandler GROUP_CHAT_HANDLER = new GroupChatRequestMessageHandler();
+
     QuitHandler QUIT_HANDLER = new QuitHandler();
 
 
@@ -73,13 +67,6 @@ public class CustomProtocolChatChannelInitializer extends ChannelInitializer<Nio
 
 
         // 处理消息
-        ch.pipeline().addLast(LOGIN_HANDLER);
-        ch.pipeline().addLast(CHAT_HANDLER);
-        ch.pipeline().addLast(GROUP_CREATE_HANDLER);
-        ch.pipeline().addLast(GROUP_JOIN_HANDLER);
-        ch.pipeline().addLast(GROUP_MEMBER_HANDLER);
-        ch.pipeline().addLast(GROUP_QUIT_HANDLER);
-        ch.pipeline().addLast(GROUP_CHAT_HANDLER);
         ch.pipeline().addLast(QUIT_HANDLER);
     }
 

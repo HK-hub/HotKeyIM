@@ -63,6 +63,12 @@ public class ChatCommunication implements Serializable {
     private Long lastMessageId;
 
     /**
+     * 最后一条确认的消息
+     */
+    @TableField(value = "last_ack_message")
+    private Long lastAckMessage;
+
+    /**
      * 最后一条消息的内容
      */
     @TableField(value = "last_message_content")
@@ -78,7 +84,7 @@ public class ChatCommunication implements Serializable {
      * 最后消息发送时间
      */
     @TableField(value = "last_send_time")
-    private Date lastSendTime;
+    private LocalDateTime lastSendTime;
 
     /**
      * 回话类型(1.个人聊天，2.群聊消息，3.系统消息,4.控制消息)

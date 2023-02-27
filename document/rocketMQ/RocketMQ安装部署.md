@@ -37,7 +37,7 @@ deleteWhen = 04
 fileReservedTime = 48
 brokerRole = ASYNC_MASTER
 flushDiskType = ASYNC_FLUSH
-brokerIP1 = {本地外网 IP}
+brokerIP1 =本地外网IP
 ```
 
 拉取镜像

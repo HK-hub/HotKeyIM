@@ -128,15 +128,14 @@ public class MetaDataConfig {
             epoll = Boolean.parseBoolean(ev);
         }
 
-
-
     }
 
+
     public static void check() {
-        log.info("address:{}", address);
-        log.info("port:{}", port);
-        log.info("serializer:{}", serializer);
-        log.info("path:{}", path);
+        log.info("chat server address:{}", address);
+        log.info("chat server port:{}", port);
+        log.info("chat server serializer:{}", serializer);
+        log.info("chat server path:{}", path);
     }
 
 

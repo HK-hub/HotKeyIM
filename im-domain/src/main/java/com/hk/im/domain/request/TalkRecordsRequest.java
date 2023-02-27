@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-public class TalkRecordsRequest {
+public class    TalkRecordsRequest {
 
     // 会话ID
     private String communicationId;
@@ -39,6 +39,9 @@ public class TalkRecordsRequest {
 
     // 查询锚点：参数表示查询锚点，也就是作为查询起点的那条消息，查询结果不包含锚点。不能设置为null
     private String anchor;
+
+    // 锚点 sequence序列
+    private Long sequence;
 
     // 查询方向：1.当前记录节点向前查找，2.向后查找；默认：向前查找
     private Integer direction = 1;

@@ -15,6 +15,7 @@
         <module name="im-client" />
         <module name="im-generator" />
         <module name="web-common" />
+        <module name="im-flow" />
         <module name="ruoyi-framework" />
         <module name="im-domain" />
         <module name="im-admin" />

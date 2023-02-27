@@ -5,25 +5,47 @@
 <mapper namespace="com.hk.im.infrastructure.mapper.MessageFlowMapper">
 
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.MessageFlow">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="groupId" column="group_id" jdbcType="BIGINT"/>
-            <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
-            <result property="receiverId" column="receiver_id" jdbcType="BIGINT"/>
-            <result property="chatType" column="chat_type" jdbcType="INTEGER"/>
-            <result property="messageType" column="message_type" jdbcType="INTEGER"/>
-            <result property="messageId" column="message_id" jdbcType="BIGINT"/>
-            <result property="sequence" column="sequence" jdbcType="BIGINT"/>
-            <result property="sendStatus" column="send_status" jdbcType="INTEGER"/>
-            <result property="signFlag" column="sign_flag" jdbcType="INTEGER"/>
-            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="groupId" column="group_id" jdbcType="BIGINT"/>
+        <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
+        <result property="receiverId" column="receiver_id" jdbcType="BIGINT"/>
+        <result property="chatType" column="chat_type" jdbcType="INTEGER"/>
+        <result property="messageType" column="message_type" jdbcType="INTEGER"/>
+        <result property="messageId" column="message_id" jdbcType="BIGINT"/>
+        <result property="sequence" column="sequence" jdbcType="BIGINT"/>
+        <result property="sendStatus" column="send_status" jdbcType="INTEGER"/>
+        <result property="signFlag" column="sign_flag" jdbcType="INTEGER"/>
+        <result property="revoke" column="revoke" jdbcType="BOOLEAN"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,group_id,sender_id,
+        id
+        ,group_id,sender_id,
         receiver_id,chat_type,message_type,
-        message_id,sequence,send_status,sign_flag,
+        message_id,sequence,send_status,sign_flag,revoke
         deleted,create_time,update_time
     </sql>
+
+    <!-- 从锚点开始获取私聊聊天开始 -->
+    <select id="selectPrivateRecordsByAnchor" resultType="com.hk.im.domain.entity.MessageFlow">
+
+        select *
+        from tb_message_flow
+        where (sender_id = #{po.senderId} and receiver_id = #{po.receiverId})
+           or (sender_id = #{po.receiverId} and receiver_id = #{po.senderId})
+            and `sequence` > #{po.sequence}
+            limit #{po.limit}
+    </select>
+
+    <!-- 从锚点开始查询群聊聊天消息分页 -->
+    <select id="selectGroupRecordsByAnchor" resultType="com.hk.im.domain.entity.MessageFlow">
+        select *
+        from tb_message_flow
+        where receiver_id = #{po.receiverId}
+          and `sequence` > #{po.sequence} limit #{po.limit}
+    </select>
+
 </mapper>

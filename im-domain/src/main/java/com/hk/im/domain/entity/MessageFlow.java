@@ -79,6 +79,12 @@ public class MessageFlow implements Serializable {
     private Integer signFlag;
 
     /**
+     * 是否撤回
+     */
+    @TableField(value = "revoke")
+    private Boolean revoke;
+
+    /**
      * 是否删除该条聊天记录,0.false, 1.ture
      */
     @TableField(value = "deleted")

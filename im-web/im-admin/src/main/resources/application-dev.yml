@@ -60,6 +60,11 @@ logging:
 
 # rocketMQ
 rocketmq:
-  name-server: 47.108.146.141:9876
+  name-server: 111.92.241.177:9876
   producer:
     group: hkim-producer-group
+  consumer:
+    connect:
+      group: chat-connect-group
+    chat:
+      group: chat-message-group

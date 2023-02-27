@@ -24,89 +24,92 @@ public class MessageBO {
     /**
      * 聊天消息表id
      */
-    private Long id;
+    protected Long id;
 
     /**
      * 聊天消息id
      */
-    private Long messageId;
+    protected Long messageId;
 
 
     /**
      * 聊天消息流水id
      */
-    private Long messageFlowId;
+    protected Long messageFlowId;
 
     /**
      * 群id,如果是群聊的话
      */
-    private Long groupId;
+    protected Long groupId;
 
     /**
      * 消息发送者id
      */
-    private Long senderId;
+    protected Long senderId;
 
     /**
      * 消息接收者id(用户id或群id)
      */
-    private Long receiverId;
+    protected Long receiverId;
 
     /**
      * 会话类型:1.个人聊天,2.群聊，3.系统消息,
      */
-    private Integer chatType;
+    protected Integer chatType;
 
     /**
      * 消息类型:1.文本，2.图片，3.语音，4.图文混合，5.文件，6.语音通话，7.视频通话，
      8.白板演示，9.远程控制，10.日程安排，11.外部分享,12.@消息
      */
-    private Integer messageType;
+    protected Integer messageType;
 
     /**
      * 消息序列号
      */
-    private Long sequence;
+    protected Long sequence;
 
     /**
      * 消息发送状态：1.发送中，2.已发送，3.发送失败,4.草稿，
      */
-    private Integer sendStatus;
+    protected Integer sendStatus;
 
     /**
      * 签收状态：1.未读，2.已读，3.忽略，4.撤回，5.删除
      */
-    private Integer signFlag;
+    protected Integer signFlag;
 
     /**
      * 是否删除该条聊天记录,0.false, 1.ture
      */
-    private Boolean deleted;
+    protected Boolean deleted;
 
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    protected LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    protected LocalDateTime updateTime;
 
     /**
      * 消息属性：0.默认，1.离线消息，2.漫游消息，3.同步消息，4.透传消息，5.控制消息
      */
-    private Integer messageFeature;
+    protected Integer messageFeature;
 
     /**
      * 消息内容,最大文本数量1024个字符
      */
-    private String content;
+    protected String content;
 
     /**
      * 扩展字段，一般使用JSON字符串存储,可以用户回复消息，@消息，超文本消息，卡片消息，视频消息等
      */
-    private Map<String, Object> extra;
+    protected Map<String, Object> extra;
+
+    // 消息浮动位置布局：默认 center，自己发送右边right，好友发送左边left
+    protected String layout  = "center";
 
 
 }

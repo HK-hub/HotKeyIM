@@ -1,8 +1,8 @@
 package com.hk.im.service.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hk.im.client.service.CategoryService;
 import com.hk.im.domain.entity.Category;
-import com.hk.im.service.service.CategoryService;
 import com.hk.im.infrastructure.mapper.CategoryMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
-    implements CategoryService{
+    implements CategoryService {
 
 }
 

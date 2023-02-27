@@ -19,8 +19,7 @@ public interface ChatCommunicationMapper extends BaseMapper<ChatCommunication> {
      * @param receiverId
      * @return
      */
-    @Select("select * from tb_chat_communication where (sender_id = #{senderId} and receiver_id = #{receiverId}) or " +
-            "(sender_id = #{receiverId} and receiver_id = #{senderId})")
+    @Select("select * from tb_chat_communication where sender_id = #{senderId} and receiver_id = #{receiverId}")
     public ChatCommunication selectCommunication(@Param("senderId") Long senderId, @Param("receiverId") Long receiverId);
 
 

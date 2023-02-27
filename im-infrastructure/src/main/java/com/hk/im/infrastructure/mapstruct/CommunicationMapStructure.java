@@ -31,6 +31,8 @@ public interface CommunicationMapStructure {
     @Mapping(source = "communication.disturb", target = "disturb")
     @Mapping(source = "communication.online", target = "online")
     @Mapping(source = "communication.createTime", target = "createTime")
+    @Mapping(source = "friendVO", target = "friendVO")
+    @Mapping(source = "groupVO", target = "groupVO")
     public ChatCommunicationVO toVO(ChatCommunication communication, FriendVO friendVO, GroupVO groupVO);
 
 }

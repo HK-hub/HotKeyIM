@@ -9,6 +9,8 @@ import com.hk.im.domain.entity.MessageFlow;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.TalkRecordsRequest;
 
+import java.util.List;
+
 /**
  * @ClassName : MessageFlowService
  * @author : HK意境
@@ -59,5 +61,10 @@ public interface MessageFlowService extends IService<MessageFlow> {
      * @return
      */
     MessageBO doSaveMessageAndFlow(ChatMessage message, MessageFlow flow);
+
+
+
+
+
 
 }

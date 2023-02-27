@@ -11,7 +11,8 @@ package com.hk.im.domain.entity;
  * @Modified :
  * @Version : 1.0
  */
-class FriendTest {
+class FriendTest <K,V> {
+
 
 
 }

@@ -1,9 +1,9 @@
 package com.hk.im.server.chat.protocol;
 
 import com.hk.im.server.chat.config.MetaDataConfig;
-import com.hk.im.server.chat.message.Message;
 import com.hk.im.server.chat.serialization.SerializationEnum;
 import com.hk.im.server.chat.serialization.SerializerFacade;
+import com.hk.im.server.common.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;

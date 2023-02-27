@@ -2,11 +2,11 @@ package com.hk.im.admin.service;
 
 import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.admin.util.MinioUtil;
+import com.hk.im.client.service.MinioService;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.UploadResponse;
 import com.hk.im.domain.request.UploadAvatarRequest;
-import com.hk.im.service.service.MinioService;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;

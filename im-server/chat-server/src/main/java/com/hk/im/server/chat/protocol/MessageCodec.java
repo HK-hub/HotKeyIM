@@ -1,7 +1,7 @@
 package com.hk.im.server.chat.protocol;
 
 
-import com.hk.im.server.chat.message.Message;
+import com.hk.im.server.common.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;

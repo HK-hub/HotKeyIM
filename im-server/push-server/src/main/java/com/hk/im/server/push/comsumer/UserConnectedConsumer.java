@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "${rocketmq.producer.group}", topic = MessageQueueConstants.CONNECT_MESSAGE_TAG)
+@RocketMQMessageListener(consumerGroup = "chat-connect-group", topic = "connect-topic")
 public class UserConnectedConsumer implements RocketMQListener<ConnectMessage> {
 
     @Resource

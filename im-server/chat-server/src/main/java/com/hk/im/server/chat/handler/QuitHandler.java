@@ -1,6 +1,6 @@
 package com.hk.im.server.chat.handler;
 
-import com.hk.im.server.chat.session.SessionFactory;
+import com.feilong.net.mail.SessionFactory;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -30,7 +30,7 @@ public class QuitHandler extends ChannelInboundHandlerAdapter {
     // 连接断开
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        SessionFactory.getSession().unbind(ctx.channel());
+        // SessionFactory.getSession().unbind(ctx.channel());
         log.debug("{} 已经离线", ctx.channel());
         super.channelInactive(ctx);
     }
@@ -39,7 +39,7 @@ public class QuitHandler extends ChannelInboundHandlerAdapter {
     // 捕捉到异常
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        SessionFactory.getSession().unbind(ctx.channel());
+        // SessionFactory.getSession().unbind(ctx.channel());
         log.debug("{} 已经异常断开，异常：{}", ctx.channel(), cause);
         super.exceptionCaught(ctx, cause);
     }

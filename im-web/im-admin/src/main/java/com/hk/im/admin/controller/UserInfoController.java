@@ -1,6 +1,7 @@
 package com.hk.im.admin.controller;
 
 import com.hk.im.client.service.UserInfoService;
+import com.hk.im.client.service.UserService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.util.JWTUtils;
 import com.hk.im.domain.context.UserContextHolder;

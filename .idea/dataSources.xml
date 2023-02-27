@@ -9,5 +9,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/hk_im</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@111.92.241.177" uuid="7a3b9132-9085-4f52-a1d2-094a9aadd8d8">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://111.92.241.177:3306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

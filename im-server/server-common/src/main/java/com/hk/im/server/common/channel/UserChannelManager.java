@@ -1,6 +1,8 @@
 package com.hk.im.server.common.channel;
 
 import com.alibaba.fastjson2.JSON;
+import com.hk.im.domain.constant.MessageConstants;
+import com.hk.im.domain.message.WebSocketMessage;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -10,10 +12,13 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -107,13 +112,19 @@ public class UserChannelManager {
 
     /**
      * Get channel by uid
-     * @param uid     uid
+     * @param userId     uid
      * @return channel
      */
     @Nullable
-    public static Set<Channel> getUserChannel(@NonNull Long uid) {
-        return userChannelMap.get(uid);
+    public static Set<Channel> getUserChannel(@NonNull Long userId) {
+        return userChannelMap.get(userId);
     }
+
+    @Nullable
+    public static Set<Channel> getGroupChannel(@NonNull Long groupId) {
+        return userChannelMap.get(groupId);
+    }
+
 
     public static Map<Long, Set<Channel>> getUserChannelMap() {
         return userChannelMap;
@@ -128,7 +139,7 @@ public class UserChannelManager {
      */
     public static void writeAndFlush(@NonNull Long uid, @NonNull Object message, @NonNull MessageConstants.MessageActionType typeEnum) {
         Set<Channel> channelSet = userChannelMap.get(uid);
-        if (ObjectUtils.isEmpty(channelSet) || channelSet.size() == 0) {
+        if (CollectionUtils.isEmpty(channelSet) || channelSet.size() == 0) {
             return;
         }
         // 发送消息
@@ -176,5 +187,16 @@ public class UserChannelManager {
         });
     }
 
+
+    /**
+     * 向置顶群聊群员写消息
+     * @param groupId
+     * @param memberId
+     * @param message
+     */
+    public static void writeGroupMemberAndFlush(Long groupId, Long memberId, Object message) {
+
+
+    }
 
 }

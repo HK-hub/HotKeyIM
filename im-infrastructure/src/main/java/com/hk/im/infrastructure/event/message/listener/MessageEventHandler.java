@@ -5,12 +5,15 @@ import com.hk.im.client.service.RocketMQService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.MessageConstants;
+import com.hk.im.domain.constant.MessageQueueConstants;
+import com.hk.im.domain.entity.ChatCommunication;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
 import com.hk.im.infrastructure.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -36,8 +39,9 @@ public class MessageEventHandler {
     private RocketMQService rocketMQService;
     @Resource
     private ChatCommunicationService chatCommunicationService;
-    @Value("${rocketmq.producer.group}")
-    private String consumerGroup;
+    @Resource
+    private ApplicationContext applicationContext;
+
 
     @Async
     @EventListener
@@ -60,9 +64,21 @@ public class MessageEventHandler {
             ResponseResult result = this.chatCommunicationService.updateCommunicationDraft(messageBO);
         }
 
-        // 发送消息成功：发送MQ
-        SendResult sendResult = this.rocketMQService.sendTagMsg(consumerGroup, MessageConstants.CHAT_MESSAGE_TAG, messageBO);
+        // 更新会话
+        ResponseResult talkResult = this.chatCommunicationService.getChatCommunication(messageBO.getSenderId(), messageBO.getReceiverId());
+        ChatCommunication communication = (ChatCommunication) talkResult.getData();
+        communication.setLastMessageContent(messageBO.getContent())
+                .setLastMessageId(messageBO.getId())
+                .setLastSendTime(messageBO.getCreateTime());
+        this.chatCommunicationService.updateById(communication);
 
+        // 更新未读数目
+
+
+        // 发送消息成功：发送MQ
+        SendResult sendResult = this.rocketMQService.sendTagMsg(MessageQueueConstants.MessageConsumerTopic.chat_topic.topic,
+                MessageConstants.ChatMessageType.TEXT.name(), messageBO);
+        log.info("Sent message by rocketmq: {}", sendResult);
     }
 
 
