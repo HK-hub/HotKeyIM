@@ -1,7 +1,7 @@
 package com.hk.im.server.chat.protocol;
 
 
-import com.hk.im.server.common.message.Message;
+import com.hk.im.server.common.message.AbstractMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
@@ -20,7 +20,7 @@ import java.util.List;
  * @Version : 1.0
  */
 @Slf4j
-public class MessageCodec extends ByteToMessageCodec<Message> {
+public class MessageCodec extends ByteToMessageCodec<AbstractMessage> {
 
 
     /**
@@ -31,7 +31,7 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
      * @throws Exception
      */
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, ByteBuf out) throws Exception {
+    protected void encode(ChannelHandlerContext channelHandlerContext, AbstractMessage message, ByteBuf out) throws Exception {
         MessageCodecExecutor.encode(channelHandlerContext, message, out);
     }
 

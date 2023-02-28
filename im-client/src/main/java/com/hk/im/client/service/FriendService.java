@@ -118,4 +118,12 @@ public interface FriendService extends IService<Friend> {
      * @return
      */
     List<Friend> getAllEnableInviteFriends(String groupId, String userId);
+
+    /**
+     * 获取用户好友
+     * @param senderId
+     * @param receiverId
+     * @return
+     */
+    Friend getFriendById(Long senderId, Long receiverId);
 }

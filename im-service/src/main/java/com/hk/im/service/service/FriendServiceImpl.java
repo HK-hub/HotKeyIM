@@ -434,6 +434,19 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
     }
 
 
+    /**
+     * 获取用户指定好友
+     * @param senderId
+     * @param receiverId
+     * @return
+     */
+    @Override
+    public Friend getFriendById(Long senderId, Long receiverId) {
+        Friend friend = this.friendMapper.selectFriendByTowUser(senderId, receiverId);
+        return friend;
+    }
+
+
 }
 
 

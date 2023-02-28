@@ -45,6 +45,8 @@ public class ResponseResult<T> {
     // 响应时间
     private LocalDateTime dateTime = LocalDateTime.now();
 
+    private ResultEntity result;
+
     // 静态返回对象
     public static ResponseResult SuccessResponse = new ResponseResult(ResultCode.SUCCESS, "ok");
     public static ResponseResult FailResponse = new ResponseResult(ResultCode.FAIL, "failed");

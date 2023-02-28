@@ -3,6 +3,7 @@ package com.hk.im.admin.controller;
 import com.hk.im.client.service.ChatCommunicationService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.CreateCommunicationRequest;
+import com.hk.im.domain.request.TopTalkRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,19 @@ public class CommunicationController {
 
         return this.chatCommunicationService.createChatCommunication(request);
     }
+
+
+    /**
+     * 置顶会话
+     * @param request
+     * @return
+     */
+    @PostMapping("/topping")
+    public ResponseResult topCommunication(@RequestBody TopTalkRequest request) {
+
+        return this.chatCommunicationService.topTalkCommunication(request);
+    }
+
 
 
 }

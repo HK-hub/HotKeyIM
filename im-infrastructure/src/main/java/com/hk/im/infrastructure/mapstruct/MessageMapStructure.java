@@ -38,13 +38,6 @@ public interface MessageMapStructure {
 
     @Mapping(source = "messageBO.id", target = "id")
     @Mapping(source = "messageBO.groupId", target = "groupId")
-    @Mapping(source = "userVO", target = "sender")
-    @Mapping(source = "friendVO", target = "receiver")
-    @Mapping(source = "userVO.miniAvatar", target = "avatar")
-    @Mapping(source = "userVO.miniAvatar", target = "senderAvatar")
-    @Mapping(source = "friendVO.avatar", target = "receiverAvatar")
-    @Mapping(source = "friendVO.remarkName", target = "friendRemark")
-    @Mapping(source = "friendVO.nickname", target = "nickname")
-    public MessageVO boToVO(MessageBO messageBO, UserVO userVO, FriendVO friendVO);
+    public MessageVO boToVO(MessageBO messageBO);
 
 }

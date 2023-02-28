@@ -1,6 +1,6 @@
 package com.hk.im.server.chat.protocol;
 
-import com.hk.im.server.common.message.Message;
+import com.hk.im.server.common.message.AbstractMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -19,9 +19,9 @@ import java.util.List;
  * @Version : 1.0
  */
 @ChannelHandler.Sharable
-public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message> {
+public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, AbstractMessage> {
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, List<Object> list) throws Exception {
+    protected void encode(ChannelHandlerContext channelHandlerContext, AbstractMessage message, List<Object> list) throws Exception {
         // 将 message 消息编码放入 buffer
         ByteBuf buffer = channelHandlerContext.alloc().buffer();
         MessageCodecExecutor.encode(channelHandlerContext, message,  buffer);

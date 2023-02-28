@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.client.service.*;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
+import com.hk.im.common.resp.ResultEntity;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.constant.MessageConstants;
@@ -36,6 +37,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -126,8 +128,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
         Long receiverId = Long.valueOf(request.getReceiverId());
 
         // 查询用户
-        UserVO senderVO = this.userManager.findUserAndInfo(senderId);
-        FriendVO friendVO = this.friendService.getUserFriendById(senderId, receiverId);
+        UserVO userVO = this.userManager.findUserAndInfo(senderId);
+        UserVO friendVO = this.userManager.findUserAndInfo(receiverId);
 
         // 获取聊天类型
         Integer talkType = request.getTalkType();
@@ -153,8 +155,10 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
             // 转换为 MessageBO
             MessageBO messageBO = MessageMapStructure.INSTANCE.toBO(flow, message);
             // 转换为MessageVO
-            return MessageMapStructure.INSTANCE.boToVO(messageBO, senderVO ,friendVO);
-        }).toList();
+            MessageVO messageVO = MessageMapStructure.INSTANCE.boToVO(messageBO);
+            // 计算头像，id
+            return messageVO.computedPrivateMessageVO(userVO, friendVO);
+        }).sorted(Comparator.comparing(MessageVO::getSequence)).toList();
 
         // 响应数据
         return ResponseResult.SUCCESS(messageVOList);

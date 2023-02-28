@@ -3,7 +3,8 @@ package com.hk.im.server.chat.protocol;
 import com.hk.im.server.chat.config.MetaDataConfig;
 import com.hk.im.server.chat.serialization.SerializationEnum;
 import com.hk.im.server.chat.serialization.SerializerFacade;
-import com.hk.im.server.common.message.Message;
+import com.hk.im.server.common.message.AbstractMessage;
+import com.hk.im.server.common.message.MessageTypeDeterminer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ import java.util.List;
 @Slf4j
 public class MessageCodecExecutor {
 
-    public static void encode(ChannelHandlerContext channelHandlerContext, Message message, ByteBuf out) throws Exception {
+    public static void encode(ChannelHandlerContext channelHandlerContext, AbstractMessage message, ByteBuf out) throws Exception {
         // 1. 魔数，4字节
         out.writeBytes(ProtocolMetaData.magic);
         // 2. 版本，1 字节
@@ -68,7 +69,7 @@ public class MessageCodecExecutor {
         // 解析Message对象
         SerializationEnum serializer = SerializationEnum.getInstance(serialization);
         // 确定具体消息类型
-        Class<?> clazz = Message.getMessageClass(messageType);
+        Class<?> clazz = MessageTypeDeterminer.getMessageClass(messageType);
         Object message = SerializerFacade.deserialize(serializer, clazz, bytes);
 
         log.debug("{},{},{},{},{},{}", magicNumber, version, serialization, messageType, sequenceId, contentLength);

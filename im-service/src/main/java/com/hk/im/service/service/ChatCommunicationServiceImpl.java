@@ -10,7 +10,9 @@ import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.entity.ChatCommunication;
+import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.request.CreateCommunicationRequest;
+import com.hk.im.domain.request.TopTalkRequest;
 import com.hk.im.domain.vo.ChatCommunicationVO;
 import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.GroupVO;
@@ -21,6 +23,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -319,6 +322,65 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
             return ResponseResult.FAIL();
         }
         return ResponseResult.SUCCESS(communication);
+    }
+
+
+    /**
+     * 置顶、取消置顶会话
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult topTalkCommunication(TopTalkRequest request) {
+
+        // 参数校验
+        boolean preChek = Objects.isNull(request) || StringUtils.isEmpty(request.getTalkId());
+        if (BooleanUtils.isTrue(preChek)) {
+            // 校验失败
+            return ResponseResult.FAIL().setResultCode(ResultCode.BAD_REQUEST);
+        }
+
+        String talkId = request.getTalkId();
+        // 获取会话
+        ChatCommunication talk = this.getById(talkId);
+
+        if (Objects.isNull(talk)) {
+            // 会话不存在
+            return ResponseResult.FAIL().setMessage("会话不存在!");
+        }
+        Friend friend = this.friendService.getFriendById(talk.getSenderId(), talk.getReceiverId());
+
+        // 根据操作进行处理
+        Integer operation = request.getOperation();
+
+        if (operation == TopTalkRequest.Operation.TOP.ordinal()) {
+            // 置顶 :1.检查是否置顶 2.置顶
+            if (BooleanUtils.isTrue(talk.getTop())) {
+                // 已经置顶了
+                return ResponseResult.SUCCESS(talk);
+            }
+            // 没有置顶 -> 进行置顶操作
+            talk.setTop(Boolean.TRUE);
+            friend.setTop(Boolean.TRUE);
+
+        } else if (operation == TopTalkRequest.Operation.CANCEL.ordinal()) {
+            // 取消置顶：1.检查是否已经置顶，2.进行取消操作
+            if (BooleanUtils.isFalse(talk.getTop())) {
+                // 已经不是置顶了
+                return ResponseResult.SUCCESS(talk);
+            }
+            // 进行取消置顶操作
+            talk.setTop(Boolean.FALSE);
+            friend.setTop(Boolean.FALSE);
+        }
+
+        // 好友置顶
+        this.updateById(talk);
+        this.friendService.updateById(friend);
+
+        // 响应操作后的数据
+        return ResponseResult.SUCCESS(talk);
     }
 }
 

@@ -5,6 +5,7 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.entity.ChatCommunication;
 import com.hk.im.domain.request.CreateCommunicationRequest;
+import com.hk.im.domain.request.TopTalkRequest;
 
 /**
  * @ClassName : ChatCommunicationService
@@ -57,4 +58,11 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
      * @return
      */
     ResponseResult updateCommunicationDraft(MessageBO messageBO);
+
+    /**
+     * 置顶会话、取消置顶
+     * @param request
+     * @return
+     */
+    ResponseResult topTalkCommunication(TopTalkRequest request);
 }

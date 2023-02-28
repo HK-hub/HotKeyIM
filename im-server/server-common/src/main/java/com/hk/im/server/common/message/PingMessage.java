@@ -1,8 +1,8 @@
 package com.hk.im.server.common.message;
 
-public class PingMessage extends Message {
+public class PingMessage extends AbstractMessage {
     @Override
     public int getMessageType() {
-        return PingMessage;
+        return MessageTypeDeterminer.PingMessageType;
     }
 }

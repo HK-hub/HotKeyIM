@@ -9,3 +9,11 @@
 ### 接口安全
 [SpringBoot 如何保证接口安全？老鸟们都是这么玩的！](https://juejin.cn/post/7195355046065176631)
 
+
+## 监控告警
+prometheus 版本：prometheus-2.37.6.linux-amd64.tar.gz
+```shell
+wget https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-amd64.tar.gz
+```
+
+
