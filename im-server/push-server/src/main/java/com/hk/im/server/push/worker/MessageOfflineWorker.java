@@ -8,6 +8,7 @@ import com.hk.im.domain.entity.ChatCommunication;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -39,7 +40,7 @@ public class MessageOfflineWorker {
         Long senderId = messageBO.getSenderId();
         Long receiverId = messageBO.getReceiverId();
         // 查询会话
-        ResponseResult talkResult = this.chatCommunicationService.getChatCommunication(senderId, receiverId);
+        ResponseResult talkResult = this.chatCommunicationService.getChatCommunication(receiverId, senderId);
         if (BooleanUtils.isFalse(talkResult.isSuccess())) {
             // 离线消息处理失败
             log.info("offline message handle failed:{}",talkResult);
@@ -65,6 +66,7 @@ public class MessageOfflineWorker {
      * 更新未读数量
      * @param talk
      */
+    @Transactional
     public synchronized void doPrivate(MessageBO messageBO, ChatCommunication talk) {
 
         talk.setUnreadCount(talk.getUnreadCount() + 1);

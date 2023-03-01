@@ -3,6 +3,8 @@ package com.hk.im.server.push.comsumer;
 import com.alibaba.fastjson2.JSON;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
+import com.hk.im.domain.entity.User;
+import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.server.common.channel.UserChannelManager;
 import com.hk.im.server.push.worker.MessageOfflineWorker;
 import com.hk.im.server.push.worker.MessagePushWorker;
@@ -22,7 +24,7 @@ import javax.annotation.Resource;
  * @author : HK意境
  * @ClassName : SendMessageConsumer
  * @date : 2023/2/24 15:36
- * @description :
+ * @description : 发送聊天消息消费者
  * @Todo :
  * @Bug :
  * @Modified :
@@ -48,10 +50,30 @@ public class SendMessageConsumer implements RocketMQListener<MessageBO>, Initial
         // 日志记录
         log.info("rocketmq on message(chat message): {}",  messageBO);
 
+        /*Long senderId = messageBO.getSenderId();
+        Long receiverId = messageBO.getReceiverId();
+        Set<Channel> senderChannel = UserChannelManager.getUserChannel(senderId);
+        for (Channel channel : senderChannel) {
+            if (channel.isActive()) {
+                log.info("push message to sender");
+                channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(messageBO)));
+            }
+
+        }
+
+        Set<Channel> receiverChannel = UserChannelManager.getUserChannel(receiverId);
+        for (Channel channel : receiverChannel) {
+            if (channel.isActive()) {
+                log.info("push message to receiver");
+                channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(messageBO)));
+            }
+
+        }*/
+
         // 进行消息同步
-        this.messageSynchronizer.synchronizeSelf(messageBO);
+         this.messageSynchronizer.synchronizeSelf(messageBO);
         // 进行推送消息
-        this.messagePushWorker.doProcess(messageBO);
+         this.messagePushWorker.doProcess(messageBO);
     }
 
 

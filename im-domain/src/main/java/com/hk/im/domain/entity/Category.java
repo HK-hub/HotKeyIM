@@ -8,17 +8,24 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 
  * @TableName tb_category
  */
 @TableName(value ="tb_category")
 @Data
+@Table(name = "tb_category")
 public class Category implements Serializable {
     /**
      * 分类id
      */
-    @TableId(value = "id")
+    @Id
+    @Column(name = "id")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

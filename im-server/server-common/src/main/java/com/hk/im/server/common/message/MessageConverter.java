@@ -1,7 +1,10 @@
 package com.hk.im.server.common.message;
 
+import com.alibaba.fastjson2.JSON;
+import com.feilong.json.JsonUtil;
 import com.hk.im.server.common.constants.MessageTypeConstants;
 import com.hk.im.server.common.event.SimpleTextMessage;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 /**
  * @author : HK意境
@@ -24,6 +27,12 @@ public class MessageConverter {
             case TEXT -> new SimpleTextMessage();
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
+    }
+
+
+    public static TextWebSocketFrame wrapperText(DataContainer dataContainer) {
+
+        return new TextWebSocketFrame(JSON.toJSONString(dataContainer));
     }
 
 

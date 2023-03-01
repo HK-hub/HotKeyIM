@@ -4,6 +4,7 @@ import com.hk.im.server.common.message.AbstractMessage;
 import com.hk.im.server.common.message.MessageTypeDeterminer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -18,6 +19,7 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ToString(callSuper = true)
 @Accessors(chain = true)
 public class SimpleTextMessage extends AbstractMessage {
 

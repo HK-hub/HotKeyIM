@@ -3,6 +3,7 @@ package com.hk.im.domain.constant;
 import com.hk.im.domain.message.WebSocketMessage;
 import com.hk.im.domain.message.control.ConnectMessage;
 import com.hk.im.domain.message.system.NoSupportMessage;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +48,21 @@ public class MessageConstants {
         // 非法操作消息
         NO_SUPPORT,
 
+    }
+
+    // 消息事件
+    @Getter
+    public enum MessageEventType {
+        // 连接初始化消息
+        CONNECT("connect"),
+        // 普通聊天消息
+        CHAT("event_talk"),;
+
+        private String event;
+
+        MessageEventType(String event) {
+            this.event = event;
+        }
     }
 
 
@@ -134,4 +150,6 @@ public class MessageConstants {
         DRAFT,
 
     }
+
+
 }

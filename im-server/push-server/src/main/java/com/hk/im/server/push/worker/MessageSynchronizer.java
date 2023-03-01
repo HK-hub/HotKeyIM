@@ -52,15 +52,16 @@ public class MessageSynchronizer {
     public void doPushMessage(MessageBO messageBO, Set<Channel> channelSet) {
 
         // 好友在线，进行推送消息
-        AbstractMessage message = MessageConverter.generateMessage(messageBO.getMessageType());
-
+        AbstractMessage message = MessageConverter.generateMessage(messageBO.getMessageType())
+                .setMessageType(messageBO.getMessageType()).setMessageBO(messageBO);
         DataContainer dataContainer = new DataContainer().setMessage(message)
-                .setActionType(MessageConstants.MessageActionType.CHAT.ordinal());
+                .setActionType(MessageConstants.MessageActionType.CHAT.ordinal())
+                .setEvent(MessageConstants.MessageEventType.CHAT.getEvent());
         // 推送消息
         for (Channel channel : channelSet) {
             if (channel.isActive()) {
                 log.info("push message={} to Channel={}",dataContainer, channel.id().asLongText());
-                channel.writeAndFlush(dataContainer);
+                channel.writeAndFlush(MessageConverter.wrapperText(dataContainer));
             }
         }
 
