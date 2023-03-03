@@ -1,4 +1,4 @@
-package com.hk.im.admin.util;
+package com.hk.im.common.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,4 +15,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ObjectMapperUtil {
 
     public static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    static {
+        OBJECT_MAPPER.findAndRegisterModules();
+    }
+
+
 }

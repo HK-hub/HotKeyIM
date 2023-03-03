@@ -1,7 +1,9 @@
 package com.hk.im.server.common.message;
 
 import com.alibaba.fastjson2.JSON;
-import com.feilong.json.JsonUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hk.im.common.util.ObjectMapperUtil;
 import com.hk.im.server.common.constants.MessageTypeConstants;
 import com.hk.im.server.common.event.SimpleTextMessage;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -32,7 +34,13 @@ public class MessageConverter {
 
     public static TextWebSocketFrame wrapperText(DataContainer dataContainer) {
 
-        return new TextWebSocketFrame(JSON.toJSONString(dataContainer));
+        // 使用 Jackson 序列化
+        try {
+            return new TextWebSocketFrame(ObjectMapperUtil.OBJECT_MAPPER.writeValueAsString(dataContainer));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

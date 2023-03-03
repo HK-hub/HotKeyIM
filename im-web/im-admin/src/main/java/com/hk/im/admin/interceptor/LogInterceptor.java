@@ -27,7 +27,6 @@ import java.util.Objects;
 public class LogInterceptor implements AsyncHandlerInterceptor {
 
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
@@ -40,6 +39,8 @@ public class LogInterceptor implements AsyncHandlerInterceptor {
 
         // 放入 MDC
         MDC.put(ReqRespConstants.TRACE_ID, traceId);
+        // 设置响应头
+        response.addHeader(ReqRespConstants.TRACE_ID, traceId);
 
         // 打印日志
         String ip = request.getRemoteAddr();
@@ -51,15 +52,18 @@ public class LogInterceptor implements AsyncHandlerInterceptor {
 
     /**
      * handler 开始处理
+     *
      * @param request
      * @param response
      * @param handler
+     *
      * @throws Exception
      */
     @Override
     public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         preHandle(request, response, handler);
     }
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         AsyncHandlerInterceptor.super.postHandle(request, response, handler, modelAndView);

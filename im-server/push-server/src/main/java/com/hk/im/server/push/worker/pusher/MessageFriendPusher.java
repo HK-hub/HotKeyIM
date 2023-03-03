@@ -1,13 +1,8 @@
 package com.hk.im.server.push.worker.pusher;
 
-import com.feilong.lib.javassist.Loader;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.server.common.channel.UserChannelManager;
-import com.hk.im.server.common.event.SimpleTextMessage;
-import com.hk.im.server.common.message.AbstractMessage;
-import com.hk.im.server.common.message.DataContainer;
-import com.hk.im.server.common.message.MessageConverter;
 import com.hk.im.server.push.worker.MessageOfflineWorker;
 import com.hk.im.server.push.worker.MessageSynchronizer;
 import io.netty.channel.Channel;

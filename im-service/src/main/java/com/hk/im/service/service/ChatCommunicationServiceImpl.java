@@ -11,6 +11,7 @@ import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.entity.ChatCommunication;
 import com.hk.im.domain.entity.Friend;
+import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
 import com.hk.im.domain.vo.ChatCommunicationVO;
@@ -381,6 +382,41 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
 
         // 响应操作后的数据
         return ResponseResult.SUCCESS(talk);
+    }
+
+
+    /**
+     * 清空用户未读消息
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult clearUnreadMessage(ClearUnreadRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getReceiverId()) || Objects.isNull(request.getTalkType());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 素材
+        Long receiverId = Long.valueOf(request.getReceiverId());
+        Integer talkType = request.getTalkType();
+        Long senderId = Long.valueOf(request.getSenderId());
+
+        // 查询会话
+        ChatCommunication talk = this.chatCommunicationMapper.selectCommunication(senderId, receiverId);
+        if (Objects.isNull(talk)) {
+            return ResponseResult.FAIL();
+        }
+
+        // 清空会话未读消息
+        talk.setUnreadCount(0);
+        boolean update = this.updateById(talk);
+
+        // 响应
+        return ResponseResult.SUCCESS(update).setMessage("清空未读消息数成功!");
     }
 }
 

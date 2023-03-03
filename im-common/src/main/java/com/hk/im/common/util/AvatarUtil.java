@@ -1,7 +1,5 @@
 package com.hk.im.common.util;
 
-import com.feilong.accessor.keygenerator.UUIDKeyGenerator;
-
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 

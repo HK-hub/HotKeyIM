@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.entity.ChatCommunication;
+import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
 
@@ -65,4 +66,12 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
      * @return
      */
     ResponseResult topTalkCommunication(TopTalkRequest request);
+
+    /**
+     * 清空消息未读数量
+     * @param request
+     * @return
+     */
+    ResponseResult clearUnreadMessage(ClearUnreadRequest request);
+
 }

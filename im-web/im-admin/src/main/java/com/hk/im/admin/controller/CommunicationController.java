@@ -2,6 +2,7 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.client.service.ChatCommunicationService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +65,18 @@ public class CommunicationController {
         return this.chatCommunicationService.topTalkCommunication(request);
     }
 
+
+    /**
+     * 清空未读消息
+     * @param request
+     * @return
+     */
+    @PostMapping("/unread/clear")
+    public ResponseResult clearUnreadMessage(@RequestBody ClearUnreadRequest request) {
+
+        return this.chatCommunicationService.clearUnreadMessage(request);
+
+    }
 
 
 }

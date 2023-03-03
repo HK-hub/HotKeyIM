@@ -50,26 +50,6 @@ public class SendMessageConsumer implements RocketMQListener<MessageBO>, Initial
         // 日志记录
         log.info("rocketmq on message(chat message): {}",  messageBO);
 
-        /*Long senderId = messageBO.getSenderId();
-        Long receiverId = messageBO.getReceiverId();
-        Set<Channel> senderChannel = UserChannelManager.getUserChannel(senderId);
-        for (Channel channel : senderChannel) {
-            if (channel.isActive()) {
-                log.info("push message to sender");
-                channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(messageBO)));
-            }
-
-        }
-
-        Set<Channel> receiverChannel = UserChannelManager.getUserChannel(receiverId);
-        for (Channel channel : receiverChannel) {
-            if (channel.isActive()) {
-                log.info("push message to receiver");
-                channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(messageBO)));
-            }
-
-        }*/
-
         // 进行消息同步
          this.messageSynchronizer.synchronizeSelf(messageBO);
         // 进行推送消息

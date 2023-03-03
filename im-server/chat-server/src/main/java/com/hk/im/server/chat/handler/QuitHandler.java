@@ -1,6 +1,5 @@
 package com.hk.im.server.chat.handler;
 
-import com.feilong.net.mail.SessionFactory;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

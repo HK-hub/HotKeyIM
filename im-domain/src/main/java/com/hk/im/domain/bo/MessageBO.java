@@ -1,5 +1,8 @@
 package com.hk.im.domain.bo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -24,32 +27,38 @@ public class MessageBO {
     /**
      * 聊天消息表id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     protected Long id;
 
     /**
      * 聊天消息id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     protected Long messageId;
 
 
     /**
      * 聊天消息流水id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     protected Long messageFlowId;
 
     /**
      * 群id,如果是群聊的话
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     protected Long groupId;
 
     /**
      * 消息发送者id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     protected Long senderId;
 
     /**
      * 消息接收者id(用户id或群id)
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     protected Long receiverId;
 
     /**
@@ -86,11 +95,13 @@ public class MessageBO {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime createTime;
 
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime updateTime;
 
     /**
