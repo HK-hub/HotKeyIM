@@ -9,6 +9,7 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
+import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.ChatCommunication;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.request.ClearUnreadRequest;
@@ -386,7 +387,7 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
 
 
     /**
-     * 清空用户未读消息
+     * 清空用户未读消息： 清空 senderId=userId, receiverId=好友id 的会话未读数量
      * @param request
      * @return
      */
@@ -404,6 +405,9 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         Long receiverId = Long.valueOf(request.getReceiverId());
         Integer talkType = request.getTalkType();
         Long senderId = Long.valueOf(request.getSenderId());
+        if (Objects.isNull(senderId)) {
+            senderId = UserContextHolder.get().getId();
+        }
 
         // 查询会话
         ChatCommunication talk = this.chatCommunicationMapper.selectCommunication(senderId, receiverId);

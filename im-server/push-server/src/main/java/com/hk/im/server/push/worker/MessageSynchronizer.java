@@ -49,6 +49,28 @@ public class MessageSynchronizer {
     }
 
 
+    /**
+     * 将消息同步给好友
+     * @param messageBO
+     */
+    @Async("asyncServiceExecutor")
+    public void synchronizeFriend(MessageBO messageBO) {
+
+
+    }
+
+
+    /**
+     * 将消息同步给群聊
+     * @param messageBO
+     */
+    @Async("asyncServiceExecutor")
+    public void synchronizeGroup(MessageBO messageBO) {
+
+    }
+
+
+
     public void doPushMessage(MessageBO messageBO, Set<Channel> channelSet) {
 
         // 好友在线，进行推送消息

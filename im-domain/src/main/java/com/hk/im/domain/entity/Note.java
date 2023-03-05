@@ -1,6 +1,5 @@
 package com.hk.im.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -23,6 +22,12 @@ public class Note implements Serializable {
 
     /**
      * markdown 格式的笔记内容
+     */
+    @TableField(value = "md_content")
+    private String mdContent;
+
+    /**
+     * HTML 解析格式的笔记内容
      */
     @TableField(value = "content")
     private String content;
