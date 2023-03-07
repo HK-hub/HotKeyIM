@@ -11,6 +11,7 @@ import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.context.UserContextHolder;
+import com.hk.im.domain.dto.LatestMessageRecordDTO;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.MessageFlow;
@@ -36,10 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author : HK意境
@@ -119,12 +117,12 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
         // 需要获取的聊天记录数
         Integer limit = request.getLimit();
         // 检验登录用户
-        Long senderId =  null;
+        Long senderId = null;
         if (StringUtils.isEmpty(request.getSenderId())) {
             // 没有传输 userId, 通过 UserContextHolder 获取
             request.setSenderId(String.valueOf(UserContextHolder.get().getId()));
         }
-        senderId = Long.valueOf(request.getSenderId());
+        senderId = Long.parseLong(request.getSenderId());
         Long receiverId = Long.valueOf(request.getReceiverId());
 
         // 查询用户
@@ -150,18 +148,34 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
         }
         // 转换为MessageB: 查询消息体
         List<MessageVO> messageVOList = messageFlowList.stream().map(flow -> {
-            // 查询消息体
-            ChatMessage message = this.chatMessageService.getById(flow.getMessageId());
-            // 转换为 MessageBO
-            MessageBO messageBO = MessageMapStructure.INSTANCE.toBO(flow, message);
-            // 转换为MessageVO
-            MessageVO messageVO = MessageMapStructure.INSTANCE.boToVO(messageBO);
-            // 计算头像，id
-            return messageVO.computedPrivateMessageVO(userVO, friendVO);
-        }).sorted(Comparator.comparing(MessageVO::getSequence)).toList();
+                    // 查询消息体
+                    ChatMessage message = this.chatMessageService.getById(flow.getMessageId());
+                    // 转换为 MessageBO
+                    MessageBO messageBO = MessageMapStructure.INSTANCE.toBO(flow, message);
+                    // 转换为MessageVO
+                    MessageVO messageVO = MessageMapStructure.INSTANCE.boToVO(messageBO);
+                    // 计算头像，id
+                    return messageVO.computedPrivateMessageVO(userVO, friendVO);
+                })
+                // 排序：按照 sequence 排序
+                .sorted(Comparator.comparing(MessageVO::getSequence)).toList();
+
+        // 获取最小的 sequence
+        MessageFlow minMessage = new MessageFlow().setSequence(0L).setMessageId(0L);
+        ;
+        Optional<MessageFlow> minOptional = messageFlowList.stream()
+                .min(Comparator.comparingLong(MessageFlow::getSequence));
+        // 存在最小消息记录
+        if (minOptional.isPresent()) {
+            minMessage = minOptional.get();
+        }
 
         // 响应数据
-        return ResponseResult.SUCCESS(messageVOList);
+        LatestMessageRecordDTO recordDTO = new LatestMessageRecordDTO().setMessageVOList(messageVOList)
+                .setLimit(limit)
+                .setSequence(minMessage.getSequence())
+                .setAnchorId(minMessage.getMessageId());
+        return ResponseResult.SUCCESS(recordDTO);
     }
 
     /**

@@ -4,7 +4,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     druid:
-      url: jdbc:mysql://localhost:3306/hk_im?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://localhost:3306/hk_im?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
       username: root
       password: root
       # 初始连接数
@@ -60,7 +60,7 @@ logging:
 
 # rocketMQ
 rocketmq:
-  name-server: 111.92.241.177:9876
+  name-server: 47.108.146.141:9876
   producer:
     group: hkim-producer-group
   consumer:

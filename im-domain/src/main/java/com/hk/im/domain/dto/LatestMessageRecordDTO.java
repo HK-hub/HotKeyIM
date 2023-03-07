@@ -29,6 +29,9 @@ public class LatestMessageRecordDTO {
     // 消息锚点 sequence
     private Long sequence;
 
+    // 限制
+    private Integer limit;
+
 
 
 

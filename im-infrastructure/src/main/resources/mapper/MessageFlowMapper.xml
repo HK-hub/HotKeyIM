@@ -34,10 +34,16 @@
 
         select *
         from tb_message_flow
-        where (sender_id = #{po.senderId} and receiver_id = #{po.receiverId})
-           or (sender_id = #{po.receiverId} and receiver_id = #{po.senderId})
-            and `sequence` > #{po.sequence}
-            limit #{po.limit}
+        where ((sender_id = #{po.senderId} and receiver_id = #{po.receiverId})
+           or (sender_id = #{po.receiverId} and receiver_id = #{po.senderId}))
+        <if test="po.sequence == 0">
+            order by sequence desc limit #{po.limit};
+        </if>
+        <if test="po.sequence != 0">
+            and `sequence` &lt; #{po.sequence}
+            order by `sequence` limit #{po.limit};
+        </if>
+
     </select>
 
     <!-- 从锚点开始查询群聊聊天消息分页 -->
