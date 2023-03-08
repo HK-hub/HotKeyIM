@@ -1,13 +1,23 @@
 package com.hk.im.infrastructure.event.message.listener;
 
 import com.hk.im.client.service.ChatCommunicationService;
+import com.hk.im.client.service.GroupService;
 import com.hk.im.client.service.RocketMQService;
+import com.hk.im.client.service.UserService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.bo.MessageBO;
+import com.hk.im.domain.bo.MessageRecordMemberBO;
+import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.constant.MessageQueueConstants;
 import com.hk.im.domain.entity.ChatCommunication;
+import com.hk.im.domain.entity.Group;
+import com.hk.im.domain.entity.User;
+import com.hk.im.domain.vo.MessageVO;
+import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
+import com.hk.im.infrastructure.manager.UserManager;
+import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
 import com.hk.im.infrastructure.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
@@ -35,6 +45,10 @@ import java.util.Objects;
 @Component
 public class MessageEventHandler {
 
+    @Resource
+    private UserManager userManager;
+    @Resource
+    private GroupService groupService;
     @Resource
     private RocketMQService rocketMQService;
     @Resource
@@ -74,11 +88,67 @@ public class MessageEventHandler {
 
         // 更新未读数目
 
+        // 设置消息发送实体和接收实体
+        MessageVO messageVO = this.computedMessageRecordMember(messageBO);
 
         // 发送消息成功：发送MQ
         SendResult sendResult = this.rocketMQService.sendTagMsg(MessageQueueConstants.MessageConsumerTopic.chat_topic.topic,
-                MessageConstants.ChatMessageType.TEXT.name(), messageBO);
+                MessageConstants.ChatMessageType.TEXT.name(), messageVO);
         log.info("Sent message by rocketmq: {}", sendResult);
+    }
+
+
+    /**
+     * 设置消息接收和发送的实体成员
+     *
+     * @param messageBO
+     */
+    private MessageVO computedMessageRecordMember(MessageBO messageBO) {
+
+        /*Long senderId = messageBO.getSenderId();
+        Long receiverId = messageBO.getReceiverId();
+
+        // 获取发送者
+        User sender = this.userService.getById(senderId);
+        MessageRecordMemberBO senderMember = new MessageRecordMemberBO();
+        MessageRecordMemberBO receiverMember = new MessageRecordMemberBO();
+        // 获取接收者：可能为群聊
+        Integer chatType = messageBO.getChatType();
+        if (CommunicationConstants.SessionType.PRIVATE.ordinal() == chatType) {
+            // 私聊
+            User receiver = this.userService.getById(receiverId);
+            receiverMember.setUserId(receiverId)
+                    .setUsername(receiver.getUsername())
+                    .setRemarkName(receiver.getUsername())
+                    .setAvatar(receiver.getMiniAvatar());
+        }else if (CommunicationConstants.SessionType.GROUP.ordinal() == chatType) {
+            // 群聊
+            Group group = this.groupService.getById(receiverId);
+            receiverMember.setGroupId(group.getId())
+                    .setAvatar(group.getGroupAvatar())
+                    .setUsername(group.getGroupName())
+                    .setRemarkName(group.getGroupName());
+        }
+
+
+        // 设置发送者信息
+        senderMember.setUserId(sender.getId())
+                .setAvatar(sender.getMiniAvatar())
+                .setUsername(sender.getUsername());
+
+        messageBO.setSenderMember(senderMember);
+        messageBO.setReceiverMember(receiverMember);*/
+
+        // 转换为 VO
+        MessageVO messageVO = MessageMapStructure.INSTANCE.boToVO(messageBO);
+        UserVO userVO = this.userManager.findUserAndInfo(messageBO.getSenderId());
+        UserVO friendVO = this.userManager.findUserAndInfo(messageBO.getReceiverId());
+
+        // 计算 userVO 和 friendVO
+        messageVO.computedPrivateMessageVO(userVO, friendVO);
+
+        // 响应数据
+        return messageVO;
     }
 
 

@@ -74,4 +74,11 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
      */
     ResponseResult clearUnreadMessage(ClearUnreadRequest request);
 
+
+    /**
+     * 获取自己的会话
+     * @param senderId
+     * @return
+     */
+    ChatCommunication getMyselfCommunication(Long senderId);
 }

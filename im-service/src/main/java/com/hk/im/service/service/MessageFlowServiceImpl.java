@@ -162,7 +162,6 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
         // 获取最小的 sequence
         MessageFlow minMessage = new MessageFlow().setSequence(0L).setMessageId(0L);
-        ;
         Optional<MessageFlow> minOptional = messageFlowList.stream()
                 .min(Comparator.comparingLong(MessageFlow::getSequence));
         // 存在最小消息记录

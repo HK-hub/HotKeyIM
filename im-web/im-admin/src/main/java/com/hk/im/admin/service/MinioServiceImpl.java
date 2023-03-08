@@ -351,7 +351,8 @@ public class MinioServiceImpl implements MinioService {
         UploadAvatarRequest.AvatarType type = UploadAvatarRequest.AvatarType.values()[request.getType()];
         if (type == UploadAvatarRequest.AvatarType.USER) {
             // 用户头像
-
+            bucket = MinioConstant.BucketEnum.User.getBucket();
+            objectName = MinioConstant.getUserAvatarPath(request.getTargetId());
         } else {
             // 群聊头像
             bucket = MinioConstant.BucketEnum.Group.getBucket();

@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.entity.User;
+import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.server.common.channel.UserChannelManager;
 import com.hk.im.server.push.worker.MessageOfflineWorker;
@@ -33,7 +34,7 @@ import javax.annotation.Resource;
 @Slf4j
 @Component
 @RocketMQMessageListener(consumerGroup = "chat-message-group", topic = "chat-topic")
-public class SendMessageConsumer implements RocketMQListener<MessageBO>, InitializingBean {
+public class SendMessageConsumer implements RocketMQListener<MessageVO>, InitializingBean {
 
     @Resource
     private MessagePushWorker messagePushWorker;
@@ -42,18 +43,18 @@ public class SendMessageConsumer implements RocketMQListener<MessageBO>, Initial
 
     /**
      * 发送消息
-     * @param messageBO
+     * @param messageVO
      */
     @Override
-    public void onMessage(MessageBO messageBO) {
+    public void onMessage(MessageVO messageVO) {
 
         // 日志记录
-        log.info("rocketmq on message(chat message): {}",  messageBO);
+        log.info("rocketmq on message(chat message): {}",  messageVO);
 
         // 进行消息同步
-         this.messageSynchronizer.synchronizeSelf(messageBO);
+         this.messageSynchronizer.synchronizeSelf(messageVO);
         // 进行推送消息
-         this.messagePushWorker.doProcess(messageBO);
+         this.messagePushWorker.doProcess(messageVO);
     }
 
 

@@ -55,11 +55,15 @@ public class MessageBO {
     @JsonSerialize(using = ToStringSerializer.class)
     protected Long senderId;
 
+    protected MessageRecordMemberBO senderMember;
+
     /**
      * 消息接收者id(用户id或群id)
      */
     @JsonSerialize(using = ToStringSerializer.class)
     protected Long receiverId;
+
+    protected MessageRecordMemberBO receiverMember;
 
     /**
      * 会话类型:1.个人聊天,2.群聊，3.系统消息,

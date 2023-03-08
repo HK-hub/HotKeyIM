@@ -2,6 +2,7 @@ package com.hk.im.server.push.worker.pusher;
 
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.MessageConstants;
+import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.server.common.channel.UserChannelManager;
 import com.hk.im.server.push.worker.MessageOfflineWorker;
 import com.hk.im.server.push.worker.MessageSynchronizer;
@@ -34,20 +35,20 @@ public class MessageFriendPusher {
 
     /**
      * 好友私聊
-     * @param messageBO
+     * @param messageVO
      */
-    public void pushMessage(MessageBO messageBO) {
+    public void pushMessage(MessageVO messageVO) {
 
         // 获取好友通道
-        Set<Channel> channelSet = UserChannelManager.getUserChannel(messageBO.getReceiverId());
+        Set<Channel> channelSet = UserChannelManager.getUserChannel(messageVO.getReceiverId());
         if (CollectionUtils.isEmpty(channelSet)) {
             // 离线消息处理
-            this.messageOfflineWorker.doProcess(messageBO);
+            this.messageOfflineWorker.doProcess(messageVO);
             return;
         }
 
         // 推送
-        this.messageSynchronizer.doPushMessage(messageBO, channelSet);
+        this.messageSynchronizer.doPushMessage(messageVO, channelSet);
 
     }
 

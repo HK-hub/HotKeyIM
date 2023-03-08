@@ -2,6 +2,7 @@ package com.hk.im.server.push.worker;
 
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
+import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.server.push.worker.pusher.MessageFriendPusher;
 import com.hk.im.server.push.worker.pusher.MessageGroupPusher;
 import lombok.extern.slf4j.Slf4j;
@@ -31,18 +32,18 @@ public class MessagePushWorker {
 
     /**
      * 消息推送处理：推送给自己(多端同步), 推送给好友，群聊
-     * @param messageBO
+     * @param messageVO
      */
-    public void doProcess(MessageBO messageBO) {
+    public void doProcess(MessageVO messageVO) {
         // 聊天类型
-        Integer chatType = messageBO.getChatType();
+        Integer chatType = messageVO.getChatType();
         // 根据聊天类型进行分发
         if (CommunicationConstants.SessionType.PRIVATE.ordinal() == chatType) {
             // 好友私聊
-            this.messageFriendPusher.pushMessage(messageBO);
+            this.messageFriendPusher.pushMessage(messageVO);
         } else if (CommunicationConstants.SessionType.GROUP.ordinal() == chatType) {
             // 群聊
-            this.messageGroupPusher.pushMessage(messageBO);
+            this.messageGroupPusher.pushMessage(messageVO);
         }
 
     }

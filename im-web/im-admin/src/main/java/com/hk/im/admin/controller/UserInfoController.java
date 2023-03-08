@@ -6,11 +6,11 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.util.JWTUtils;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.User;
+import com.hk.im.domain.request.ChangeUserDetailRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 
 /**
@@ -43,6 +43,33 @@ public class UserInfoController {
         }
         return result;
 
+    }
+
+
+    /**
+     * 获取用户详细信息
+     * @param userId
+     * @return
+     */
+    @GetMapping("/detail")
+    public ResponseResult getUserDetails(@RequestParam("userId") String userId) {
+        if (StringUtils.isEmpty(userId)) {
+            // 获取登录用户
+            userId = String.valueOf(UserContextHolder.get().getId());
+        }
+        return this.userService.getUserAndInfo(Long.valueOf(userId));
+    }
+
+
+    /**
+     * 修改用户详细信息
+     * @param request
+     * @return
+     */
+    @PostMapping("/change/detail")
+    public ResponseResult changeUserDetailInfo(@RequestBody ChangeUserDetailRequest request) {
+
+        return this.userInfoService.updateUserDetailInfo(request);
     }
 
 

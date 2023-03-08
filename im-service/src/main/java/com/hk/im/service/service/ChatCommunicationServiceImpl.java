@@ -215,7 +215,16 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
     @Override
     public ResponseResult getChatCommunication(Long senderId, Long receiverId) {
 
-        ChatCommunication communication = this.chatCommunicationMapper.selectCommunication(senderId, receiverId);
+        ChatCommunication communication = null;
+        // 判断当前会话对象是否为自己
+        if (Objects.equals(senderId, receiverId)) {
+            // 发送者是自己
+            communication = this.getMyselfCommunication(senderId);
+            return ResponseResult.SUCCESS(communication);
+        }
+
+        // 查询好友，群聊会话
+        communication = this.chatCommunicationMapper.selectCommunication(senderId, receiverId);
         if (Objects.isNull(communication)) {
             // 会话不存在
             return ResponseResult.FAIL(communication);
@@ -421,6 +430,25 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
 
         // 响应
         return ResponseResult.SUCCESS(update).setMessage("清空未读消息数成功!");
+    }
+
+
+    /**
+     * 获取自己的会话
+     * @param userId 当前用户自己
+     * @return
+     */
+    @Override
+    public ChatCommunication getMyselfCommunication(Long userId) {
+
+        ChatCommunication talk = this.lambdaQuery()
+                .eq(ChatCommunication::getSenderId, userId)
+                .eq(ChatCommunication::getReceiverId, userId)
+                .orderByAsc(ChatCommunication::getId)
+                .last(" limit 1")
+                .one();
+
+        return talk;
     }
 }
 

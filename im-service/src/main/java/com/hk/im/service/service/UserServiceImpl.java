@@ -545,6 +545,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
 
+    /**
+     * 更新用户信息：注意密码加密
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean updateUser(User user) {
+
+        return this.updateById(user);
+    }
+
+
 }
 
 

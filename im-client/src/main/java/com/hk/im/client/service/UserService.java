@@ -42,4 +42,11 @@ public interface UserService extends IService<User> {
 
     // 退出登录
     ResponseResult logout(LoginOrRegisterRequest request);
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    boolean updateUser(User user);
 }

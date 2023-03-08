@@ -33,7 +33,6 @@ public class MinioConstant {
     // 群聊文件
     public static final String GROUP_FILE_PATH = "/group/file/";
 
-
     @Getter
     public enum BucketEnum {
 
@@ -130,5 +129,28 @@ public class MinioConstant {
         return GROUP_AVATAR_PATH + AccessPolicyEnum.PUBLIC.policy + ResourceNamePrefixEnum.GROUP_AVATAR.prefix
                 + groupAccount + ".png";
     }
+
+
+    /**
+     * 获取用户头像路径
+      * @param targetId
+     * @return
+     */
+    public static String getUserAvatarPath(String targetId) {
+
+        String miniAvatar = MinioConstant.USER_MINI_AVATAR_PREFIX + targetId;
+        return MinioConstant.USER_AVATAR_PATH + miniAvatar + ".jpg";
+    }
+
+    /**
+     * 获取用户大头像路径
+     * @param targetId
+     * @return
+     */
+    public static String getUserBigAvatarPath(String targetId) {
+        String bigAvatar = MinioConstant.USER_BIG_AVATAR_PREFIX + targetId;
+        return MinioConstant.USER_AVATAR_PATH + bigAvatar + ".jpg";
+    }
+
 
 }

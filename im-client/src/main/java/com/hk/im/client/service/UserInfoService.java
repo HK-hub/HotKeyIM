@@ -3,6 +3,7 @@ package com.hk.im.client.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.UserInfo;
+import com.hk.im.domain.request.ChangeUserDetailRequest;
 
 /**
  * @ClassName : UserInfoService
@@ -24,4 +25,11 @@ public interface UserInfoService extends IService<UserInfo> {
      */
    public ResponseResult getUserInfo(Long userId, String token);
 
+
+    /**
+     * 更新用户详细信息
+     * @param request
+     * @return
+     */
+   public ResponseResult updateUserDetailInfo(ChangeUserDetailRequest request);
 }

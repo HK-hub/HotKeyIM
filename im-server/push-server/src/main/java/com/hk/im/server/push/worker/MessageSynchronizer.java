@@ -2,6 +2,7 @@ package com.hk.im.server.push.worker;
 
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.MessageConstants;
+import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.server.common.channel.UserChannelManager;
 import com.hk.im.server.common.message.AbstractMessage;
 import com.hk.im.server.common.message.DataContainer;
@@ -32,29 +33,29 @@ public class MessageSynchronizer {
 
     /**
      * 同步消息给自己
-     * @param messageBO
+     * @param messageVO
      */
     @Async("asyncServiceExecutor")
-    public void synchronizeSelf(MessageBO messageBO) {
+    public void synchronizeSelf(MessageVO messageVO) {
 
-        Long senderId = messageBO.getSenderId();
-        log.info("MessageSynchronizer synchronize message to me={},message={}", senderId, messageBO);
+        Long senderId = messageVO.getSenderId();
+        log.info("MessageSynchronizer synchronize message to me={},message={}", senderId, messageVO);
 
         // 推送给自己
         Set<Channel> channelSet = UserChannelManager.getUserChannel(senderId);
         if (CollectionUtils.isEmpty(channelSet)) {
             channelSet = Collections.emptySet();
         }
-        this.doPushMessage(messageBO, channelSet);
+        this.doPushMessage(messageVO, channelSet);
     }
 
 
     /**
      * 将消息同步给好友
-     * @param messageBO
+     * @param messageVO
      */
     @Async("asyncServiceExecutor")
-    public void synchronizeFriend(MessageBO messageBO) {
+    public void synchronizeFriend(MessageVO messageVO) {
 
 
     }
@@ -62,20 +63,20 @@ public class MessageSynchronizer {
 
     /**
      * 将消息同步给群聊
-     * @param messageBO
+     * @param messageVO
      */
     @Async("asyncServiceExecutor")
-    public void synchronizeGroup(MessageBO messageBO) {
+    public void synchronizeGroup(MessageVO messageVO) {
 
     }
 
 
 
-    public void doPushMessage(MessageBO messageBO, Set<Channel> channelSet) {
+    public void doPushMessage(MessageVO messageVO, Set<Channel> channelSet) {
 
         // 好友在线，进行推送消息
-        AbstractMessage message = MessageConverter.generateMessage(messageBO.getMessageType())
-                .setMessageType(messageBO.getMessageType()).setMessageBO(messageBO);
+        AbstractMessage message = MessageConverter.generateMessage(messageVO.getMessageType())
+                .setMessageType(messageVO.getMessageType()).setMessageBO(messageVO);
         DataContainer dataContainer = new DataContainer().setMessage(message)
                 .setActionType(MessageConstants.MessageActionType.CHAT.ordinal())
                 .setEvent(MessageConstants.MessageEventType.CHAT.getEvent());
