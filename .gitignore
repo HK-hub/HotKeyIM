@@ -3,6 +3,8 @@
 /document/**
 commitlint.config.js
 node_modules/**
+HKChat-Client/**
+.gitignore
 
 # Compiled class file
 *.class
