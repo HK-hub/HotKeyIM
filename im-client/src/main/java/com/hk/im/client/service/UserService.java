@@ -49,4 +49,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     boolean updateUser(User user);
+
+    /**
+     * 修改用户密码
+     * @param request
+     * @return
+     */
+    ResponseResult updateUserPassword(ForgetAccountRequest request);
 }

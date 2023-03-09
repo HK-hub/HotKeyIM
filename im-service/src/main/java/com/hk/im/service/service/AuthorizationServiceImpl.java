@@ -66,6 +66,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             stringRedisTemplate.opsForValue().set(RedisConstants.MODIFY_PASSWORD_KEY+user, code, 10, TimeUnit.MINUTES);
         } else if (Objects.equals(type,UserConstants.LOGIN_OR_REGISTER)) {
             stringRedisTemplate.opsForValue().set(RedisConstants.LOGIN_CODE_KEY+user, code, 10, TimeUnit.MINUTES);
+        } else if (Objects.equals(type,UserConstants.CHANGE_PASSWORD)) {
+            stringRedisTemplate.opsForValue().set(RedisConstants.MODIFY_PASSWORD_KEY+user, code, 10, TimeUnit.MINUTES);
         }
         return code;
     }

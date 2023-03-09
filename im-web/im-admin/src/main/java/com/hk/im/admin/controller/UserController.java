@@ -177,6 +177,19 @@ public class UserController {
         return this.userService.forgetOrUpdatePassword(request);
     }
 
+
+    /**
+     * 修改密码
+     * @param request
+     * @return
+     */
+    @PostMapping("/password")
+    public ResponseResult changePassword(@RequestBody ForgetAccountRequest request) {
+
+        return this.userService.updateUserPassword(request);
+    }
+
+
     /**
      * 更新用户信息
      * @param userVO

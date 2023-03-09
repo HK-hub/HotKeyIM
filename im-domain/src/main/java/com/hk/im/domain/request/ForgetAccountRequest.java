@@ -25,6 +25,8 @@ public class ForgetAccountRequest {
     private String newPassword;
     // 验证码
     private String code;
+    // 公钥
+    public  String publicKey;
 
     public static enum ActionTypeEnum {
 

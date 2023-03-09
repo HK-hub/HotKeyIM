@@ -3,6 +3,7 @@ package com.hk.im.service.service;
 import com.apifan.common.random.source.NumberSource;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.hk.im.client.service.*;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.consntant.RedisConstants;
@@ -55,6 +56,9 @@ import java.util.Objects;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+
+    @Resource
+    private RSAService rsaService;
     @Resource
     private UserManager userManager;
     @Resource
@@ -103,14 +107,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             String subject = null;
             // 确定主题
             if (Objects.equals(type, UserConstants.FIND_PASSWORD)) {
-                subject = "Hot Key IM聊天应用-找回账号验证码";
+                subject = "Hot Key IM聊天应用-找回账号密码验证码";
             } else if (Objects.equals(type, UserConstants.LOGIN_OR_REGISTER)) {
                 subject = "Hot Key IM聊天应用-登陆注册验证码";
+            } else if (Objects.equals(type, UserConstants.CHANGE_PASSWORD)) {
+                subject = "Hot Key IM聊天应用-修改密码验证码";
             } else {
                 // 非法类型
                 return ResponseResult.FAIL("对不起，您的操作非法!");
             }
-            String content = "<h2>您的登录注册验证码如下：" + code + "</h2>";
+            String content = "<h2> 您的操作验证码如下：" + code + "</h2>";
             mailService.sendSimpleMail("3161880795@qq.com", "Hot Key IM 官方", account,
                     null, subject, content);
 
@@ -180,6 +186,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
             // 邮箱或手机号存在一个正确
             // 获取验证码
+            String key = null;
             String code = null;
             if (BooleanUtils.isTrue(!emailInValid)) {
                 // 用户是否存在校验
@@ -189,7 +196,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     // 登录失败
                     return ResponseResult.FAIL("账号不存在或未绑定邮箱!");
                 }
-                code = stringRedisTemplate.opsForValue().get(RedisConstants.LOGIN_CODE_KEY + email);
+                key = RedisConstants.LOGIN_CODE_KEY + email;
             } else {
                 user = this.userManager.findUserByAccountOrPhoneOrEmail(phone);
                 // 登录结果验证
@@ -197,10 +204,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     // 登录失败
                     return ResponseResult.FAIL("账号不存在或未绑定手机号!");
                 }
-                code = stringRedisTemplate.opsForValue().get(RedisConstants.LOGIN_CODE_KEY + phone);
+                key = RedisConstants.LOGIN_CODE_KEY + phone;
             }
 
             // 校验验证码
+            code = stringRedisTemplate.opsForValue().get(key);
+            // 删除验证码
+            this.stringRedisTemplate.delete(key);
+
             if (!Objects.equals(code, loginRequest.getCode())) {
                 // 验证码错误
                 return ResponseResult.FAIL("手机号或邮箱或验证码错误,请重试哦!");
@@ -318,7 +329,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         // TODO 注册成功，发布事件: 添加自己为好友
-        this.applicationEventPublisher.publishEvent(new UserRegisterEvent(this,user));
+        this.applicationEventPublisher.publishEvent(new UserRegisterEvent(this, user));
 
 
         result.setMessage("注册用户成功!");
@@ -530,7 +541,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 退出登录
+     *
      * @param request
+     *
      * @return
      */
     @Override
@@ -547,13 +560,79 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 更新用户信息：注意密码加密
+     *
      * @param user
+     *
      * @return
      */
     @Override
     public boolean updateUser(User user) {
-
         return this.updateById(user);
+    }
+
+
+    /**
+     * 修改用户密码
+     *
+     * @param request: 这里的 oldPassword 和 newPassword 是通过RSA加密的
+     *
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult updateUserPassword(ForgetAccountRequest request) {
+
+        // 参数校验
+        if (Objects.isNull(request) || StringUtils.isEmpty(request.getCode()) ||
+                StringUtils.isEmpty(request.getNewPassword()) || StringUtils.isEmpty(request.getOldPassword())) {
+            // 校验失败
+            return ResponseResult.FAIL("参数不完整!");
+        }
+
+        // 账号
+        String account = request.getAccount();
+        if (StringUtils.isEmpty(account)) {
+            // 没有传输账号
+            return ResponseResult.FAIL().setResultCode(ResultCode.UNAUTHENTICATED);
+        }
+        // 查询指定用户
+        User user = this.userManager.findUserByAccountOrPhoneOrEmail(account);
+
+        /*
+        // TODO RSA 非对称加密进行密码解密
+        // 解密原密码
+        this.rsaService.calculatePrivateKey();
+        this.rsaService.decrypt(request.getOldPassword(), )*/
+
+        // 用户不存在
+        if (Objects.isNull(user)) {
+            return ResponseResult.FAIL().setResultCode(ResultCode.NO_SUCH_USER);
+        }
+
+        // 对比验证码
+        String authCode = this.authorizationService.getAuthCode(RedisConstants.MODIFY_PASSWORD_KEY + account);
+        if (!Objects.equals(authCode, request.getCode())) {
+            return ResponseResult.FAIL("验证码错误或已过期，请重新获取!");
+        }
+
+        // 对比历史密码
+        String oldPassword = request.getOldPassword();
+        if (BooleanUtils.isFalse(BCrypt.checkpw(oldPassword, user.getPassword()))) {
+            // 密码校验失败
+            return ResponseResult.FAIL("原密码错误!");
+        }
+
+        // 修改密码
+        String hashpw = BCrypt.hashpw(request.getNewPassword(), BCrypt.gensalt());
+        boolean updatePassword = this.updateById(user.setPassword(hashpw));
+
+        // 响应
+        if (BooleanUtils.isFalse(updatePassword)) {
+            // 修改密码错误
+            return ResponseResult.FAIL();
+        }
+
+        return ResponseResult.SUCCESS("密码修改成功!");
     }
 
 

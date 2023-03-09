@@ -84,6 +84,9 @@ public class RedisConstants {
     // 会话消息id 发号器 ttl : 8 小时 = 3600 * 8
     public static final long SEQUENCE_TTL = 3600 * 8;
 
+    // RSA 密钥
+    public static final String RSA_KEY = "security:rsa:key:";
+
 
     /**
      * 判断 key 值是否存在于 redis 中

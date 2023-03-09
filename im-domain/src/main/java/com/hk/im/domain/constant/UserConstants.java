@@ -15,6 +15,7 @@ public class UserConstants {
     public static final String USER_SALT_PREFIX = "user_salt_";
     public static final String LOGIN_OR_REGISTER = "lr";
     public static final String FIND_PASSWORD = "fp";
+    public static final String CHANGE_PASSWORD = "cp";
 
     // 缩略头像大小
     public static final int MINI_AVATAR_WIDTH = 100;
