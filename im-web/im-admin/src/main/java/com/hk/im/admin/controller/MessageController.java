@@ -3,6 +3,7 @@ package com.hk.im.admin.controller;
 import com.hk.im.client.service.ChatMessageService;
 import com.hk.im.client.service.MessageFlowService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.TalkRecordsRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +66,18 @@ public class MessageController {
     public ResponseResult sendTextMessage(@RequestBody TextMessage message) {
 
         return this.messageFlowService.sendTextMessage(message);
+    }
+
+
+    /**
+     * 发送图片消息
+     * @param request
+     * @return {@link ImageMessage}
+     */
+    @PostMapping("/send/image")
+    public ResponseResult sendImageMessage(@RequestBody ImageMessage request) {
+
+        return this.messageFlowService.sendImageMessage(request);
     }
 
 

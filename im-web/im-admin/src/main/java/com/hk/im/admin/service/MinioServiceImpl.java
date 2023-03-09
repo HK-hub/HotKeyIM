@@ -1,5 +1,6 @@
 package com.hk.im.admin.service;
 
+import cn.hutool.core.lang.UUID;
 import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.admin.util.MinioUtil;
 import com.hk.im.client.service.MinioService;
@@ -10,10 +11,14 @@ import com.hk.im.domain.request.UploadAvatarRequest;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.annotation.Resource;
@@ -35,6 +40,7 @@ import java.util.Random;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @Service
 public class MinioServiceImpl implements MinioService {
 
@@ -374,6 +380,31 @@ public class MinioServiceImpl implements MinioService {
 
         // 上传成功
         return ResponseResult.SUCCESS(url);
+    }
+
+
+    /**
+     * 上传用户聊天图片
+     * @param image
+     * @param bucket
+     * @param senderId
+     * @return
+     */
+    @Override
+    public String putImage(MultipartFile image, String bucket, Long senderId) {
+
+        // 扩展名
+        String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+        // 计算名称
+        String objectName = UUID.fastUUID().toString(true) + "." + extension;
+        // 上传成功链接
+        String url = null;
+        try {
+           url = this.putObject(image.getInputStream(), bucket, objectName);
+        } catch (IOException e) {
+            log.error("putImage error", e);
+        }
+        return url;
     }
 
 

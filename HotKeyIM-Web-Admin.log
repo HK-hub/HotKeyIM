@@ -171,3 +171,366 @@
 2023-03-09 15:12:27.383  INFO 88972 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@2ac68008,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzUzMDc1fQ.F1mmfSf-oJSmK81mBy-pJvVrZTQ4_L6Jb-PhYXZV4itLSYl7wqzgBSt8lhH8NOqKt9bEt6UNyPT7u4RlCaXkFQ
 2023-03-09 15:12:27.386  INFO 88972 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@19814eb5,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzUzMDc1fQ.F1mmfSf-oJSmK81mBy-pJvVrZTQ4_L6Jb-PhYXZV4itLSYl7wqzgBSt8lhH8NOqKt9bEt6UNyPT7u4RlCaXkFQ,user=1611656761503215617
 2023-03-09 15:12:27.416  INFO 88972 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1612030664754913281","msg_id":[]}}
+2023-03-09 16:12:27.606  INFO 88972 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.c.HeartBeatEventHandler    : 已经30分钟 没有读取到数据了
+2023-03-09 16:12:27.632  INFO 88972 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.c.HeartBeatEventHandler    : 读空闲事件发生，断开连接:907841fffe2e6da0-00015b8c-00000009-2ff31de4f4848764-f929f472
+2023-03-09 16:12:27.941  INFO 88972 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:6244,id=907841fffe2e6da0-00015b8c-00000009-2ff31de4f4848764-f929f472
+2023-03-09 16:12:27.943  INFO 88972 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:6244
+2023-03-09 16:39:24.736  INFO 88972 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 16:39:24.738  INFO 88972 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 16:39:24.773  INFO 88972 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 16:39:24.773  INFO 88972 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 16:39:25.173  INFO 88972 --- [SpringApplicationShutdownHook] a.r.s.s.DefaultRocketMQListenerContainer : container destroyed, DefaultRocketMQListenerContainer{consumerGroup='chat-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 16:39:25.175  INFO 88972 --- [SpringApplicationShutdownHook] a.r.s.s.DefaultRocketMQListenerContainer : container destroyed, DefaultRocketMQListenerContainer{consumerGroup='chat-connect-group', namespace='', nameServer='47.108.146.141:9876', topic='connect-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 16:39:25.253  INFO 88972 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 16:39:25.254  INFO 88972 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 16:39:25.259  INFO 88972 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-09 16:39:25.320  INFO 88972 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2023-03-09 16:39:25.325  INFO 88972 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2023-03-09 16:48:32.833  INFO 103140 --- [main] com.hk.im.admin.IMAdminApplication       : Starting IMAdminApplication using Java 17.0.2 on DESKTOP-PICLGLQ with PID 103140 (F:\JavaCode\HotKeyIM\im-web\im-admin\target\classes started by HK意境 in F:\JavaCode\HotKeyIM)
+2023-03-09 16:48:32.855  INFO 103140 --- [main] com.hk.im.admin.IMAdminApplication       : The following 1 profile is active: "dev"
+2023-03-09 16:48:40.236  INFO 103140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-03-09 16:48:40.236  INFO 103140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-09 16:48:40.300  INFO 103140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+2023-03-09 16:48:40.358  INFO 103140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-03-09 16:48:40.359  INFO 103140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-09 16:48:40.381  INFO 103140 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2023-03-09 16:48:41.022  INFO 103140 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodTraceAdvice' of type [com.hk.im.admin.advice.MethodTraceAdvice$$EnhancerBySpringCGLIB$$986d546a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-09 16:48:41.046  INFO 103140 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodTraceAdvisor' of type [org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-09 16:48:42.030  INFO 103140 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2023-03-09 16:48:42.052  INFO 103140 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-09 16:48:42.052  INFO 103140 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-03-09 16:48:42.436  INFO 103140 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/admin]  : Initializing Spring embedded WebApplicationContext
+2023-03-09 16:48:42.436  INFO 103140 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 9442 ms
+2023-03-09 16:48:43.777  INFO 103140 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2023-03-09 16:48:44.907  INFO 103140 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2023-03-09 16:48:45.136  INFO 103140 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-09 16:48:45.551  INFO 103140 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-03-09 16:48:46.106  INFO 103140 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-03-09 16:48:46.377  INFO 103140 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-03-09 16:48:46.697  INFO 103140 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-09 16:48:46.735  INFO 103140 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-09 16:48:47.567  WARN 103140 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.CollectEmoticon ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 16:48:48.019  WARN 103140 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.LikePost ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 16:48:48.146  WARN 103140 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.NoteTag ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 16:48:48.290  WARN 103140 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.UserCollection ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 16:48:49.784  INFO 103140 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server address:localhost
+2023-03-09 16:48:49.786  INFO 103140 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server port:9870
+2023-03-09 16:48:49.786  INFO 103140 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server serializer:Json
+2023-03-09 16:48:49.786  INFO 103140 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server path:/channel
+2023-03-09 16:48:49.795  INFO 103140 --- [main] c.h.i.s.p.comsumer.SendMessageConsumer   : sendMessage consumer bean created
+2023-03-09 16:48:50.618  INFO 103140 --- [main] c.h.i.s.p.config.ExecutorConfiguration   : start asyncServiceExecutor
+2023-03-09 16:48:50.706  WARN 103140 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-09 16:48:51.892  INFO 103140 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='chat-connect-group', namespace='', nameServer='47.108.146.141:9876', topic='connect-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 16:48:51.892  INFO 103140 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:userConnectedConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-03-09 16:48:52.071  INFO 103140 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='chat-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 16:48:52.071  INFO 103140 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:sendMessageConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-03-09 16:48:52.127  INFO 103140 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path '/admin'
+2023-03-09 16:48:52.136  INFO 103140 --- [main] c.h.i.server.chat.ChatServerBootStarter  : IOC 容器准备完毕,准备创建Chat Server: 2023-03-09T16:48:52.136140400
+2023-03-09 16:48:52.136  INFO 103140 --- [main] c.h.i.server.chat.ChatServerBootStarter  : 启动Chat Server: class com.hk.im.server.chat.ChatServerBootStarter-2023-03-09T16:48:52.136140400
+2023-03-09 16:48:52.143  INFO 103140 --- [main] com.hk.im.admin.IMAdminApplication       : Started IMAdminApplication in 20.453 seconds (JVM running for 28.356)
+2023-03-09 16:48:52.351  INFO 103140 --- [Thread-8] c.h.i.s.chat.server.HotKeyChatServer     : websocket 服务启动，ip=localhost,port=9870
+2023-03-09 16:49:41.830  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/admin]  : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-09 16:49:41.830  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-03-09 16:49:41.832  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-03-09 16:49:41.911  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=2c0b79cf-a675-43c5-8c70-b81ec951fb4d],[ip=127.0.0.1],[uri=/admin/user/login],[method=OPTIONS],[time=2023-03-09T16:49:41.910751100]
+2023-03-09 16:49:42.173  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=7c32b255-0abf-44ff-a2bb-cfc2bfd350bc],[ip=127.0.0.1],[uri=/admin/user/login],[method=POST],[time=2023-03-09T16:49:42.173568]
+2023-03-09 16:49:43.840  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=98cbdaaa-bc35-4fc5-89cc-08b2cebd164f],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=OPTIONS],[time=2023-03-09T16:49:43.840879100]
+2023-03-09 16:49:43.840  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=b96c5057-0f7d-453d-86c3-511e1a0c805c],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=OPTIONS],[time=2023-03-09T16:49:43.840879100]
+2023-03-09 16:49:43.858  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=f4b91442-5403-43fe-aee6-798b08cf1316],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-09T16:49:43.858879700]
+2023-03-09 16:49:43.858  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@1d15565b,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:49:43.859  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=7cfe6c47-2894-4ed9-8f48-62f9fd0049f6],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=GET],[time=2023-03-09T16:49:43.859877700]
+2023-03-09 16:49:43.859  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@300c549e,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:49:44.015  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@b3d15c4,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:49:44.015  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@3ee62c49,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:49:44.147  WARN 103140 --- [http-nio-127.0.0.1-9090-exec-8] c.b.m.c.t.support.ReflectLambdaMeta      : Unable to make field private final java.lang.Class java.lang.invoke.SerializedLambda.capturingClass accessible: module java.base does not "opens java.lang.invoke" to unnamed module @6150c3ec
+2023-03-09 16:49:44.243  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:4284
+2023-03-09 16:49:44.243  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:4284
+2023-03-09 16:49:44.267  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,headers=http://localhost:3000,method=GET
+2023-03-09 16:49:44.268  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:49:44.269  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-09 16:49:44.407  INFO 103140 --- [ConsumeMessageThread_chat-connect-group_1] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1611656761503215617, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA, extend=null)
+2023-03-09 16:49:44.432  INFO 103140 --- [ConsumeMessageThread_chat-connect-group_1] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教)
+2023-03-09 16:49:44.605  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-09 16:49:44.613  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=6b65150e-fe9c-421c-a1f2-84a43b893870],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-09T16:49:44.613153400]
+2023-03-09 16:49:44.652  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=987bbc42-dbf6-48b6-b6df-7c4703fe38f8],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-09T16:49:44.652156500]
+2023-03-09 16:49:44.652  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@3d039905,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:49:44.656  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@b3d15c4,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:49:44.658  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1611656761503215617
+2023-03-09 16:49:51.362  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=3d6fb753-fcb0-4f56-992f-dcd4c9c0777b],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=OPTIONS],[time=2023-03-09T16:49:51.362338]
+2023-03-09 16:49:51.362  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=dd395982-12ab-4062-9763-bceecb5eb747],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=OPTIONS],[time=2023-03-09T16:49:51.362338]
+2023-03-09 16:49:51.375  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=f82a5beb-b89c-431d-8a1c-bd354580933e],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=GET],[time=2023-03-09T16:49:51.375079]
+2023-03-09 16:49:51.375  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=8017bab6-0bf3-49c5-b3a8-1180e3e581f3],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=GET],[time=2023-03-09T16:49:51.375079]
+2023-03-09 16:49:51.375  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@338c9b6f,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:49:51.375  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@5bdf6216,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:49:51.378  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@3ee62c49,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:49:51.378  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@b3d15c4,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:49:51.662  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1612030664754913281","msg_id":["1630834504530690049","1631131068348272641","1631536603358920706","1631543156694679554","1631543980913164289","1631544981921562625","1631545332447936513","1631547912842420226","1631549401233117186","1631549482778775553","1631549872870019074","1633008691928141825","1633009164240326658","1633360461682462722"]}}
+2023-03-09 16:50:14.729  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=b1ccd98f-0527-4c4c-a1a2-2099a9ba4e9c],[ip=127.0.0.1],[uri=/admin/message/send/text],[method=OPTIONS],[time=2023-03-09T16:50:14.728751500]
+2023-03-09 16:50:14.746  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=827c45c3-e9b4-4e91-ae78-9c9bd4640e09],[ip=127.0.0.1],[uri=/admin/message/send/text],[method=POST],[time=2023-03-09T16:50:14.746771]
+2023-03-09 16:50:14.746  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@7fa9bd29,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:50:14.748  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@716e5cac,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:50:14.838  INFO 103140 --- [async-service-1] c.h.i.i.e.c.l.CommunicationEventListener : refresh sequence and session ttl: Sequence(id=null, name=null, description=null, sessionId=null, receiverId=1612030664754913281, senderId=1611656761503215617, max=null, step=null, segment=null, version=null, createTime=null, updateTime=null, current=1)
+2023-03-09 16:50:14.870  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_chat_message  ( id,
+sequence,
+message_feature,
+message_type,
+content,
+
+
+create_time,
+update_time )  VALUES  ( ?,
+?,
+?,
+?,
+?,
+
+
+?,
+? )
+2023-03-09 16:50:14.894  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-09 16:50:14.994  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_message_flow  ( id,
+
+sender_id,
+receiver_id,
+chat_type,
+message_type,
+message_id,
+`sequence`,
+send_status,
+sign_flag,
+
+deleted,
+create_time,
+update_time )  VALUES  ( ?,
+
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+?,
+? )
+2023-03-09 16:50:14.994  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-09 16:50:15.024  INFO 103140 --- [async-service-2] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-09 16:50:15.025  INFO 103140 --- [async-service-2] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-09 16:50:15.353  INFO 103140 --- [async-service-2] c.h.i.i.e.m.l.MessageEventHandler        : Sent message by rocketmq: SendResult [sendStatus=SEND_OK, msgId=7F00000192E463947C6B2CCFCAA90001, offsetMsgId=2F6C928D00002A9F0000000000017B67, messageQueue=MessageQueue [topic=chat-topic, brokerName=broker-a, queueId=2], queueOffset=3]
+2023-03-09 16:50:15.375  INFO 103140 --- [ConsumeMessageThread_chat-message-group_1] c.h.i.s.p.comsumer.SendMessageConsumer   : rocketmq on message(chat message): MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-09 16:50:15.384  INFO 103140 --- [ConsumeMessageThread_chat-message-group_1] c.h.i.s.p.worker.MessageOfflineWorker    : offline message handle start:MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-09 16:50:15.384  INFO 103140 --- [async-service-3] c.h.i.s.push.worker.MessageSynchronizer  : MessageSynchronizer synchronize message to me=1611656761503215617,message=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-09 16:50:15.388  INFO 103140 --- [ConsumeMessageThread_chat-message-group_1] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-09 16:50:15.389  INFO 103140 --- [ConsumeMessageThread_chat-message-group_1] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-09 16:50:15.527  INFO 103140 --- [async-service-3] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleTextMessage(super=AbstractMessage(sequenceId=0, messageType=1, messageBO=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)), extend=null), extra=null) to Channel=907841fffe2e6da0-000192e4-00000009-121247b712c6e8a9-cd0e6d52
+2023-03-09 16:55:54.943  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:4284,id=907841fffe2e6da0-000192e4-00000009-121247b712c6e8a9-cd0e6d52
+2023-03-09 16:55:54.945  INFO 103140 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:4284
+2023-03-09 16:56:01.626  INFO 103140 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:13406
+2023-03-09 16:56:01.627  INFO 103140 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:13406
+2023-03-09 16:56:01.630  INFO 103140 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,headers=http://localhost:3000,method=GET
+2023-03-09 16:56:01.631  INFO 103140 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:56:01.631  INFO 103140 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-09 16:56:01.642  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=bdce5da7-57bb-4e8e-a5bc-1d1db3cf6295],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=OPTIONS],[time=2023-03-09T16:56:01.642639400]
+2023-03-09 16:56:01.643  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=8bcc04e1-ee0f-4007-827f-44c0af550497],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=OPTIONS],[time=2023-03-09T16:56:01.643641]
+2023-03-09 16:56:01.685  INFO 103140 --- [ConsumeMessageThread_chat-connect-group_2] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1611656761503215617, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA, extend=null)
+2023-03-09 16:56:01.702  INFO 103140 --- [ConsumeMessageThread_chat-connect-group_2] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教)
+2023-03-09 16:56:01.760  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=60a5cfdc-04e2-48e4-94a6-cae957b7d3de],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-09T16:56:01.760638100]
+2023-03-09 16:56:01.761  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@6ace9f49,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:56:01.762  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=e417f57e-ca41-4cec-ba3f-8270ebe47ab0],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=GET],[time=2023-03-09T16:56:01.762638600]
+2023-03-09 16:56:01.762  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@16b0c271,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:56:01.763  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@b3d15c4,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:56:01.765  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@716e5cac,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:56:02.910  INFO 103140 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-09 16:56:03.334  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=a8674f34-5f65-4cf4-a88e-f4e9d631000e],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-09T16:56:03.334896]
+2023-03-09 16:56:03.364  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=ca68d566-dd6d-49dc-ab82-3daa00cb52ba],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-09T16:56:03.364892]
+2023-03-09 16:56:03.364  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@5a6d6035,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:56:03.367  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@716e5cac,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:56:03.368  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1611656761503215617
+2023-03-09 16:56:18.092  INFO 103140 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:13406,id=907841fffe2e6da0-000192e4-0000000a-2d8c43c8075cab58-cd684e68
+2023-03-09 16:56:18.093  INFO 103140 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:13406
+2023-03-09 16:56:26.289  INFO 103140 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:7242
+2023-03-09 16:56:26.291  INFO 103140 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:7242
+2023-03-09 16:56:26.294  INFO 103140 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,headers=http://localhost:3000,method=GET
+2023-03-09 16:56:26.295  INFO 103140 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:56:26.295  INFO 103140 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-09 16:56:26.319  INFO 103140 --- [ConsumeMessageThread_chat-connect-group_3] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1611656761503215617, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA, extend=null)
+2023-03-09 16:56:26.332  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=32efb048-a048-4262-b843-97e7a16b3665],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=OPTIONS],[time=2023-03-09T16:56:26.332908200]
+2023-03-09 16:56:26.332  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=5d88cdda-edc9-4d73-8361-7d39fa94f18a],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=OPTIONS],[time=2023-03-09T16:56:26.332908200]
+2023-03-09 16:56:26.334  INFO 103140 --- [ConsumeMessageThread_chat-connect-group_3] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教)
+2023-03-09 16:56:26.781  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=bcc1aaf6-61ed-4912-9e0d-dc338ac8e053],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-09T16:56:26.781910100]
+2023-03-09 16:56:26.781  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@5379ba8d,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:56:26.784  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@3ee62c49,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:56:26.804  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=c4596e3f-995e-47ab-a371-6791b44525f9],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=GET],[time=2023-03-09T16:56:26.804908600]
+2023-03-09 16:56:26.804  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@4fe87236,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:56:26.811  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@3ee62c49,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:56:27.397  INFO 103140 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-09 16:56:27.416  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=850b5e2b-93a5-4c74-b409-20bd6299417c],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-09T16:56:27.416907400]
+2023-03-09 16:56:27.427  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=a6970d99-3cf1-4dc4-938c-1ab805bd9a77],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-09T16:56:27.427908100]
+2023-03-09 16:56:27.427  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@36a75021,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA
+2023-03-09 16:56:27.434  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@3ee62c49,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4MzU4OTgyfQ.q9dJ3m48d5bQQuu9ppN4M-gXbBf05AW8mNdT9hAhNHmApAzpRqF9zN5-ZXwc16AHnT1gESf2_FLDvjBEEIKoBA,user=1611656761503215617
+2023-03-09 16:56:27.435  INFO 103140 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1611656761503215617
+2023-03-09 17:31:14.489  INFO 103140 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 17:31:14.492  INFO 103140 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 17:31:14.565  INFO 103140 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 17:31:14.567  INFO 103140 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 17:31:15.092  INFO 103140 --- [SpringApplicationShutdownHook] a.r.s.s.DefaultRocketMQListenerContainer : container destroyed, DefaultRocketMQListenerContainer{consumerGroup='chat-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 17:31:15.093  INFO 103140 --- [SpringApplicationShutdownHook] a.r.s.s.DefaultRocketMQListenerContainer : container destroyed, DefaultRocketMQListenerContainer{consumerGroup='chat-connect-group', namespace='', nameServer='47.108.146.141:9876', topic='connect-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 17:31:15.160  INFO 103140 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 17:31:15.161  INFO 103140 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 17:31:15.165  INFO 103140 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-09 17:31:15.251  INFO 103140 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2023-03-09 17:31:15.254  INFO 103140 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2023-03-09 22:13:15.378  INFO 91120 --- [main] com.hk.im.admin.IMAdminApplication       : Starting IMAdminApplication using Java 17.0.2 on DESKTOP-PICLGLQ with PID 91120 (F:\JavaCode\HotKeyIM\im-web\im-admin\target\classes started by HK意境 in F:\JavaCode\HotKeyIM)
+2023-03-09 22:13:15.402  INFO 91120 --- [main] com.hk.im.admin.IMAdminApplication       : The following 1 profile is active: "dev"
+2023-03-09 22:13:24.403  INFO 91120 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-03-09 22:13:24.423  INFO 91120 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-09 22:13:24.455  INFO 91120 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
+2023-03-09 22:13:24.525  INFO 91120 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-03-09 22:13:24.527  INFO 91120 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-09 22:13:24.545  INFO 91120 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-03-09 22:13:25.250  INFO 91120 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodTraceAdvice' of type [com.hk.im.admin.advice.MethodTraceAdvice$$EnhancerBySpringCGLIB$$b75257b1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-09 22:13:25.276  INFO 91120 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodTraceAdvisor' of type [org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-09 22:13:26.477  INFO 91120 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2023-03-09 22:13:26.492  INFO 91120 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-09 22:13:26.492  INFO 91120 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-03-09 22:13:26.762  INFO 91120 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/admin]  : Initializing Spring embedded WebApplicationContext
+2023-03-09 22:13:26.762  INFO 91120 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 11248 ms
+2023-03-09 22:13:27.865  INFO 91120 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2023-03-09 22:13:28.717  INFO 91120 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2023-03-09 22:13:28.924  INFO 91120 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-09 22:13:29.099  INFO 91120 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-03-09 22:13:29.413  INFO 91120 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-03-09 22:13:29.602  INFO 91120 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-03-09 22:13:29.923  INFO 91120 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-09 22:13:29.958  INFO 91120 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-09 22:13:31.433  WARN 91120 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.CollectEmoticon ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 22:13:31.769  WARN 91120 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.LikePost ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 22:13:31.834  WARN 91120 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.NoteTag ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 22:13:31.932  WARN 91120 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.UserCollection ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 22:13:33.944  INFO 91120 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server address:localhost
+2023-03-09 22:13:33.946  INFO 91120 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server port:9870
+2023-03-09 22:13:33.947  INFO 91120 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server serializer:Json
+2023-03-09 22:13:33.947  INFO 91120 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server path:/channel
+2023-03-09 22:13:33.957  INFO 91120 --- [main] c.h.i.s.p.c.SendTextMessageConsumer      : sendMessage consumer bean created
+2023-03-09 22:13:34.955  INFO 91120 --- [main] c.h.i.s.p.config.ExecutorConfiguration   : start asyncServiceExecutor
+2023-03-09 22:13:35.065  WARN 91120 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-09 22:13:37.181  INFO 91120 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='chat-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 22:13:37.181  INFO 91120 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:sendTextMessageConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-03-09 22:13:37.581  INFO 91120 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='chat-connect-group', namespace='', nameServer='47.108.146.141:9876', topic='connect-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 22:13:37.581  INFO 91120 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:userConnectedConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-03-09 22:13:37.703  INFO 91120 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path '/admin'
+2023-03-09 22:13:37.715  INFO 91120 --- [main] c.h.i.server.chat.ChatServerBootStarter  : IOC 容器准备完毕,准备创建Chat Server: 2023-03-09T22:13:37.715340500
+2023-03-09 22:13:37.715  INFO 91120 --- [main] c.h.i.server.chat.ChatServerBootStarter  : 启动Chat Server: class com.hk.im.server.chat.ChatServerBootStarter-2023-03-09T22:13:37.715340500
+2023-03-09 22:13:37.739  INFO 91120 --- [main] com.hk.im.admin.IMAdminApplication       : Started IMAdminApplication in 23.311 seconds (JVM running for 25.267)
+2023-03-09 22:13:38.007  INFO 91120 --- [Thread-8] c.h.i.s.chat.server.HotKeyChatServer     : websocket 服务启动，ip=localhost,port=9870
+2023-03-09 22:30:52.235  INFO 91120 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 22:30:52.259  INFO 91120 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 22:30:52.351  INFO 91120 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 22:30:52.351  INFO 91120 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 22:30:52.574  INFO 91120 --- [SpringApplicationShutdownHook] a.r.s.s.DefaultRocketMQListenerContainer : container destroyed, DefaultRocketMQListenerContainer{consumerGroup='chat-connect-group', namespace='', nameServer='47.108.146.141:9876', topic='connect-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 22:30:52.578  INFO 91120 --- [SpringApplicationShutdownHook] a.r.s.s.DefaultRocketMQListenerContainer : container destroyed, DefaultRocketMQListenerContainer{consumerGroup='chat-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 22:30:52.757  INFO 91120 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 22:30:52.758  INFO 91120 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 22:30:52.765  INFO 91120 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-09 22:30:52.820  INFO 91120 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2023-03-09 22:30:52.894  INFO 91120 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2023-03-09 22:31:21.683  INFO 110068 --- [main] com.hk.im.admin.IMAdminApplication       : Starting IMAdminApplication using Java 17.0.2 on DESKTOP-PICLGLQ with PID 110068 (F:\JavaCode\HotKeyIM\im-web\im-admin\target\classes started by HK意境 in F:\JavaCode\HotKeyIM)
+2023-03-09 22:31:21.687  INFO 110068 --- [main] com.hk.im.admin.IMAdminApplication       : The following 1 profile is active: "dev"
+2023-03-09 22:31:26.350  INFO 110068 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-03-09 22:31:26.351  INFO 110068 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-09 22:31:26.375  INFO 110068 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 JPA repository interfaces.
+2023-03-09 22:31:26.404  INFO 110068 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-03-09 22:31:26.405  INFO 110068 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-09 22:31:26.436  INFO 110068 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-03-09 22:31:26.838  INFO 110068 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodTraceAdvice' of type [com.hk.im.admin.advice.MethodTraceAdvice$$EnhancerBySpringCGLIB$$15dc8be5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-09 22:31:26.851  INFO 110068 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodTraceAdvisor' of type [org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-09 22:31:27.598  INFO 110068 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2023-03-09 22:31:27.611  INFO 110068 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-09 22:31:27.611  INFO 110068 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-03-09 22:31:27.811  INFO 110068 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/admin]  : Initializing Spring embedded WebApplicationContext
+2023-03-09 22:31:27.812  INFO 110068 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6042 ms
+2023-03-09 22:31:28.461  INFO 110068 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2023-03-09 22:31:29.216  INFO 110068 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2023-03-09 22:31:29.412  INFO 110068 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-09 22:31:29.563  INFO 110068 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-03-09 22:31:29.808  INFO 110068 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-03-09 22:31:29.978  INFO 110068 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-03-09 22:31:30.218  INFO 110068 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-09 22:31:30.230  INFO 110068 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-09 22:31:30.886  WARN 110068 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.CollectEmoticon ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 22:31:31.199  WARN 110068 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.LikePost ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 22:31:31.275  WARN 110068 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.NoteTag ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 22:31:31.390  WARN 110068 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.UserCollection ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-09 22:31:32.271  INFO 110068 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server address:localhost
+2023-03-09 22:31:32.272  INFO 110068 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server port:9870
+2023-03-09 22:31:32.273  INFO 110068 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server serializer:Json
+2023-03-09 22:31:32.273  INFO 110068 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server path:/channel
+2023-03-09 22:31:32.280  INFO 110068 --- [main] c.h.i.s.p.c.SendTextMessageConsumer      : sendMessage consumer bean created
+2023-03-09 22:31:32.869  INFO 110068 --- [main] c.h.i.s.p.config.ExecutorConfiguration   : start asyncServiceExecutor
+2023-03-09 22:31:32.917  WARN 110068 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-09 22:31:33.908  INFO 110068 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='chat-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 22:31:33.908  INFO 110068 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:sendTextMessageConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-03-09 22:31:34.189  INFO 110068 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='chat-connect-group', namespace='', nameServer='47.108.146.141:9876', topic='connect-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 22:31:34.190  INFO 110068 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:userConnectedConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-03-09 22:31:34.223  INFO 110068 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path '/admin'
+2023-03-09 22:31:34.229  INFO 110068 --- [main] c.h.i.server.chat.ChatServerBootStarter  : IOC 容器准备完毕,准备创建Chat Server: 2023-03-09T22:31:34.229686200
+2023-03-09 22:31:34.229  INFO 110068 --- [main] c.h.i.server.chat.ChatServerBootStarter  : 启动Chat Server: class com.hk.im.server.chat.ChatServerBootStarter-2023-03-09T22:31:34.229686200
+2023-03-09 22:31:34.234  INFO 110068 --- [main] com.hk.im.admin.IMAdminApplication       : Started IMAdminApplication in 13.397 seconds (JVM running for 16.47)
+2023-03-09 22:31:34.357  INFO 110068 --- [Thread-8] c.h.i.s.chat.server.HotKeyChatServer     : websocket 服务启动，ip=localhost,port=9870
+2023-03-09 22:52:52.173  INFO 110068 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 22:52:52.180  INFO 110068 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 22:52:52.318  INFO 110068 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 22:52:52.319  INFO 110068 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 22:52:52.466  INFO 110068 --- [SpringApplicationShutdownHook] a.r.s.s.DefaultRocketMQListenerContainer : container destroyed, DefaultRocketMQListenerContainer{consumerGroup='chat-connect-group', namespace='', nameServer='47.108.146.141:9876', topic='connect-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 22:52:52.467  INFO 110068 --- [SpringApplicationShutdownHook] a.r.s.s.DefaultRocketMQListenerContainer : container destroyed, DefaultRocketMQListenerContainer{consumerGroup='chat-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-09 22:52:52.637  INFO 110068 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:9876] result: true
+2023-03-09 22:52:52.637  INFO 110068 --- [NettyClientSelector_1] RocketmqRemoting                         : closeChannel: close the connection to remote address[47.108.146.141:10911] result: true
+2023-03-09 22:52:52.642  INFO 110068 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-09 22:52:52.776  INFO 110068 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2023-03-09 22:52:52.779  INFO 110068 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed

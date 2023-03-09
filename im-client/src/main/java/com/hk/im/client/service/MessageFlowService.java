@@ -3,13 +3,11 @@ package com.hk.im.client.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.bo.MessageBO;
-import com.hk.im.domain.dto.ChatMessageDTO;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.MessageFlow;
+import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.TalkRecordsRequest;
-
-import java.util.List;
 
 /**
  * @ClassName : MessageFlowService
@@ -56,15 +54,9 @@ public interface MessageFlowService extends IService<MessageFlow> {
     ResponseResult sendTextMessage(TextMessage message);
 
     /**
-     * 保存消息
-     * @param message
-     * @return
+     * 发送图片消息
+     * @param request
+     * @return {@link ResponseResult}
      */
-    MessageBO doSaveMessageAndFlow(ChatMessage message, MessageFlow flow);
-
-
-
-
-
-
+    ResponseResult sendImageMessage(ImageMessage request);
 }

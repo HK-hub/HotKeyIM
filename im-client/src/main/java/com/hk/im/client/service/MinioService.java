@@ -6,6 +6,7 @@ import com.hk.im.domain.request.UploadAvatarRequest;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.List;
@@ -205,4 +206,14 @@ public interface MinioService {
      * @return
      */
     ResponseResult uploadAvatar(UploadAvatarRequest request);
+
+    /**
+     * 上传聊天图片
+     * @param image
+     * @param bucket
+     * @param senderId
+     * @return
+     */
+    String putImage(MultipartFile image, String bucket, Long senderId);
+
 }

@@ -50,6 +50,12 @@ public class ChatMessage implements Serializable {
     private String content;
 
     /**
+     * 图片，文件，视频，音频等等链接
+     */
+    @TableField(value = "url")
+    private String url;
+
+    /**
      * 扩展字段，一般使用JSON字符串存储,可以用户回复消息，@消息，超文本消息，卡片消息，视频消息等
      */
     @TableField(value = "extra", typeHandler = JacksonTypeHandler.class)

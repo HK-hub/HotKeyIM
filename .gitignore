@@ -5,6 +5,8 @@ commitlint.config.js
 node_modules/**
 HKChat-Client/**
 .gitignore
+HotKeyIM-Web-Admin.log
+HotKeyIM-Web-Admin.**.log
 
 # Compiled class file
 *.class
