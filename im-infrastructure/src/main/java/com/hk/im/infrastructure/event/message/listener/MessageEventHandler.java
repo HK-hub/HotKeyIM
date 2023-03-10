@@ -76,6 +76,7 @@ public class MessageEventHandler {
         if (sendStatus == MessageConstants.SendStatusEnum.FAIL || sendStatus == MessageConstants.SendStatusEnum.DRAFT) {
             // 保存为会话草稿
             ResponseResult result = this.chatCommunicationService.updateCommunicationDraft(messageBO);
+            return ;
         }
 
         // 更新会话
@@ -92,8 +93,10 @@ public class MessageEventHandler {
         MessageVO messageVO = this.computedMessageRecordMember(messageBO);
 
         // 发送消息成功：发送MQ
+        // 计算发送的消息类型名称
+        MessageConstants.ChatMessageType messageType = MessageConstants.ChatMessageType.values()[messageBO.getMessageType()];
         SendResult sendResult = this.rocketMQService.sendTagMsg(MessageQueueConstants.MessageConsumerTopic.chat_topic.topic,
-                MessageConstants.ChatMessageType.TEXT.name(), messageVO);
+                messageType.name(), messageVO);
         log.info("Sent message by rocketmq: {}", sendResult);
     }
 

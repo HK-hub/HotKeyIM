@@ -1,9 +1,10 @@
-HotKeyIM-Web-Admin.log
 /target
 **/target
 /document/**
 commitlint.config.js
 node_modules/**
+.gitignore
+HotKeyIM-Web-Admin.log
 HotKeyIM-Web-Admin-**.log
 
 # Compiled class file

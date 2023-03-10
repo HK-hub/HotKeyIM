@@ -20,6 +20,8 @@ public class MinioConstant {
     public static final String USER_MINI_AVATAR_PREFIX = AccessPolicyEnum.PUBLIC.policy + ResourceNamePrefixEnum.MINI_AVATAR.prefix;
     // 用户二维码地址
     public static final String USER_QRCODE_PREFIX = AccessPolicyEnum.PUBLIC.policy + ResourceNamePrefixEnum.QRCODE.prefix;
+    // 好友私聊图片地址
+    public static final String PRIVATE_CHAT_IMAGE = AccessPolicyEnum.PUBLIC.policy + ResourceNamePrefixEnum.IMAGE.prefix;
     // 用户头像空间
     public static final String USER_AVATAR_PATH = "/user/avatar/";
     // 用户二维码
@@ -32,6 +34,8 @@ public class MinioConstant {
     public static final String GROUP_QRCODE_PATH = "/qrcode/";
     // 群聊文件
     public static final String GROUP_FILE_PATH = "/group/file/";
+    // 私聊图片
+    public static final String PRIVATE_IMAGE_PATH = "/image/";
 
     @Getter
     public enum BucketEnum {
@@ -39,6 +43,7 @@ public class MinioConstant {
         System("system"),
         User("user"),
         Group("group"),
+        Image("image"),
         ;
         private String bucket;
 
@@ -101,7 +106,8 @@ public class MinioConstant {
         QRCODE("qrcode_"),
         // 文件
         FILE("file_"),
-        ;
+        // 图片
+        IMAGE("image_");
 
         private String prefix;
 
@@ -150,6 +156,14 @@ public class MinioConstant {
     public static String getUserBigAvatarPath(String targetId) {
         String bigAvatar = MinioConstant.USER_BIG_AVATAR_PREFIX + targetId;
         return MinioConstant.USER_AVATAR_PATH + bigAvatar + ".jpg";
+    }
+
+    /**
+     * 好友私聊获取图片
+     * @return String objectPath 图片路径
+     */
+    public static String getPrivateImagePath(String objectName) {
+        return PRIVATE_CHAT_IMAGE  + objectName;
     }
 
 

@@ -70,8 +70,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="UserInfo" />
-                  <option name="tableName" value="tb_user_info" />
+                  <option name="className" value="Robot" />
+                  <option name="tableName" value="tb_robot" />
                 </TableUIInfo>
               </list>
             </option>

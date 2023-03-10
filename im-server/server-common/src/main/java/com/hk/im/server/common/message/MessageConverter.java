@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hk.im.common.util.ObjectMapperUtil;
 import com.hk.im.server.common.constants.MessageTypeConstants;
+import com.hk.im.server.common.event.SimpleImageMessage;
 import com.hk.im.server.common.event.SimpleTextMessage;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
@@ -27,6 +28,7 @@ public class MessageConverter {
         // 返回消息类型
         return switch (type) {
             case TEXT -> new SimpleTextMessage();
+            case IMAGE -> new SimpleImageMessage();
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
     }

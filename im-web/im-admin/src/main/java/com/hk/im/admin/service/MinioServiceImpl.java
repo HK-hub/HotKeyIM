@@ -1,5 +1,6 @@
 package com.hk.im.admin.service;
 
+import cn.hutool.core.lang.UUID;
 import com.hk.im.admin.properties.MinioProperties;
 import com.hk.im.admin.util.MinioUtil;
 import com.hk.im.client.service.MinioService;
@@ -10,13 +11,19 @@ import com.hk.im.domain.request.UploadAvatarRequest;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -35,6 +42,7 @@ import java.util.Random;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @Service
 public class MinioServiceImpl implements MinioService {
 
@@ -141,9 +149,11 @@ public class MinioServiceImpl implements MinioService {
 
     /**
      * 上传文件
+     *
      * @param inputStream
      * @param bucketName
      * @param objectName
+     *
      * @return
      */
     @Override
@@ -163,9 +173,11 @@ public class MinioServiceImpl implements MinioService {
 
     /**
      * 上传文件无需指定objectName, 内部会重写ObjectName
+     *
      * @param bucketName
      * @param inputStream
      * @param originalFilename
+     *
      * @return
      */
     @Override
@@ -329,7 +341,9 @@ public class MinioServiceImpl implements MinioService {
 
     /**
      * 上传头像
+     *
      * @param request
+     *
      * @return
      */
     @Override
@@ -374,6 +388,43 @@ public class MinioServiceImpl implements MinioService {
 
         // 上传成功
         return ResponseResult.SUCCESS(url);
+    }
+
+
+    /**
+     * 上传用户聊天图片
+     *
+     * @param image
+     * @param bucket
+     * @param senderId
+     *
+     * @return
+     */
+    @Override
+    public String putChatImage(MultipartFile image, String bucket, Long senderId) {
+
+        // 上传成功链接
+        String url = null;
+        try {
+            // 图片宽高，像素: with x height
+            BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
+            // 宽度
+            int width = bufferedImage.getWidth();
+            // 高度
+            int height = bufferedImage.getHeight();
+
+            // 扩展名
+            String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+            // 计算名称
+            String objectName = MinioConstant.getPrivateImagePath(
+                    UUID.fastUUID().toString(true) +
+                            "_" + width + "x" + height +
+                            "." + extension);
+            url = this.putObject(image.getInputStream(), bucket, objectName);
+        } catch (IOException e) {
+            log.error("putImage error", e);
+        }
+        return url;
     }
 
 
