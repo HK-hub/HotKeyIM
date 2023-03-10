@@ -12,10 +12,12 @@ import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.domain.request.ChangeUserDetailRequest;
+import com.hk.im.infrastructure.event.user.event.UserAvatarUpdateEvent;
 import com.hk.im.infrastructure.mapper.UserInfoMapper;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     private UserService userService;
     @Resource
     private AuthorizationService authorizationService;
+    @Resource
+    private ApplicationContext applicationContext;
+
     @Override
     public ResponseResult getUserInfo(Long userId, String token) {
 
@@ -87,6 +92,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         // 获取当前用户信息
         UserInfo userInfo = this.getById(userId);
         User user = this.userService.getById(userId);
+        if (Objects.isNull(user)) {
+            return ResponseResult.FAIL().setResultCode(ResultCode.NO_SUCH_USER);
+        }
 
         // 更新
         {
@@ -100,6 +108,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
                 user.setMiniAvatar(request.getAvatar());
                 user.setBigAvatar(request.getAvatar());
                 // 发送修改用户信息事件
+                this.applicationContext.publishEvent(new UserAvatarUpdateEvent(this, user));
             }
             if (StringUtils.isNotEmpty(request.getMotto())) {
                 // 签名

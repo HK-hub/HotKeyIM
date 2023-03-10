@@ -1,5 +1,7 @@
 package com.hk.im.infrastructure.event.user.listener;
 
+import com.hk.im.client.service.FriendService;
+import com.hk.im.client.service.UserService;
 import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.FriendGroup;
@@ -14,6 +16,7 @@ import com.hk.im.infrastructure.mapper.FriendMapper;
 import com.hk.im.infrastructure.mapper.UserInfoMapper;
 import com.hk.im.infrastructure.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -42,6 +45,8 @@ public class UserEventListener {
     private FriendGroupMapper friendGroupMapper;
     @Resource
     private FriendMapper friendMapper;
+    @Resource
+    private FriendService friendService;
 
     /**
      * 用户更新事件
@@ -96,6 +101,7 @@ public class UserEventListener {
 
     /**
      * 用户详细信息更新事件
+     *
      * @param event
      */
     @Async
@@ -107,12 +113,25 @@ public class UserEventListener {
 
     /**
      * 更新用户头像
+     *
      * @param event
      */
     @Async
     @EventListener
     public void userAvatarUpdatedEventHandler(UserAvatarUpdateEvent event) {
 
+        User user = event.getData();
+
+        if (StringUtils.isEmpty(user.getMiniAvatar())) {
+            // 头像不存在
+            return ;
+        }
+
+        // 更新头像
+        boolean update = this.friendService.lambdaUpdate()
+                .eq(Friend::getFriendId, user.getId())
+                .set(Friend::getAvatar, user.getMiniAvatar())
+                .update();
     }
 
 
