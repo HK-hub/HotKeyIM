@@ -1,8 +1,10 @@
+HotKeyIM-Web-Admin.log
 /target
 **/target
 /document/**
 commitlint.config.js
 node_modules/**
+HotKeyIM-Web-Admin-**.log
 
 # Compiled class file
 *.class
