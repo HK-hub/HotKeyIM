@@ -8,8 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author : HK意境
- * @ClassName : ImageMessage
- * @date : 2023/3/9 16:52
+ * @ClassName : AttachmentMessage
+ * @date : 2023/3/10 15:07
  * @description :
  * @Todo :
  * @Bug :
@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Data
 @Accessors(chain = true)
-public class ImageMessage extends WebSocketMessage {
+public class AttachmentMessage extends WebSocketMessage {
 
     private Integer talkType;
 
@@ -26,16 +26,16 @@ public class ImageMessage extends WebSocketMessage {
 
     private String receiverId;
 
-    private MultipartFile image;
+    private MultipartFile file;
 
-    @Override
-    public Integer getChatMessageType() {
-        return MessageConstants.ChatMessageType.IMAGE.ordinal();
-    }
 
     @Override
     public int getMessageActionType() {
         return MessageConstants.MessageActionType.CHAT.ordinal();
     }
 
+    @Override
+    public Integer getChatMessageType() {
+        return MessageConstants.ChatMessageType.FILE.ordinal();
+    }
 }

@@ -1,6 +1,7 @@
 package com.hk.im.service.worker;
 
-import com.hk.im.client.service.*;
+import com.hk.im.client.service.MinioService;
+import com.hk.im.client.service.SequenceService;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
@@ -8,9 +9,11 @@ import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.dto.BaseMessageExtra;
+import com.hk.im.domain.dto.FileMessageExtra;
 import com.hk.im.domain.dto.ImageMessageExtra;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.MessageFlow;
+import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
@@ -23,12 +26,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.Objects;
 
 /**
  * @author : HK意境
- * @ClassName : ImageMessageWorker
- * @date : 2023/3/9 22:00
+ * @ClassName : AttachmentMessageWorker
+ * @date : 2023/3/10 15:12
  * @description :
  * @Todo :
  * @Bug :
@@ -37,32 +41,32 @@ import java.util.Objects;
  */
 @Slf4j
 @Component
-public class ImageMessageWorker {
+public class AttachmentMessageWorker {
 
     @Resource
-    private ApplicationContext applicationContext;
+    private MinioService minioService;
     @Resource
     private SequenceService sequenceService;
     @Resource
-    private MinioService minioService;
-
-    @Resource
     private BaseMessageWorker baseMessageWorker;
+    @Resource
+    private ApplicationContext applicationContext;
 
-    public ResponseResult sendMessage(ImageMessage request) {
+
+    public ResponseResult sendMessage(AttachmentMessage request) {
 
         // 参数校验
         boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getReceiverId()) || Objects.isNull(request.getTalkType())
-                || Objects.isNull(request.getImage());
+                || Objects.isNull(request.getFile());
         if (BooleanUtils.isTrue(preCheck)) {
             // 参数校验失败
-            return ResponseResult.FAIL("图片消息参数错误!");
+            return ResponseResult.FAIL("附件消息参数错误!");
         }
 
         // 校验消息类型
         Integer chatMessageType = request.getChatMessageType();
-        if (MessageConstants.ChatMessageType.IMAGE.ordinal() != chatMessageType) {
-            // 不是文本消息类型
+        if (MessageConstants.ChatMessageType.FILE.ordinal() != chatMessageType) {
+            // 不是文件消息类型
             return ResponseResult.FAIL().setResultCode(ResultCode.BAD_REQUEST);
         }
 
@@ -72,24 +76,24 @@ public class ImageMessageWorker {
             senderId = UserContextHolder.get().getId();
         }
         Long receiverId = Long.valueOf(request.getReceiverId());
-        MultipartFile image = request.getImage();
+        MultipartFile file = request.getFile();
         Integer talkType = request.getTalkType();
 
         // 上传图片
-        String imageUrl = this.minioService.putChatImage(image, MinioConstant.BucketEnum.Image.getBucket(), senderId);
+        String fileUrl = this.minioService.putChatFile(file, MinioConstant.BucketEnum.File.getBucket(), senderId);
         // 图片消息扩展信息
-        ImageMessageExtra imageMessageExtra = this.calculateExtra(image);
-        imageMessageExtra.setUploader(senderId).setReceiver(receiverId);
+        FileMessageExtra fileMessageExtra = this.calculateExtra(file);
+        fileMessageExtra.setUploader(senderId).setReceiver(receiverId);
         // 保存消息
         ChatMessage chatMessage = new ChatMessage()
                 // 消息内容
-                .setContent(imageUrl)
-                .setUrl(imageUrl)
+                .setContent(fileUrl)
+                .setUrl(fileUrl)
                 // 消息特性
                 .setMessageFeature(MessageConstants.MessageFeature.DEFAULT.ordinal())
                 // 消息类型
-                .setMessageType(MessageConstants.ChatMessageType.IMAGE.ordinal())
-                .setExtra(imageMessageExtra);
+                .setMessageType(MessageConstants.ChatMessageType.FILE.ordinal())
+                .setExtra(fileMessageExtra);
 
         // 获取消息序列号
         ResponseResult sequenceResult = this.sequenceService.nextId(senderId, receiverId, talkType);
@@ -133,22 +137,20 @@ public class ImageMessageWorker {
 
 
     /**
-     * 装配出图片消息扩展信息
+     * 计算文件属性
      *
-     * @param image
+     * @param file
      *
      * @return
      */
-    private ImageMessageExtra calculateExtra(MultipartFile image) {
+    private FileMessageExtra calculateExtra(MultipartFile file) {
 
-        ImageMessageExtra extra = new ImageMessageExtra();
-
-        extra.setExtension(FilenameUtils.getExtension(image.getOriginalFilename()));
-        extra.setFileName(image.getOriginalFilename())
-                .setOriginalFileName(image.getOriginalFilename())
-                .setFileSubType(MessageConstants.FileSubType.IMAGE.ordinal())
-                // 文件大小单位：MB
-                .setSize((double) image.getSize() / 1048576);
+        FileMessageExtra extra = new FileMessageExtra();
+        extra.setFileName(file.getOriginalFilename());
+        extra.setOriginalFileName(file.getOriginalFilename());
+        extra.setExtension(FilenameUtils.getExtension(file.getOriginalFilename()));
+        extra.setSize((double) file.getSize() / 1048576);
+        extra.setFileSubType(MessageConstants.FileSubType.FILE.ordinal());
 
         return extra;
     }

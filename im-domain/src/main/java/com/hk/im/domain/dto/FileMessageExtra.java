@@ -1,14 +1,13 @@
 package com.hk.im.domain.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author : HK意境
- * @ClassName : ImageMessageExtra
- * @date : 2023/3/9 22:46
+ * @ClassName : FileMessageExtra
+ * @date : 2023/3/10 15:19
  * @description :
  * @Todo :
  * @Bug :
@@ -18,8 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-public class ImageMessageExtra extends BaseMessageExtra{
+public class FileMessageExtra extends BaseMessageExtra{
 
     // 文件名称
     protected String fileName;

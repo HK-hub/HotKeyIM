@@ -12,8 +12,8 @@ import javax.annotation.Resource;
 
 /**
  * @author : HK意境
- * @ClassName : SentImageMessageConsumer
- * @date : 2023/3/10 9:21
+ * @ClassName : SendFileMessageConsumer
+ * @date : 2023/3/10 15:55
  * @description :
  * @Todo :
  * @Bug :
@@ -22,8 +22,10 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "image-message-group", topic = "chat-topic", selectorExpression = "IMAGE")
-public class SentImageMessageConsumer implements RocketMQListener<MessageVO> {
+@RocketMQMessageListener(consumerGroup = "image-message-group", topic = "chat-topic", selectorExpression = "FILE")
+public class SendFileMessageConsumer implements RocketMQListener<MessageVO> {
+
+
 
     @Resource
     private MessagePushWorker messagePushWorker;
@@ -45,6 +47,4 @@ public class SentImageMessageConsumer implements RocketMQListener<MessageVO> {
         // 进行推送消息
         this.messagePushWorker.doProcess(messageVO);
     }
-
-
 }

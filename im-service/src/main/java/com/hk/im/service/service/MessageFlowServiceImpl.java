@@ -15,6 +15,7 @@ import com.hk.im.domain.dto.LatestMessageRecordDTO;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.MessageFlow;
+import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
@@ -25,6 +26,7 @@ import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.MessageFlowMapper;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
+import com.hk.im.service.worker.AttachmentMessageWorker;
 import com.hk.im.service.worker.ImageMessageWorker;
 import com.hk.im.service.worker.TextMessageWorker;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +67,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     private TextMessageWorker textMessageWorker;
     @Resource
     private ImageMessageWorker imageMessageWorker;
+    @Resource
+    private AttachmentMessageWorker attachmentMessageWorker;
 
 
     /**
@@ -260,6 +264,18 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     public ResponseResult sendImageMessage(ImageMessage request) {
 
         return this.imageMessageWorker.sendMessage(request);
+    }
+
+
+    /**
+     * 发送附件，文件消息
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult sendAttachmentMessage(AttachmentMessage request) {
+
+        return this.attachmentMessageWorker.sendMessage(request);
     }
 
 

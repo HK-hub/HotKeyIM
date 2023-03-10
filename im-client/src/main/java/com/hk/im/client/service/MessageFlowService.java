@@ -5,6 +5,7 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.MessageFlow;
+import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.TalkRecordsRequest;
@@ -59,4 +60,12 @@ public interface MessageFlowService extends IService<MessageFlow> {
      * @return {@link ResponseResult}
      */
     ResponseResult sendImageMessage(ImageMessage request);
+
+
+    /**
+     * 发送附件消息
+     * @param request
+     * @return
+     */
+    ResponseResult sendAttachmentMessage(AttachmentMessage request);
 }

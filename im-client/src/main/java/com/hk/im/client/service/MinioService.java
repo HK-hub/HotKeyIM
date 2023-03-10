@@ -216,4 +216,12 @@ public interface MinioService {
      */
     String putChatImage(MultipartFile image, String bucket, Long senderId);
 
+    /**
+     * 上传聊天附件
+     * @param file
+     * @param bucket
+     * @param senderId
+     * @return
+     */
+    String putChatFile(MultipartFile file, String bucket, Long senderId);
 }

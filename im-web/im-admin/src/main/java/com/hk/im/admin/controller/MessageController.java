@@ -3,6 +3,7 @@ package com.hk.im.admin.controller;
 import com.hk.im.client.service.ChatMessageService;
 import com.hk.im.client.service.MessageFlowService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.TalkRecordsRequest;
@@ -78,6 +79,18 @@ public class MessageController {
     public ResponseResult sendImageMessage(ImageMessage request) {
 
         return this.messageFlowService.sendImageMessage(request);
+    }
+
+
+    /**
+     * 发送附件，文件消息
+     * @param request
+     * @return
+     */
+    @PostMapping("/send/attachment")
+    public ResponseResult sendAttachmentMessage(AttachmentMessage request) {
+
+        return this.messageFlowService.sendAttachmentMessage(request);
     }
 
 

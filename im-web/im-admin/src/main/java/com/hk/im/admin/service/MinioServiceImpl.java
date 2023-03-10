@@ -427,6 +427,33 @@ public class MinioServiceImpl implements MinioService {
         return url;
     }
 
+    /**
+     * 上传聊天附件或文件
+     * @param file
+     * @param bucket
+     * @param senderId
+     * @return
+     */
+    @Override
+    public String putChatFile(MultipartFile file, String bucket, Long senderId) {
+
+        // 上传成功链接
+        String url = null;
+        try {
+
+            // 扩展名
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+            // 计算名称
+            String objectName = MinioConstant.getPrivateImagePath(
+                    senderId + "_" +
+                    UUID.fastUUID().toString(true) + "." + extension);
+            url = this.putObject(file.getInputStream(), bucket, objectName);
+        } catch (IOException e) {
+            log.error("put chat attachment or file error", e);
+        }
+        return url;
+    }
+
 
     /**
      * 获取文件信息, 如果抛出异常则说明文件不存在
