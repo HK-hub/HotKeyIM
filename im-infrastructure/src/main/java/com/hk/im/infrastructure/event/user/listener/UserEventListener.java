@@ -5,6 +5,8 @@ import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.FriendGroup;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
+import com.hk.im.infrastructure.event.user.event.UserAvatarUpdateEvent;
+import com.hk.im.infrastructure.event.user.event.UserDetailUpdateEvent;
 import com.hk.im.infrastructure.event.user.event.UserRegisterEvent;
 import com.hk.im.infrastructure.event.user.event.UserUpdatedEvent;
 import com.hk.im.infrastructure.mapper.FriendGroupMapper;
@@ -88,6 +90,28 @@ public class UserEventListener {
                 .setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
         // 保存：
         this.friendMapper.insert(friend);
+
+    }
+
+
+    /**
+     * 用户详细信息更新事件
+     * @param event
+     */
+    @Async
+    @EventListener
+    public void userDetailsUpdatedEventHandler(UserDetailUpdateEvent event) {
+
+    }
+
+
+    /**
+     * 更新用户头像
+     * @param event
+     */
+    @Async
+    @EventListener
+    public void userAvatarUpdatedEventHandler(UserAvatarUpdateEvent event) {
 
     }
 

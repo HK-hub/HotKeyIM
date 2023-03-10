@@ -99,6 +99,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
                 // 头像
                 user.setMiniAvatar(request.getAvatar());
                 user.setBigAvatar(request.getAvatar());
+                // 发送修改用户信息事件
             }
             if (StringUtils.isNotEmpty(request.getMotto())) {
                 // 签名
