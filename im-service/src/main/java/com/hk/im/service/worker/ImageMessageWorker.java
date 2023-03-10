@@ -75,7 +75,7 @@ public class ImageMessageWorker {
         Integer talkType = request.getTalkType();
 
         // 上传图片
-        String imageUrl = this.minioService.putImage(image, MinioConstant.BucketEnum.Image.getBucket(), senderId);
+        String imageUrl = this.minioService.putChatImage(image, MinioConstant.BucketEnum.Image.getBucket(), senderId);
         // 图片消息扩展信息
         ImageMessageExtra imageMessageExtra = this.calculateExtra(image);
         imageMessageExtra.setUploader(senderId).setReceiver(receiverId);

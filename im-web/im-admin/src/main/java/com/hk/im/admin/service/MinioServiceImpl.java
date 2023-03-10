@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -147,9 +149,11 @@ public class MinioServiceImpl implements MinioService {
 
     /**
      * 上传文件
+     *
      * @param inputStream
      * @param bucketName
      * @param objectName
+     *
      * @return
      */
     @Override
@@ -169,9 +173,11 @@ public class MinioServiceImpl implements MinioService {
 
     /**
      * 上传文件无需指定objectName, 内部会重写ObjectName
+     *
      * @param bucketName
      * @param inputStream
      * @param originalFilename
+     *
      * @return
      */
     @Override
@@ -335,7 +341,9 @@ public class MinioServiceImpl implements MinioService {
 
     /**
      * 上传头像
+     *
      * @param request
+     *
      * @return
      */
     @Override
@@ -385,23 +393,34 @@ public class MinioServiceImpl implements MinioService {
 
     /**
      * 上传用户聊天图片
+     *
      * @param image
      * @param bucket
      * @param senderId
+     *
      * @return
      */
     @Override
-    public String putImage(MultipartFile image, String bucket, Long senderId) {
+    public String putChatImage(MultipartFile image, String bucket, Long senderId) {
 
-        // 扩展名
-        String extension = FilenameUtils.getExtension(image.getOriginalFilename());
-        // 计算名称
-        String objectName = MinioConstant.getPrivateImagePath(
-                UUID.fastUUID().toString(true) + "." + extension);
         // 上传成功链接
         String url = null;
         try {
-           url = this.putObject(image.getInputStream(), bucket, objectName);
+            // 图片宽高，像素: with x height
+            BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
+            // 宽度
+            int width = bufferedImage.getWidth();
+            // 高度
+            int height = bufferedImage.getHeight();
+
+            // 扩展名
+            String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+            // 计算名称
+            String objectName = MinioConstant.getPrivateImagePath(
+                    UUID.fastUUID().toString(true) +
+                            "_" + width + "x" + height +
+                            "." + extension);
+            url = this.putObject(image.getInputStream(), bucket, objectName);
         } catch (IOException e) {
             log.error("putImage error", e);
         }

@@ -214,6 +214,6 @@ public interface MinioService {
      * @param senderId
      * @return
      */
-    String putImage(MultipartFile image, String bucket, Long senderId);
+    String putChatImage(MultipartFile image, String bucket, Long senderId);
 
 }
