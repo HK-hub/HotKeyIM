@@ -1399,3 +1399,994 @@ deleted=?  WHERE id=?
 2023-03-10 10:49:27.688  INFO 16220 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-03-10 10:49:27.764  INFO 16220 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
 2023-03-10 10:49:27.787  INFO 16220 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2023-03-10 10:49:55.075  INFO 117248 --- [main] com.hk.im.admin.IMAdminApplication       : Starting IMAdminApplication using Java 17.0.2 on DESKTOP-PICLGLQ with PID 117248 (F:\JavaCode\HotKeyIM\im-web\im-admin\target\classes started by HK意境 in F:\JavaCode\HotKeyIM)
+2023-03-10 10:49:55.084  INFO 117248 --- [main] com.hk.im.admin.IMAdminApplication       : The following 1 profile is active: "dev"
+2023-03-10 10:50:00.531  INFO 117248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-03-10 10:50:00.532  INFO 117248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-10 10:50:00.562  INFO 117248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 JPA repository interfaces.
+2023-03-10 10:50:00.614  INFO 117248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-03-10 10:50:00.616  INFO 117248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-10 10:50:00.637  INFO 117248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-03-10 10:50:01.238  INFO 117248 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodTraceAdvice' of type [com.hk.im.admin.advice.MethodTraceAdvice$$EnhancerBySpringCGLIB$$33b57418] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-10 10:50:01.259  INFO 117248 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodTraceAdvisor' of type [org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-03-10 10:50:02.125  INFO 117248 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2023-03-10 10:50:02.144  INFO 117248 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-10 10:50:02.145  INFO 117248 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-03-10 10:50:02.435  INFO 117248 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/admin]  : Initializing Spring embedded WebApplicationContext
+2023-03-10 10:50:02.435  INFO 117248 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7257 ms
+2023-03-10 10:50:03.291  INFO 117248 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2023-03-10 10:50:04.257  INFO 117248 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2023-03-10 10:50:04.454  INFO 117248 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-10 10:50:04.616  INFO 117248 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-03-10 10:50:05.251  INFO 117248 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-03-10 10:50:05.471  INFO 117248 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-03-10 10:50:05.844  INFO 117248 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-10 10:50:05.867  INFO 117248 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-10 10:50:06.525  WARN 117248 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.CollectEmoticon ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-10 10:50:07.013  WARN 117248 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.LikePost ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-10 10:50:07.105  WARN 117248 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.NoteTag ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-10 10:50:07.276  WARN 117248 --- [main] c.b.m.core.injector.DefaultSqlInjector   : class com.hk.im.domain.entity.UserCollection ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-03-10 10:50:08.836  INFO 117248 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server address:localhost
+2023-03-10 10:50:08.838  INFO 117248 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server port:9870
+2023-03-10 10:50:08.838  INFO 117248 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server serializer:Json
+2023-03-10 10:50:08.838  INFO 117248 --- [main] c.h.i.server.chat.config.MetaDataConfig  : chat server path:/channel
+2023-03-10 10:50:08.848  INFO 117248 --- [main] c.h.i.s.p.c.SendTextMessageConsumer      : sendMessage consumer bean created
+2023-03-10 10:50:09.617  INFO 117248 --- [main] c.h.i.s.p.config.ExecutorConfiguration   : start asyncServiceExecutor
+2023-03-10 10:50:09.692  WARN 117248 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-10 10:50:11.022  INFO 117248 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='chat-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='TEXT', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-10 10:50:11.023  INFO 117248 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:sendTextMessageConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-03-10 10:50:11.179  INFO 117248 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='chat-connect-group', namespace='', nameServer='47.108.146.141:9876', topic='connect-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-10 10:50:11.179  INFO 117248 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:userConnectedConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-03-10 10:50:11.342  INFO 117248 --- [main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='image-message-group', namespace='', nameServer='47.108.146.141:9876', topic='chat-topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='IMAGE', messageModel=CLUSTERING', tlsEnable=false}
+2023-03-10 10:50:11.343  INFO 117248 --- [main] o.a.r.s.a.ListenerContainerConfiguration : Register the listener to container, listenerBeanName:sentImageMessageConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_3
+2023-03-10 10:50:11.419  INFO 117248 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path '/admin'
+2023-03-10 10:50:11.428  INFO 117248 --- [main] c.h.i.server.chat.ChatServerBootStarter  : IOC 容器准备完毕,准备创建Chat Server: 2023-03-10T10:50:11.428604800
+2023-03-10 10:50:11.429  INFO 117248 --- [main] c.h.i.server.chat.ChatServerBootStarter  : 启动Chat Server: class com.hk.im.server.chat.ChatServerBootStarter-2023-03-10T10:50:11.429604
+2023-03-10 10:50:11.449  INFO 117248 --- [main] com.hk.im.admin.IMAdminApplication       : Started IMAdminApplication in 17.283 seconds (JVM running for 19.339)
+2023-03-10 10:50:11.636  INFO 117248 --- [Thread-9] c.h.i.s.chat.server.HotKeyChatServer     : websocket 服务启动，ip=localhost,port=9870
+2023-03-10 10:50:14.368  INFO 117248 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:5564
+2023-03-10 10:50:14.368  INFO 117248 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:5564
+2023-03-10 10:50:14.384  INFO 117248 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:50:14.385  INFO 117248 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:50:14.385  INFO 117248 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:50:15.018  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_1] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1611656761503215617, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ, extend=null)
+2023-03-10 10:50:15.066  WARN 117248 --- [nioEventLoopGroup-5-1] c.b.m.c.t.support.ReflectLambdaMeta      : Unable to make field private final java.lang.Class java.lang.invoke.SerializedLambda.capturingClass accessible: module java.base does not "opens java.lang.invoke" to unnamed module @7e6f74c
+2023-03-10 10:50:15.372  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_1] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教)
+2023-03-10 10:50:15.446  INFO 117248 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:50:15.954  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/admin]  : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-10 10:50:15.954  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-03-10 10:50:15.956  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-03-10 10:50:16.004  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=9172e783-d404-4da6-af3e-9bf5e0533e71],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-10T10:50:16.004855400]
+2023-03-10 10:50:16.150  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=d05bd818-b469-4774-af17-c5973b66ae92],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:50:16.150858300]
+2023-03-10 10:50:16.150  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@57ec6b33,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:50:16.159  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:50:16.187  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1611656761503215617
+2023-03-10 10:50:37.843  INFO 117248 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:5564,id=907841fffe2e6da0-0001ca00-00000009-30956ea30ede2345-143ec6cb
+2023-03-10 10:50:37.844  INFO 117248 --- [nioEventLoopGroup-5-1] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:5564
+2023-03-10 10:50:39.857  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=78847b75-bdef-423b-91f1-6ea929ae4c6d],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=OPTIONS],[time=2023-03-10T10:50:39.857738100]
+2023-03-10 10:50:39.858  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=797f0980-98da-4d6c-a910-62f4bcc02b1d],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=OPTIONS],[time=2023-03-10T10:50:39.858738200]
+2023-03-10 10:50:39.879  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=d7563fdf-c132-4a3f-8fe3-3db49c012ab7],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:50:39.879737800]
+2023-03-10 10:50:39.879  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@7f8628b9,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:50:39.882  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=221549f2-e38d-4ff8-a359-c4ad4d283508],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=GET],[time=2023-03-10T10:50:39.882737600]
+2023-03-10 10:50:39.882  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@3612dee,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:50:39.883  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:50:39.885  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@da6d3f2,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:50:40.134  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:7813
+2023-03-10 10:50:40.134  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:7813
+2023-03-10 10:50:40.138  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:50:40.138  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:50:40.138  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:50:40.166  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_2] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1611656761503215617, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ, extend=null)
+2023-03-10 10:50:40.181  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_2] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教)
+2023-03-10 10:50:40.755  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:50:40.762  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=85b8973e-c959-4831-8c5f-68442db63985],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-10T10:50:40.762693]
+2023-03-10 10:50:40.773  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=0a114586-8732-48e8-929f-316af6210e01],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:50:40.773695700]
+2023-03-10 10:50:40.773  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@43830176,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:50:40.776  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@da6d3f2,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:50:40.777  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1611656761503215617
+2023-03-10 10:50:48.658  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=0132be7b-c5f7-465e-b0bf-a55c92d37ea4],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=OPTIONS],[time=2023-03-10T10:50:48.658993900]
+2023-03-10 10:50:48.658  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=26317f54-a05b-4618-8e96-7a154fca54c2],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=OPTIONS],[time=2023-03-10T10:50:48.658993900]
+2023-03-10 10:50:48.673  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=e5fcfc31-e883-41f1-87ba-d6e7bc2e54e5],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=GET],[time=2023-03-10T10:50:48.673991900]
+2023-03-10 10:50:48.673  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@554ef153,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:50:48.674  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=34b4d58a-77bf-4c36-86e3-172b562735ef],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=GET],[time=2023-03-10T10:50:48.674996400]
+2023-03-10 10:50:48.674  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@38006367,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:50:48.678  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@da6d3f2,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:50:48.678  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:50:48.903  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1612030664754913281","msg_id":["1631543156694679554","1631543980913164289","1631544981921562625","1631545332447936513","1631547912842420226","1631549401233117186","1631549482778775553","1631549872870019074","1633008691928141825","1633009164240326658","1633360461682462722"]}}
+2023-03-10 10:51:04.698  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=d53a4bb9-a1e2-4a71-8b18-f5426bebaae9],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=OPTIONS],[time=2023-03-10T10:51:04.698665400]
+2023-03-10 10:51:04.966  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=3af7991d-c795-442f-bc9e-10a92dc25f3b],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=POST],[time=2023-03-10T10:51:04.966679]
+2023-03-10 10:51:04.967  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@19b04de3,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:51:04.969  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset:org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@ae6d854,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:51:06.079  INFO 117248 --- [async-service-1] c.h.i.i.e.c.l.CommunicationEventListener : refresh sequence and session ttl: Sequence(id=null, name=null, description=null, sessionId=null, receiverId=1612030664754913281, senderId=1611656761503215617, max=null, step=null, segment=null, version=null, createTime=null, updateTime=null, current=1)
+2023-03-10 10:51:06.114  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_chat_message  ( id,
+sequence,
+message_feature,
+message_type,
+content,
+url,
+extra,
+
+create_time,
+update_time )  VALUES  ( ?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+? )
+2023-03-10 10:51:06.129  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:51:06.187  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_message_flow  ( id,
+
+sender_id,
+receiver_id,
+chat_type,
+message_type,
+message_id,
+`sequence`,
+send_status,
+sign_flag,
+
+deleted,
+create_time,
+update_time )  VALUES  ( ?,
+
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+?,
+? )
+2023-03-10 10:51:06.188  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:51:06.377  INFO 117248 --- [async-service-2] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-10 10:51:06.379  INFO 117248 --- [async-service-2] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:51:06.493  INFO 117248 --- [async-service-2] c.h.i.i.e.m.l.MessageEventHandler        : Sent message by rocketmq: SendResult [sendStatus=SEND_OK, msgId=7F000001CA0063947C6B30AD576D0002, offsetMsgId=2F6C928D00002A9F000000000001CFF3, messageQueue=MessageQueue [topic=chat-topic, brokerName=broker-a, queueId=2], queueOffset=5]
+2023-03-10 10:51:06.520  INFO 117248 --- [ConsumeMessageThread_image-message-group_1] c.h.i.s.p.c.SentImageMessageConsumer     : rocketmq on message(chat message image): MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-10 10:51:06.529  INFO 117248 --- [ConsumeMessageThread_image-message-group_1] c.h.i.s.p.worker.MessageOfflineWorker    : offline message handle start:MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-10 10:51:06.529  INFO 117248 --- [async-service-3] c.h.i.s.push.worker.MessageSynchronizer  : MessageSynchronizer synchronize message to me=1611656761503215617,message=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-10 10:51:06.533  INFO 117248 --- [ConsumeMessageThread_image-message-group_1] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-10 10:51:06.534  INFO 117248 --- [ConsumeMessageThread_image-message-group_1] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:51:06.541  INFO 117248 --- [async-service-3] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人))), extra=null) to Channel=907841fffe2e6da0-0001ca00-0000000c-161586335ede4884-7e14bb0f
+2023-03-10 10:51:32.784  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=dd04b043-7888-43c7-9f39-1c723ba49da7],[ip=127.0.0.1],[uri=/admin/user/login],[method=OPTIONS],[time=2023-03-10T10:51:32.784002500]
+2023-03-10 10:51:32.797  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=13067754-a7a2-4205-a7e4-d752e506a15e],[ip=127.0.0.1],[uri=/admin/user/login],[method=POST],[time=2023-03-10T10:51:32.797016500]
+2023-03-10 10:51:33.018  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=7d2680c9-3031-47b2-9e15-ad131404eb37],[ip=127.0.0.1],[uri=/admin/user/1612030664754913281],[method=OPTIONS],[time=2023-03-10T10:51:33.018005300]
+2023-03-10 10:51:33.024  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=0330c0f4-b4b5-4db6-bebc-2edc5ee78763],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=OPTIONS],[time=2023-03-10T10:51:33.024991400]
+2023-03-10 10:51:33.035  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=925170b0-90fb-41ad-8de6-f3d089f970ae],[ip=127.0.0.1],[uri=/admin/user/1612030664754913281],[method=GET],[time=2023-03-10T10:51:33.035989300]
+2023-03-10 10:51:33.035  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@4a32738a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:51:33.037  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:51:33.039  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=f020ccd9-6ae0-42d6-915d-8bddd688e2c9],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:51:33.039989300]
+2023-03-10 10:51:33.039  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@1e2fd669,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:51:33.043  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@da6d3f2,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:51:33.281  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:6617
+2023-03-10 10:51:33.281  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:6617
+2023-03-10 10:51:33.284  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:51:33.284  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:51:33.284  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:51:33.309  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_3] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1612030664754913281, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ, extend=null)
+2023-03-10 10:51:33.319  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_3] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教)
+2023-03-10 10:51:33.360  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:51:33.422  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=c3cfc19d-8555-4d65-aec2-ae0a4893d47c],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-10T10:51:33.422987300]
+2023-03-10 10:51:33.439  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=4c8c19b3-f1b1-4c2c-8bba-b0985fbc5391],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:51:33.438988100]
+2023-03-10 10:51:33.439  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@7bbc927d,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:51:33.441  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:51:33.442  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1612030664754913281
+2023-03-10 10:51:37.993  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=e7b5ed42-472b-42c6-a48a-0f095c8a6548],[ip=127.0.0.1],[uri=/admin/talk/unread/clear],[method=OPTIONS],[time=2023-03-10T10:51:37.993319600]
+2023-03-10 10:51:37.994  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=4721e94b-3a01-4338-890f-15c8d32c6a4c],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=OPTIONS],[time=2023-03-10T10:51:37.994321400]
+2023-03-10 10:51:37.994  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=c2446782-9ee1-4463-858c-832d69081c72],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=OPTIONS],[time=2023-03-10T10:51:37.994321400]
+2023-03-10 10:51:38.015  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=c8e9c488-5539-4287-865a-3dd748c45f8c],[ip=127.0.0.1],[uri=/admin/talk/unread/clear],[method=POST],[time=2023-03-10T10:51:38.015319400]
+2023-03-10 10:51:38.016  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@2387ed8b,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:51:38.017  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=84bbf77e-5750-4de0-92eb-4612cbce0c12],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=GET],[time=2023-03-10T10:51:38.017317700]
+2023-03-10 10:51:38.017  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@645f6bec,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:51:38.018  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@da6d3f2,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:51:38.019  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=6d1c5280-3bba-47e6-a195-b131f6f8cac6],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=GET],[time=2023-03-10T10:51:38.019320200]
+2023-03-10 10:51:38.019  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@3f1ec666,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:51:38.019  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1036eaaa,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:51:38.022  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:51:38.131 ERROR 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.hk.im.admin.advice.WebExceptionAdvice  : runtime exception:
+
+java.lang.NumberFormatException: Cannot parse null string
+	at java.base/java.lang.Long.parseLong(Long.java:674) ~[na:na]
+	at java.base/java.lang.Long.valueOf(Long.java:1163) ~[na:na]
+	at com.hk.im.service.service.ChatCommunicationServiceImpl.clearUnreadMessage(ChatCommunicationServiceImpl.java:416) ~[classes/:na]
+	at com.hk.im.service.service.ChatCommunicationServiceImpl$$FastClassBySpringCGLIB$$aef42fb5.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.20.jar:5.3.20]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689) ~[spring-aop-5.3.18.jar:5.3.18]
+	at com.hk.im.service.service.ChatCommunicationServiceImpl$$EnhancerBySpringCGLIB$$e4c05fa8.clearUnreadMessage(<generated>) ~[classes/:na]
+	at com.hk.im.admin.controller.CommunicationController.clearUnreadMessage(CommunicationController.java:77) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) ~[tomcat-embed-core-9.0.63.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.63.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124) ~[druid-1.2.8.jar:1.2.8]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+
+2023-03-10 10:51:38.201  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1611656761503215617","msg_id":["1631544192121536513","1631545232514449410","1631545265607507969","1631545409157562370","1631545527147528193","1631547263044124673","1631549589595115521","1631549636093169666","1633009057675644929","1633029761007677442","1633033758145835009","1633107494089826306","1633360292828172290","1633752041069252610","1634007735336988674","1634009318841962498","1634011620046835713","1634013278881456129","1634013813894291458","1634024046859448321"]}}
+2023-03-10 10:51:49.768  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=018dd5b1-b0eb-4642-9286-310daadf2539],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=OPTIONS],[time=2023-03-10T10:51:49.768901900]
+2023-03-10 10:51:49.805  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=2f5cf09a-2e8e-4bad-8ea2-3be6b1ce65fe],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=POST],[time=2023-03-10T10:51:49.805899700]
+2023-03-10 10:51:49.806  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@6f01408a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:51:49.808  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset:org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@459eec0c,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:51:50.396  INFO 117248 --- [async-service-4] c.h.i.i.e.c.l.CommunicationEventListener : refresh sequence and session ttl: Sequence(id=null, name=null, description=null, sessionId=null, receiverId=1611656761503215617, senderId=1612030664754913281, max=null, step=null, segment=null, version=null, createTime=null, updateTime=null, current=1)
+2023-03-10 10:51:50.397  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_chat_message  ( id,
+sequence,
+message_feature,
+message_type,
+content,
+url,
+extra,
+
+create_time,
+update_time )  VALUES  ( ?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+? )
+2023-03-10 10:51:50.397  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:51:50.404  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_message_flow  ( id,
+
+sender_id,
+receiver_id,
+chat_type,
+message_type,
+message_id,
+`sequence`,
+send_status,
+sign_flag,
+
+deleted,
+create_time,
+update_time )  VALUES  ( ?,
+
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+?,
+? )
+2023-03-10 10:51:50.405  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:51:50.580  INFO 117248 --- [async-service-5] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-10 10:51:50.581  INFO 117248 --- [async-service-5] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:51:50.703  INFO 117248 --- [async-service-5] c.h.i.i.e.m.l.MessageEventHandler        : Sent message by rocketmq: SendResult [sendStatus=SEND_OK, msgId=7F000001CA0063947C6B30AE041D0004, offsetMsgId=2F6C928D00002A9F000000000001DA7F, messageQueue=MessageQueue [topic=chat-topic, brokerName=broker-a, queueId=2], queueOffset=6]
+2023-03-10 10:51:50.704  INFO 117248 --- [ConsumeMessageThread_image-message-group_2] c.h.i.s.p.c.SentImageMessageConsumer     : rocketmq on message(chat message image): MessageVO(sender=UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教), receiver=null, avatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, senderAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, receiverAvatar=null, friendRemark=令狐翅膀, nickname=令狐翅膀)
+2023-03-10 10:51:50.705  INFO 117248 --- [ConsumeMessageThread_image-message-group_2] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教), receiver=null, avatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, senderAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, receiverAvatar=null, friendRemark=令狐翅膀, nickname=令狐翅膀))), extra=null) to Channel=907841fffe2e6da0-0001ca00-0000000c-161586335ede4884-7e14bb0f
+2023-03-10 10:51:50.705  INFO 117248 --- [async-service-6] c.h.i.s.push.worker.MessageSynchronizer  : MessageSynchronizer synchronize message to me=1612030664754913281,message=MessageVO(sender=UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教), receiver=null, avatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, senderAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, receiverAvatar=null, friendRemark=令狐翅膀, nickname=令狐翅膀)
+2023-03-10 10:51:50.705  INFO 117248 --- [async-service-6] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教), receiver=null, avatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, senderAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, receiverAvatar=null, friendRemark=令狐翅膀, nickname=令狐翅膀))), extra=null) to Channel=907841fffe2e6da0-0001ca00-0000000d-2a4b2c36a6dd7820-ec6488a6
+2023-03-10 10:51:51.765  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1612030664754913281","msg_id":["1634024232541286402"]}}
+2023-03-10 10:53:10.622  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:7813,id=907841fffe2e6da0-0001ca00-0000000c-161586335ede4884-7e14bb0f
+2023-03-10 10:53:10.622  INFO 117248 --- [nioEventLoopGroup-5-2] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:7813
+2023-03-10 10:53:11.260  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:6617,id=907841fffe2e6da0-0001ca00-0000000d-2a4b2c36a6dd7820-ec6488a6
+2023-03-10 10:53:11.260  INFO 117248 --- [nioEventLoopGroup-5-3] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:6617
+2023-03-10 10:53:16.531  INFO 117248 --- [nioEventLoopGroup-5-4] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:12960
+2023-03-10 10:53:16.531  INFO 117248 --- [nioEventLoopGroup-5-4] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:12960
+2023-03-10 10:53:16.534  INFO 117248 --- [nioEventLoopGroup-5-4] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:53:16.534  INFO 117248 --- [nioEventLoopGroup-5-4] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:53:16.534  INFO 117248 --- [nioEventLoopGroup-5-4] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:53:16.551  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=e8e5f0cc-8614-4306-b4a4-609ac748c9b0],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:53:16.551983600]
+2023-03-10 10:53:16.552  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@1ced54a9,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:53:16.552  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=54187542-02c2-4d4a-b5a3-579c0b15c5ab],[ip=127.0.0.1],[uri=/admin/user/1612030664754913281],[method=GET],[time=2023-03-10T10:53:16.552984]
+2023-03-10 10:53:16.552  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@51d531e7,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:53:16.554  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:53:16.554  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@31a9392a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:53:16.572  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_4] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1612030664754913281, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ, extend=null)
+2023-03-10 10:53:16.586  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_4] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教)
+2023-03-10 10:53:17.184  INFO 117248 --- [nioEventLoopGroup-5-5] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:12970
+2023-03-10 10:53:17.184  INFO 117248 --- [nioEventLoopGroup-5-5] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:12970
+2023-03-10 10:53:17.187  INFO 117248 --- [nioEventLoopGroup-5-5] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:53:17.187  INFO 117248 --- [nioEventLoopGroup-5-5] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:53:17.187  INFO 117248 --- [nioEventLoopGroup-5-5] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:53:17.215  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_5] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1611656761503215617, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ, extend=null)
+2023-03-10 10:53:17.217  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=3e20947f-87ce-499a-9a79-f8df641c5ce0],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=OPTIONS],[time=2023-03-10T10:53:17.217985]
+2023-03-10 10:53:17.217  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=fafcb473-5d96-49b3-a20e-92fe69c94c08],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=OPTIONS],[time=2023-03-10T10:53:17.217985]
+2023-03-10 10:53:17.229  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_5] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教)
+2023-03-10 10:53:17.245  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=da30f1c1-77e2-49fc-9840-a780fc4eaf28],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:53:17.245986]
+2023-03-10 10:53:17.245  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@974dbb,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:53:17.246  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=f8f8c146-da9b-45cc-8eec-b8ee40256f8b],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=GET],[time=2023-03-10T10:53:17.246984500]
+2023-03-10 10:53:17.246  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@7db4dbd8,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:53:17.253  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@31a9392a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:53:17.253  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:53:17.762  INFO 117248 --- [nioEventLoopGroup-5-4] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:53:17.841  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=bda0d6af-05f2-44d1-91f6-40e4e7b1648f],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:53:17.841466500]
+2023-03-10 10:53:17.841  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@57f34703,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:53:17.844  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:53:17.845  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1612030664754913281
+2023-03-10 10:53:18.416  INFO 117248 --- [nioEventLoopGroup-5-5] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:53:18.424  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=113514d6-aeaf-4e8f-9685-cf6e8aaf0146],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-10T10:53:18.424937100]
+2023-03-10 10:53:18.436  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=043df57d-7cfc-4a0c-ae40-ed8a28db84a1],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:53:18.436939500]
+2023-03-10 10:53:18.436  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@6dfc3418,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:53:18.440  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@31a9392a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:53:18.441  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1611656761503215617
+2023-03-10 10:53:25.467  INFO 117248 --- [nioEventLoopGroup-5-4] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:12960,id=907841fffe2e6da0-0001ca00-0000000e-1076a26eb91ceb70-cafef861
+2023-03-10 10:53:25.468  INFO 117248 --- [nioEventLoopGroup-5-4] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:12960
+2023-03-10 10:53:25.488  INFO 117248 --- [nioEventLoopGroup-5-5] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:12970,id=907841fffe2e6da0-0001ca00-0000000f-2ed0bcfab91cedfd-96608921
+2023-03-10 10:53:25.488  INFO 117248 --- [nioEventLoopGroup-5-5] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:12970
+2023-03-10 10:53:29.146  INFO 117248 --- [nioEventLoopGroup-5-6] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:9530
+2023-03-10 10:53:29.147  INFO 117248 --- [nioEventLoopGroup-5-6] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:9530
+2023-03-10 10:53:29.149  INFO 117248 --- [nioEventLoopGroup-5-6] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:53:29.149  INFO 117248 --- [nioEventLoopGroup-5-6] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:53:29.149  INFO 117248 --- [nioEventLoopGroup-5-6] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:53:29.172  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=df4f317d-45ff-4ec8-95c6-9720f4c7ad77],[ip=127.0.0.1],[uri=/admin/user/1612030664754913281],[method=GET],[time=2023-03-10T10:53:29.172501700]
+2023-03-10 10:53:29.172  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@6d391904,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:53:29.172  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_6] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1612030664754913281, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ, extend=null)
+2023-03-10 10:53:29.173  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=24694017-42be-4bf5-b255-4400b0759941],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:53:29.173500100]
+2023-03-10 10:53:29.173  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@2ec844e9,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:53:29.175  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1036eaaa,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:53:29.175  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:53:29.184  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_6] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教)
+2023-03-10 10:53:29.694  INFO 117248 --- [nioEventLoopGroup-5-6] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:53:29.849  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=996a9e49-3539-4d4e-b72e-afbb8cbf38e9],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:53:29.849174200]
+2023-03-10 10:53:29.850  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@e1074f6,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:53:29.852  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1036eaaa,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:53:29.853  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1612030664754913281
+2023-03-10 10:53:29.968  INFO 117248 --- [nioEventLoopGroup-5-7] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:9550
+2023-03-10 10:53:29.968  INFO 117248 --- [nioEventLoopGroup-5-7] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:9550
+2023-03-10 10:53:29.971  INFO 117248 --- [nioEventLoopGroup-5-7] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:53:29.972  INFO 117248 --- [nioEventLoopGroup-5-7] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:53:29.972  INFO 117248 --- [nioEventLoopGroup-5-7] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:53:30.007  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_7] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1611656761503215617, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ, extend=null)
+2023-03-10 10:53:30.022  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=47dedb06-b60b-4736-8a2d-94872a3cb24a],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=OPTIONS],[time=2023-03-10T10:53:30.022173900]
+2023-03-10 10:53:30.024  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_7] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教)
+2023-03-10 10:53:30.025  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=5d50e240-0ca5-41d8-8b74-3b103e78d599],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=OPTIONS],[time=2023-03-10T10:53:30.025173500]
+2023-03-10 10:53:30.043  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=642c294c-9036-4271-9896-b0e4059733de],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=GET],[time=2023-03-10T10:53:30.043174700]
+2023-03-10 10:53:30.043  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=cc2b81d5-1568-4d6b-8ba5-ca3f221e55a9],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:53:30.043174700]
+2023-03-10 10:53:30.044  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@372fd75a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:53:30.044  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@2b64a82d,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:53:30.046  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:53:30.046  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1036eaaa,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:53:30.819  INFO 117248 --- [nioEventLoopGroup-5-7] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:53:30.894  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=eb12f478-8c84-43ec-93ed-ab0b82126a72],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-10T10:53:30.894241600]
+2023-03-10 10:53:30.904  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=4970c144-29e9-480b-aa72-e553848711ba],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:53:30.904240600]
+2023-03-10 10:53:30.904  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@78ca7b63,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:53:30.906  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:53:30.907  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1611656761503215617
+2023-03-10 10:54:02.729  INFO 117248 --- [nioEventLoopGroup-5-6] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:9530,id=907841fffe2e6da0-0001ca00-00000010-34eec26641033cb8-de59df85
+2023-03-10 10:54:02.729  INFO 117248 --- [nioEventLoopGroup-5-6] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:9530
+2023-03-10 10:54:02.745  INFO 117248 --- [nioEventLoopGroup-5-7] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:9550,id=907841fffe2e6da0-0001ca00-00000011-2d597c9a41033fee-a02f048a
+2023-03-10 10:54:02.745  INFO 117248 --- [nioEventLoopGroup-5-7] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:9550
+2023-03-10 10:54:06.311  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:7154
+2023-03-10 10:54:06.312  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:7154
+2023-03-10 10:54:06.316  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:54:06.316  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:54:06.316  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:54:06.332  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=119a34ed-279c-4298-a7c5-89b40447fb80],[ip=127.0.0.1],[uri=/admin/user/1612030664754913281],[method=GET],[time=2023-03-10T10:54:06.332218300]
+2023-03-10 10:54:06.332  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@494ab3d,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:54:06.332  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=33497c83-4bac-4802-ac1f-72986498f99e],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:54:06.332218300]
+2023-03-10 10:54:06.332  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@79822584,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:54:06.334  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:54:06.334  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@31a9392a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:54:06.339  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_8] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1612030664754913281, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ, extend=null)
+2023-03-10 10:54:06.352  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_8] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教)
+2023-03-10 10:54:06.944  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:7166
+2023-03-10 10:54:06.945  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:7166
+2023-03-10 10:54:06.948  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:54:06.949  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:54:06.949  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:54:06.974  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_9] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1611656761503215617, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ, extend=null)
+2023-03-10 10:54:06.976  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=ca15dd51-09a1-4e67-b89a-d09080a8cfe7],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=OPTIONS],[time=2023-03-10T10:54:06.976220200]
+2023-03-10 10:54:06.977  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=4b38abe4-9586-41ce-a0df-670c6c5c375f],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=OPTIONS],[time=2023-03-10T10:54:06.977219900]
+2023-03-10 10:54:06.989  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_9] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教)
+2023-03-10 10:54:06.990  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=4917ceb8-d105-4455-bc21-6656a5dd9880],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:54:06.990221400]
+2023-03-10 10:54:06.990  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@9f4728a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:54:06.991  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=49f7d167-1f3a-4abe-a182-f4fa54c13cca],[ip=127.0.0.1],[uri=/admin/user/1611656761503215617],[method=GET],[time=2023-03-10T10:54:06.991219900]
+2023-03-10 10:54:06.991  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@4be722cc,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:54:06.993  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:54:06.993  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@31a9392a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:54:07.053  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:54:07.082  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=72b9b19c-bc08-4f34-8251-a2bedd93ccd8],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:54:07.082219800]
+2023-03-10 10:54:07.082  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@4c0ce050,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:54:07.084  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@31a9392a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:54:07.085  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1612030664754913281
+2023-03-10 10:54:07.773  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:54:07.781  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=96588803-9496-4543-85af-3d5adfdcbed1],[ip=127.0.0.1],[uri=/admin/talk/list],[method=OPTIONS],[time=2023-03-10T10:54:07.781223900]
+2023-03-10 10:54:07.796  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=1dc89d4a-465f-4838-bd34-faa079011297],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:54:07.796220500]
+2023-03-10 10:54:07.796  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@39ad8353,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:54:07.799  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@31a9392a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:54:07.800  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1611656761503215617
+2023-03-10 10:54:13.407  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=1647cc7b-aa10-47f4-a6f1-f583cf379ec5],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=OPTIONS],[time=2023-03-10T10:54:13.407369300]
+2023-03-10 10:54:13.407  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=c8dd6ed6-80ef-42e4-97b9-1878610b4600],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=OPTIONS],[time=2023-03-10T10:54:13.407369300]
+2023-03-10 10:54:13.424  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=da5f4d0d-7a38-4340-97e6-791c05dcd130],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=GET],[time=2023-03-10T10:54:13.424600100]
+2023-03-10 10:54:13.425  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@14ede4ad,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:54:13.425  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=99fc9996-e6e9-4e72-8580-4f5067fe8ffd],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=GET],[time=2023-03-10T10:54:13.425592500]
+2023-03-10 10:54:13.425  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@c3e8352,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:54:13.427  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:54:13.429  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1036eaaa,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:54:13.546  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1612030664754913281","msg_id":["1631544981921562625","1631545332447936513","1631547912842420226","1631549401233117186","1631549482778775553","1631549872870019074","1633008691928141825","1633009164240326658","1633360461682462722","1634024232541286402"]}}
+2023-03-10 10:54:37.198  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=8b59a927-941d-4df7-9a5d-6a14c1df644e],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=OPTIONS],[time=2023-03-10T10:54:37.198354200]
+2023-03-10 10:54:37.234  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=9a67d5e5-0d1b-4f28-9d2e-94527f29ef4f],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=POST],[time=2023-03-10T10:54:37.234351900]
+2023-03-10 10:54:37.235  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@32807f58,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:54:37.236  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.UserLoginInterceptor           : requeset:org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@2185b8cf,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:54:39.043  INFO 117248 --- [async-service-7] c.h.i.i.e.c.l.CommunicationEventListener : refresh sequence and session ttl: Sequence(id=null, name=null, description=null, sessionId=null, receiverId=1612030664754913281, senderId=1611656761503215617, max=null, step=null, segment=null, version=null, createTime=null, updateTime=null, current=1)
+2023-03-10 10:54:39.043  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_chat_message  ( id,
+sequence,
+message_feature,
+message_type,
+content,
+url,
+extra,
+
+create_time,
+update_time )  VALUES  ( ?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+? )
+2023-03-10 10:54:39.044  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:54:39.051  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_message_flow  ( id,
+
+sender_id,
+receiver_id,
+chat_type,
+message_type,
+message_id,
+`sequence`,
+send_status,
+sign_flag,
+
+deleted,
+create_time,
+update_time )  VALUES  ( ?,
+
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+?,
+? )
+2023-03-10 10:54:39.051  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:54:39.164  INFO 117248 --- [async-service-8] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-10 10:54:39.164  INFO 117248 --- [async-service-8] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:54:39.258  INFO 117248 --- [async-service-8] c.h.i.i.e.m.l.MessageEventHandler        : Sent message by rocketmq: SendResult [sendStatus=SEND_OK, msgId=7F000001CA0063947C6B30B09689000B, offsetMsgId=2F6C928D00002A9F000000000001F1AD, messageQueue=MessageQueue [topic=chat-topic, brokerName=broker-a, queueId=3], queueOffset=12]
+2023-03-10 10:54:39.269  INFO 117248 --- [ConsumeMessageThread_image-message-group_3] c.h.i.s.p.c.SentImageMessageConsumer     : rocketmq on message(chat message image): MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-10 10:54:39.270  INFO 117248 --- [ConsumeMessageThread_image-message-group_3] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人))), extra=null) to Channel=907841fffe2e6da0-0001ca00-00000012-11012ef35103ade5-dd6854ad
+2023-03-10 10:54:39.270  INFO 117248 --- [async-service-9] c.h.i.s.push.worker.MessageSynchronizer  : MessageSynchronizer synchronize message to me=1611656761503215617,message=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-10 10:54:39.270  INFO 117248 --- [async-service-9] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人))), extra=null) to Channel=907841fffe2e6da0-0001ca00-00000013-22230cad5103905f-8616edf8
+2023-03-10 10:55:12.174  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=23622f61-c2e7-4939-bca7-23645c3bb5f2],[ip=127.0.0.1],[uri=/admin/talk/unread/clear],[method=POST],[time=2023-03-10T10:55:12.174201300]
+2023-03-10 10:55:12.174  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@33ccb752,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:55:12.176  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=b5e6f9f9-078b-4e95-b70d-67095e992d8d],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=GET],[time=2023-03-10T10:55:12.176213600]
+2023-03-10 10:55:12.176  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@46e8d591,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:55:12.176  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=36dfa5e7-3314-4e03-aa17-e47d3bc06d31],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=GET],[time=2023-03-10T10:55:12.176213600]
+2023-03-10 10:55:12.176  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@5c3424e7,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:55:12.176  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@31a9392a,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:55:12.177  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1036eaaa,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:55:12.177  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:55:12.183 ERROR 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.hk.im.admin.advice.WebExceptionAdvice  : runtime exception:
+
+java.lang.NumberFormatException: Cannot parse null string
+	at java.base/java.lang.Long.parseLong(Long.java:674) ~[na:na]
+	at java.base/java.lang.Long.valueOf(Long.java:1163) ~[na:na]
+	at com.hk.im.service.service.ChatCommunicationServiceImpl.clearUnreadMessage(ChatCommunicationServiceImpl.java:416) ~[classes/:na]
+	at com.hk.im.service.service.ChatCommunicationServiceImpl$$FastClassBySpringCGLIB$$aef42fb5.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.20.jar:5.3.20]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689) ~[spring-aop-5.3.18.jar:5.3.18]
+	at com.hk.im.service.service.ChatCommunicationServiceImpl$$EnhancerBySpringCGLIB$$e4c05fa8.clearUnreadMessage(<generated>) ~[classes/:na]
+	at com.hk.im.admin.controller.CommunicationController.clearUnreadMessage(CommunicationController.java:77) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) ~[tomcat-embed-core-9.0.63.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.20.jar:5.3.20]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.63.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124) ~[druid-1.2.8.jar:1.2.8]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.20.jar:5.3.20]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.63.jar:9.0.63]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+
+2023-03-10 10:55:12.274  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1611656761503215617","msg_id":["1631545232514449410","1631545265607507969","1631545409157562370","1631545527147528193","1631547263044124673","1631549589595115521","1631549636093169666","1633009057675644929","1633029761007677442","1633033758145835009","1633107494089826306","1633360292828172290","1633752041069252610","1634007735336988674","1634009318841962498","1634011620046835713","1634013278881456129","1634013813894291458","1634024046859448321","1634024939898073090"]}}
+2023-03-10 10:55:22.264  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=84cae015-4c5b-44a1-873e-6d4dafae49ff],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=POST],[time=2023-03-10T10:55:22.264638]
+2023-03-10 10:55:22.265  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@306074d4,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:55:22.267  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset:org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@3346dfd9,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:55:22.352  INFO 117248 --- [async-service-10] c.h.i.i.e.c.l.CommunicationEventListener : refresh sequence and session ttl: Sequence(id=null, name=null, description=null, sessionId=null, receiverId=1611656761503215617, senderId=1612030664754913281, max=null, step=null, segment=null, version=null, createTime=null, updateTime=null, current=1)
+2023-03-10 10:55:22.354  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_chat_message  ( id,
+sequence,
+message_feature,
+message_type,
+content,
+url,
+extra,
+
+create_time,
+update_time )  VALUES  ( ?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+? )
+2023-03-10 10:55:22.354  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:55:22.359  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_message_flow  ( id,
+
+sender_id,
+receiver_id,
+chat_type,
+message_type,
+message_id,
+`sequence`,
+send_status,
+sign_flag,
+
+deleted,
+create_time,
+update_time )  VALUES  ( ?,
+
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+?,
+? )
+2023-03-10 10:55:22.359  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:55:22.483  INFO 117248 --- [async-service-11] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-10 10:55:22.484  INFO 117248 --- [async-service-11] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:55:22.634  INFO 117248 --- [async-service-11] c.h.i.i.e.m.l.MessageEventHandler        : Sent message by rocketmq: SendResult [sendStatus=SEND_OK, msgId=7F000001CA0063947C6B30B13FFA000C, offsetMsgId=2F6C928D00002A9F000000000001F997, messageQueue=MessageQueue [topic=chat-topic, brokerName=broker-a, queueId=3], queueOffset=13]
+2023-03-10 10:55:22.636  INFO 117248 --- [ConsumeMessageThread_image-message-group_4] c.h.i.s.p.c.SentImageMessageConsumer     : rocketmq on message(chat message image): MessageVO(sender=UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教), receiver=null, avatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, senderAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, receiverAvatar=null, friendRemark=令狐翅膀, nickname=令狐翅膀)
+2023-03-10 10:55:22.636  INFO 117248 --- [ConsumeMessageThread_image-message-group_4] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教), receiver=null, avatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, senderAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, receiverAvatar=null, friendRemark=令狐翅膀, nickname=令狐翅膀))), extra=null) to Channel=907841fffe2e6da0-0001ca00-00000013-22230cad5103905f-8616edf8
+2023-03-10 10:55:22.637  INFO 117248 --- [async-service-12] c.h.i.s.push.worker.MessageSynchronizer  : MessageSynchronizer synchronize message to me=1612030664754913281,message=MessageVO(sender=UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教), receiver=null, avatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, senderAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, receiverAvatar=null, friendRemark=令狐翅膀, nickname=令狐翅膀)
+2023-03-10 10:55:22.637  INFO 117248 --- [async-service-12] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g&s=200, miniAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=null, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教), receiver=null, avatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, senderAvatar=https://www.gravatar.com/avatar/4e1d0b589912493fab5ed56d0d1c93e6.png?f=y&d=robohash&r=g, receiverAvatar=null, friendRemark=令狐翅膀, nickname=令狐翅膀))), extra=null) to Channel=907841fffe2e6da0-0001ca00-00000012-11012ef35103ade5-dd6854ad
+2023-03-10 10:55:22.742  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=962e720e-decb-4183-87fc-b150353606da],[ip=127.0.0.1],[uri=/admin/talk/unread/clear],[method=OPTIONS],[time=2023-03-10T10:55:22.742659300]
+2023-03-10 10:55:22.752  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=50943b46-9cfe-4535-86ab-578d12aadd4d],[ip=127.0.0.1],[uri=/admin/talk/unread/clear],[method=POST],[time=2023-03-10T10:55:22.752642]
+2023-03-10 10:55:22.752  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@43cf1066,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:55:22.755  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:55:22.763  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-10 10:55:22.764  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:55:23.693  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1612030664754913281","msg_id":["1634025121553379329"]}}
+2023-03-10 10:56:09.805  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=81d8d6dc-7705-43e9-b74d-7f1cc21d902b],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=OPTIONS],[time=2023-03-10T10:56:09.805007600]
+2023-03-10 10:56:09.832  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=fdf39a93-7c80-4496-b149-01c71f6f0245],[ip=127.0.0.1],[uri=/admin/message/send/image],[method=POST],[time=2023-03-10T10:56:09.832007400]
+2023-03-10 10:56:09.832  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@1a4dda49,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:56:09.834  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset:org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@30878ba8,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:56:09.903  INFO 117248 --- [async-service-13] c.h.i.i.e.c.l.CommunicationEventListener : refresh sequence and session ttl: Sequence(id=null, name=null, description=null, sessionId=null, receiverId=1612030664754913281, senderId=1611656761503215617, max=null, step=null, segment=null, version=null, createTime=null, updateTime=null, current=1)
+2023-03-10 10:56:09.904  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_chat_message  ( id,
+sequence,
+message_feature,
+message_type,
+content,
+url,
+extra,
+
+create_time,
+update_time )  VALUES  ( ?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+? )
+2023-03-10 10:56:09.904  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:56:09.907  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ INSERT INTO tb_message_flow  ( id,
+
+sender_id,
+receiver_id,
+chat_type,
+message_type,
+message_id,
+`sequence`,
+send_status,
+sign_flag,
+
+deleted,
+create_time,
+update_time )  VALUES  ( ?,
+
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+
+?,
+?,
+? )
+2023-03-10 10:56:09.907  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.hk.im.admin.config.MybatisPlusConfig   : start insert fill ....
+2023-03-10 10:56:09.987  INFO 117248 --- [async-service-14] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-10 10:56:09.988  INFO 117248 --- [async-service-14] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:56:10.083  INFO 117248 --- [async-service-14] c.h.i.i.e.m.l.MessageEventHandler        : Sent message by rocketmq: SendResult [sendStatus=SEND_OK, msgId=7F000001CA0063947C6B30B1F952000D, offsetMsgId=2F6C928D00002A9F0000000000020148, messageQueue=MessageQueue [topic=chat-topic, brokerName=broker-a, queueId=3], queueOffset=14]
+2023-03-10 10:56:10.085  INFO 117248 --- [ConsumeMessageThread_image-message-group_5] c.h.i.s.p.c.SentImageMessageConsumer     : rocketmq on message(chat message image): MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-10 10:56:10.086  INFO 117248 --- [ConsumeMessageThread_image-message-group_5] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人))), extra=null) to Channel=907841fffe2e6da0-0001ca00-00000012-11012ef35103ade5-dd6854ad
+2023-03-10 10:56:10.086  INFO 117248 --- [async-service-15] c.h.i.s.push.worker.MessageSynchronizer  : MessageSynchronizer synchronize message to me=1611656761503215617,message=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人)
+2023-03-10 10:56:10.086  INFO 117248 --- [async-service-15] c.h.i.s.push.worker.MessageSynchronizer  : push message=DataContainer(actionType=1, event=event_talk, message=SimpleImageMessage(super=AbstractMessage(sequenceId=0, messageType=2, messageBO=MessageVO(sender=UserVO(id=1611656761503215617, accessToken=null, expiresIn=3600, username=西门大官人, account=1673083889, phone=null, email=3161880795@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, qrcode=http://47.108.146.141:9000/user//qrcode/public_qrcode_1673083889.jpg, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=1, age=null, birthday=2022-08-17, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是西门大官人,请多指教), receiver=null, avatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, senderAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1611656761503215617.jpg, receiverAvatar=null, friendRemark=西门大官人, nickname=西门大官人))), extra=null) to Channel=907841fffe2e6da0-0001ca00-00000013-22230cad5103905f-8616edf8
+2023-03-10 10:56:10.219  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=a3189ee6-cc06-4163-a9ab-9490ced1630e],[ip=127.0.0.1],[uri=/admin/talk/unread/clear],[method=POST],[time=2023-03-10T10:56:10.219566]
+2023-03-10 10:56:10.219  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@471ef741,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:10.223  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:56:10.228  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_chat_communication  SET belong_user_id=?,
+
+sender_id=?,
+receiver_id=?,
+
+last_message_id=?,
+
+last_message_content=?,
+
+last_send_time=?,
+session_type=?,
+
+unread_count=?,
+
+top=?,
+robot=?,
+disturb=?,
+online=?,
+create_time=?,
+update_time=?,
+deleted=?  WHERE id=?
+2023-03-10 10:56:10.230  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:56:11.140  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1611656761503215617","msg_id":["1634025320992534529"]}}
+2023-03-10 10:56:22.567  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=eff19fe3-6c6b-4bbf-89ae-49a48e5a95fd],[ip=127.0.0.1],[uri=/admin/friend/list/v2],[method=OPTIONS],[time=2023-03-10T10:56:22.567784200]
+2023-03-10 10:56:22.580  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=af8549b3-7fb1-4160-b10d-5a123b7469b5],[ip=127.0.0.1],[uri=/admin/friend/list/v2],[method=GET],[time=2023-03-10T10:56:22.580787700]
+2023-03-10 10:56:22.580  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@59173754,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:22.582  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:56:29.390  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=9ffdf908-3886-4670-99c6-7ec94b9359d5],[ip=127.0.0.1],[uri=/admin/info/detail],[method=OPTIONS],[time=2023-03-10T10:56:29.390168400]
+2023-03-10 10:56:29.404  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=d2d13f8c-1ae2-4ed8-88e6-08d51f0ecc21],[ip=127.0.0.1],[uri=/admin/info/detail],[method=GET],[time=2023-03-10T10:56:29.404159100]
+2023-03-10 10:56:29.404  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@6cdde050,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:29.406  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:56:42.997  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-2] c.h.im.admin.interceptor.LogInterceptor  : [traceId=73a11cf9-20b1-4668-9ac6-f1ad288f55c8],[ip=127.0.0.1],[uri=/admin/minio/upload/avatar],[method=OPTIONS],[time=2023-03-10T10:56:42.997209700]
+2023-03-10 10:56:43.021  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=9a01d412-9cf4-4537-aadc-75b8d549275b],[ip=127.0.0.1],[uri=/admin/minio/upload/avatar],[method=POST],[time=2023-03-10T10:56:43.021219900]
+2023-03-10 10:56:43.021  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@12100c11,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:43.022  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.i.a.i.UserLoginInterceptor           : requeset:org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@2360a635,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:56:45.648  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=4baba5ca-fa96-424c-bdac-3187023edb71],[ip=127.0.0.1],[uri=/admin/info/change/detail],[method=OPTIONS],[time=2023-03-10T10:56:45.648693400]
+2023-03-10 10:56:45.658  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.im.admin.interceptor.LogInterceptor  : [traceId=30caa619-20f5-4882-a3ef-f7d413cbf383],[ip=127.0.0.1],[uri=/admin/info/change/detail],[method=POST],[time=2023-03-10T10:56:45.658703500]
+2023-03-10 10:56:45.658  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@2230815d,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:45.660  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:56:45.763  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_user_info  SET nickname=?,
+
+
+
+
+
+wallet=?,
+
+
+gender=?,
+
+
+
+
+
+
+
+
+
+signature=?,
+add_friend_policy=?,
+
+
+create_time=?,
+update_time=?  WHERE user_id=?
+2023-03-10 10:56:45.773  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.h.i.a.i.MyBatisSqlUpdateSqlDebugPlugin : =====> SQL日志Update操作:
+ UPDATE tb_user  SET username=?,
+account=?,
+password=?,
+phone=?,
+email=?,
+big_avatar=?,
+mini_avatar=?,
+
+
+create_time=?,
+update_time=?  WHERE id=?
+2023-03-10 10:56:45.773  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-5] c.hk.im.admin.config.MybatisPlusConfig   : start update fill ....
+2023-03-10 10:56:51.884  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接断开：/127.0.0.1:7154,id=907841fffe2e6da0-0001ca00-00000012-11012ef35103ade5-dd6854ad
+2023-03-10 10:56:51.885  INFO 117248 --- [nioEventLoopGroup-5-8] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接断开：/127.0.0.1:7154
+2023-03-10 10:56:54.187  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.im.admin.interceptor.LogInterceptor  : [traceId=ee76ad4c-0661-472e-862e-f654d96495bc],[ip=127.0.0.1],[uri=/admin/user/1612030664754913281],[method=GET],[time=2023-03-10T10:56:54.187117400]
+2023-03-10 10:56:54.187  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@3f7a0d07,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:54.190  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-3] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:56:54.212  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.im.admin.interceptor.LogInterceptor  : [traceId=28c6d751-7f73-402c-911e-c1dade5f0025],[ip=127.0.0.1],[uri=/admin/apply/user/receive],[method=GET],[time=2023-03-10T10:56:54.212116200]
+2023-03-10 10:56:54.212  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@122e4412,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:54.214  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-9] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:56:54.467  INFO 117248 --- [nioEventLoopGroup-5-10] c.h.i.s.c.s.h.w.ClientMessageHandler     : 链接创建：/127.0.0.1:10617
+2023-03-10 10:56:54.468  INFO 117248 --- [nioEventLoopGroup-5-10] c.h.i.s.c.s.h.w.WebSocketCloseHandler    : 链接创建：/127.0.0.1:10617
+2023-03-10 10:56:54.469  INFO 117248 --- [nioEventLoopGroup-5-10] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request:uri=/channel:Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,headers=http://localhost:3000,method=GET
+2023-03-10 10:56:54.469  INFO 117248 --- [nioEventLoopGroup-5-10] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : request url params:token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:54.469  INFO 117248 --- [nioEventLoopGroup-5-10] c.h.i.s.c.s.h.c.WebSocketConnectHandler  : the FullHttpRequest new uri=/channel
+2023-03-10 10:56:54.489  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_10] c.h.i.s.p.c.UserConnectedConsumer        : rocketMQ onMessage: ConnectMessage(userId=1612030664754913281, token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ, extend=null)
+2023-03-10 10:56:54.496  INFO 117248 --- [ConsumeMessageThread_chat-connect-group_10] c.h.i.s.p.c.UserConnectedConsumer        : connected user:UserVO(id=1612030664754913281, accessToken=null, expiresIn=3600, username=令狐翅膀, account=1673173034, phone=18171513361, email=p.ohbkyke@qq.com, bigAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1612030664754913281.jpg, miniAvatar=http://47.108.146.141:9000/user//user/avatar/public_avatar_mini_1612030664754913281.jpg, qrcode=null, qq=null, wechat=null, github=null, dingtalk=null, wallet=0, status=null, gender=2, age=null, birthday=null, constellation=null, campus=null, major=null, job=null, city=null, interest=null, tag=null, signature=你好，我是令狐翅膀,请多指教)
+2023-03-10 10:56:54.797  INFO 117248 --- [nioEventLoopGroup-5-10] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"heartbeat","content":"ping"}
+2023-03-10 10:56:54.881  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.im.admin.interceptor.LogInterceptor  : [traceId=d5df4a6a-3f23-4298-8763-bddd2dd594ee],[ip=127.0.0.1],[uri=/admin/talk/list],[method=GET],[time=2023-03-10T10:56:54.881826900]
+2023-03-10 10:56:54.882  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@7707b320,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:54.883  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:56:54.884  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-8] c.h.i.a.c.CommunicationController        : getCommunicationList, request user=1612030664754913281
+2023-03-10 10:56:55.310  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.im.admin.interceptor.LogInterceptor  : [traceId=57654b2b-0b88-4bfa-9b09-08a62ebdfe56],[ip=127.0.0.1],[uri=/admin/info/detail],[method=GET],[time=2023-03-10T10:56:55.310011100]
+2023-03-10 10:56:55.310  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@28f0e03b,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:56:55.312  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-7] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:57:03.184  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.im.admin.interceptor.LogInterceptor  : [traceId=0dd08809-f4c5-47c0-9cff-101ba987332e],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=GET],[time=2023-03-10T10:57:03.184410800]
+2023-03-10 10:57:03.185  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@6a2a2993,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:57:03.185  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.im.admin.interceptor.LogInterceptor  : [traceId=9bd676db-3e9f-4de1-a70e-cd859532e541],[ip=127.0.0.1],[uri=/admin/emoticon/user/list],[method=GET],[time=2023-03-10T10:57:03.185423400]
+2023-03-10 10:57:03.185  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@4bdad90b,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ
+2023-03-10 10:57:03.187  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-10] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:57:03.187  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-4] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1036eaaa,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjEyMDMwNjY0NzU0OTEzMjgxIiwiZXhwIjoxNjc4NDIzODkyfQ.Gvamz88nKy79QkWc9Ch8cH8KXKUBxjywiqhdCs2m5OWAmR4xLYRv9IGNTT3nDA7WbLrO_FXudHMtnDXsIOzelQ,user=1612030664754913281
+2023-03-10 10:57:03.273  INFO 117248 --- [nioEventLoopGroup-5-10] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1611656761503215617","msg_id":["1631545265607507969","1631545409157562370","1631545527147528193","1631547263044124673","1631549589595115521","1631549636093169666","1633009057675644929","1633029761007677442","1633033758145835009","1633107494089826306","1633360292828172290","1633752041069252610","1634007735336988674","1634009318841962498","1634011620046835713","1634013278881456129","1634013813894291458","1634024046859448321","1634024939898073090","1634025320992534529"]}}
+2023-03-10 10:57:57.930  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-6] c.h.im.admin.interceptor.LogInterceptor  : [traceId=d451e0b4-f179-4b6c-b71f-14e4268ed2e9],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=OPTIONS],[time=2023-03-10T10:57:57.930441400]
+2023-03-10 10:57:57.941  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.im.admin.interceptor.LogInterceptor  : [traceId=f217bfd9-6a98-4e05-9885-5a334ff1a6d6],[ip=127.0.0.1],[uri=/admin/message/records/latest],[method=GET],[time=2023-03-10T10:57:57.941452900]
+2023-03-10 10:57:57.942  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset interceptor:org.apache.tomcat.util.http.NamesEnumerator@3aa86ed9,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ
+2023-03-10 10:57:57.943  INFO 117248 --- [http-nio-127.0.0.1-9090-exec-1] c.h.i.a.i.UserLoginInterceptor           : requeset:org.apache.catalina.connector.RequestFacade@1e2d8d23,token=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjExNjU2NzYxNTAzMjE1NjE3IiwiZXhwIjoxNjc4NDIyNTcwfQ.xviJOnGvjZKpFZzIbRrr9z6XUDWwHaLEW8lWqutmZhHZugJ8bA7jfHjZ0jv5vATFwliVPJSMaMDFoDVKiFThyQ,user=1611656761503215617
+2023-03-10 10:57:58.020  INFO 117248 --- [nioEventLoopGroup-5-9] c.h.i.s.c.s.h.d.HandlerDispatcher        : chat server receive message:{"event":"event_talk_read","data":{"receiver_id":"1612030664754913281","msg_id":["1630117054164103170","1630118875163127810","1630119255745884162","1630119687062843394","1630121566790512641","1630121910618681345","1630124550480064514","1630125121740054530","1630125362539241473","1630156667502997505","1630156985452212225","1630158680160743426","1630166382639329282","1630167575428083713","1630176890545303554"]}}
