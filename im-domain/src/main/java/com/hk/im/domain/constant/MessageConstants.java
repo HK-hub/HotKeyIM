@@ -151,5 +151,15 @@ public class MessageConstants {
 
     }
 
+    public static enum FileSubType {
+
+        DEFAULT,
+        IMAGE,
+        VOICE,
+        VIDEO,
+        FILE,
+
+    }
+
 
 }

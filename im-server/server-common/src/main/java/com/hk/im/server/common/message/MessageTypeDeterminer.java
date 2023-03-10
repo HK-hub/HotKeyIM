@@ -35,11 +35,14 @@ public class MessageTypeDeterminer {
     public static Integer PingMessageType = 999;
     public static Integer PongMessageType = 996;
     public static Integer TextMessageType = 1;
+    public static Integer ImageMessageType = 2;
 
     static {
         messageClasses.put(PingMessageType, PingMessage.class);
         messageClasses.put(PongMessageType, PongMessage.class);
         messageClasses.put(TextMessageType, SimpleTextMessage.class);
+        messageClasses.put(ImageMessageType, SimpleTextMessage.class);
+
     }
 
 

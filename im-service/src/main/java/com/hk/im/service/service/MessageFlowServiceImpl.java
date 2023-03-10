@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.client.service.*;
+import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
-import com.hk.im.common.resp.ResultEntity;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.constant.MessageConstants;
@@ -15,28 +15,28 @@ import com.hk.im.domain.dto.LatestMessageRecordDTO;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.MessageFlow;
-import com.hk.im.domain.entity.UserInfo;
+import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
 import com.hk.im.domain.request.TalkRecordsRequest;
-import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.MessageFlowMapper;
-import com.hk.im.infrastructure.mapper.UserInfoMapper;
-import com.hk.im.infrastructure.mapper.UserMapper;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
+import com.hk.im.service.worker.ImageMessageWorker;
+import com.hk.im.service.worker.TextMessageWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -60,13 +60,11 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     @Resource
     private ChatMessageService chatMessageService;
     @Resource
-    private ApplicationContext applicationContext;
-    @Resource
-    private SequenceService sequenceService;
-    @Resource
     private UserManager userManager;
     @Resource
-    private FriendService friendService;
+    private TextMessageWorker textMessageWorker;
+    @Resource
+    private ImageMessageWorker imageMessageWorker;
 
 
     /**
@@ -250,118 +248,18 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     @Override
     @Transactional(rollbackFor = Exception.class)
     public synchronized ResponseResult sendTextMessage(TextMessage message) {
-
-        // 参数校验
-        boolean preCheck = Objects.isNull(message) || StringUtils.isEmpty(message.getSenderId()) || Objects.isNull(message.getText()) ||
-                StringUtils.isEmpty(message.getReceiverId()) || Objects.isNull(message.getTalkType());
-        if (BooleanUtils.isTrue(preCheck)) {
-            // 消息参数校验失败
-            return ResponseResult.FAIL().setResultCode(ResultCode.BAD_REQUEST);
-        }
-
-        // 校验消息类型
-        Integer chatMessageType = message.getChatMessageType();
-        if (MessageConstants.ChatMessageType.TEXT.ordinal() != chatMessageType) {
-            // 不是文本消息类型
-            return ResponseResult.FAIL().setResultCode(ResultCode.BAD_REQUEST);
-        }
-
-        // 素材准备
-        Long senderId = Long.valueOf(message.getSenderId());
-        Long receiverId = Long.valueOf(message.getReceiverId());
-        String text = message.getText();
-        Integer talkType = message.getTalkType();
-
-        // 保存消息
-        ChatMessage chatMessage = new ChatMessage()
-                // 消息内容
-                .setContent(text)
-                // 消息特性
-                .setMessageFeature(MessageConstants.MessageFeature.DEFAULT.ordinal())
-                // 消息类型
-                .setMessageType(MessageConstants.ChatMessageType.TEXT.ordinal());
-        // 获取消息序列号
-        ResponseResult sequenceResult = this.sequenceService.nextId(senderId, receiverId, talkType);
-        if (BooleanUtils.isFalse(sequenceResult.isSuccess())) {
-            // 获取序列号失败
-            return ResponseResult.FAIL().setResultCode(ResultCode.SERVER_BUSY);
-        }
-
-        // 设置消息序列号
-        chatMessage.setSequence((Long) sequenceResult.getData());
-        // 消息流水
-        MessageFlow messageFlow = new MessageFlow()
-                .setSenderId(senderId).setReceiverId(receiverId)
-                .setMessageType(chatMessage.getMessageType()).setChatType(talkType)
-                .setSequence(chatMessage.getSequence())
-                // 消息签收状态
-                .setSignFlag(MessageConstants.SignStatsEnum.UNREAD.ordinal())
-                // 消息发送状态
-                .setSendStatus(MessageConstants.SendStatusEnum.SENDING.ordinal())
-                .setDeleted(Boolean.FALSE);
-
-        // 保存消息和消息流水
-        MessageBO messageBO = doSaveMessageAndFlow(chatMessage, messageFlow);
-        // 判断消息发送是否成功
-        if (Objects.isNull(messageBO)) {
-            // 消息发送失败: 设置草稿->
-            messageFlow.setSendStatus(MessageConstants.SendStatusEnum.FAIL.ordinal());
-            messageBO = MessageMapStructure.INSTANCE.toBO(messageFlow, chatMessage);
-            // TODO 发送消息保存事件
-            this.applicationContext.publishEvent(new SendChatMessageEvent(this, messageBO));
-            // 响应
-            return ResponseResult.FAIL().setResultCode(ResultCode.SERVER_BUSY);
-        }
-
-        // TODO 发送消息保存事件
-        this.applicationContext.publishEvent(new SendChatMessageEvent(this, messageBO));
-
-        // 发送消息成功
-        return ResponseResult.SUCCESS(messageBO).setMessage("消息发送成功!");
+        return this.textMessageWorker.sendMessage(message);
     }
 
-
     /**
-     * 保存消息和消息流水
-     *
-     * @param message
-     *
-     * @return
+     * 发送图片消息
+     * @param request
+     * @return {@link ResponseResult}
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public MessageBO doSaveMessageAndFlow(ChatMessage message, MessageFlow flow) {
+    public ResponseResult sendImageMessage(ImageMessage request) {
 
-        // 保存消息
-        boolean save = this.chatMessageService.save(message);
-        if (BooleanUtils.isFalse(save)) {
-            // 保存消息失败
-            return null;
-        }
-
-        // 设置消息流水
-        flow.setMessageId(message.getId())
-                .setCreateTime(message.getCreateTime())
-                .setUpdateTime(message.getUpdateTime())
-                .setSendStatus(MessageConstants.SendStatusEnum.SENDED.ordinal());
-        Integer chatType = flow.getChatType();
-        if (chatType == CommunicationConstants.SessionType.GROUP.ordinal()) {
-            // 群聊类型
-            flow.setGroupId(flow.getReceiverId());
-        }
-
-        // 保存消息流水
-        boolean flowSave = this.save(flow);
-        if (BooleanUtils.isFalse(flowSave)) {
-            // 保存失败
-            return null;
-        }
-
-
-        // 更新会话状态
-
-        // 响应DTO
-        return MessageMapStructure.INSTANCE.toBO(flow, message);
+        return this.imageMessageWorker.sendMessage(request);
     }
 
 

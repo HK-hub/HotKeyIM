@@ -1,20 +1,11 @@
 package com.hk.im.server.push.comsumer;
 
-import com.alibaba.fastjson2.JSON;
-import com.hk.im.domain.bo.MessageBO;
-import com.hk.im.domain.constant.CommunicationConstants;
-import com.hk.im.domain.entity.User;
 import com.hk.im.domain.vo.MessageVO;
-import com.hk.im.infrastructure.manager.UserManager;
-import com.hk.im.server.common.channel.UserChannelManager;
-import com.hk.im.server.push.worker.MessageOfflineWorker;
 import com.hk.im.server.push.worker.MessagePushWorker;
 import com.hk.im.server.push.worker.MessageSynchronizer;
-import io.netty.channel.Channel;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
@@ -23,7 +14,7 @@ import javax.annotation.Resource;
 
 /**
  * @author : HK意境
- * @ClassName : SendMessageConsumer
+ * @ClassName : SendTextMessageConsumer
  * @date : 2023/2/24 15:36
  * @description : 发送聊天消息消费者
  * @Todo :
@@ -33,8 +24,9 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "chat-message-group", topic = "chat-topic")
-public class SendMessageConsumer implements RocketMQListener<MessageVO>, InitializingBean {
+@RocketMQMessageListener(consumerGroup = "chat-message-group", topic = "chat-topic",
+        selectorExpression = "TEXT", selectorType = SelectorType.TAG)
+public class SendTextMessageConsumer implements RocketMQListener<MessageVO>, InitializingBean {
 
     @Resource
     private MessagePushWorker messagePushWorker;
@@ -49,7 +41,7 @@ public class SendMessageConsumer implements RocketMQListener<MessageVO>, Initial
     public void onMessage(MessageVO messageVO) {
 
         // 日志记录
-        log.info("rocketmq on message(chat message): {}",  messageVO);
+        log.info("rocketmq on message(chat message text): {}",  messageVO);
 
         // 进行消息同步
          this.messageSynchronizer.synchronizeSelf(messageVO);
