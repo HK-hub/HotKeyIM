@@ -5,18 +5,16 @@ import com.hk.im.server.push.worker.MessagePushWorker;
 import com.hk.im.server.push.worker.MessageSynchronizer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
 /**
  * @author : HK意境
- * @ClassName : SendTextMessageConsumer
- * @date : 2023/2/24 15:36
- * @description : 发送聊天消息消费者
+ * @ClassName : SentImageMessageConsumer
+ * @date : 2023/3/10 9:21
+ * @description :
  * @Todo :
  * @Bug :
  * @Modified :
@@ -24,9 +22,8 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "chat-message-group", topic = "chat-topic",
-        selectorExpression = "TEXT", selectorType = SelectorType.TAG)
-public class SendTextMessageConsumer implements RocketMQListener<MessageVO>, InitializingBean {
+@RocketMQMessageListener(consumerGroup = "image-message-group", topic = "chat-topic", selectorExpression = "IMAGE")
+public class SentImageMessageConsumer implements RocketMQListener<MessageVO> {
 
     @Resource
     private MessagePushWorker messagePushWorker;
@@ -41,17 +38,13 @@ public class SendTextMessageConsumer implements RocketMQListener<MessageVO>, Ini
     public void onMessage(MessageVO messageVO) {
 
         // 日志记录
-        log.info("rocketmq on message(chat message text): {}",  messageVO);
+        log.info("rocketmq on message(chat message image): {}",  messageVO);
 
         // 进行消息同步
-         this.messageSynchronizer.synchronizeSelf(messageVO);
+        this.messageSynchronizer.synchronizeSelf(messageVO);
         // 进行推送消息
-         this.messagePushWorker.doProcess(messageVO);
+        this.messagePushWorker.doProcess(messageVO);
     }
 
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        log.info("sendMessage consumer bean created");
-    }
 }

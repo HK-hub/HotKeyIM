@@ -12,10 +12,9 @@ import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.MessageFlow;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
-import com.hk.im.infrastructure.manager.UserManager;
-import com.hk.im.infrastructure.mapper.MessageFlowMapper;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
@@ -77,7 +76,9 @@ public class ImageMessageWorker {
 
         // 上传图片
         String imageUrl = this.minioService.putImage(image, MinioConstant.BucketEnum.Image.getBucket(), senderId);
-
+        // 图片消息扩展信息
+        ImageMessageExtra imageMessageExtra = this.calculateExtra(image);
+        imageMessageExtra.setUploader(senderId).setReceiver(receiverId);
         // 保存消息
         ChatMessage chatMessage = new ChatMessage()
                 // 消息内容
@@ -86,9 +87,9 @@ public class ImageMessageWorker {
                 // 消息特性
                 .setMessageFeature(MessageConstants.MessageFeature.DEFAULT.ordinal())
                 // 消息类型
-                .setMessageType(MessageConstants.ChatMessageType.IMAGE.ordinal());
-        // 图片消息扩展信息
-        new ImageMessageExtra().setFileName()
+                .setMessageType(MessageConstants.ChatMessageType.IMAGE.ordinal())
+                .setExtra(imageMessageExtra);
+
         // 获取消息序列号
         ResponseResult sequenceResult = this.sequenceService.nextId(senderId, receiverId, talkType);
         if (BooleanUtils.isFalse(sequenceResult.isSuccess())) {
@@ -127,6 +128,24 @@ public class ImageMessageWorker {
 
         // 发送消息成功
         return ResponseResult.SUCCESS(messageBO).setMessage("消息发送成功!");
+    }
+
+
+    /**
+     * 装配出图片消息扩展信息
+     * @param image
+     * @return
+     */
+    private ImageMessageExtra calculateExtra(MultipartFile image) {
+
+        ImageMessageExtra extra = new ImageMessageExtra();
+        extra.setExtension(FilenameUtils.getExtension(image.getOriginalFilename()));
+        extra.setFileName(image.getOriginalFilename())
+                .setFileSubType(MessageConstants.FileSubType.IMAGE.ordinal())
+                // 文件大小单位：MB
+                .setSize((double) image.getSize() / 1048576);
+
+        return extra;
     }
 
 

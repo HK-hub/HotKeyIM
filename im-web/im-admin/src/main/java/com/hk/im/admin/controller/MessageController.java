@@ -75,7 +75,7 @@ public class MessageController {
      * @return {@link ImageMessage}
      */
     @PostMapping("/send/image")
-    public ResponseResult sendImageMessage(@RequestBody ImageMessage request) {
+    public ResponseResult sendImageMessage(ImageMessage request) {
 
         return this.messageFlowService.sendImageMessage(request);
     }

@@ -59,7 +59,7 @@ public class ChatMessage implements Serializable {
      * 扩展字段，一般使用JSON字符串存储,可以用户回复消息，@消息，超文本消息，卡片消息，视频消息等
      */
     @TableField(value = "extra", typeHandler = JacksonTypeHandler.class)
-    private Map<String, Object> extra;
+    private Object extra;
 
     /**
      * 是否删除该条聊天记录,0.false, 1.ture

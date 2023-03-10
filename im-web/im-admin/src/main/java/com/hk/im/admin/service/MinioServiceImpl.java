@@ -396,7 +396,8 @@ public class MinioServiceImpl implements MinioService {
         // 扩展名
         String extension = FilenameUtils.getExtension(image.getOriginalFilename());
         // 计算名称
-        String objectName = UUID.fastUUID().toString(true) + "." + extension;
+        String objectName = MinioConstant.getPrivateImagePath(
+                UUID.fastUUID().toString(true) + "." + extension);
         // 上传成功链接
         String url = null;
         try {
