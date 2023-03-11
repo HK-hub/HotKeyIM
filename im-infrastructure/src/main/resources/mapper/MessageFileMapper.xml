@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.MessageFileMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.MessageFile">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="messageId" column="message_id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="source" column="source" jdbcType="TINYINT"/>
+            <result property="type" column="type" jdbcType="TINYINT"/>
+            <result property="drive" column="drive" jdbcType="TINYINT"/>
+            <result property="originalName" column="original_name" jdbcType="VARCHAR"/>
+            <result property="suffix" column="suffix" jdbcType="VARCHAR"/>
+            <result property="size" column="size" jdbcType="BIGINT"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,message_id,user_id,
+        source,type,drive,
+        original_name,suffix,size,
+        path,url,update_time,
+        create_time
+    </sql>
+</mapper>

@@ -87,7 +87,7 @@ public class MessageController {
      * @param request
      * @return
      */
-    @PostMapping("/send/attachment")
+    @PostMapping("/send/file")
     public ResponseResult sendAttachmentMessage(AttachmentMessage request) {
 
         return this.messageFlowService.sendAttachmentMessage(request);
