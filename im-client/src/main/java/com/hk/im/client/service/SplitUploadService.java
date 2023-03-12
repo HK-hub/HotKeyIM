@@ -3,6 +3,8 @@ package com.hk.im.client.service;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.SplitUpload;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hk.im.domain.request.MergeSplitFileRequest;
+import com.hk.im.domain.request.SecondsTransferRequest;
 import com.hk.im.domain.request.SplitUploadRequest;
 
 /**
@@ -23,4 +25,19 @@ public interface SplitUploadService extends IService<SplitUpload> {
      * @return
      */
     ResponseResult uploadTalkFile(SplitUploadRequest request);
+
+
+    /**
+     * 合并文件
+     * @param request
+     * @return
+     */
+    ResponseResult mergeSplitUploadFile(MergeSplitFileRequest request);
+
+    /**
+     * 秒传文件
+     * @param request
+     * @return
+     */
+    ResponseResult transferFileBySeconds(SecondsTransferRequest request);
 }

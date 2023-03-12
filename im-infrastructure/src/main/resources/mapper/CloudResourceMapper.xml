@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.im.infrastructure.mapper.CloudResourceMapper">
+
+    <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.CloudResource">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="directory" column="directory" jdbcType="BOOLEAN"/>
+        <result property="resourceType" column="resource_type" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="extendType" column="extend_type" jdbcType="VARCHAR"/>
+        <result property="hash" column="hash" jdbcType="VARCHAR"/>
+        <result property="md5" column="md5" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="size" column="size" jdbcType="BIGINT"/>
+        <result property="count" column="count" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,belong_id,directory,
+        resource_type,`name`,
+        description,extend_type,hash,md5,
+        url,`size`,`count`,deleted,create_time,
+        update_time
+    </sql>
+</mapper>

@@ -12,14 +12,28 @@ import lombok.Data;
  * 
  * @TableName tb_cloud_disk_resource
  */
-@TableName(value ="tb_cloud_disk_resource")
+@TableName(value ="tb_cloud_resource")
 @Data
-public class CloudDiskResource implements Serializable {
+public class CloudResource implements Serializable {
+
     /**
      * 云盘id
      */
-    @TableId(value = "id")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
+
+    /**
+     * 文件资源属主：userId 或者 groupId
+     */
+    @TableField(value = "belong_id")
+    private Long belongId;
+
+    /**
+     * 是否是文件夹路径
+     */
+    @TableField(value = "directory")
+    private Boolean directory;
+
 
     /**
      * 资源类型：1.图片，2.视频，3.音频，4.压缩包，5.文件
@@ -46,6 +60,13 @@ public class CloudDiskResource implements Serializable {
     private String extendType;
 
     /**
+     * 文件 hash 值
+     */
+    @TableField(value = "hash")
+    private String hash;
+
+
+    /**
      * 资源文件md5
      */
     @TableField(value = "md5")
@@ -56,6 +77,19 @@ public class CloudDiskResource implements Serializable {
      */
     @TableField(value = "url")
     private String url;
+
+    /**
+     * 文件大小单位字节 byte
+     */
+    @TableField(value = "`size`")
+    private Long size;
+
+
+    /**
+     * 实现秒传功能：count 用于计数，当count == 0 的时候，发送事件/消息/任务进行删除
+     */
+    @TableField(value = "`count`")
+    private Integer count;
 
     /**
      * 是否删除
@@ -89,7 +123,7 @@ public class CloudDiskResource implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        CloudDiskResource other = (CloudDiskResource) that;
+        CloudResource other = (CloudResource) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getResourceType() == null ? other.getResourceType() == null : this.getResourceType().equals(other.getResourceType()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))

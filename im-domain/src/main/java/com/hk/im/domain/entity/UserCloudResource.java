@@ -1,6 +1,5 @@
 package com.hk.im.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -15,10 +14,11 @@ import lombok.Data;
 @TableName(value ="tb_user_cloud_resource")
 @Data
 public class UserCloudResource implements Serializable {
+
     /**
      * 云盘id
      */
-    @TableField(value = "id")
+    @TableId(value = "id")
     private Long id;
 
     /**
@@ -26,6 +26,12 @@ public class UserCloudResource implements Serializable {
      */
     @TableField(value = "user_id")
     private Long userId;
+
+    /**
+     * 资源id
+     */
+    @TableField(value = "resource_id")
+    private Long resourceId;
 
     /**
      * 是否删除

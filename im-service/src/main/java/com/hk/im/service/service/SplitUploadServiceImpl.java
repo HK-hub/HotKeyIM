@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.client.service.SplitUploadService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.SplitUpload;
+import com.hk.im.domain.request.MergeSplitFileRequest;
+import com.hk.im.domain.request.SecondsTransferRequest;
 import com.hk.im.domain.request.SplitUploadRequest;
 import com.hk.im.infrastructure.mapper.SplitUploadMapper;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,26 @@ public class SplitUploadServiceImpl extends ServiceImpl<SplitUploadMapper, Split
      */
     @Override
     public ResponseResult uploadTalkFile(SplitUploadRequest request) {
+        return null;
+    }
+
+    /**
+     * 合并文件
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult mergeSplitUploadFile(MergeSplitFileRequest request) {
+        return null;
+    }
+
+    /**
+     * 秒传文件
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult transferFileBySeconds(SecondsTransferRequest request) {
         return null;
     }
 }

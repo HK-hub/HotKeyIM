@@ -5,15 +5,17 @@
 <mapper namespace="com.hk.im.infrastructure.mapper.UserCloudResourceMapper">
 
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.UserCloudResource">
-            <result property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="resourceId" column="resource_id" jdbcType="BIGINT"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,deleted,
+        id
+        ,user_id,resource_id,deleted,
         create_time,update_time
     </sql>
 </mapper>
