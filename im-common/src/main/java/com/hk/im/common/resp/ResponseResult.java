@@ -84,6 +84,17 @@ public class ResponseResult<T> {
         return this;
     }
 
+    /**
+     * 设置响应数据并且同时设置响应消息
+     * @param data
+     * @return
+     */
+    public ResponseResult<T> setDataAsMessage(T data) {
+        this.data = data;
+        this.message = data.toString();
+        return this;
+    }
+
     public ResponseResult<T> setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
         return this;
@@ -111,5 +122,7 @@ public class ResponseResult<T> {
     public static <T> ResponseResult<T> FAIL(T data) {
         return new ResponseResult(ResultCode.FAIL, data);
     }
+
+
 }
 

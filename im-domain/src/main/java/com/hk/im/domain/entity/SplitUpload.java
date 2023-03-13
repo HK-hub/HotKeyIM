@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 
 /**
@@ -49,12 +51,12 @@ public class SplitUpload implements Serializable {
     /**
      * 当前索引块
      */
-    private Object splitIndex;
+    private Integer splitIndex;
 
     /**
      * 总上传索引块
      */
-    private Object splitNum;
+    private Integer splitNum;
 
     /**
      * 临时保存路径
@@ -74,11 +76,12 @@ public class SplitUpload implements Serializable {
     /**
      * 文件是否删除[0:否;1:是;] 
      */
-    private Integer isDelete;
+    private Boolean isDelete;
 
     /**
      * 额外参数json
      */
+    @TableField(value = "attribute", typeHandler = JacksonTypeHandler.class)
     private Object attribute;
 
     /**

@@ -59,4 +59,10 @@ public interface AuthorizationService {
     public Boolean getUserOnlineStatus(Long userId);
 
 
+    /**
+     * 设置用户文件上传临时授权token
+     * @param uploaderId
+     * @return
+     */
+    public String getOrSetUserUploadToken(Long uploaderId);
 }

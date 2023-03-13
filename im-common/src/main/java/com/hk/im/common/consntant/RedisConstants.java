@@ -86,6 +86,7 @@ public class RedisConstants {
 
     // RSA 密钥
     public static final String RSA_KEY = "security:rsa:key:";
+    public static final String UPLOAD_TOKEN = "upload:token:";
 
 
     /**

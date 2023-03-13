@@ -1,5 +1,6 @@
 package com.hk.im.service.service;
 
+import cn.hutool.core.lang.UUID;
 import com.hk.im.client.service.AuthorizationService;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.util.JWTUtils;
@@ -37,8 +38,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 RedisConstants.ACCESS_TOKEN_TTL, TimeUnit.SECONDS);
         return token;
     }
-
-
 
 
     /**
@@ -118,5 +117,31 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         Boolean exists = this.stringRedisTemplate.hasKey(key);
 
         return exists;
+    }
+
+
+    /**
+     * 获取或设置用户文件上传临时授权token
+     * @param uploaderId
+     * @return {@link String}
+     */
+    @Override
+    public String getOrSetUserUploadToken(Long uploaderId) {
+
+        String key = RedisConstants.UPLOAD_TOKEN + uploaderId;
+        String token = this.stringRedisTemplate.opsForValue().get(key);
+        // 获取过期时间
+        Long expire = this.stringRedisTemplate.getExpire(key, TimeUnit.MINUTES);
+
+        if (Objects.nonNull(expire) && StringUtils.isNotEmpty(token) && expire > 5L) {
+            // token 存在并且有效期充足, 过期时间大于5分钟
+            return token;
+        }
+
+        // token 过期，不存在，或快过期
+        token = UUID.fastUUID().toString(true);
+        this.stringRedisTemplate.opsForValue().set(key, token, 30, TimeUnit.MINUTES);
+
+        return token;
     }
 }
