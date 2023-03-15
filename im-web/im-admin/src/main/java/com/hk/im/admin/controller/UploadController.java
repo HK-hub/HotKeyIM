@@ -43,7 +43,7 @@ public class UploadController {
      * @return
      */
     @PostMapping("/file/initialize")
-    public ResponseResult checkUploadFileInfo(UploadFileInfoRequest request) {
+    public ResponseResult checkUploadFileInfo(@RequestBody UploadFileInfoRequest request) {
         return this.cloudResourceService.checkUploadFileInfo(request);
     }
 

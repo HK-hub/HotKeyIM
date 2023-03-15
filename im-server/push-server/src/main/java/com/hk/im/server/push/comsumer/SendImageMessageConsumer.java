@@ -5,6 +5,7 @@ import com.hk.im.server.push.worker.MessagePushWorker;
 import com.hk.im.server.push.worker.MessageSynchronizer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,8 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "image-message-group", topic = "chat-topic", selectorExpression = "IMAGE")
+@RocketMQMessageListener(consumerGroup = "image-message-group", topic = "chat-topic",
+        selectorExpression = "IMAGE", selectorType = SelectorType.TAG)
 public class SendImageMessageConsumer implements RocketMQListener<MessageVO> {
 
     @Resource

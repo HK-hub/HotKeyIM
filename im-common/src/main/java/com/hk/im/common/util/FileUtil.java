@@ -123,7 +123,7 @@ public class FileUtil {
     /**
      * 图片类型
      */
-    public static final Set<String> imageTypes = Set.of("png", "jpg", "jpeg", "gif", "webp", "tiff", "bmp", "svg");
+    public static final Set<String> imageTypes = Set.of("png", "jpg", "jpeg", "gif", "webp", "tiff", "bmp", "svg", "ico");
     // 视频类型
     public static final Set<String> videoTypes = Set.of("avi", "wmv", "mpg", "mpeg", "mov", "mp4", "rm", "ram", "m3u8", "asf");
     // 音频类型

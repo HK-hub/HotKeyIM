@@ -103,8 +103,8 @@ public class CloudResourceServiceImpl extends ServiceImpl<CloudResourceMapper, C
         List<Integer> splitIndexList = uploadSliceList.stream().map(SplitUpload::getSplitIndex).toList();
 
         // 计算分片总数
-        // int slices = (int) Math.ceil(1.0 * size / sliceFileSize);
-        infoResponse.setSplitSize(sliceFileSize)
+        int slices = (int) Math.ceil(1.0 * size / sliceFileSize);
+        infoResponse.setSplitSize(slices)
                 .setUploadId(md5)
                 .setUploadedIndex(splitIndexList)
                 .setUploadToken(uploadToken);

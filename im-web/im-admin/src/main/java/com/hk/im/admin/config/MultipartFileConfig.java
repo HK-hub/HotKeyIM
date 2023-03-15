@@ -35,12 +35,9 @@ public class MultipartFileConfig implements InitializingBean {
         File path = new File(tmpPath);
 
         if (BooleanUtils.isFalse(path.exists())) {
-            // 路径不存在
-            // 获取当前项目路径
-            File classPath = new File(ResourceUtils.getURL("classpath:").getPath());
-            path = new File(classPath.getAbsolutePath(), MinioConstant.TEM_PATH);
-            if (BooleanUtils.isFalse(path.exists())) {
-                boolean mkdirs = path.mkdirs();
+            // 文件夹不存在创建文件
+            boolean mkdirs = path.mkdirs();
+            if (BooleanUtils.isFalse(mkdirs)) {
                 log.warn("Could not create temp upload directory: {}", path.getAbsolutePath());
             }
         }

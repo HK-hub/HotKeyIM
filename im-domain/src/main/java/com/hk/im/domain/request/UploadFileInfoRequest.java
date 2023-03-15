@@ -37,12 +37,10 @@ public class UploadFileInfoRequest {
      */
     private String hash;
 
-
     /**
      * 上传者
      */
     private Long uploaderId;
-
 
     // 临时上传凭证
     private String token;

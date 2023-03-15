@@ -22,9 +22,8 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "image-message-group", topic = "chat-topic", selectorExpression = "FILE")
+@RocketMQMessageListener(consumerGroup = "file-message-group", topic = "chat-topic", selectorExpression = "FILE")
 public class SendFileMessageConsumer implements RocketMQListener<MessageVO> {
-
 
 
     @Resource
