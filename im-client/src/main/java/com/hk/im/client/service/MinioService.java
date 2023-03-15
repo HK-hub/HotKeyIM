@@ -224,4 +224,13 @@ public interface MinioService {
      * @return
      */
     String putChatFile(MultipartFile file, String bucket, Long senderId);
+
+    /**
+     * 上传本地文件
+     * @param mergeFilePath
+     * @param bucket
+     * @param hash
+     * @return
+     */
+    String putLocalFile(String mergeFilePath, String bucket, String hash);
 }

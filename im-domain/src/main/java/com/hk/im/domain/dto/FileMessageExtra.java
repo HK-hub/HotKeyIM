@@ -25,8 +25,8 @@ public class FileMessageExtra extends BaseMessageExtra{
     // 文件原始名称
     protected String originalFileName;
 
-    // 文件大小: KB
-    protected Double size;
+    // 文件大小: 字节
+    protected Long size;
 
     // 文件扩展名
     protected String extension;
@@ -42,6 +42,11 @@ public class FileMessageExtra extends BaseMessageExtra{
 
     // 接收者
     protected Long receiver;
+
+    // url 链接
+    protected String url;
+
+    protected String md5;
 
 
 }

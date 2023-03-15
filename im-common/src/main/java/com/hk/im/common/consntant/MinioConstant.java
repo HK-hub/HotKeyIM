@@ -36,6 +36,9 @@ public class MinioConstant {
     public static final String GROUP_FILE_PATH = "/group/file/";
     // 私聊图片
     public static final String PRIVATE_IMAGE_PATH = "/image/";
+    // 临时文件目录
+    public static final String TEM_PATH = "temp/upload/";
+
 
     @Getter
     public enum BucketEnum {
@@ -165,6 +168,15 @@ public class MinioConstant {
      */
     public static String getPrivateImagePath(String objectName) {
         return PRIVATE_CHAT_IMAGE  + objectName;
+    }
+
+
+    /**
+     * 获取文件上传所在的文件夹下
+     * @return
+     */
+    public static String getUploadFilePrefix() {
+        return "/upload/";
     }
 
 

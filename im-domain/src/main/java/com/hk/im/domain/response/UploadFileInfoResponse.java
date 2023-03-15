@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.BooleanUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class UploadFileInfoResponse {
     /**
      * 已经上传了的分片索引
      */
-    private List<Integer> uploadedIndex;
+    private List<Integer> uploadedIndex = new ArrayList<>();
 
 
     /**

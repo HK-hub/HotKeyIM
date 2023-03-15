@@ -43,4 +43,8 @@ public class UploadFileInfoRequest {
      */
     private Long uploaderId;
 
+
+    // 临时上传凭证
+    private String token;
+
 }

@@ -1,6 +1,5 @@
 package com.hk.im.service.service;
 
-import cn.hutool.core.lang.UUID;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.client.service.AuthorizationService;
 import com.hk.im.client.service.CloudResourceService;
@@ -18,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -40,10 +40,8 @@ public class CloudResourceServiceImpl extends ServiceImpl<CloudResourceMapper, C
     private CloudResourceMapper cloudResourceMapper;
     @Resource
     private SplitUploadService splitUploadService;
-    @Value("${spring.servlet.multipart.slice-file-size}")
+    @Value("${hotkey.im.file.upload.slice-size}")
     private Integer sliceFileSize;
-    @Resource
-    private StringRedisTemplate stringRedisTemplate;
     @Resource
     private AuthorizationService authorizationService;
 
@@ -81,7 +79,7 @@ public class CloudResourceServiceImpl extends ServiceImpl<CloudResourceMapper, C
         Long size = request.getFileSize();
 
         // 查询是否有已经上传过的文件了
-        CloudResource cloudResource = this.cloudResourceMapper.existsUploadFilInfo(fileName, hash, md5, size);
+        CloudResource cloudResource = this.cloudResourceMapper.existsUploadFileInfo(fileName, hash, md5, size);
         // 假设用户上传速度为 500KB/s , 限制100MB需要上传时间为：100 * 1024 / 500 = 5 分钟以内，为了日后扩展，这里设计为token有效期30分钟
         String uploadToken = this.authorizationService.getOrSetUserUploadToken(uploaderId);
 
@@ -115,6 +113,29 @@ public class CloudResourceServiceImpl extends ServiceImpl<CloudResourceMapper, C
     }
 
 
+    /**
+     * 是否存在对应资源
+     * @return {@link CloudResource}
+     */
+    @Override
+    public CloudResource existsUploadFileInfo(String fileName, String hash, String md5, Long size) {
+        return this.cloudResourceMapper.existsUploadFileInfo(fileName, hash, md5, size);
+    }
+
+
+    /**
+     * 增加云资源引用计数
+     * @param cloudResource
+     * @param by
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean increaseResourceCount(CloudResource cloudResource, int by) {
+
+        boolean update = this.cloudResourceMapper.increaseResourceCount(cloudResource, by);
+        return update;
+    }
 
 
 }

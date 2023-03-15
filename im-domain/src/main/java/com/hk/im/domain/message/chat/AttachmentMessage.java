@@ -26,7 +26,9 @@ public class AttachmentMessage extends WebSocketMessage {
 
     private String receiverId;
 
-    private MultipartFile file;
+    private String fileUploadId;
+
+    private String originalFileName;
 
 
     @Override

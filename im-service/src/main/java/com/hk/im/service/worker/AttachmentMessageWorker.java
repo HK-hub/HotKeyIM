@@ -2,6 +2,7 @@ package com.hk.im.service.worker;
 
 import com.hk.im.client.service.MinioService;
 import com.hk.im.client.service.SequenceService;
+import com.hk.im.client.service.SplitUploadService;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
@@ -10,8 +11,11 @@ import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.dto.FileMessageExtra;
 import com.hk.im.domain.entity.ChatMessage;
+import com.hk.im.domain.entity.CloudResource;
 import com.hk.im.domain.entity.MessageFlow;
 import com.hk.im.domain.message.chat.AttachmentMessage;
+import com.hk.im.domain.request.MergeSplitFileRequest;
+import com.hk.im.infrastructure.event.file.event.UploadFileEvent;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
 import lombok.extern.slf4j.Slf4j;
@@ -48,13 +52,15 @@ public class AttachmentMessageWorker {
     private BaseMessageWorker baseMessageWorker;
     @Resource
     private ApplicationContext applicationContext;
+    @Resource
+    private SplitUploadService splitUploadService;
 
 
     public ResponseResult sendMessage(AttachmentMessage request) {
 
         // 参数校验
         boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getReceiverId()) || Objects.isNull(request.getTalkType())
-                || Objects.isNull(request.getFile());
+                || StringUtils.isEmpty(request.getFileUploadId());
         if (BooleanUtils.isTrue(preCheck)) {
             // 参数校验失败
             return ResponseResult.FAIL("附件消息参数错误!");
@@ -68,29 +74,36 @@ public class AttachmentMessageWorker {
         }
 
         // 素材准备
+        Integer talkType = request.getTalkType();
         Long senderId = Long.valueOf(request.getSenderId());
         if (Objects.isNull(request.getSenderId())) {
             senderId = UserContextHolder.get().getId();
         }
         Long receiverId = Long.valueOf(request.getReceiverId());
-        MultipartFile file = request.getFile();
-        Integer talkType = request.getTalkType();
+        String hash = request.getFileUploadId();
 
-        // 上传图片
-        String fileUrl = this.minioService.putChatFile(file, MinioConstant.BucketEnum.File.getBucket(), senderId);
-        // 图片消息扩展信息
-        FileMessageExtra fileMessageExtra = this.calculateExtra(file);
-        fileMessageExtra.setUploader(senderId).setReceiver(receiverId);
+        // 合并文件,上传文件
+        ResponseResult result = this.mergeAndUploadFile(request);
+        if (BooleanUtils.isFalse(result.isSuccess())) {
+            // 文件合并或上传失败
+            return ResponseResult.FAIL();
+        }
+
+        // 获取扩展信息
+        FileMessageExtra extra = (FileMessageExtra) result.getData();
+
+        // TODO 发布事件：保存云资源数据
+        this.applicationContext.publishEvent(new UploadFileEvent(this, extra));
         // 保存消息
         ChatMessage chatMessage = new ChatMessage()
                 // 消息内容
-                .setContent(fileUrl)
-                .setUrl(fileUrl)
+                .setContent(extra.getUrl())
+                .setUrl(extra.getUrl())
                 // 消息特性
                 .setMessageFeature(MessageConstants.MessageFeature.DEFAULT.ordinal())
                 // 消息类型
                 .setMessageType(MessageConstants.ChatMessageType.FILE.ordinal())
-                .setExtra(fileMessageExtra);
+                .setExtra(extra);
 
         // 获取消息序列号
         ResponseResult sequenceResult = this.sequenceService.nextId(senderId, receiverId, talkType);
@@ -134,22 +147,54 @@ public class AttachmentMessageWorker {
 
 
     /**
-     * 计算文件属性
+     * 合并文件并且上传
      *
-     * @param file
+     * @param request
      *
      * @return
      */
-    private FileMessageExtra calculateExtra(MultipartFile file) {
+    private ResponseResult mergeAndUploadFile(AttachmentMessage request) {
 
+        // 素材准备
+        Long senderId = Long.valueOf(request.getSenderId());
+        if (Objects.isNull(request.getSenderId())) {
+            senderId = UserContextHolder.get().getId();
+        }
+        Long receiverId = Long.valueOf(request.getReceiverId());
+        String hash = request.getFileUploadId();
+
+        // 合并文件
+        MergeSplitFileRequest mergeRequest = new MergeSplitFileRequest()
+                .setFileName(request.getOriginalFileName())
+                .setUploaderId(request.getSenderId());
+        mergeRequest.setHash(hash).setMd5(hash).setUploadId(hash);
+        ResponseResult mergeResult = this.splitUploadService.mergeSplitUploadFile(mergeRequest);
+        if (BooleanUtils.isFalse(mergeResult.isSuccess())) {
+            // 合并失败
+            return ResponseResult.FAIL("合并文件失败，无法发送文件消息!");
+        }
+        File mergeFile = (File) mergeResult.getData();
+
+        // 上传图片
+        String fileUrl = this.minioService.putLocalFile(mergeFile.getAbsolutePath(), MinioConstant.BucketEnum.File.getBucket(), hash);
+        if (StringUtils.isEmpty(fileUrl)) {
+            // 上传失败
+            return ResponseResult.FAIL("上传文件失败，无法发送文件消息!");
+        }
+
+        // 构建扩展信息
         FileMessageExtra extra = new FileMessageExtra();
-        extra.setFileName(file.getOriginalFilename());
-        extra.setOriginalFileName(file.getOriginalFilename());
-        extra.setExtension(FilenameUtils.getExtension(file.getOriginalFilename()));
-        extra.setSize((double) file.getSize() / 1048576);
-        extra.setFileSubType(MessageConstants.FileSubType.FILE.ordinal());
+        extra.setUploader(senderId)
+                .setMd5(hash)
+                .setUrl(fileUrl)
+                .setOriginalFileName(request.getOriginalFileName())
+                .setFileName(mergeFile.getAbsolutePath())
+                .setSize(mergeFile.length())
+                .setFileSubType(CloudResource.getResourceType(request.getOriginalFileName()))
+                .setExtension(FilenameUtils.getExtension(request.getOriginalFileName()))
+                .setReceiver(receiverId);
 
-        return extra;
+        return ResponseResult.SUCCESS(extra);
     }
 
 

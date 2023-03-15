@@ -147,8 +147,8 @@ public class ImageMessageWorker {
         extra.setFileName(image.getOriginalFilename())
                 .setOriginalFileName(image.getOriginalFilename())
                 .setFileSubType(MessageConstants.FileSubType.IMAGE.ordinal())
-                // 文件大小单位：MB
-                .setSize((double) image.getSize() / 1048576);
+                // 文件大小单位：KB
+                .setSize((double) image.getSize() / 1024);
 
         return extra;
     }

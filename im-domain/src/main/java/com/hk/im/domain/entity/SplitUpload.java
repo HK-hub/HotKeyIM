@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 文件拆分数据表
@@ -16,6 +17,7 @@ import lombok.Data;
  */
 @TableName(value ="tb_split_upload")
 @Data
+@Accessors(chain = true)
 public class SplitUpload implements Serializable {
     /**
      * 临时文件ID
@@ -71,7 +73,7 @@ public class SplitUpload implements Serializable {
     /**
      * 文件大小
      */
-    private Object fileSize;
+    private Integer fileSize;
 
     /**
      * 文件是否删除[0:否;1:是;] 
@@ -93,5 +95,14 @@ public class SplitUpload implements Serializable {
      * 创建时间
      */
     private LocalDateTime updateTime;
+
+
+    public static enum FileType {
+
+        UNKNOWN,
+        MERGE,
+        SPLIT,
+
+    }
 
 }

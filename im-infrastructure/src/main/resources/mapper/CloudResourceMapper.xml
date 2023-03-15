@@ -28,4 +28,12 @@
         url,`size`,`count`,deleted,create_time,
         update_time
     </sql>
+
+
+    <update id="increaseResourceCount">
+        update tb_cloud_resource
+        set count = count + #{by}
+        where (id = #{resource.id} or md5 = #{resource.md5})
+        and deleted = false
+    </update>
 </mapper>

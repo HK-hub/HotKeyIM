@@ -157,8 +157,10 @@ public class MessageConstants {
         IMAGE,
         VOICE,
         VIDEO,
+        COMPRESS,
+        TEXT,
+        CODE,
         FILE,
-
     }
 
 

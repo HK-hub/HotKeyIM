@@ -21,11 +21,18 @@ public class MergeSplitFileRequest {
 
     private String fileName;
 
+    private Integer size;
+
     private String md5;
 
     /**
      * 文件hash
      */
     private String hash;
+
+    private String uploaderId;
+
+    private String token;
+
 
 }

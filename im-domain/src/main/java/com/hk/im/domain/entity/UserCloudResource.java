@@ -1,11 +1,13 @@
 package com.hk.im.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 
@@ -13,12 +15,13 @@ import lombok.Data;
  */
 @TableName(value ="tb_user_cloud_resource")
 @Data
+@Accessors(chain = true)
 public class UserCloudResource implements Serializable {
 
     /**
      * 云盘id
      */
-    @TableId(value = "id")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**

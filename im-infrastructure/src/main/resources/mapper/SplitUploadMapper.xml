@@ -31,4 +31,10 @@
         file_ext,file_size,is_delete,
         attribute,create_time,update_time
     </sql>
+
+    <!-- 查询上传分片 -->
+    <select id="selectTheUploadSlice" resultType="com.hk.im.domain.entity.SplitUpload">
+        select * from tb_split_upload where upload_id = #{uploadId} and split_index = #{splitIndex}
+                                        and split_num = #{splitNum} limit 1
+    </select>
 </mapper>

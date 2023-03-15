@@ -21,8 +21,16 @@ public interface CloudResourceMapper extends BaseMapper<CloudResource> {
      */
     @Select("select * from tb_cloud_resource where hash=#{hash} and md5=#{md5} and `size`=#{size}" +
             " and deleted = false  limit 1")
-    CloudResource existsUploadFilInfo(String fileName, @Param("hash") String hash,
+    CloudResource existsUploadFileInfo(String fileName, @Param("hash") String hash,
                                       @Param("md5") String md5, @Param("size") Long size);
+
+    /**
+     * 增加资源引用计数
+     * @param cloudResource
+     * @param by
+     * @return
+     */
+    boolean increaseResourceCount(@Param("resource") CloudResource cloudResource, @Param("by") int by);
 }
 
 

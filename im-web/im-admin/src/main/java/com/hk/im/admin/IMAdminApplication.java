@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -20,6 +21,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @Version : 1.0
  */
 @EnableAsync
+@EnableAspectJAutoProxy
 @MapperScan("com.hk.im.infrastructure.mapper")
 @SpringBootApplication(scanBasePackages = {"com.hk.im"})
 public class IMAdminApplication {

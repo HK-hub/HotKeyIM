@@ -24,4 +24,18 @@ public interface CloudResourceService extends IService<CloudResource> {
      * @return
      */
     ResponseResult checkUploadFileInfo(UploadFileInfoRequest request);
+
+    /**
+     * 是否存在对应资源
+     * @return {@link CloudResource}
+     */
+    public CloudResource existsUploadFileInfo(String fileName, String hash, String md5, Long size );
+
+    /**
+     * 增加原资源引用计数
+     * @param cloudResource
+     * @param by
+     * @return
+     */
+    boolean increaseResourceCount(CloudResource cloudResource, int by);
 }
