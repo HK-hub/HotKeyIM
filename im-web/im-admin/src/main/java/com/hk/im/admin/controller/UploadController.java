@@ -3,10 +3,7 @@ package com.hk.im.admin.controller;
 import com.hk.im.client.service.CloudResourceService;
 import com.hk.im.client.service.SplitUploadService;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.domain.request.MergeSplitFileRequest;
-import com.hk.im.domain.request.SecondsTransferRequest;
-import com.hk.im.domain.request.SplitUploadRequest;
-import com.hk.im.domain.request.UploadFileInfoRequest;
+import com.hk.im.domain.request.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -89,6 +86,4 @@ public class UploadController {
         }
         return this.splitUploadService.mergeSplitUploadFile(request);
     }
-
-
 }
