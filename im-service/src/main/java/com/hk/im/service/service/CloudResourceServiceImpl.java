@@ -80,7 +80,7 @@ public class CloudResourceServiceImpl extends ServiceImpl<CloudResourceMapper, C
 
         // 查询是否有已经上传过的文件了
         CloudResource cloudResource = this.cloudResourceMapper.existsUploadFileInfo(fileName, hash, md5, size);
-        // 假设用户上传速度为 500KB/s , 限制100MB需要上传时间为：100 * 1024 / 500 = 5 分钟以内，为了日后扩展，这里设计为token有效期30分钟
+        // 假设用户上传速度为 500KB/s , 限制100MB需要上传时间为：100 * 1024 / 500 = 5 分钟以内，为了日后扩展，这里设计为token有效期15分钟
         String uploadToken = this.authorizationService.getOrSetUserUploadToken(uploaderId);
 
         if (Objects.nonNull(cloudResource)) {
@@ -103,8 +103,8 @@ public class CloudResourceServiceImpl extends ServiceImpl<CloudResourceMapper, C
         List<Integer> splitIndexList = uploadSliceList.stream().map(SplitUpload::getSplitIndex).toList();
 
         // 计算分片总数
-        int slices = (int) Math.ceil(1.0 * size / sliceFileSize);
-        infoResponse.setSplitSize(slices)
+        // int slices = (int) Math.ceil(1.0 * size / sliceFileSize);
+        infoResponse.setSplitSize(sliceFileSize)
                 .setUploadId(md5)
                 .setUploadedIndex(splitIndexList)
                 .setUploadToken(uploadToken);

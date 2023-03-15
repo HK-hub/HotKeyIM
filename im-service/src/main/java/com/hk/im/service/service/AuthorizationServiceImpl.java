@@ -139,8 +139,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
 
         // token 过期，不存在，或快过期
-        token = UUID.fastUUID().toString(true);
-        this.stringRedisTemplate.opsForValue().set(key, token, 30, TimeUnit.MINUTES);
+        token = UUID.fastUUID().toString(false);
+        this.stringRedisTemplate.opsForValue().set(key, token, 15, TimeUnit.MINUTES);
 
         return token;
     }

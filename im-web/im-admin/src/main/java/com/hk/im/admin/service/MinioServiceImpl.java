@@ -466,7 +466,7 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public String putLocalFile(String mergeFilePath, String bucket, String hash) {
 
-        String objectName = MinioConstant.getUploadFilePrefix() + hash + FilenameUtils.getExtension(mergeFilePath);
+        String objectName = MinioConstant.getUploadFilePrefix() + hash + "." + FilenameUtils.getExtension(mergeFilePath);
         try {
             this.minioUtil.uploadFile(bucket, objectName, mergeFilePath);
         } catch (Exception e) {

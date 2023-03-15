@@ -30,6 +30,8 @@ public class AttachmentMessage extends WebSocketMessage {
 
     private String originalFileName;
 
+    private Integer size;
+
 
     @Override
     public int getMessageActionType() {

@@ -97,7 +97,7 @@ public class AttachmentMessageWorker {
         // 保存消息
         ChatMessage chatMessage = new ChatMessage()
                 // 消息内容
-                .setContent(extra.getUrl())
+                .setContent(extra.getOriginalFileName())
                 .setUrl(extra.getUrl())
                 // 消息特性
                 .setMessageFeature(MessageConstants.MessageFeature.DEFAULT.ordinal())
@@ -166,6 +166,7 @@ public class AttachmentMessageWorker {
         // 合并文件
         MergeSplitFileRequest mergeRequest = new MergeSplitFileRequest()
                 .setFileName(request.getOriginalFileName())
+                .setSize(request.getSize())
                 .setUploaderId(request.getSenderId());
         mergeRequest.setHash(hash).setMd5(hash).setUploadId(hash);
         ResponseResult mergeResult = this.splitUploadService.mergeSplitUploadFile(mergeRequest);
@@ -187,11 +188,12 @@ public class AttachmentMessageWorker {
         extra.setUploader(senderId)
                 .setMd5(hash)
                 .setUrl(fileUrl)
-                .setOriginalFileName(request.getOriginalFileName())
+                .setOriginalFileName(mergeRequest.getFileName())
                 .setFileName(mergeFile.getAbsolutePath())
+                .setLocalPath(mergeFile.getAbsolutePath())
                 .setSize(mergeFile.length())
-                .setFileSubType(CloudResource.getResourceType(request.getOriginalFileName()))
-                .setExtension(FilenameUtils.getExtension(request.getOriginalFileName()))
+                .setFileSubType(CloudResource.getResourceType(mergeRequest.getFileName()))
+                .setExtension(FilenameUtils.getExtension(mergeRequest.getFileName()))
                 .setReceiver(receiverId);
 
         return ResponseResult.SUCCESS(extra);

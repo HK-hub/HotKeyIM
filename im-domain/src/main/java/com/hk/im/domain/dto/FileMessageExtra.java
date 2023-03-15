@@ -46,6 +46,9 @@ public class FileMessageExtra extends BaseMessageExtra{
     // url 链接
     protected String url;
 
+    // 本地文件位置
+    protected String localPath;
+
     protected String md5;
 
 

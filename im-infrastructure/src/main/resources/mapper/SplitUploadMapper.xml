@@ -17,8 +17,6 @@
         <result property="fileExt" column="file_ext" jdbcType="VARCHAR"/>
         <result property="fileSize" column="file_size" jdbcType="INTEGER"/>
         <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
-        <result property="attribute" column="attribute"
-                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -28,8 +26,8 @@
         ,type,drive,
         upload_id,user_id,original_name,
         split_index,split_num,path,
-        file_ext,file_size,is_delete,
-        attribute,create_time,update_time
+        file_ext,file_size,is_delete
+        ,create_time,update_time
     </sql>
 
     <!-- 查询上传分片 -->

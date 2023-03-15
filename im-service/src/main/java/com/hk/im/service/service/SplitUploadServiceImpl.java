@@ -1,12 +1,10 @@
 package com.hk.im.service.service;
 
 
-import cn.hutool.core.io.file.FileNameUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.client.service.AuthorizationService;
 import com.hk.im.client.service.MinioService;
 import com.hk.im.client.service.SplitUploadService;
-import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.filter.FileNameFilter;
 import com.hk.im.common.resp.ResponseResult;
@@ -19,7 +17,6 @@ import com.hk.im.domain.request.SplitUploadRequest;
 import com.hk.im.domain.request.UploadFileInfoRequest;
 import com.hk.im.infrastructure.mapper.SplitUploadMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,14 +27,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.*;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -236,7 +231,7 @@ public class SplitUploadServiceImpl extends ServiceImpl<SplitUploadMapper, Split
         // 进行合并
         String mergeFilePath = null;
         CompletableFuture[] futures = new CompletableFuture[sliceList.size()];
-        Path path = Paths.get(tmpPath, hash, hash, FilenameUtils.getExtension(request.getFileName()));
+        Path path = Paths.get(tmpPath, hash, hash + "." + FilenameUtils.getExtension(request.getFileName()));
         try {
             // 创建文件
             Path mergeFile = Files.createFile(path);

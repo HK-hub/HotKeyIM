@@ -175,6 +175,30 @@ public class FileUtil {
     }
 
 
+    public boolean mergeFile(String targetFileName, File slice, Integer startPos) {
+
+        try (RandomAccessFile randomAccessor = new RandomAccessFile(targetFileName, "rw");
+             FileInputStream fis = new FileInputStream(slice);
+             BufferedInputStream bufferedInputStream = new BufferedInputStream(fis)) {
+            // 设置开始下标
+            randomAccessor.seek(startPos);
+            byte[] buffer = new byte[8 * 1024];
+            int len = 0;
+            int offset = 0;
+            while ((len = bufferedInputStream.read(buffer)) != -1) {
+                // randomAccessor.write(buffer, offset, len);
+                randomAccessor.write(buffer);
+                offset += len;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
 
 
 }
