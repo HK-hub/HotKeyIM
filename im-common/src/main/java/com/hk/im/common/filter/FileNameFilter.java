@@ -36,12 +36,8 @@ public class FileNameFilter implements FileFilter {
         // 文件名为分片数字
         String name = file.getName();
         Matcher matcher = pattern.matcher(name);
-        if (!matcher.matches()) {
-            // 名字不匹配
-            return false;
-        }
-
-        return true;
+        // 名字不匹配
+        return matcher.matches();
     }
 
 

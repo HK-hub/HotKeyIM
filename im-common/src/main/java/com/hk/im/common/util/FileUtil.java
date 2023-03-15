@@ -53,8 +53,11 @@ public class FileUtil {
      */
     public static File[] filterPathFiles(File path, FileFilter filter) {
 
-        File[] files = path.listFiles(filter);
-        return files;
+        // 这里 path 可能不存在
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+        return path.listFiles(filter);
     }
 
     /**
