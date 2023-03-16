@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.domain.request.MergeSplitFileRequest;
 import com.hk.im.domain.request.SecondsTransferRequest;
 import com.hk.im.domain.request.SplitUploadRequest;
+import com.hk.im.domain.request.UploadFileInfoRequest;
+
+import java.util.List;
 
 /**
  * @ClassName : SplitUploadService
@@ -40,4 +43,11 @@ public interface SplitUploadService extends IService<SplitUpload> {
      * @return
      */
     ResponseResult transferFileBySeconds(SecondsTransferRequest request);
+
+    /**
+     * 获取上传文件的分片列表
+     * @param request
+     * @return
+     */
+    List<SplitUpload> getFileUploadSliceList(UploadFileInfoRequest request);
 }

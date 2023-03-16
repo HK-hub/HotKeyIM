@@ -3,15 +3,10 @@ package com.hk.im.admin.controller;
 import com.hk.im.client.service.CloudResourceService;
 import com.hk.im.client.service.SplitUploadService;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.domain.request.MergeSplitFileRequest;
-import com.hk.im.domain.request.SecondsTransferRequest;
-import com.hk.im.domain.request.SplitUploadRequest;
-import com.hk.im.domain.request.UploadFileInfoRequest;
+import com.hk.im.domain.request.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -27,6 +22,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @CrossOrigin
+@RestController
 @RequestMapping("/upload")
 public class UploadController {
 
@@ -38,18 +34,22 @@ public class UploadController {
     /**
      * 检查上传文件信息，包括是否已经存在文件hash 值等，是否已经上传过
      * 如果已经上传完成，则进行秒传，如果有上传记录，但是没有上传完成则进行断点续传
+     *
      * @param request
+     *
      * @return
      */
-    @GetMapping("/file/info")
-    public ResponseResult checkUploadFileInfo(UploadFileInfoRequest request) {
+    @PostMapping("/file/initialize")
+    public ResponseResult checkUploadFileInfo(@RequestBody UploadFileInfoRequest request) {
         return this.cloudResourceService.checkUploadFileInfo(request);
     }
 
 
     /**
      * 文件秒传
+     *
      * @param request
+     *
      * @return
      */
     @PostMapping("/file/seconds")
@@ -59,7 +59,9 @@ public class UploadController {
 
     /**
      * 大文件分片上传
+     *
      * @param request
+     *
      * @return
      */
     @PostMapping("/file/split")
@@ -70,13 +72,18 @@ public class UploadController {
 
     /**
      * 合并分片上传的文件
+     *
      * @param request
+     *
      * @return
      */
     @PostMapping("/file/merge")
     public ResponseResult mergeSplitFile(MergeSplitFileRequest request) {
+        // 提前校验token
+        String token = request.getToken();
+        if (StringUtils.isEmpty(token)) {
+            return ResponseResult.FAIL();
+        }
         return this.splitUploadService.mergeSplitUploadFile(request);
     }
-
-
 }

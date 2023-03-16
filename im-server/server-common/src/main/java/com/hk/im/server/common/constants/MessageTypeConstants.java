@@ -29,7 +29,6 @@ public class MessageTypeConstants {
         IMAGE,
         CODE,
 
-
     }
 
     public static enum ActionTypeEnum {

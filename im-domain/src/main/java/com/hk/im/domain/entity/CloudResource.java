@@ -1,19 +1,24 @@
 package com.hk.im.domain.entity;
 
+import cn.hutool.core.io.file.FileNameUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.hk.im.common.util.FileUtil;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
- * 
  * @TableName tb_cloud_disk_resource
  */
-@TableName(value ="tb_cloud_resource")
+@TableName(value = "tb_cloud_resource")
 @Data
+@Accessors(chain = true)
 public class CloudResource implements Serializable {
 
     /**
@@ -125,15 +130,15 @@ public class CloudResource implements Serializable {
         }
         CloudResource other = (CloudResource) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getResourceType() == null ? other.getResourceType() == null : this.getResourceType().equals(other.getResourceType()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
-            && (this.getExtendType() == null ? other.getExtendType() == null : this.getExtendType().equals(other.getExtendType()))
-            && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()))
-            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
-            && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+                && (this.getResourceType() == null ? other.getResourceType() == null : this.getResourceType().equals(other.getResourceType()))
+                && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+                && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
+                && (this.getExtendType() == null ? other.getExtendType() == null : this.getExtendType().equals(other.getExtendType()))
+                && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()))
+                && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
+                && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -173,4 +178,49 @@ public class CloudResource implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+    /**
+     * 资源类型：1.图片，2.视频，3.音频，4.压缩包，5.文件
+     */
+    public static enum ResourceType {
+
+        UNKNOWN,
+        IMAGE,
+        VOICE,
+        VIDEO,
+        COMPRESS,
+        TEXT,
+        CODE,
+        FILE,
+
+    }
+
+
+    /**
+     * 获取文件的资源分类
+     *
+     * @param fileName
+     *
+     * @return
+     */
+    public static int getResourceType(String fileName) {
+        String suffix = FileNameUtil.getSuffix(fileName);
+        if (FileUtil.isImage(suffix)) {
+            return ResourceType.IMAGE.ordinal();
+        } else if (FileUtil.isVideo(suffix)) {
+            return ResourceType.VIDEO.ordinal();
+        } else if (FileUtil.isVoice(suffix)) {
+            return ResourceType.VOICE.ordinal();
+        } else if (FileUtil.isCompress(suffix)) {
+            return ResourceType.COMPRESS.ordinal();
+        } else if (FileUtil.isText(suffix)){
+            return ResourceType.TEXT.ordinal();
+        } else if (FileUtil.isCode(suffix)){
+            return ResourceType.CODE.ordinal();
+        } else {
+            return ResourceType.FILE.ordinal();
+        }
+    }
+
+
 }

@@ -5,28 +5,34 @@
 <mapper namespace="com.hk.im.infrastructure.mapper.SplitUploadMapper">
 
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.SplitUpload">
-            <id property="id" column="id" jdbcType="OTHER"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="drive" column="drive" jdbcType="TINYINT"/>
-            <result property="uploadId" column="upload_id" jdbcType="VARCHAR"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="originalName" column="original_name" jdbcType="VARCHAR"/>
-            <result property="splitIndex" column="split_index" jdbcType="OTHER"/>
-            <result property="splitNum" column="split_num" jdbcType="OTHER"/>
-            <result property="path" column="path" jdbcType="VARCHAR"/>
-            <result property="fileExt" column="file_ext" jdbcType="VARCHAR"/>
-            <result property="fileSize" column="file_size" jdbcType="OTHER"/>
-            <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
-            <result property="attribute" column="attribute" jdbcType="OTHER"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="OTHER"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="drive" column="drive" jdbcType="TINYINT"/>
+        <result property="uploadId" column="upload_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="originalName" column="original_name" jdbcType="VARCHAR"/>
+        <result property="splitIndex" column="split_index" jdbcType="INTEGER"/>
+        <result property="splitNum" column="split_num" jdbcType="INTEGER"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="fileExt" column="file_ext" jdbcType="VARCHAR"/>
+        <result property="fileSize" column="file_size" jdbcType="INTEGER"/>
+        <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,type,drive,
+        id
+        ,type,drive,
         upload_id,user_id,original_name,
         split_index,split_num,path,
-        file_ext,file_size,is_delete,
-        attribute,create_time,update_time
+        file_ext,file_size,is_delete
+        ,create_time,update_time
     </sql>
+
+    <!-- 查询上传分片 -->
+    <select id="selectTheUploadSlice" resultType="com.hk.im.domain.entity.SplitUpload">
+        select * from tb_split_upload where upload_id = #{uploadId} and split_index = #{splitIndex}
+                                        and split_num = #{splitNum} limit 1
+    </select>
 </mapper>

@@ -8,6 +8,7 @@ import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.UploadResponse;
 import com.hk.im.domain.request.UploadAvatarRequest;
+import io.minio.ObjectWriteResponse;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
@@ -452,6 +453,28 @@ public class MinioServiceImpl implements MinioService {
             log.error("put chat attachment or file error", e);
         }
         return url;
+    }
+
+
+    /**
+     * 上传本地文件
+     * @param mergeFilePath 绝对路径
+     * @param bucket
+     * @param hash
+     * @return
+     */
+    @Override
+    public String putLocalFile(String mergeFilePath, String bucket, String hash) {
+
+        String objectName = MinioConstant.getUploadFilePrefix() + hash + "." + FilenameUtils.getExtension(mergeFilePath);
+        try {
+            this.minioUtil.uploadFile(bucket, objectName, mergeFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return minioProperties.getConsole() + "/" + bucket + "/" + objectName;
     }
 
 

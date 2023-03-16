@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author : HK意境
@@ -56,7 +57,8 @@ public class MessageConstants {
         // 连接初始化消息
         CONNECT("connect"),
         // 普通聊天消息
-        CHAT("event_talk"),;
+        CHAT("event_talk"),
+        ;
 
         private String event;
 
@@ -103,6 +105,7 @@ public class MessageConstants {
 
 
     // 消息特性
+
     /**
      * 消息属性：0.默认，1.离线消息，2.漫游消息，3.同步消息，4.透传消息，5.控制消息
      */
@@ -157,9 +160,18 @@ public class MessageConstants {
         IMAGE,
         VOICE,
         VIDEO,
+        COMPRESS,
+        TEXT,
+        CODE,
         FILE,
-
     }
 
+
+    /**
+     * 支持文件预览的文件类型
+     */
+    public static Set<String> enablePreviewFileType = Set.of("txt", "pdf", "docx", "doc", "ppt", "zip", "pptx", "xls", "xlsx",
+            "htm", "asp", "jsp", "xml", "json", "properties", "md", "gitignore", "log", "bat", "m", "bas", "prg", "cmd",
+            "cpp", "java", "c", "h", "go", "py", "kt", "js", "css", "csv", "rust", "sh", "sql","mp3","wav","mp4","flv");
 
 }

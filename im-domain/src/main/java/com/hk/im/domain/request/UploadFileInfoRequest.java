@@ -25,8 +25,7 @@ public class UploadFileInfoRequest {
     /**
      * 待上传文件大小: 单位byte 字节，1 byte = 8 bit
      */
-    private Long size;
-
+    private Long fileSize;
 
     /**
      * 待上传文件hash值
@@ -37,5 +36,13 @@ public class UploadFileInfoRequest {
      * 文件hash
      */
     private String hash;
+
+    /**
+     * 上传者
+     */
+    private Long uploaderId;
+
+    // 临时上传凭证
+    private String token;
 
 }

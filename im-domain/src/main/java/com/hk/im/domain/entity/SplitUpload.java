@@ -1,12 +1,13 @@
 package com.hk.im.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 文件拆分数据表
@@ -14,6 +15,7 @@ import lombok.Data;
  */
 @TableName(value ="tb_split_upload")
 @Data
+@Accessors(chain = true)
 public class SplitUpload implements Serializable {
     /**
      * 临时文件ID
@@ -24,71 +26,89 @@ public class SplitUpload implements Serializable {
     /**
      * 文件属性[1:合并文件;2:拆分文件]
      */
+    @TableField(value = "type")
     private Integer type;
 
     /**
      * 驱动类型[1:local;2:cos;]
      */
+    @TableField(value = "drive")
     private Integer drive;
 
     /**
      * 临时文件hash名
      */
+    @TableField(value = "upload_id")
     private String uploadId;
 
     /**
      * 上传的用户ID
      */
+    @TableField(value = "user_id")
     private Long userId;
 
     /**
      * 原文件名
      */
+    @TableField(value = "original_name")
     private String originalName;
 
     /**
      * 当前索引块
      */
-    private Object splitIndex;
+    @TableField(value = "split_index")
+    private Integer splitIndex;
 
     /**
      * 总上传索引块
      */
-    private Object splitNum;
+    @TableField(value = "split_num")
+    private Integer splitNum;
 
     /**
      * 临时保存路径
      */
+    @TableField(value = "path")
     private String path;
 
     /**
      * 文件后缀名
      */
+    @TableField(value = "file_ext")
     private String fileExt;
 
     /**
      * 文件大小
      */
-    private Object fileSize;
+    @TableField(value = "file_size")
+    private Integer fileSize;
 
     /**
      * 文件是否删除[0:否;1:是;] 
      */
-    private Integer isDelete;
+    @TableField(value = "is_delete")
+    private Boolean isDelete;
 
-    /**
-     * 额外参数json
-     */
-    private Object attribute;
-
-    /**
-     * 更新时间
-     */
-    private LocalDateTime createTime;
 
     /**
      * 创建时间
      */
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
+
+    public static enum FileType {
+
+        UNKNOWN,
+        MERGE,
+        SPLIT,
+
+    }
 
 }

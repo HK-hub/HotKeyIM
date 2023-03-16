@@ -33,5 +33,7 @@ public class SecondsTransferRequest {
      */
     private String hash;
 
+    private Long receiverId;
+
 
 }
