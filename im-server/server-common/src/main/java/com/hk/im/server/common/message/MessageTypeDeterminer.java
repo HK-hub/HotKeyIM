@@ -1,5 +1,6 @@
 package com.hk.im.server.common.message;
 
+import com.hk.im.server.common.event.SimpleCodeMessage;
 import com.hk.im.server.common.event.SimpleFileMessage;
 import com.hk.im.server.common.event.SimpleImageMessage;
 import com.hk.im.server.common.event.SimpleTextMessage;
@@ -38,7 +39,7 @@ public class MessageTypeDeterminer {
     public static Integer PongMessageType = 996;
     public static Integer TextMessageType = 1;
     public static Integer ImageMessageType = 2;
-
+    public static Integer CodeMessageType = 3;
     public static Integer FileMessageType = 6;
 
     static {
@@ -47,6 +48,7 @@ public class MessageTypeDeterminer {
         messageClasses.put(TextMessageType, SimpleTextMessage.class);
         messageClasses.put(ImageMessageType, SimpleImageMessage.class);
         messageClasses.put(FileMessageType, SimpleFileMessage.class);
+        messageClasses.put(CodeMessageType, SimpleCodeMessage.class);
 
     }
 

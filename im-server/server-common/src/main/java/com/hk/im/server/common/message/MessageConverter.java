@@ -31,6 +31,7 @@ public class MessageConverter {
         return switch (type) {
             case TEXT -> new SimpleTextMessage();
             case IMAGE -> new SimpleImageMessage();
+            case CODE ->  new SimpleFileMessage();
             case FILE ->  new SimpleFileMessage();
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
