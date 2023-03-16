@@ -19,6 +19,7 @@ import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
+import com.hk.im.domain.request.CodeMessageRequest;
 import com.hk.im.domain.request.TalkRecordsRequest;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
@@ -27,6 +28,7 @@ import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.MessageFlowMapper;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
 import com.hk.im.service.worker.AttachmentMessageWorker;
+import com.hk.im.service.worker.CodeMessageWorker;
 import com.hk.im.service.worker.ImageMessageWorker;
 import com.hk.im.service.worker.TextMessageWorker;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +71,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     private ImageMessageWorker imageMessageWorker;
     @Resource
     private AttachmentMessageWorker attachmentMessageWorker;
+    @Resource
+    private CodeMessageWorker codeMessageWorker;
 
 
     /**
@@ -276,6 +280,18 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     public ResponseResult sendAttachmentMessage(AttachmentMessage request) {
 
         return this.attachmentMessageWorker.sendMessage(request);
+    }
+
+
+    /**
+     * 发送代码消息
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult sendCodeMessage(CodeMessageRequest request) {
+
+        return this.codeMessageWorker.sendMessage(request);
     }
 
 

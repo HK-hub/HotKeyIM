@@ -91,6 +91,8 @@ public class MessageConstants {
         LINK,
         // 卡片消息
         CARD,
+        // 转发消息
+        FORWARD,
         // 语音通话
         VOICE_CALL,
         // 视频通话
