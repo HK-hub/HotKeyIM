@@ -2,7 +2,7 @@
 **/target
 /document/**
 commitlint.config.js
-node_modules/**
+node_modules/
 .gitignore
 HotKeyIM-Web-Admin.log
 HotKeyIM-Web-Admin-**.log
