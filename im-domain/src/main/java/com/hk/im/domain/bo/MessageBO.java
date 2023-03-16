@@ -119,6 +119,11 @@ public class MessageBO {
     protected String content;
 
     /**
+     * 消息数据链接
+     */
+    protected String url;
+
+    /**
      * 扩展字段，一般使用JSON字符串存储,可以用户回复消息，@消息，超文本消息，卡片消息，视频消息等
      */
     protected Object extra;

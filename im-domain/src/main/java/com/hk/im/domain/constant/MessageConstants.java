@@ -79,8 +79,8 @@ public class MessageConstants {
         IMAGE,
         // 代码消息
         CODE,
-        // 语音消息
-        VOICE,
+        // 语音消息,视频消息
+        AUDIO,
         // 视频消息
         VIDEO,
         // 文件消息

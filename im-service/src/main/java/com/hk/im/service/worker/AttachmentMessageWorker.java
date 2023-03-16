@@ -6,6 +6,7 @@ import com.hk.im.client.service.SplitUploadService;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
+import com.hk.im.common.util.FileUtil;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.context.UserContextHolder;
@@ -199,5 +200,34 @@ public class AttachmentMessageWorker {
         return ResponseResult.SUCCESS(extra);
     }
 
+
+    /**
+     * 计算文件真实类型：可能为语音，文件，视频等
+     *
+     * @param fileName
+     *
+     * @return
+     */
+    private MessageConstants.ChatMessageType computedMessageActualType(String fileName) {
+
+        CloudResource.ResourceType type = CloudResource.getResourceTypeEnum(fileName);
+        // 判断类型
+        if (type.equals(CloudResource.ResourceType.AUDIO)) {
+            // 音视频
+            return MessageConstants.ChatMessageType.AUDIO;
+        } else if (type.equals(CloudResource.ResourceType.IMAGE)) {
+            // 音视频
+            return MessageConstants.ChatMessageType.IMAGE;
+        } else if (type.equals(CloudResource.ResourceType.VIDEO)) {
+            // 音视频
+            return MessageConstants.ChatMessageType.VIDEO;
+        } else if (type.equals(CloudResource.ResourceType.CODE)) {
+            // 音视频
+            return MessageConstants.ChatMessageType.CODE;
+        } else {
+            // 音视频
+            return MessageConstants.ChatMessageType.FILE;
+        }
+    }
 
 }
