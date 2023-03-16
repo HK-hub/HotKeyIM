@@ -1,6 +1,7 @@
 package com.hk.im.infrastructure.mapstruct;
 
 import com.hk.im.domain.bo.MessageBO;
+import com.hk.im.domain.dto.FileMessageExtra;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.MessageFlow;
 import com.hk.im.domain.vo.FriendVO;
@@ -9,6 +10,8 @@ import com.hk.im.domain.vo.UserVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.Map;
 
 /**
  * @author : HK意境
@@ -39,5 +42,8 @@ public interface MessageMapStructure {
     @Mapping(source = "messageBO.id", target = "id")
     @Mapping(source = "messageBO.groupId", target = "groupId")
     public MessageVO boToVO(MessageBO messageBO);
+
+
+    public FileMessageExtra buildExtra(Map<String, Object> map);
 
 }

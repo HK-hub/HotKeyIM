@@ -61,8 +61,6 @@ public class SplitUploadServiceImpl extends ServiceImpl<SplitUploadMapper, Split
     private AuthorizationService authorizationService;
     @Resource(name = "mergeSliceFileThreadPool")
     private ThreadPoolExecutor mergeSliceFileThreadPool;
-    @Resource
-    private MinioService minioService;
 
 
     /**

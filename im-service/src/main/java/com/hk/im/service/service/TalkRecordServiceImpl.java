@@ -1,10 +1,14 @@
 package com.hk.im.service.service;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
+import com.alibaba.fastjson2.JSON;
 import com.hk.im.client.service.AuthorizationService;
 import com.hk.im.client.service.ChatMessageService;
 import com.hk.im.client.service.TalkRecordService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
+import com.hk.im.common.util.ObjectMapperUtil;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.dto.BaseMessageExtra;
@@ -13,11 +17,15 @@ import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.DownloadMessageFileRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -114,7 +122,7 @@ public class TalkRecordServiceImpl implements TalkRecordService {
         }
 
         // 判断文件扩展类型是否支持预览
-        FileMessageExtra extra = (FileMessageExtra) fileMessage.getExtra();
+        FileMessageExtra extra = ObjectMapperUtil.OBJECT_MAPPER.convertValue(fileMessage.getExtra(), FileMessageExtra.class);
         String extension = extra.getExtension();
         // 文件是否支持预览
         if (!MessageConstants.enablePreviewFileType.contains(extension)) {
