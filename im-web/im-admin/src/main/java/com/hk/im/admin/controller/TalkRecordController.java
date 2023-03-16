@@ -37,5 +37,15 @@ public class TalkRecordController {
         return this.talkRecordService.downloadRecordFile(request);
     }
 
+    /**
+     * 预览聊天记录文件
+     * @param request
+     * @return
+     */
+    @PostMapping("/file/preview")
+    public ResponseResult previewMessageFile(@RequestBody DownloadMessageFileRequest request) {
+        return this.talkRecordService.previewMessageFile(request);
+    }
+
 
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author : HK意境
@@ -163,5 +164,11 @@ public class MessageConstants {
         FILE,
     }
 
+
+    /**
+     * 支持文件预览的文件类型
+     */
+    public static Set<String> enablePreviewFileType = Set.of("pdf", "txt", "docx", "doc", "ppt", "zip", "pptx", "xls", "xlsx",
+            "cpp", "java", "c", "h", "html", "go", "py", "kt", "js", "css", "csv", "rust", "sh", "sql");
 
 }

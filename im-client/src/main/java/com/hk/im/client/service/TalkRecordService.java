@@ -22,4 +22,11 @@ public interface TalkRecordService {
      */
     ResponseResult downloadRecordFile(DownloadMessageFileRequest request);
 
+    /**
+     * 聊天记录文件预览
+     * @param request
+     * @return
+     */
+    ResponseResult previewMessageFile(DownloadMessageFileRequest request);
 }
+
