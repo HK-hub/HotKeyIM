@@ -406,7 +406,7 @@ public class SpeechRecognitionUtil extends AbstractClient {
      * @return SentenceRecognitionResponse
      * @throws TencentCloudSDKException
      */
-    public SentenceRecognitionResponse SentenceRecognition(SentenceRecognitionRequest req) throws TencentCloudSDKException{
+    public SentenceRecognitionResponse sentenceRecognition(SentenceRecognitionRequest req) throws TencentCloudSDKException{
         JsonResponseModel<SentenceRecognitionResponse> rsp = null;
         String rspStr = "";
         try {
