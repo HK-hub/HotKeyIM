@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SpeechRecognitionUtilTest {
 
-    private String secretId = "AKIDXv53qVyMjy2yqjKkxzsY4Y21sY2LSQAw";
-    private String secretKey = "qY8YmY8W2OZdrvpZ7RchbHi5IRQzNYUB";
+    private String secretId = "";
+    private String secretKey = "";
     @Test
     void createRecTask() {
     }
