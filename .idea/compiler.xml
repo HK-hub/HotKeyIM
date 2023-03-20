@@ -22,6 +22,7 @@
         <module name="server-common" />
         <module name="im-service" />
         <module name="ruoyi-common" />
+        <module name="signal-server" />
         <module name="ruoyi-quartz" />
         <module name="im-common" />
         <module name="im-system" />
