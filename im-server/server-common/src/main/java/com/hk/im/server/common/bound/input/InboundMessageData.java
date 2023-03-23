@@ -17,6 +17,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class InboundMessageData {
 
-    String event;
+    protected String event;
+
+    // JOSN 字符串
+    protected String dataString;
 
 }

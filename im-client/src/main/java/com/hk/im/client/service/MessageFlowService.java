@@ -9,6 +9,7 @@ import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.CodeMessageRequest;
+import com.hk.im.domain.request.InviteVideoCallRequest;
 import com.hk.im.domain.request.TalkRecordsRequest;
 
 /**
@@ -76,4 +77,11 @@ public interface MessageFlowService extends IService<MessageFlow> {
      * @return
      */
     ResponseResult sendCodeMessage(CodeMessageRequest request);
+
+    /**
+     * 发起视频通话
+     * @param request
+     * @return
+     */
+    ResponseResult sendVideoMessage(InviteVideoCallRequest request);
 }

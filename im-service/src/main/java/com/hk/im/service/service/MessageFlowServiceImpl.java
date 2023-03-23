@@ -20,6 +20,7 @@ import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
 import com.hk.im.domain.request.CodeMessageRequest;
+import com.hk.im.domain.request.InviteVideoCallRequest;
 import com.hk.im.domain.request.TalkRecordsRequest;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
@@ -27,10 +28,7 @@ import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.MessageFlowMapper;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
-import com.hk.im.service.worker.AttachmentMessageWorker;
-import com.hk.im.service.worker.CodeMessageWorker;
-import com.hk.im.service.worker.ImageMessageWorker;
-import com.hk.im.service.worker.TextMessageWorker;
+import com.hk.im.service.worker.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -73,6 +71,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     private AttachmentMessageWorker attachmentMessageWorker;
     @Resource
     private CodeMessageWorker codeMessageWorker;
+    @Resource
+    private VideoMessageWorker videoMessageWorker;
 
 
     /**
@@ -292,6 +292,18 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     public ResponseResult sendCodeMessage(CodeMessageRequest request) {
 
         return this.codeMessageWorker.sendMessage(request);
+    }
+
+
+    /**
+     * 发起视频通话
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult sendVideoMessage(InviteVideoCallRequest request) {
+
+        return this.videoMessageWorker.inviteVideoCall(request);
     }
 
 
