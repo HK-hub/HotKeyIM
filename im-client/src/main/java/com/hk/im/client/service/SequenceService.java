@@ -42,4 +42,12 @@ public interface SequenceService extends IService<Sequence> {
      */
     public ResponseResult nextId(Long senderId, Long receiverId, Integer talkType);
 
+
+    /**
+     * 获取一个房间号
+     * @return
+     */
+    public ResponseResult getRoomId(Long hostId);
+
+
 }

@@ -20,6 +20,6 @@ public class InboundMessageData {
     protected String event;
 
     // JOSN 字符串
-    protected String dataString;
+    protected String data;
 
 }

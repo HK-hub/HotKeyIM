@@ -89,6 +89,10 @@ public class RedisConstants {
     public static final String UPLOAD_TOKEN = "upload:token:";
 
 
+    // 房间号集合
+    public static final String ROOM_NUMBER_KEY = "rtc:room:number:";
+
+
     /**
      * 判断 key 值是否存在于 redis 中
      * 使用 bloom filter

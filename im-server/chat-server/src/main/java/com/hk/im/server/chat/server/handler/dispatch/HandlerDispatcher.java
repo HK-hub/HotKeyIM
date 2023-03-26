@@ -35,8 +35,9 @@ public class HandlerDispatcher {
             WebSocketConnectHandler.doConnect(ctx, msg);
         } else if (msg instanceof TextWebSocketFrame) {
             // 业务消息
-            log.info("chat server receive message:{}", ((TextWebSocketFrame) msg).text());
-            WebSocketMessageHandler.process(ctx, msg);
+            TextWebSocketFrame webSocketFrame = (TextWebSocketFrame) msg;
+            log.info("chat server receive message:{}", webSocketFrame.text());
+            WebSocketMessageHandler.process(ctx, webSocketFrame);
         }
     }
 

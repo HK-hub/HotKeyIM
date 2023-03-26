@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 public class SignalingEventMessage {
 
 
-
-
+    // 信令类型
+    protected String cmd;
 
 }
