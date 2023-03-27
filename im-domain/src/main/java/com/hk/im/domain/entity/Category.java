@@ -56,7 +56,7 @@ public class Category implements Serializable {
      * 是否删除
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间
