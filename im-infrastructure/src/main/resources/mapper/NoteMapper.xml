@@ -8,18 +8,34 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="mdContent" column="md_content" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="authorId" column="author_id" jdbcType="BIGINT"/>
         <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
-        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id
+        ,title
         ,md_content,content,author_id,
         category_id,status,deleted,
         create_time,update_time
     </sql>
+
+
+    <!-- 查询用户文集列表 -->
+    <select id="selectNoteArticleList" resultType="com.hk.im.domain.entity.Note">
+        select *
+        from tb_note
+        where author_id = #{request.userId}
+          and status = 1
+          and deleted = false
+          and (content like concat('%', #{request.keyword}, '%')
+            or md_content like concat('%', #{request.keyword}, '%')
+            or title like concat('%', #{request.keyword}, '%'))
+          limit ${(request.page - 1) * request.pageSize}, #{request.pageSize}
+    </select>
 </mapper>

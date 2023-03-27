@@ -21,6 +21,12 @@ public class Note implements Serializable {
     private Long id;
 
     /**
+     * 文章标题
+     */
+    @TableField(value = "title")
+    private String title;
+
+    /**
      * markdown 格式的笔记内容
      */
     @TableField(value = "md_content")
@@ -54,7 +60,7 @@ public class Note implements Serializable {
      * 是否删除
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间

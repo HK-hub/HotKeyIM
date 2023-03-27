@@ -1,8 +1,7 @@
 package com.hk.im.admin.controller;
 
-import com.hk.im.client.service.NoteService;
+import com.hk.im.client.service.TagService;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.domain.request.GetArticleListRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +12,8 @@ import javax.annotation.Resource;
 
 /**
  * @author : HK意境
- * @ClassName : NoteController
- * @date : 2023/3/26 14:45
+ * @ClassName : NoteTagController
+ * @date : 2023/3/27 16:09
  * @description :
  * @Todo :
  * @Bug :
@@ -24,24 +23,21 @@ import javax.annotation.Resource;
 @Slf4j
 @CrossOrigin
 @RestController
-@RequestMapping("/note")
-public class NoteController {
-
+@RequestMapping("/note/tag")
+public class NoteTagController {
 
     @Resource
-    private NoteService noteService;
+    private TagService tagService;
+
 
     /**
-     * 查询用户笔记文集列表
-     * @param request
+     * 获取用户笔记列表
      * @return
      */
-    @GetMapping("/article/list")
-    public ResponseResult getArticleList(GetArticleListRequest request) {
+    @GetMapping("/list")
+    public ResponseResult getUserNoteTags(Long userId) {
 
-        return this.noteService.getNoteArticleList(request);
+        return tagService.getUserNoteTags(userId);
     }
-
-
 
 }

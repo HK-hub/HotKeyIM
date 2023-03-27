@@ -5,10 +5,15 @@ import com.hk.im.client.service.CategoryService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.Category;
+import com.hk.im.domain.entity.Note;
+import com.hk.im.domain.request.EditNoteCategoryRequest;
+import com.hk.im.domain.vo.NoteVO;
 import com.hk.im.infrastructure.mapper.CategoryMapper;
+import com.hk.im.infrastructure.mapstruct.NoteMapStructure;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +30,9 @@ import java.util.Objects;
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     implements CategoryService {
+
+    @Resource
+    private CategoryMapper categoryMapper;
 
 
     /**
@@ -47,6 +55,54 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
                 .list();
         return ResponseResult.SUCCESS(categories);
     }
+
+    /**
+     * 添加或修改笔记分类
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult editNoteCategoryList(EditNoteCategoryRequest request) {
+
+        return null;
+    }
+
+
+    /**
+     * 批量获取笔记的分类列表
+     * @param noteList
+     * @return
+     */
+    @Override
+    public List<NoteVO> batchGetNoteCategory(List<Note> noteList) {
+
+        List<NoteVO> noteVOList = noteList.stream().map(note -> {
+            Category category = this.lambdaQuery().eq(Category::getId, note.getCategoryId())
+                    .one();
+            return NoteMapStructure.INSTANCE.toVO(note, category,null);
+        }).toList();
+
+        return noteVOList;
+    }
+
+
+    /**
+     * 获取笔记的分类
+     * @param noteId
+     * @return
+     */
+    @Override
+    public Category getNoteCategory(Long noteId) {
+        Category category = this.lambdaQuery().eq(Category::getId, noteId)
+                .one();
+        return category;
+    }
+
+
+
+
+
+
 }
 
 
