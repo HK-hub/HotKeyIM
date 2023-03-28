@@ -1,6 +1,4 @@
 package com.hk.im.domain.request;
-
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

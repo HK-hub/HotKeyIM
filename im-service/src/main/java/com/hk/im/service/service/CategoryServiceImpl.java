@@ -10,6 +10,7 @@ import com.hk.im.domain.request.EditNoteCategoryRequest;
 import com.hk.im.domain.vo.NoteVO;
 import com.hk.im.infrastructure.mapper.CategoryMapper;
 import com.hk.im.infrastructure.mapstruct.NoteMapStructure;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
                 .eq(Category::getUserId, userId)
                 .eq(Category::getDeleted, false)
                 .list();
+
+
+
         return ResponseResult.SUCCESS(categories);
     }
 
@@ -64,7 +68,42 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     @Override
     public ResponseResult editNoteCategoryList(EditNoteCategoryRequest request) {
 
-        return null;
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getName()) || Objects.isNull(request.getCategoryId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 参数校验失败
+            return ResponseResult.SUCCESS(preCheck);
+        }
+
+        Long userId = UserContextHolder.get().getId();
+        boolean res = false;
+        Category category = new Category();
+
+        // 查看是否存在分类信息
+        boolean exists = this.lambdaQuery()
+                .eq(Category::getId, request.getCategoryId())
+                .exists();
+        if (BooleanUtils.isFalse(exists)) {
+            // 分类不存在 -> 保存分类
+             category.setUserId(userId)
+                    .setName(request.getName())
+                    .setDescription(request.getDescription());
+            res = this.save(category);
+
+        } else {
+            // 分类存在进行更新
+            category.setId(request.getCategoryId())
+                    .setName(request.getName())
+                    .setDescription(request.getDescription());
+            res = this.updateById(category);
+        }
+
+        // 构造响应结果
+        if (BooleanUtils.isFalse(res)) {
+            return ResponseResult.FAIL().setDataAsMessage("编辑文集分类失败!");
+        }
+
+        return ResponseResult.SUCCESS(category).setMessage("编辑分类信息成功!");
     }
 
 

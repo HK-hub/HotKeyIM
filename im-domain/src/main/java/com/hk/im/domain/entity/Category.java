@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @TableName(value ="tb_category")
 @Data
 @Table(name = "tb_category")
+@Accessors(chain = true)
 public class Category implements Serializable {
     /**
      * 分类id
