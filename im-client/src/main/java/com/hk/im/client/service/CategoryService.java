@@ -53,9 +53,15 @@ public interface CategoryService extends IService<Category> {
 
     /**
      * 获取笔记分类
-     * @param note
+     * @param noteId
      * @return {@link Category}
      */
     public Category getNoteCategory(Long noteId);
 
+    /**
+     * 获取用户默认笔记分类
+     * @param userId
+     * @return
+     */
+    public Category getNoteDefaultCategory(Long userId);
 }

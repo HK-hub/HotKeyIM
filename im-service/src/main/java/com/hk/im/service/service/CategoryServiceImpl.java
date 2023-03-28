@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,7 +70,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
             // 查询分类对应文章数量
             int count = this.getCategoryNoteCounts(category.getId());
             return CategoryMapStructure.INSTANCE.toVO(category, count);
-        }).toList();
+        })
+            // 排序：按照创建时间从大到小排序
+            .sorted(Comparator.comparing(CategoryVO::getCreateTime).reversed()).toList();
 
 
         return ResponseResult.SUCCESS(categoryVOS);
@@ -161,8 +164,26 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
 
 
     /**
+     * 获取用户默认笔记分类
+     * @param userId
+     * @return
+     */
+    @Override
+    public Category getNoteDefaultCategory(Long userId) {
+
+        Category one = this.lambdaQuery()
+                .eq(Category::getType, Category.Type.defaulted.ordinal())
+                .one();
+
+        return one;
+    }
+
+
+    /**
      * 获取分类下文章数量
+     *
      * @param categoryId
+     *
      * @return
      */
     public int getCategoryNoteCounts(Long categoryId) {

@@ -22,7 +22,7 @@ public interface NoteMapper extends BaseMapper<Note> {
      * @param request
      * @return
      */
-    List<Note> selectRecentEditNoteList(GetArticleListRequest request, @Param("startTime") LocalDate startTime);
+    List<Note> selectRecentEditNoteList(@Param("request") GetArticleListRequest request, @Param("startTime") LocalDate startTime);
 
     /**
      * 我的收藏
@@ -37,7 +37,7 @@ public interface NoteMapper extends BaseMapper<Note> {
      * @param request
      * @return
      */
-    List<Note> selectNoteListByCategory(GetArticleListRequest request);
+    List<Note> selectNoteListByCategory(@Param("request") GetArticleListRequest request);
 
     /**
      * 标签分类

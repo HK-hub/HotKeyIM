@@ -6,13 +6,21 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
- * 
- * @TableName tb_note
+ * @ClassName : Note
+ * @author : HK意境
+ * @date : 2023/3/28 15:32
+ * @description :
+ * @Todo :
+ * @Bug :
+ * @Modified :
+ * @Version : 1.0
  */
 @TableName(value ="tb_note")
 @Data
+@Accessors(chain = true)
 public class Note implements Serializable {
     /**
      * 笔记id
@@ -37,6 +45,12 @@ public class Note implements Serializable {
      */
     @TableField(value = "content")
     private String content;
+
+    /**
+     * 封面图片：第一张上传的图片
+     */
+    @TableField(value = "cover")
+    private String cover;
 
     /**
      * 作者id

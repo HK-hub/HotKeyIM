@@ -3,6 +3,7 @@ package com.hk.im.client.service;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Note;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hk.im.domain.request.EditArticleRequest;
 import com.hk.im.domain.request.GetArticleListRequest;
 
 /**
@@ -23,4 +24,11 @@ public interface NoteService extends IService<Note> {
      * @return
      */
     ResponseResult getNoteArticleList(GetArticleListRequest request);
+
+    /**
+     * 编辑文章笔记
+     * @param request
+     * @return
+     */
+    ResponseResult editNoteArticle(EditArticleRequest request);
 }

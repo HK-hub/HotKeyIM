@@ -1,28 +1,32 @@
 package com.hk.im.service.service;
 
+import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.hk.im.client.service.*;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.*;
+import com.hk.im.domain.request.EditArticleRequest;
 import com.hk.im.domain.request.GetArticleListRequest;
+import com.hk.im.domain.response.EditNoteArticleResponse;
 import com.hk.im.domain.vo.NoteVO;
 import com.hk.im.infrastructure.mapper.NoteMapper;
 import com.hk.im.infrastructure.mapstruct.NoteMapStructure;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * @ClassName : NoteServiceImpl
  * @author : HK意境
+ * @ClassName : NoteServiceImpl
  * @date : 2023/3/27 16:49
  * @description :
  * @Todo :
@@ -46,7 +50,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
 
     /**
      * 获取用户文集列表
+     *
      * @param request
+     *
      * @return {@link java.util.List} of {@link Note}
      */
     @Override
@@ -104,6 +110,86 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
 
         // 响应数据
         return ResponseResult.SUCCESS(noteVOList);
+    }
+
+
+    /**
+     * 编辑文章笔记
+     *
+     * @param request
+     *
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult editNoteArticle(EditArticleRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getNoteId()) || Objects.isNull(request.getMdContent())
+                || StringUtils.isEmpty(request.getTitle());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 参数校验失败
+            return ResponseResult.FAIL("笔记文章信息不完整!");
+        }
+
+        // 素材
+        Long noteId = request.getNoteId();
+        Long userId = UserContextHolder.get().getId();
+        Long categoryId = request.getCategoryId();
+
+        // 检查文章是否存在
+        Note note = this.getById(noteId);
+
+        boolean res = false;
+        if (Objects.isNull(note)) {
+            // 笔记文章不存在，新增文章
+            note = new Note()
+                    .setAuthorId(userId)
+                    .setTitle(request.getTitle())
+                    .setStatus(1)
+                    .setContent(request.getContent())
+                    .setMdContent(request.getMdContent());
+
+            // 确定分类信息
+            if (Objects.isNull(categoryId) || 0 == categoryId) {
+                // 分类不存在：选择默认分类
+                Category defaultCategory = this.categoryService.getNoteDefaultCategory(userId);
+                if (Objects.isNull(defaultCategory)) {
+                    // 默认分类不存在
+                    return ResponseResult.FAIL("抱歉,您未选择文章笔记分类!");
+                }
+
+                // 设置分类
+                categoryId = defaultCategory.getId();
+            }
+
+            note.setCategoryId(categoryId);
+
+            // 保存文章笔记
+            res = this.save(note);
+        } else {
+            // 笔记文章存在：进行更新
+            note.setTitle(request.getTitle())
+                    .setContent(request.getContent())
+                    .setMdContent(request.getMdContent())
+                    .setCategoryId(categoryId);
+            res = this.updateById(note);
+        }
+
+        // 响应数据
+        if (BooleanUtils.isFalse(res)) {
+            // 保存，编辑失败
+            return ResponseResult.FAIL("保存笔记文章失败!");
+        }
+
+        // 保存，编辑成功: 构建响应体
+        String summary = Jsoup.parse(note.getContent()).text();
+        EditNoteArticleResponse result = new EditNoteArticleResponse()
+                .setId(note.getId())
+                .setTitle(note.getTitle())
+                .setCover(note.getCover())
+                .setSummary(summary);
+        return ResponseResult.SUCCESS(result);
     }
 }
 

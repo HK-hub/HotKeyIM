@@ -47,6 +47,12 @@ public class Category implements Serializable {
     private String avatar;
 
     /**
+     * 分类类型：0.默认分类,1.普通，2.星标
+     */
+    @TableField(value = "`type`")
+    private Integer type;
+
+    /**
      * 分类说明
      */
     @TableField(value = "description")
@@ -128,4 +134,14 @@ public class Category implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+
+    public static enum Type {
+
+        defaulted,
+        simple,
+        star,
+
+    }
+
 }

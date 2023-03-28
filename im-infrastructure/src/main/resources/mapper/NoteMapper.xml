@@ -9,6 +9,7 @@
         <result property="mdContent" column="md_content" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR"/>
         <result property="authorId" column="author_id" jdbcType="BIGINT"/>
         <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
@@ -20,7 +21,7 @@
     <sql id="Base_Column_List">
         id
         ,title
-        ,md_content,content,author_id,
+        ,md_content,content,cover,author_id,
         category_id,status,deleted,
         create_time,update_time
     </sql>

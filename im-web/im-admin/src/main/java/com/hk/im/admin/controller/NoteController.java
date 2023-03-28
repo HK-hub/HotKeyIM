@@ -2,12 +2,10 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.client.service.NoteService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.EditArticleRequest;
 import com.hk.im.domain.request.GetArticleListRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -40,6 +38,13 @@ public class NoteController {
     public ResponseResult getArticleList(GetArticleListRequest request) {
 
         return this.noteService.getNoteArticleList(request);
+    }
+
+
+    @PostMapping("/article/edit")
+    public ResponseResult editArticle(EditArticleRequest request) {
+
+        return this.noteService.editNoteArticle(request);
     }
 
 

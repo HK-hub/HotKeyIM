@@ -1,12 +1,10 @@
 package com.hk.im.infrastructure.event.user.listener;
 
+import com.hk.im.client.service.CategoryService;
 import com.hk.im.client.service.FriendService;
 import com.hk.im.client.service.UserService;
 import com.hk.im.domain.constant.FriendConstants;
-import com.hk.im.domain.entity.Friend;
-import com.hk.im.domain.entity.FriendGroup;
-import com.hk.im.domain.entity.User;
-import com.hk.im.domain.entity.UserInfo;
+import com.hk.im.domain.entity.*;
 import com.hk.im.infrastructure.event.user.event.UserAvatarUpdateEvent;
 import com.hk.im.infrastructure.event.user.event.UserDetailUpdateEvent;
 import com.hk.im.infrastructure.event.user.event.UserRegisterEvent;
@@ -47,6 +45,8 @@ public class UserEventListener {
     private FriendMapper friendMapper;
     @Resource
     private FriendService friendService;
+    @Resource
+    private CategoryService categoryService;
 
     /**
      * 用户更新事件
@@ -95,6 +95,13 @@ public class UserEventListener {
                 .setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
         // 保存：
         this.friendMapper.insert(friend);
+
+        // 笔记功能添加一个默认的笔记分类
+        Category category = new Category().setUserId(user.getId())
+                .setType(Category.Type.defaulted.ordinal())
+                .setName("默认分类")
+                .setDescription("默认分类");
+        this.categoryService.save(category);
 
     }
 
