@@ -7,8 +7,12 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.NoteTag;
 import com.hk.im.domain.entity.Tag;
+import com.hk.im.domain.request.EditNoteTagRequest;
+import com.hk.im.domain.vo.TagVO;
 import com.hk.im.infrastructure.mapper.TagMapper;
+import com.hk.im.infrastructure.mapstruct.NoteTagMapStructure;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -47,13 +51,20 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         if (Objects.isNull(userId)) {
             userId = UserContextHolder.get().getId();
         }
-
+        // 查询list
         List<Tag> tagList = this.lambdaQuery()
                 .eq(Tag::getUserId, userId)
                 .eq(Tag::getDeleted, false)
                 .list();
 
-        return ResponseResult.SUCCESS(tagList);
+        // 转换为 NoteVO
+        List<TagVO> tagVOS = tagList.stream().map(tag -> {
+            // 查询tag 标签对应的文章数量
+            int count = this.getTagMappingArticleCount(tag.getId());
+            return NoteTagMapStructure.INSTANCE.toVO(tag, count);
+        }).toList();
+
+        return ResponseResult.SUCCESS(tagVOS);
     }
 
 
@@ -78,6 +89,68 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
         return tagList;
     }
+
+
+    /**
+     * 编辑标签
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult editUserNoteTag(EditNoteTagRequest request) {
+
+        // 参数校验
+        if (Objects.isNull(request) || StringUtils.isEmpty(request.getName()) || Objects.isNull(request.getTagId())) {
+            // 校验失败
+            return ResponseResult.FAIL("参数校验失败!");
+        }
+
+        // 素材
+        Long userId = UserContextHolder.get().getId();
+        Long tagId = request.getTagId();
+
+        // 查询标签是否存在
+        Tag tag = this.getById(tagId);
+        boolean res = false;
+
+        if (Objects.isNull(tag)) {
+            // 标签不存在，创建
+            tag = new Tag()
+                    .setUserId(userId)
+                    .setName(request.getName())
+                    .setDescription(request.getDescription())
+                    .setAvatar(request.getAvatar());
+            res = this.save(tag);
+
+        } else {
+            // 标签存在，进行更新
+            tag.setName(request.getName());
+            res = this.updateById(tag);
+        }
+
+        // 构建返回结果
+        if (BooleanUtils.isFalse(res)) {
+            return ResponseResult.FAIL("编辑标签失败!");
+        }
+
+        // 编辑成功
+        return ResponseResult.SUCCESS(tag);
+    }
+
+
+    /**
+     * 获取标签对应文章数量
+     * @param tagId
+     * @return
+     */
+    public int getTagMappingArticleCount(Long tagId) {
+        Long count = this.noteTagService.lambdaQuery()
+                .eq(NoteTag::getTagId, tagId)
+                .count();
+        return count.intValue();
+    }
+
+
 }
 
 

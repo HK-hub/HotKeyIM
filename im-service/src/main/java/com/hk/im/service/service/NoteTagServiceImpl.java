@@ -33,6 +33,22 @@ public class NoteTagServiceImpl extends ServiceImpl<NoteTagMapper, NoteTag>
 
         return null;
     }
+
+
+    /**
+     * 获取指定标签下的笔记集合
+     * @param tagId
+     * @return
+     */
+    @Override
+    public List<NoteTag> getNoteListByTagId(Long tagId) {
+
+        List<NoteTag> noteTagList = this.lambdaQuery()
+                .eq(NoteTag::getTagId, tagId)
+                .list();
+
+        return noteTagList;
+    }
 }
 
 

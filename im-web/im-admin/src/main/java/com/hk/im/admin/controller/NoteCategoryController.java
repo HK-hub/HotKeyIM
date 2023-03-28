@@ -48,7 +48,7 @@ public class NoteCategoryController {
      * @return
      */
     @PostMapping("/edit")
-    public ResponseResult editNoteCategoryList(EditNoteCategoryRequest request) {
+    public ResponseResult editNoteCategoryList(@RequestBody EditNoteCategoryRequest request) {
         return this.categoryService.editNoteCategoryList(request);
     }
 

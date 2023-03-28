@@ -2,11 +2,9 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.client.service.TagService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.EditNoteTagRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -39,5 +37,18 @@ public class NoteTagController {
 
         return tagService.getUserNoteTags(userId);
     }
+
+
+    /**
+     * 编辑用户文章标签
+     * @param request
+     * @return
+     */
+    @PostMapping("/edit")
+    public ResponseResult editUserNoteTags(@RequestBody EditNoteTagRequest request) {
+        return this.tagService.editUserNoteTag(request);
+    }
+
+
 
 }

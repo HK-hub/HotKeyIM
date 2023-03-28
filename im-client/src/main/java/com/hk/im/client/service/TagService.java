@@ -3,6 +3,7 @@ package com.hk.im.client.service;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hk.im.domain.request.EditNoteTagRequest;
 
 import java.util.List;
 
@@ -30,4 +31,11 @@ public interface TagService extends IService<Tag> {
      * @return
      */
     List<Tag> getNoteTagList(Long id);
+
+    /**
+     * 编辑文集标签
+     * @param request
+     * @return {@link Tag}
+     */
+    ResponseResult editUserNoteTag(EditNoteTagRequest request);
 }

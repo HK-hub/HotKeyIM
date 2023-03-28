@@ -5,16 +5,18 @@
 <mapper namespace="com.hk.im.infrastructure.mapper.UserCollectionMapper">
 
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.UserCollection">
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="collectibleId" column="collectible_id" jdbcType="BIGINT"/>
-            <result property="type" column="type" jdbcType="INTEGER"/>
-            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="collectibleId" column="collectible_id" jdbcType="BIGINT"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        user_id,collectible_id,type,
+        id,user_id
+        ,collectible_id,type,
         deleted,create_time,update_time
     </sql>
 </mapper>

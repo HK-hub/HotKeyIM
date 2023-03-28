@@ -17,5 +17,17 @@ import java.util.List;
  */
 public interface NoteTagService extends IService<NoteTag> {
 
+    /**
+     * 获取指定笔记的标签集合
+     * @param noteId
+     * @return
+     */
     List<NoteTag> getNoteTagList(Long noteId);
+
+    /**
+     * 获取指定标签下的笔记集合
+     * @param tagId
+     * @return
+     */
+    List<NoteTag> getNoteListByTagId(Long tagId);
 }

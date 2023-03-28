@@ -33,9 +33,81 @@
         where author_id = #{request.userId}
           and status = 1
           and deleted = false
-          and (content like concat('%', #{request.keyword}, '%')
+            limit ${(request.page - 1) * request.pageSize}
+            , #{request.pageSize}
+    </select>
+
+    <!-- 近期编辑 -->
+    <select id="selectRecentEditNoteList" resultType="com.hk.im.domain.entity.Note">
+        select *
+        from tb_note
+        where author_id = #{request.userId}
+        and status = 1
+        and deleted = false
+        and update_time > #{startTime}
+        <if test="request.keyword != null and request.keyword.length() > 0">
+            and (content like concat('%', #{request.keyword}, '%')
             or md_content like concat('%', #{request.keyword}, '%')
             or title like concat('%', #{request.keyword}, '%'))
-          limit ${(request.page - 1) * request.pageSize}, #{request.pageSize}
+        </if>
+        limit ${(request.page - 1) * request.pageSize}, #{request.pageSize}
+    </select>
+
+    <!-- 我的收藏 -->
+    <select id="selectCollectedNoteList" resultType="com.hk.im.domain.entity.Note">
+        select *
+        from tb_note
+        where author_id = #{request.userId}
+        and status = 1
+        and deleted = false
+        <if test="noteIdList != null and noteIdList.size() > 0">
+            and id in
+            <foreach collection="noteIdList" open="(" item="noteId" separator="," close=")">
+                #{noteId}
+            </foreach>
+        </if>
+        <if test="request.keyword != null and request.keyword.length() > 0">
+            and (content like concat('%', #{request.keyword}, '%')
+            or md_content like concat('%', #{request.keyword}, '%')
+            or title like concat('%', #{request.keyword}, '%'))
+        </if>
+        limit ${(request.page - 1) * request.pageSize}, #{request.pageSize}
+    </select>
+
+    <!-- 笔记分类 -->
+    <select id="selectNoteListByCategory" resultType="com.hk.im.domain.entity.Note">
+        select *
+        from tb_note
+        where author_id = #{request.userId}
+        and category_id = #{request.cid}
+        and status = 1
+        and deleted = false
+        <if test="request.keyword != null and request.keyword.length() > 0">
+            and (content like concat('%', #{request.keyword}, '%')
+            or md_content like concat('%', #{request.keyword}, '%')
+            or title like concat('%', #{request.keyword}, '%'))
+        </if>
+        limit ${(request.page - 1) * request.pageSize}, #{request.pageSize}
+    </select>
+
+    <!-- 笔记标签 -->
+    <select id="selectNoteListByTag" resultType="com.hk.im.domain.entity.Note">
+        select *
+        from tb_note
+        where author_id = #{request.userId}
+        and status = 1
+        and deleted = false
+        <if test="noteIdList != null and noteIdList.size() > 0">
+            and id in
+            <foreach collection="noteIdList" open="(" item="noteId" separator="," close=")">
+                #{noteId}
+            </foreach>
+        </if>
+        <if test="request.keyword != null and request.keyword.length() > 0">
+            and (content like concat('%', #{request.keyword}, '%')
+            or md_content like concat('%', #{request.keyword}, '%')
+            or title like concat('%', #{request.keyword}, '%'))
+        </if>
+        limit ${(request.page - 1) * request.pageSize}, #{request.pageSize}
     </select>
 </mapper>

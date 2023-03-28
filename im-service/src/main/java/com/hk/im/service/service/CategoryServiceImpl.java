@@ -2,14 +2,18 @@ package com.hk.im.service.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.client.service.CategoryService;
+import com.hk.im.client.service.NoteService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.Category;
 import com.hk.im.domain.entity.Note;
 import com.hk.im.domain.request.EditNoteCategoryRequest;
+import com.hk.im.domain.vo.CategoryVO;
 import com.hk.im.domain.vo.NoteVO;
 import com.hk.im.infrastructure.mapper.CategoryMapper;
+import com.hk.im.infrastructure.mapstruct.CategoryMapStructure;
 import com.hk.im.infrastructure.mapstruct.NoteMapStructure;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -19,8 +23,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @ClassName : CategoryServiceImpl
  * @author : HK意境
+ * @ClassName : CategoryServiceImpl
  * @date : 2023/2/22 21:25
  * @description :
  * @Todo :
@@ -28,17 +32,22 @@ import java.util.Objects;
  * @Modified :
  * @Version : 1.0
  */
+@Slf4j
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
-    implements CategoryService {
+        implements CategoryService {
 
     @Resource
     private CategoryMapper categoryMapper;
+    @Resource
+    private NoteService noteService;
 
 
     /**
      * 获取用户笔记分类列表
+     *
      * @param userId
+     *
      * @return
      */
     @Override
@@ -55,24 +64,33 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
                 .eq(Category::getDeleted, false)
                 .list();
 
+        // 计算分类下文章数量
+        List<CategoryVO> categoryVOS = categories.stream().map(category -> {
+            // 查询分类对应文章数量
+            int count = this.getCategoryNoteCounts(category.getId());
+            return CategoryMapStructure.INSTANCE.toVO(category, count);
+        }).toList();
 
 
-        return ResponseResult.SUCCESS(categories);
+        return ResponseResult.SUCCESS(categoryVOS);
     }
 
     /**
      * 添加或修改笔记分类
+     *
      * @param request
+     *
      * @return
      */
     @Override
     public ResponseResult editNoteCategoryList(EditNoteCategoryRequest request) {
 
         // 参数校验
+        log.info("EditNoteCategoryList: {}", request);
         boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getName()) || Objects.isNull(request.getCategoryId());
         if (BooleanUtils.isTrue(preCheck)) {
             // 参数校验失败
-            return ResponseResult.SUCCESS(preCheck);
+            return ResponseResult.FAIL("参数校验失败!");
         }
 
         Long userId = UserContextHolder.get().getId();
@@ -85,7 +103,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
                 .exists();
         if (BooleanUtils.isFalse(exists)) {
             // 分类不存在 -> 保存分类
-             category.setUserId(userId)
+            category.setUserId(userId)
                     .setName(request.getName())
                     .setDescription(request.getDescription());
             res = this.save(category);
@@ -109,7 +127,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
 
     /**
      * 批量获取笔记的分类列表
+     *
      * @param noteList
+     *
      * @return
      */
     @Override
@@ -118,7 +138,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         List<NoteVO> noteVOList = noteList.stream().map(note -> {
             Category category = this.lambdaQuery().eq(Category::getId, note.getCategoryId())
                     .one();
-            return NoteMapStructure.INSTANCE.toVO(note, category,null);
+            return NoteMapStructure.INSTANCE.toVO(note, category, null);
         }).toList();
 
         return noteVOList;
@@ -127,7 +147,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
 
     /**
      * 获取笔记的分类
+     *
      * @param noteId
+     *
      * @return
      */
     @Override
@@ -138,8 +160,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     }
 
 
-
-
+    /**
+     * 获取分类下文章数量
+     * @param categoryId
+     * @return
+     */
+    public int getCategoryNoteCounts(Long categoryId) {
+        Long count = this.noteService.lambdaQuery()
+                .eq(Note::getCategoryId, categoryId)
+                .count();
+        return count.intValue();
+    }
 
 
 }

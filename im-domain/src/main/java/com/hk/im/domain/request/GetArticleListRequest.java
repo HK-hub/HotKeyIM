@@ -25,11 +25,12 @@ public class GetArticleListRequest {
     // 查询关键字
     private String keyword;
 
-    // 查询类型
+    // 查询类型: 1.近期编辑，2.我的收藏，3.分类查询， 4.分标签查询
     private Integer findType;
 
-    private Integer cid;
+    // 分类id
+    private Long cid;
 
     // 每页查询笔记条数
-    private Integer pageSize = 10;
+    private Integer pageSize = 1000;
 }
