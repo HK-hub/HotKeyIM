@@ -1,6 +1,5 @@
 package com.hk.im.service.service;
 
-import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.hk.im.client.service.*;
@@ -13,6 +12,7 @@ import com.hk.im.domain.response.EditNoteArticleResponse;
 import com.hk.im.domain.vo.NoteVO;
 import com.hk.im.infrastructure.mapper.NoteMapper;
 import com.hk.im.infrastructure.mapstruct.NoteMapStructure;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -81,11 +82,13 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         } else if (findType == 2) {
             // 我的收藏
             List<UserCollection> collectedNoteList = this.userCollectionService.getUserCollectedNoteList(userId);
-            // 提取笔记id
-            List<Long> noteIdList = collectedNoteList.stream().map(UserCollection::getCollectibleId).toList();
-            // 获取收藏笔记集合
-            noteList = this.noteMapper.selectCollectedNoteList(noteIdList, request);
-
+            // 检查是否有收藏的
+            if (CollectionUtils.isNotEmpty(collectedNoteList)) {
+                // 提取笔记id
+                List<Long> noteIdList = collectedNoteList.stream().map(UserCollection::getCollectibleId).toList();
+                // 获取收藏笔记集合
+                noteList = this.noteMapper.selectCollectedNoteList(noteIdList, request);
+            }
         } else if (findType == 3) {
             // 笔记分类：传入分类id
             noteList = this.noteMapper.selectNoteListByCategory(request);
@@ -94,19 +97,25 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
             // 笔记标签: 传入标签id
             // 查询出标签-笔记 映射集合
             List<NoteTag> noteTagList = this.noteTagService.getNoteListByTagId(request.getCid());
-            // 提取 笔记id
-            List<Long> noteIdList = noteTagList.stream().map(NoteTag::getNoteId).toList();
-            // 查询标签下笔记集合
-            noteList = this.noteMapper.selectNoteListByTag(noteIdList, request);
+            // 检查该标签下是否有笔记
+            if (CollectionUtils.isNotEmpty(noteTagList)) {
+                // 提取 笔记id
+                List<Long> noteIdList = noteTagList.stream().map(NoteTag::getNoteId).toList();
+                // 查询标签下笔记集合
+                noteList = this.noteMapper.selectNoteListByTag(noteIdList, request);
+            }
         }
 
 
         // 查询笔记分类，标签信息
         List<NoteVO> noteVOList = noteList.stream().map(note -> {
-            Category category = this.categoryService.getNoteCategory(note.getId());
-            List<Tag> tagList = this.tagService.getNoteTagList(note.getId());
-            return NoteMapStructure.INSTANCE.toVO(note, category, tagList);
-        }).toList();
+                    Category category = this.categoryService.getNoteCategory(note.getCategoryId());
+                    List<Tag> tagList = this.tagService.getNoteTagList(note.getId());
+                    return NoteMapStructure.INSTANCE.toVO(note, category, tagList);
+                })
+                // 排序：按照最新编辑时间排序
+                .sorted(Comparator.comparing(NoteVO::getUpdateTime).reversed())
+                .toList();
 
         // 响应数据
         return ResponseResult.SUCCESS(noteVOList);
@@ -139,6 +148,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
 
         // 检查文章是否存在
         Note note = this.getById(noteId);
+        String summary = Jsoup.parse(request.getContent())
+                .text().substring(0, 20);
 
         boolean res = false;
         if (Objects.isNull(note)) {
@@ -147,6 +158,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
                     .setAuthorId(userId)
                     .setTitle(request.getTitle())
                     .setStatus(1)
+                    .setSummary(summary)
                     .setContent(request.getContent())
                     .setMdContent(request.getMdContent());
 
@@ -170,6 +182,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         } else {
             // 笔记文章存在：进行更新
             note.setTitle(request.getTitle())
+                    .setSummary(summary)
                     .setContent(request.getContent())
                     .setMdContent(request.getMdContent())
                     .setCategoryId(categoryId);
@@ -183,13 +196,28 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         }
 
         // 保存，编辑成功: 构建响应体
-        String summary = Jsoup.parse(note.getContent()).text();
         EditNoteArticleResponse result = new EditNoteArticleResponse()
                 .setId(note.getId())
                 .setTitle(note.getTitle())
                 .setCover(note.getCover())
                 .setSummary(summary);
         return ResponseResult.SUCCESS(result);
+    }
+
+
+    /**
+     * 获取笔记文章
+     *
+     * @param noteId
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult getArticleDetailById(Long noteId) {
+
+
+
+        return null;
     }
 }
 

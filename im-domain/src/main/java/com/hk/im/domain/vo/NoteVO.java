@@ -1,9 +1,6 @@
 package com.hk.im.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.hk.im.domain.entity.Category;
-import com.hk.im.domain.entity.Note;
 import com.hk.im.domain.entity.Tag;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -32,6 +29,13 @@ public class NoteVO {
      * 文章标题
      */
     private String title;
+
+
+    // 封面
+    private String cover;
+
+    // 摘要
+    private String summary;
 
     /**
      * markdown 格式的笔记内容

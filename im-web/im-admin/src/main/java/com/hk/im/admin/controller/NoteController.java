@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import static com.hk.im.domain.entity.UserCollection.CollectableType.note;
+
 /**
  * @author : HK意境
  * @ClassName : NoteController
@@ -41,9 +43,26 @@ public class NoteController {
     }
 
 
-    @PostMapping("/article/edit")
-    public ResponseResult editArticle(EditArticleRequest request) {
+    /**
+     * 获取文章笔记具体内容，信息
+     * @return
+     */
+    @GetMapping("/article/detail")
+    public ResponseResult getArticleDetail(@RequestParam Long noteId) {
 
+        return this.noteService.getArticleDetailById(noteId);
+    }
+
+
+    /**
+     * 编辑，新建文章
+     * @param request
+     * @return
+     */
+    @PostMapping("/article/edit")
+    public ResponseResult editArticle(@RequestBody EditArticleRequest request) {
+
+        log.info("Edit article : {}", request);
         return this.noteService.editNoteArticle(request);
     }
 

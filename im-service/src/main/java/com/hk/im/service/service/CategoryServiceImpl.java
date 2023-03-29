@@ -151,13 +151,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     /**
      * 获取笔记的分类
      *
-     * @param noteId
+     * @param categoryId
      *
      * @return
      */
     @Override
-    public Category getNoteCategory(Long noteId) {
-        Category category = this.lambdaQuery().eq(Category::getId, noteId)
+    public Category getNoteCategory(Long categoryId) {
+        Category category = this.lambdaQuery().eq(Category::getId, categoryId)
                 .one();
         return category;
     }

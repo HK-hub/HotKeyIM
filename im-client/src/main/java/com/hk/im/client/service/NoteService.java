@@ -31,4 +31,11 @@ public interface NoteService extends IService<Note> {
      * @return
      */
     ResponseResult editNoteArticle(EditArticleRequest request);
+
+    /**
+     * 获取笔记文章
+     * @param noteId
+     * @return
+     */
+    ResponseResult getArticleDetailById(Long noteId);
 }
