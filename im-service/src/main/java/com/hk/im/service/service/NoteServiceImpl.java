@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.lang.annotation.Retention;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -117,6 +116,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
                 // 查询标签下笔记集合
                 noteList = this.noteMapper.selectNoteListByTag(noteIdList, request);
             }
+        } else if (findType == 5) {
+            // 回收站列表
+            noteList = this.noteMapper.selectRecycleBinNoteList(request);
         }
 
 
@@ -162,7 +164,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         // 检查文章是否存在
         Note note = this.getById(noteId);
         String summary = Jsoup.parse(request.getContent())
-                .text().substring(0, Math.min(20, request.getContent().length()));
+                .text();
+        summary = summary.substring(0, Math.min(20, summary.length()));
 
         boolean res = false;
         if (Objects.isNull(note)) {
@@ -264,7 +267,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         // 组装
         Category category = this.categoryService.getNoteCategory(note.getCategoryId());
         List<Tag> tagList = this.tagService.getNoteTagList(note.getId());
-        NoteDetailVO noteVO = NoteMapStructure.INSTANCE.toDetailVO(note, category, tagList);
+        List<NoteAnnex> noteAnnexList = this.noteAnnexService.getNoteAnnexList(note.getId());
+        noteAnnexList.forEach(annex -> annex.setUrl(""));
+        NoteDetailVO noteVO = NoteMapStructure.INSTANCE.toDetailVO(note, category, tagList, noteAnnexList);
 
         // 是否星标
         UserCollection collection = this.userCollectionService.getUserCollectedNoteById(note.getId());
@@ -322,7 +327,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
 
         // 参数校验
         boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getArticleId()) || Objects.isNull(request.getTags());
-        if (BooleanUtils.isFalse(preCheck)) {
+        if (BooleanUtils.isTrue(preCheck)) {
             // 参数校验失败
             return ResponseResult.FAIL();
         }
@@ -380,6 +385,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
                 .set(Note::getDeleted, Boolean.TRUE)
                 .set(Note::getStatus, 3)
                 .update();
+        // 删除附件
+        boolean res = this.noteAnnexService.putNoteAnnexToRecycle(articleId);
 
         // 响应
         return ResponseResult.SUCCESS(update);
@@ -423,6 +430,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
             return ResponseResult.FAIL("抱歉，你无权删除此文章!");
         }
 
+        // 删除附件
+        boolean res = this.noteAnnexService.removeNoteAnnexs(articleId);
         // 彻底删除文章
         boolean remove = this.removeById(articleId);
 
@@ -537,6 +546,30 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         }
 
         return ResponseResult.SUCCESS(noteAnnex.setUrl(""));
+    }
+
+
+    /**
+     * 下载笔记附件
+     * @param annexId
+     * @return
+     */
+    @Override
+    public ResponseResult downloadNoteAnnex(String annexId) {
+
+        // 参数校验
+        if (StringUtils.isEmpty(annexId)) {
+            // 参数校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 获取下载连接
+        NoteAnnex annex = this.noteAnnexService.getById(annexId);
+        if (Objects.isNull(annex)) {
+            return ResponseResult.FAIL("下载失败：附件已被移除!");
+        }
+
+        return ResponseResult.SUCCESS(annex.getUrl());
     }
 
 

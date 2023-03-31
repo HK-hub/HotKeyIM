@@ -2,6 +2,7 @@ package com.hk.im.infrastructure.mapstruct;
 
 import com.hk.im.domain.entity.Category;
 import com.hk.im.domain.entity.Note;
+import com.hk.im.domain.entity.NoteAnnex;
 import com.hk.im.domain.entity.Tag;
 import com.hk.im.domain.vo.NoteDetailVO;
 import com.hk.im.domain.vo.NoteVO;
@@ -36,7 +37,7 @@ public interface NoteMapStructure {
     @Mapping(source = "note.deleted", target = "deleted")
     @Mapping(source = "note.createTime", target = "createTime")
     @Mapping(source = "note.updateTime", target = "updateTime")
-    public NoteDetailVO toDetailVO(Note note, Category category, List<Tag> tags);
+    public NoteDetailVO toDetailVO(Note note, Category category, List<Tag> tags, List<NoteAnnex> files);
 
 
 

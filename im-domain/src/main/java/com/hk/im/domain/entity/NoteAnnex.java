@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.AccessType;
 
 /**
  * 笔记附件
@@ -21,7 +20,7 @@ public class NoteAnnex implements Serializable {
     /**
      * 主键：附件id
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

@@ -112,4 +112,14 @@
         </if>
         limit ${(request.page - 1) * request.pageSize}, #{request.pageSize}
     </select>
+
+    <!-- 获取回收站笔记 -->
+    <select id="selectRecycleBinNoteList" resultType="com.hk.im.domain.entity.Note">
+        select *
+        from tb_note
+        where author_id = #{request.userId}
+        and status = 3
+        and deleted = true
+        limit ${(request.page - 1) * request.pageSize}, #{request.pageSize}
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.admin.advice.CustomParam;
 import com.hk.im.client.service.NoteService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.*;
@@ -82,9 +83,21 @@ public class NoteController {
      * @return
      */
     @PostMapping("/article/upload/annex")
-    public  ResponseResult uploadArticle(UploadNoteAnnexRequest request) {
+    public ResponseResult uploadArticle(UploadNoteAnnexRequest request) {
 
         return this.noteService.uploadNoteAnnex(request);
+    }
+
+
+    /**
+     * 下载附件
+     * @param annexId
+     * @return
+     */
+    @GetMapping("/article/annex/download")
+    public ResponseResult downloadNoteAnnex(@RequestParam("annexId") String annexId) {
+
+        return this.noteService.downloadNoteAnnex(annexId);
     }
 
 
@@ -96,7 +109,7 @@ public class NoteController {
     @PostMapping("/article/annex/delete")
     public ResponseResult deleteArticleAnnex(UploadNoteAnnexRequest request) {
 
-        return nulll;
+        return null;
     }
 
     /**
@@ -118,7 +131,7 @@ public class NoteController {
      */
     @PostMapping("/article/tag")
     public  ResponseResult tagArticle(@RequestBody TagArticleRequest request) {
-
+        log.info("tag article request:{}", request);
         return this.noteService.tagNoteArticle(request);
     }
 
@@ -128,7 +141,7 @@ public class NoteController {
      * @return
      */
     @PostMapping("/article/recycle/put")
-    public ResponseResult putRecycleBin(Long articleId) {
+    public ResponseResult putRecycleBin(@CustomParam("articleId") Long articleId) {
 
         return this.noteService.putNoteToRecycleBin(articleId);
     }
@@ -140,7 +153,7 @@ public class NoteController {
      * @return
      */
     @PostMapping("/article/recycle/recover")
-    private ResponseResult recoverRecycleNote(Long articleId) {
+    private ResponseResult recoverRecycleNote(@CustomParam("articleId") Long articleId) {
 
         return this.noteService.recoverRecycleNote(articleId);
     }
@@ -161,7 +174,7 @@ public class NoteController {
      * @return
      */
     @PostMapping("/article/recycle/delete")
-    public ResponseResult cleanRecycleBinTheNote(Long articleId) {
+    public ResponseResult cleanRecycleBinTheNote(@CustomParam("articleId") Long articleId) {
         return this.noteService.completelyRemoveNote(articleId);
     }
 
@@ -175,9 +188,5 @@ public class NoteController {
 
         return this.noteService.cleanRecycleBinNoteList();
     }
-
-
-
-
 
 }

@@ -1,5 +1,6 @@
 package com.hk.im.client.service;
 
+import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.NoteAnnex;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -18,6 +19,27 @@ public interface NoteAnnexService extends IService<NoteAnnex> {
      */
     public List<NoteAnnex> getNoteAnnexList(Long noteId);
 
+
+    /**
+     * 彻底删除笔记附件
+     * @param articleId
+     * @return
+     */
+    boolean removeNoteAnnexs(Long articleId);
+
+    /**
+     * 讲附件放入回收站
+     * @param articleId
+     * @return
+     */
+    boolean putNoteAnnexToRecycle(Long articleId);
+
+
+    /**
+     * 获取回收站附件列表
+     * @return
+     */
+    ResponseResult getNoteRecycleAnnexList();
 
 
 }

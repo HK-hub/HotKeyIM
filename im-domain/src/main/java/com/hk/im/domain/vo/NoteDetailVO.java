@@ -3,6 +3,7 @@ package com.hk.im.domain.vo;
 import com.beust.jcommander.internal.Lists;
 import com.hk.im.domain.entity.Category;
 import com.hk.im.domain.entity.CloudResource;
+import com.hk.im.domain.entity.NoteAnnex;
 import com.hk.im.domain.entity.Tag;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -75,7 +76,7 @@ public class NoteDetailVO {
 
     private Category category;
 
-    private List<CloudResource> files = Lists.newArrayList();
+    private List<NoteAnnex> files = Lists.newArrayList();
 
 
 }

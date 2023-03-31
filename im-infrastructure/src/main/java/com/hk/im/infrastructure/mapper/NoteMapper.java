@@ -46,6 +46,13 @@ public interface NoteMapper extends BaseMapper<Note> {
      * @return
      */
     List<Note> selectNoteListByTag(@Param("noteIdList") List<Long> noteIdList, @Param("request") GetArticleListRequest request);
+
+    /**
+     * 获取回收站笔记
+     * @param request
+     * @return
+     */
+    List<Note> selectRecycleBinNoteList(@Param("request") GetArticleListRequest request);
 }
 
 
