@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 
@@ -12,6 +13,7 @@ import lombok.Data;
  */
 @TableName(value ="tb_note_tag")
 @Data
+@Accessors(chain = true)
 public class NoteTag implements Serializable {
 
     @TableId(type = IdType.ASSIGN_ID)

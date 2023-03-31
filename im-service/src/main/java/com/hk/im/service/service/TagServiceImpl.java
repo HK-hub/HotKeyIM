@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.swing.*;
@@ -135,6 +136,24 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
         // 编辑成功
         return ResponseResult.SUCCESS(tag);
+    }
+
+
+    /**
+     * 添加标签给笔记文章
+     * @param tagId
+     * @param articleId
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addTagToArticle(Long tagId, Long articleId) {
+
+        NoteTag noteTag = new NoteTag()
+                .setTagId(tagId)
+                .setNoteId(articleId);
+
+        return this.noteTagService.save(noteTag);
     }
 
 

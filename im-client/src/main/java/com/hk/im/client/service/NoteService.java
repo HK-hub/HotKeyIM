@@ -3,8 +3,10 @@ package com.hk.im.client.service;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Note;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hk.im.domain.request.AsteriskArticleRequest;
 import com.hk.im.domain.request.EditArticleRequest;
 import com.hk.im.domain.request.GetArticleListRequest;
+import com.hk.im.domain.request.TagArticleRequest;
 
 /**
  * @ClassName : NoteService
@@ -38,4 +40,56 @@ public interface NoteService extends IService<Note> {
      * @return
      */
     ResponseResult getArticleDetailById(Long noteId);
+
+
+    /**
+     * (取消)收藏笔记
+     * @param request
+     * @return
+     */
+    ResponseResult asteriskNoteArticle(AsteriskArticleRequest request);
+
+
+    /**
+     * 设置笔记文章标签
+     * @param request
+     * @return
+     */
+    ResponseResult tagNoteArticle(TagArticleRequest request);
+
+    /**
+     * 讲笔记文章删除放入回收站
+     * @param articleId
+     * @return
+     */
+    ResponseResult putNoteToRecycleBin(Long articleId);
+
+    /**
+     * 查看回收站笔记文章
+     * @return
+     */
+    ResponseResult getRecycleBinNoteList();
+
+
+    /**
+     * 彻底删除笔记文章
+     * @param articleId
+     * @return
+     */
+    ResponseResult completelyRemoveNote(Long articleId);
+
+
+    /**
+     * 清空笔记文章列表
+     * @return
+     */
+    ResponseResult cleanRecycleBinNoteList();
+
+
+    /**
+     * 恢复回收站文章
+     * @param articleId
+     * @return
+     */
+    ResponseResult recoverRecycleNote(Long articleId);
 }

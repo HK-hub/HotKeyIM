@@ -1,5 +1,6 @@
 package com.hk.im.domain.vo;
 
+import com.beust.jcommander.internal.Lists;
 import com.hk.im.domain.entity.Category;
 import com.hk.im.domain.entity.CloudResource;
 import com.hk.im.domain.entity.Tag;
@@ -11,8 +12,8 @@ import java.util.List;
 
 /**
  * @author : HK意境
- * @ClassName : NoteVO
- * @date : 2023/3/27 17:14
+ * @ClassName : NoteDetailVO
+ * @date : 2023/3/29 16:32
  * @description :
  * @Todo :
  * @Bug :
@@ -21,8 +22,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class NoteVO {
-
+public class NoteDetailVO {
 
     private Long id;
 
@@ -68,8 +68,14 @@ public class NoteVO {
      */
     private LocalDateTime updateTime;
 
+    // 是否星标收藏
+    private Boolean stared;
+
     private List<Tag> tags;
 
     private Category category;
+
+    private List<CloudResource> files = Lists.newArrayList();
+
 
 }

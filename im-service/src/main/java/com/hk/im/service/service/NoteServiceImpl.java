@@ -4,11 +4,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.hk.im.client.service.*;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.*;
+import com.hk.im.domain.request.AsteriskArticleRequest;
 import com.hk.im.domain.request.EditArticleRequest;
 import com.hk.im.domain.request.GetArticleListRequest;
+import com.hk.im.domain.request.TagArticleRequest;
 import com.hk.im.domain.response.EditNoteArticleResponse;
+import com.hk.im.domain.vo.NoteDetailVO;
 import com.hk.im.domain.vo.NoteVO;
 import com.hk.im.infrastructure.mapper.NoteMapper;
 import com.hk.im.infrastructure.mapstruct.NoteMapStructure;
@@ -21,9 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -149,7 +156,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         // 检查文章是否存在
         Note note = this.getById(noteId);
         String summary = Jsoup.parse(request.getContent())
-                .text().substring(0, 20);
+                .text().substring(0, Math.min(20, request.getContent().length()));
 
         boolean res = false;
         if (Objects.isNull(note)) {
@@ -185,7 +192,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
                     .setSummary(summary)
                     .setContent(request.getContent())
                     .setMdContent(request.getMdContent())
-                    .setCategoryId(categoryId);
+                    .setCategoryId(categoryId)
+                    .setUpdateTime(LocalDateTime.now());
             res = this.updateById(note);
         }
 
@@ -215,10 +223,233 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
     @Override
     public ResponseResult getArticleDetailById(Long noteId) {
 
+        Note note = this.getById(noteId);
+        if (Objects.isNull(note)) {
+            // 笔记文章不存在
+            return ResponseResult.FAIL(ResultCode.NO_SUCH_RESOURCE);
+        }
 
+        // 组装
+        Category category = this.categoryService.getNoteCategory(note.getCategoryId());
+        List<Tag> tagList = this.tagService.getNoteTagList(note.getId());
+        NoteDetailVO noteVO = NoteMapStructure.INSTANCE.toDetailVO(note, category, tagList);
 
-        return null;
+        // 是否星标
+        UserCollection collection = this.userCollectionService.getUserCollectedNoteById(note.getId());
+        noteVO.setStared(Objects.nonNull(collection));
+
+        return ResponseResult.SUCCESS(noteVO);
     }
+
+
+    /**
+     * 收藏/取消收藏笔记
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult asteriskNoteArticle(AsteriskArticleRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getArticleId()) || Objects.isNull(request.getType());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 查询收藏记录是否存在
+        Long articleId = request.getArticleId();
+        UserCollection collectedNote = null;
+
+        // 根据操作进行业务处理
+        Integer type = request.getType();
+
+        boolean res = false;
+        if (1 == type) {
+            // 收藏
+            collectedNote = this.userCollectionService.collectTheNoteArticle(articleId);
+            res = Objects.nonNull(collectedNote);
+
+        } else if (2 == type) {
+            // 取消收藏
+            res = this.userCollectionService.removeTheCollectedNote(articleId);
+        }
+
+        // 操作是否成功
+        return ResponseResult.SUCCESS(res);
+    }
+
+
+    /**
+     * 为笔记文章设置标签
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult tagNoteArticle(TagArticleRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getArticleId()) || Objects.isNull(request.getTags());
+        if (BooleanUtils.isFalse(preCheck)) {
+            // 参数校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 素材
+        Long articleId = request.getArticleId();
+        List<Long> tags = request.getTags();
+
+        // 查询笔记文章目前标签集合
+        List<Tag> currentNoteTags = this.tagService.getNoteTagList(articleId);
+        Set<Long> currentNoteTagIdList = currentNoteTags.stream().map(Tag::getId).collect(Collectors.toSet());
+
+        // 解析标签集合，进行设置标签: 两个标签集合并集，再去除已经有的，就是需要设置的
+        for (Long tagId : tags) {
+            // 当前标签是否保存tag
+            if (!currentNoteTagIdList.contains(tagId)) {
+                // 不包含，设置标签
+                this.tagService.addTagToArticle(tagId, articleId);
+            }
+        }
+
+        // 添加成功
+        return ResponseResult.SUCCESS();
+    }
+
+    /**
+     * 讲笔记文章删除放入回收站
+     * @param articleId
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult putNoteToRecycleBin(Long articleId) {
+
+        // 参数校验
+        if (Objects.isNull(articleId)) {
+            // 文章为选择
+            return ResponseResult.FAIL("请选择需要删除的文章!");
+        }
+
+        // 校验当前登录用户是否有权利删除
+        Long userId = UserContextHolder.get().getId();
+
+        // 查询笔记文章
+        Note note = this.getById(articleId);
+        if (!Objects.equals(note.getAuthorId(), userId)) {
+            // 不是作者
+            return ResponseResult.FAIL("抱歉，你无权删除此文章!");
+        }
+
+        // 删除文章
+        boolean update = this.lambdaUpdate()
+                .eq(Note::getId, articleId)
+                .eq(Note::getAuthorId, userId)
+                .set(Note::getDeleted, Boolean.TRUE)
+                .set(Note::getStatus, 3)
+                .update();
+
+        // 响应
+        return ResponseResult.SUCCESS(update);
+    }
+
+    /**
+     * 查看回收站笔记文章
+     * @return
+     */
+    @Override
+    public ResponseResult getRecycleBinNoteList() {
+
+        Long userId = UserContextHolder.get().getId();
+        List<Note> list = this.lambdaQuery()
+                .eq(Note::getAuthorId, userId)
+                .eq(Note::getDeleted, true)
+                // 状态: 删除
+                .eq(Note::getStatus, 3)
+                .list();
+
+
+        return ResponseResult.SUCCESS(list);
+    }
+
+
+    /**
+     * 彻底删除笔记文章
+     * @param articleId
+     * @return
+     */
+    @Override
+    public ResponseResult completelyRemoveNote(Long articleId) {
+
+        // 校验当前登录用户是否有权利删除
+        Long userId = UserContextHolder.get().getId();
+
+        // 查询笔记文章
+        Note note = this.getById(articleId);
+        if (!Objects.equals(note.getAuthorId(), userId)) {
+            // 不是作者
+            return ResponseResult.FAIL("抱歉，你无权删除此文章!");
+        }
+
+        // 彻底删除文章
+        boolean remove = this.removeById(articleId);
+
+        return ResponseResult.SUCCESS(remove);
+    }
+
+
+    /**
+     * 清空笔记文章列表
+     * @return
+     */
+    @Override
+    public ResponseResult cleanRecycleBinNoteList() {
+
+        // 校验当前登录用户是否有权利删除
+        Long userId = UserContextHolder.get().getId();
+
+        // 查询回收站列表文章
+        List<Note> list = this.lambdaQuery()
+                .eq(Note::getAuthorId, userId)
+                .eq(Note::getDeleted, true)
+                // 状态: 删除
+                .eq(Note::getStatus, 3)
+                .list();
+
+        // 清空当前用户回收站文章
+        List<Long> noteIdList = list.stream().map(Note::getId).toList();
+        boolean remove = this.removeBatchByIds(noteIdList);
+
+        return ResponseResult.SUCCESS(remove);
+    }
+
+
+    /**
+     * 恢复回收站文章
+     * @param articleId
+     * @return
+     */
+    @Override
+    public ResponseResult recoverRecycleNote(Long articleId) {
+
+        // 参数校验
+        if (Objects.isNull(articleId)) {
+            return ResponseResult.FAIL();
+        }
+
+        // 恢复
+        Long userId = UserContextHolder.get().getId();
+        boolean update = this.lambdaUpdate()
+                .eq(Note::getId, articleId)
+                .eq(Note::getAuthorId, userId)
+                .set(Note::getDeleted, Boolean.FALSE)
+                .set(Note::getStatus, 1)
+                .update();
+
+        return ResponseResult.SUCCESS(update);
+    }
+
+
 }
 
 

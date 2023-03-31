@@ -38,4 +38,12 @@ public interface TagService extends IService<Tag> {
      * @return {@link Tag}
      */
     ResponseResult editUserNoteTag(EditNoteTagRequest request);
+
+
+    /**
+     * 添加标签给笔记文章
+     * @param tagId
+     * @param articleId
+     */
+    boolean addTagToArticle(Long tagId, Long articleId);
 }

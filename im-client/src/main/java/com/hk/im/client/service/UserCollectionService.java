@@ -25,4 +25,27 @@ public interface UserCollectionService extends IService<UserCollection> {
      */
     public List<UserCollection> getUserCollectedNoteList(Long userId);
 
+
+    /**
+     * 通过id获取用户收藏的笔记文章
+     * @param collectableId
+     * @return {@link UserCollection}
+     */
+    UserCollection getUserCollectedNoteById(Long collectableId);
+
+
+    /**
+     * 取消收藏笔记
+     * @param articleId
+     * @return
+     */
+    Boolean removeTheCollectedNote(Long articleId);
+
+
+    /**
+     * 收藏笔记
+     * @param articleId
+     * @return
+     */
+    UserCollection collectTheNoteArticle(Long articleId);
 }
