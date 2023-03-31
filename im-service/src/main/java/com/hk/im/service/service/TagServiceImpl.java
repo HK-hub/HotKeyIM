@@ -158,6 +158,36 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
 
     /**
+     * 删除标签
+     * @param tagId
+     * @return
+     */
+    @Override
+    public ResponseResult deleteTag(Long tagId) {
+
+        // 参数校验
+        if (Objects.isNull(tagId)) {
+            return ResponseResult.FAIL("标签不存在!");
+        }
+
+        // 查看该标签是否还在使用
+        Long count = this.noteTagService.lambdaQuery()
+                .eq(NoteTag::getTagId, tagId)
+                .count();
+
+        if (count > 0) {
+            // 标签还在使用不能删除
+            return ResponseResult.FAIL().setDataAsMessage("标签还在使用中,无法删除!");
+        }
+
+        // 删除
+        boolean remove = this.removeById(tagId);
+
+        return ResponseResult.SUCCESS(remove);
+    }
+
+
+    /**
      * 获取标签对应文章数量
      * @param tagId
      * @return

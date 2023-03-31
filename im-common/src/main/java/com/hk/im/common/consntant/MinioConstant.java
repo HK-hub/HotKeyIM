@@ -48,6 +48,7 @@ public class MinioConstant {
         Group("group"),
         Image("image"),
         File("file"),
+        Note("note"),
         ;
         private String bucket;
 

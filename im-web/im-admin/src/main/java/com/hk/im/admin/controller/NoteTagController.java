@@ -50,6 +50,16 @@ public class NoteTagController {
     }
 
 
+    /**
+     * 删除标签
+     * @param tagId
+     * @return
+     */
+    @PostMapping("/delete")
+    public ResponseResult deleteTag(Long tagId) {
+
+        return this.tagService.deleteTag(tagId);
+    }
 
 
 

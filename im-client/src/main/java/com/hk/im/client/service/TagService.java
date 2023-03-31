@@ -46,4 +46,11 @@ public interface TagService extends IService<Tag> {
      * @param articleId
      */
     boolean addTagToArticle(Long tagId, Long articleId);
+
+    /**
+     * 删除标签
+     * @param tagId
+     * @return
+     */
+    ResponseResult deleteTag(Long tagId);
 }

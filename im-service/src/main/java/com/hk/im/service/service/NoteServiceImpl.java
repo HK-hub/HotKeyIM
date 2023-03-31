@@ -3,27 +3,29 @@ package com.hk.im.service.service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.hk.im.client.service.*;
+import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
+import com.hk.im.common.util.FileUtil;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.*;
-import com.hk.im.domain.request.AsteriskArticleRequest;
-import com.hk.im.domain.request.EditArticleRequest;
-import com.hk.im.domain.request.GetArticleListRequest;
-import com.hk.im.domain.request.TagArticleRequest;
+import com.hk.im.domain.request.*;
 import com.hk.im.domain.response.EditNoteArticleResponse;
 import com.hk.im.domain.vo.NoteDetailVO;
 import com.hk.im.domain.vo.NoteVO;
 import com.hk.im.infrastructure.mapper.NoteMapper;
 import com.hk.im.infrastructure.mapstruct.NoteMapStructure;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.lang.annotation.Retention;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -55,6 +57,10 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
     private UserCollectionService userCollectionService;
     @Resource
     private NoteTagService noteTagService;
+    @Resource
+    private MinioService minioService;
+    @Resource
+    private NoteAnnexService noteAnnexService;
 
     /**
      * 获取用户文集列表
@@ -212,6 +218,32 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         return ResponseResult.SUCCESS(result);
     }
 
+
+    /**
+     * 上传笔记文章图片
+     * @param request
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult uploadNoteImage(UploadNoteImageRequest request) {
+
+        // 参数校验
+        if (Objects.isNull(request) || Objects.isNull(request.getImage()) || Objects.isNull(request.getNoteId())) {
+            // 校验失败
+            return ResponseResult.FAIL("笔记文集图片上传信息不完整!");
+        }
+
+        // 上传
+        String url = this.minioService.putNoteImage(request.getImage(), MinioConstant.BucketEnum.Note.getBucket(), request.getNoteId());
+
+        if (StringUtils.isEmpty(url)) {
+            // 上传失败
+            return ResponseResult.FAIL("图片上传失败!");
+        }
+
+        return ResponseResult.SUCCESS(url);
+    }
 
     /**
      * 获取笔记文章
@@ -447,6 +479,64 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
                 .update();
 
         return ResponseResult.SUCCESS(update);
+    }
+
+
+    /**
+     * 上传笔记文集附件
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult uploadNoteAnnex(UploadNoteAnnexRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getNoteId()) || Objects.isNull(request.getFile());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 参数校验失败
+            return ResponseResult.FAIL("请选择笔记或附件!");
+        }
+
+        // 检查大小：不能超过10MB
+        MultipartFile file = request.getFile();
+        boolean sizeCheck = FileUtil.checkFileSize(file.getSize(), 10, "M");
+        if (BooleanUtils.isFalse(sizeCheck)) {
+            // 文件大小超出限制
+            return ResponseResult.FAIL("文件大小不能超过10M");
+        }
+
+        // 检查附件个数
+        Long noteId = request.getNoteId();
+        List<NoteAnnex> noteAnnexList =  this.noteAnnexService.getNoteAnnexList(noteId);
+
+        if (noteAnnexList.size() > 10) {
+            // 附件数量大于6，不能上传了
+            return ResponseResult.FAIL("附件数量超出限制!");
+        }
+
+        // 上传
+        String url = this.minioService.putNoteAnnex(file, MinioConstant.BucketEnum.File.getBucket(), noteId);
+        if (StringUtils.isEmpty(url)) {
+            // 上传失败
+            return ResponseResult.FAIL("文件上传失败!");
+        }
+
+        // 添加附件
+        String originalFilename = file.getOriginalFilename();
+        NoteAnnex noteAnnex = new NoteAnnex()
+                .setNoteId(noteId)
+                .setOriginalName(originalFilename)
+                .setSize((int) file.getSize())
+                .setUrl(url)
+                .setSuffix(FilenameUtils.getExtension(originalFilename));
+        boolean save = this.noteAnnexService.save(noteAnnex);
+
+        if (BooleanUtils.isFalse(save)) {
+            // 保存附件失败
+            return ResponseResult.FAIL("保存附件失败!");
+        }
+
+        return ResponseResult.SUCCESS(noteAnnex.setUrl(""));
     }
 
 

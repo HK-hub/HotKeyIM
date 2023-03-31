@@ -7,6 +7,7 @@ import com.hk.im.client.service.MinioService;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.UploadResponse;
+import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.request.UploadAvatarRequest;
 import io.minio.ObjectWriteResponse;
 import io.minio.Result;
@@ -429,6 +430,33 @@ public class MinioServiceImpl implements MinioService {
     }
 
     /**
+     * 上传用户笔记文章图片
+     * @param image
+     * @param bucket
+     * @param noteId
+     * @return
+     */
+    @Override
+    public String putNoteImage(MultipartFile image, String bucket, Long noteId) {
+
+        Long userId = UserContextHolder.get().getId();
+        // 生成图片名称
+        String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+        String name = UUID.fastUUID().toString(true);
+        String objectName = userId + "/" + noteId + "/" + "image" + "/" + name + "." + extension;
+
+        // 上传
+        String url = null;
+        try{
+            url = this.putObject(image.getInputStream(), bucket, objectName);
+        }catch(Exception e){
+            log.info("upload note image exception: ", e);
+        }
+
+        return url;
+    }
+
+    /**
      * 上传聊天附件或文件
      * @param file
      * @param bucket
@@ -475,6 +503,33 @@ public class MinioServiceImpl implements MinioService {
         }
 
         return minioProperties.getConsole() + "/" + bucket + "/" + objectName;
+    }
+
+    /**
+     * 上传笔记附件
+     * @param file
+     * @param noteId
+     * @param bucket
+     * @return
+     */
+    @Override
+    public String putNoteAnnex(MultipartFile file, String bucket, Long noteId) {
+
+        Long userId = UserContextHolder.get().getId();
+        // 生成图片名称
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        String name = UUID.fastUUID().toString(true);
+        String objectName = userId + "/" + noteId + "/" + "annex" + "/" + name + "." + extension;
+
+        // 上传
+        String url = null;
+        try{
+            url = this.putObject(file.getInputStream(), bucket, objectName);
+        }catch(Exception e){
+            log.info("upload note image exception: ", e);
+        }
+
+        return url;
     }
 
 

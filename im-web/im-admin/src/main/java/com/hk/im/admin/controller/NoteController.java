@@ -2,12 +2,10 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.client.service.NoteService;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.domain.request.AsteriskArticleRequest;
-import com.hk.im.domain.request.EditArticleRequest;
-import com.hk.im.domain.request.GetArticleListRequest;
-import com.hk.im.domain.request.TagArticleRequest;
+import com.hk.im.domain.request.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 
 /**
@@ -65,6 +63,41 @@ public class NoteController {
         return this.noteService.editNoteArticle(request);
     }
 
+
+    /**
+     * 上传笔记文集图片
+     * @param request
+     * @return
+     */
+    @PostMapping("/article/upload/image")
+    public  ResponseResult uploadArticleImage(UploadNoteImageRequest request) {
+
+        return this.noteService.uploadNoteImage(request);
+    }
+
+
+    /**
+     * 上传笔记文集附件
+     * @param request
+     * @return
+     */
+    @PostMapping("/article/upload/annex")
+    public  ResponseResult uploadArticle(UploadNoteAnnexRequest request) {
+
+        return this.noteService.uploadNoteAnnex(request);
+    }
+
+
+    /**
+     * 移除笔记附件
+     * @param request
+     * @return
+     */
+    @PostMapping("/article/annex/delete")
+    public ResponseResult deleteArticleAnnex(UploadNoteAnnexRequest request) {
+
+        return nulll;
+    }
 
     /**
      * 收藏，取消收藏星标文集笔记
