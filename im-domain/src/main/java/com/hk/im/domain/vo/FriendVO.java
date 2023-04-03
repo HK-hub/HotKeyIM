@@ -41,7 +41,7 @@ public class FriendVO {
     private UserVO friend;
 
     /**
-     * 好友在线状态
+     * 好友在线状态: 0.离线，1.在线，3.隐身
      */
     private Integer status;
 

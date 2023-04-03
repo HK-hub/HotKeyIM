@@ -155,7 +155,9 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 获取用户好友列表V2 版本: 只返回好友列表
+     *
      * @param userId
+     *
      * @return
      */
     @Override
@@ -183,8 +185,13 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
         Map<Long, UserVO> userVOMap = userVOList.stream().collect(Collectors.toMap(UserVO::getId, value -> value));
 
         // 构造 friendList
-        List<FriendVO> friendVOList = friendList.stream().map(friend ->
-                        FriendMapStructure.INSTANCE.toVO(friend, userVOMap.get(friend.getFriendId())))
+        List<FriendVO> friendVOList = friendList.stream().map(friend -> {
+                    FriendVO friendVO = FriendMapStructure.INSTANCE.toVO(friend, userVOMap.get(friend.getFriendId()));
+                    // 设置在线状态：
+                    Boolean onlineStatus = this.authorizationService.getUserOnlineStatus(friend.getUserId());
+                    friendVO.setStatus(BooleanUtils.isTrue(onlineStatus) ? 1 : 0);
+                    return friendVO;
+                })
                 .collect(Collectors.toList());
 
         // 构建分组集合
@@ -266,7 +273,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
         }
 
         Boolean update = null;
-                // 判断操作类型
+        // 判断操作类型
         ModifyFriendInfoRequest.Action action = ModifyFriendInfoRequest.Action.values()[op];
         if (Objects.equals(action, ModifyFriendInfoRequest.Action.remarkName)) {
             // 修改好友备注信息，备注名称
@@ -276,12 +283,12 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
                     .set(StringUtils.isNotBlank(request.getRemarkName()), Friend::getRemarkName, request.getRemarkName())
                     .set(StringUtils.isNotBlank(request.getRemarkDescription()), Friend::getRemarkInfo, request.getRemarkDescription())
                     .update();
-        } else if(Objects.equals(action, ModifyFriendInfoRequest.Action.group)) {
+        } else if (Objects.equals(action, ModifyFriendInfoRequest.Action.group)) {
             // 修改好友分组
             update = this.lambdaUpdate()
                     .eq(Friend::getUserId, request.getUserId())
                     .eq(Friend::getFriendId, request.getFriendId())
-                    .set(StringUtils.isNotBlank(request.getGroup()), Friend::getGroup,request.getGroup())
+                    .set(StringUtils.isNotBlank(request.getGroup()), Friend::getGroup, request.getGroup())
                     .update();
         }
 
@@ -296,7 +303,9 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 删除好友: 双向, 聊天记录，会话表等
+     *
      * @param friendId
+     *
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -327,7 +336,9 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 修改好友状态
+     *
      * @param request
+     *
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -360,8 +371,10 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 获取用户指定分组好友
+     *
      * @param userId
      * @param groupId
+     *
      * @return
      */
     @Override
@@ -387,8 +400,10 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 获取指定好友VO
+     *
      * @param userId
      * @param friendId
+     *
      * @return
      */
     @Override
@@ -409,7 +424,9 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 检索出用户可以邀请的全部好友
+     *
      * @param userId
+     *
      * @return
      */
     @Override
@@ -436,8 +453,10 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 获取用户指定好友
+     *
      * @param senderId
      * @param receiverId
+     *
      * @return
      */
     @Override
