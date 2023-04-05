@@ -66,7 +66,7 @@ public class FindServiceImpl implements FindService {
 
         // 查询群聊设置为公开的群聊
         List<GroupSetting> groupSettings = this.groupSettingService.lambdaQuery()
-                .eq(GroupSetting::getFindType, GroupConstants.GroupFindType.PUBLIC)
+                .eq(GroupSetting::getFindType, GroupConstants.GroupFindType.PUBLIC.ordinal())
                 .list();
         if (CollectionUtils.isEmpty(groupSettings)) {
             groupSettings = Collections.emptyList();
@@ -83,6 +83,7 @@ public class FindServiceImpl implements FindService {
         // 排序：按照群聊人数，群聊类型，群聊描述进行排序
         Comparator<GroupVO> comparator = Comparator.comparing(GroupVO::getMemberCount).reversed()
                 .thenComparing(GroupVO::getGroupType)
+                .thenComparing(GroupVO::getCreateTime)
                 .thenComparing(GroupVO::getDescription, String.CASE_INSENSITIVE_ORDER);
 
         // 转换为 VO 对象
