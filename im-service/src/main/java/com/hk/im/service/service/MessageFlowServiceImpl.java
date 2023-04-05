@@ -14,6 +14,7 @@ import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.dto.LatestMessageRecordDTO;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.Group;
+import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.MessageFlow;
 import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
@@ -59,6 +60,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     private MessageFlowMapper messageFlowMapper;
     @Resource
     private GroupService groupService;
+    @Resource
+    private GroupMemberService groupMemberService;
     @Resource
     private ChatMessageService chatMessageService;
     @Resource
@@ -160,8 +163,17 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
                     MessageBO messageBO = MessageMapStructure.INSTANCE.toBO(flow, message);
                     // 转换为MessageVO
                     MessageVO messageVO = MessageMapStructure.INSTANCE.boToVO(messageBO);
-                    // 计算头像，id
-                    return messageVO.computedPrivateMessageVO(userVO, friendVO);
+                    // 如果是私聊或者@群员消息->计算头像，id
+                    if (CommunicationConstants.SessionType.PRIVATE.ordinal() == talkType) {
+                        // 私聊
+                        messageVO.computedPrivateMessageVO(userVO, friendVO, null);
+                    } else if (CommunicationConstants.SessionType.GROUP.ordinal() == talkType) {
+                        // 群聊
+                        // 查询发送者群员
+                        GroupMember groupMember = this.groupMemberService.getTheGroupMember(messageVO.getReceiverId(), messageVO.getSenderId());
+                        messageVO.computedPrivateMessageVO(userVO, null, groupMember);
+                    }
+                    return messageVO;
                 })
                 // 排序：按照 sequence 排序
                 .sorted(Comparator.comparing(MessageVO::getSequence)).toList();

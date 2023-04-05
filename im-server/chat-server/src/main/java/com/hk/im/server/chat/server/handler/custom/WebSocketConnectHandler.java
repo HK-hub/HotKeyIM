@@ -128,7 +128,7 @@ public class WebSocketConnectHandler {
         // 设置群聊channel
         List<GroupVO> groupVOList = (List<GroupVO>) result.getData();
         for (GroupVO groupVO : groupVOList) {
-            UserChannelManager.addGroupChannel(groupVO.getId(), channel);
+            UserChannelManager.addGroupChannel(groupVO.getId(), userId, channel);
         }
     }
 

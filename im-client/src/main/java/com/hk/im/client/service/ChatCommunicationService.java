@@ -74,6 +74,14 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
      */
     ResponseResult clearUnreadMessage(ClearUnreadRequest request);
 
+    /**
+     * 自增会话未读数量
+     * @param talk
+     * @param increase
+     * @return
+     */
+    ResponseResult increaseTalkUnreadCount(ChatCommunication talk, int increase);
+
 
     /**
      * 获取自己的会话

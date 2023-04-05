@@ -264,6 +264,24 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         return memberVOList;
     }
 
+
+    /**
+     * 获取群聊成员ID列表
+     * @param groupId
+     * @return
+     */
+    @Override
+    public List<GroupMember> getGroupMemberIdList(Long groupId) {
+
+        List<GroupMember> memberIdList = this.lambdaQuery()
+                .select(GroupMember::getMemberId)
+                .eq(GroupMember::getGroupId, groupId)
+                .eq(GroupMember::getStatus, 1)
+                .list();
+
+        return memberIdList;
+    }
+
     /**
      * 无条件加入群聊
      * @param request
@@ -384,7 +402,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
      * @return
      */
     @Override
-    public GroupMember getTheGroupMember(String groupId, String memberId) {
+    public GroupMember getTheGroupMember(Long groupId, Long memberId) {
 
         GroupMember member = this.lambdaQuery()
                 .eq(GroupMember::getGroupId, groupId)

@@ -133,8 +133,9 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
                 messageFlow = new MessageFlow().setSequence(0L);
             }
             // 设置自增缓存: 8 小时
+            // TODO : 这里应该不设置过期时间，永久保存
             this.stringRedisTemplate.opsForValue()
-                    .set(key, String.valueOf(messageFlow.getSequence()), RedisConstants.SEQUENCE_TTL, TimeUnit.SECONDS);
+                    .set(key, String.valueOf(messageFlow.getSequence()));
         }
 
         // 按照步长自增

@@ -1,6 +1,8 @@
 package com.hk.im.service.service;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hk.im.client.service.AuthorizationService;
 import com.hk.im.client.service.ChatCommunicationService;
 import com.hk.im.client.service.FriendService;
 import com.hk.im.client.service.GroupService;
@@ -57,6 +59,8 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
     private FriendService friendService;
     @Resource
     private GroupService groupService;
+    @Resource
+    private AuthorizationService authorizationService;
 
     /**
      * 创建会话
@@ -132,12 +136,20 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         // 保存成功-缓存到redis
         String name = senderId < receiverId ? senderId + "-" + receiverId : receiverId + "-" + senderId;
         // 根据会话类型进行设置
+        /*if (type == 1) {
+            // 私聊
+            name = senderId < receiverId ? senderId + "-" + receiverId : receiverId + "-" + senderId;
+
+        } else if (type == 2) {
+            // 群聊
+            name = receiverId + "-" + receiverId;
+        }*/
         if (sessionType == CommunicationConstants.SessionType.GROUP) {
             name = request.getReceiverId();
         }
         String key = RedisConstants.COMMUNICATION_KEY + RedisConstants.SEQUENCE_KEY + name;
 
-        // 设置到 redis 缓存
+        // 设置到 redis 缓存: 永不过期
         this.stringRedisTemplate.opsForValue().set(key, String.valueOf(0), 120, TimeUnit.MINUTES);
 
         // 构造响应数据
@@ -281,6 +293,8 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
                         ? vo.getFriendVO().getNickname() : vo.getFriendVO().getRemarkName());
                 // 头像
                 vo.setAvatar(vo.getFriendVO().getAvatar());
+                // 在线状态
+                vo.setOnline(this.authorizationService.getUserOnlineStatus(vo.getReceiverId()));
             } else if (sessionType == CommunicationConstants.SessionType.GROUP.ordinal()) {
                 // 群聊
                 vo.setReceiverName(vo.getGroupVO().getGroupName());
@@ -430,6 +444,21 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
 
         // 响应
         return ResponseResult.SUCCESS(update).setMessage("清空未读消息数成功!");
+    }
+
+
+    /**
+     * 修改会话未读数量
+     * @param talk
+     * @param increase
+     * @return
+     */
+    @Override
+    public ResponseResult increaseTalkUnreadCount(ChatCommunication talk, int increase) {
+
+        Boolean res = this.chatCommunicationMapper.increaseTalkUnreadCount(talk.getId(), increase);
+
+        return new ResponseResult().setSuccess(res);
     }
 
 

@@ -483,7 +483,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         GroupDetailVO groupDetailVO = GroupDetailMapStructure.INSTANCE.toVO(group);
 
         // 设置群内昵称
-        GroupMember groupMember = this.groupMemberService.getTheGroupMember(groupId, memberId);
+        GroupMember groupMember = this.groupMemberService.getTheGroupMember(Long.valueOf(groupId), Long.valueOf(memberId));
         if (Objects.isNull(groupMember)) {
             // 不是群聊成员
             return ResponseResult.FAIL("抱歉该用户不是群聊成员!");

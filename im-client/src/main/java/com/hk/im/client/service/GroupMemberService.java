@@ -10,6 +10,7 @@ import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.domain.vo.GroupMemberVO;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @ClassName : GroupMemberService
@@ -52,6 +53,13 @@ public interface GroupMemberService extends IService<GroupMember> {
     List<GroupMemberVO> getGroupMemberList(Long groupId);
 
     /**
+     * 获取群聊成员Id集合
+     * @param groupId
+     * @return
+     */
+    List<GroupMember> getGroupMemberIdList(Long groupId);
+
+    /**
      * 加入群聊
      * @param request
      * @return
@@ -88,5 +96,5 @@ public interface GroupMemberService extends IService<GroupMember> {
      * @param memberId
      * @return
      */
-    GroupMember getTheGroupMember(String groupId, String memberId);
+    GroupMember getTheGroupMember(Long groupId, Long memberId);
 }

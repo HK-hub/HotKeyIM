@@ -1,5 +1,6 @@
 package com.hk.im.domain.vo;
 
+import com.hk.im.common.consntant.RedisConstants;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -26,8 +27,8 @@ public class UserVO {
     // accessToken 凭证
     private String accessToken;
 
-    // 凭证过期时间: 1小时=3600 秒
-    private Long expiresIn = 3600L;
+    // 凭证过期时间: 12 小时=43200L 秒
+    private Long expiresIn = RedisConstants.ACCESS_TOKEN_TTL;
 
     private String username;
 

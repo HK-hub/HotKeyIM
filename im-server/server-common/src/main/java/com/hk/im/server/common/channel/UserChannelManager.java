@@ -39,8 +39,12 @@ import java.util.concurrent.locks.ReentrantLock;
 public class UserChannelManager {
 
     // 保存用户与其对应的channel: 使用 <set>集合是为了支持多端登录, 如果为群聊，<set> 集合则表示群员的 Channel
-    public static final Map<Long, Set<Channel>> userChannelMap = new ConcurrentHashMap<>();
+    public static final Map<Long, Set<Channel>> userChannelMap = new ConcurrentHashMap<>(1024);
     public static ChannelGroup clientChannelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
+    // 群聊在线成员id集合
+    public static Map<Long, Set<Long>> groupMemberMap = new ConcurrentHashMap<>(1024);
+
     // 并发加锁
     private static final Lock lock = new ReentrantLock();
 
@@ -74,7 +78,7 @@ public class UserChannelManager {
      * @param groupId
      * @param channel
      */
-    public static void addGroupChannel(@NonNull Long groupId, @NonNull Channel channel) {
+    public static void addGroupChannel(@NonNull Long groupId, @NonNull Long userId, @NonNull Channel channel) {
 
         lock.lock();
         try{
@@ -85,6 +89,15 @@ public class UserChannelManager {
             channels.add(channel);
             userChannelMap.put(groupId, channels);
             clientChannelGroup.add(channel);
+
+            Set<Long> memberSet = groupMemberMap.get(groupId);
+            if (CollectionUtils.isEmpty(memberSet)) {
+                // 群聊成员id 集合不存在
+                memberSet = new HashSet<>();
+            }
+            memberSet.add(userId);
+            groupMemberMap.put(groupId, memberSet);
+
         }catch(Exception e){
             e.printStackTrace();
         }finally {
@@ -120,9 +133,45 @@ public class UserChannelManager {
         return userChannelMap.get(userId);
     }
 
+
+    /**
+     * 获取群聊成员Channel
+     * @param groupId
+     * @return
+     */
     @Nullable
     public static Set<Channel> getGroupChannel(@NonNull Long groupId) {
-        return userChannelMap.get(groupId);
+        Set<Channel> channelSet = userChannelMap.get(groupId);
+        if (CollectionUtils.isEmpty(channelSet)) {
+            channelSet = new HashSet<>();
+        }
+        return channelSet;
+    }
+
+
+    /**
+     * 获取群聊成员Channel，排除我
+     * @param groupId
+     * @return
+     */
+    public static Set<Channel> getGroupChannelExcludeMe(@NonNull Long groupId, Long userId) {
+        Set<Channel> channelSet = userChannelMap.get(groupId);
+        if (CollectionUtils.isEmpty(channelSet)) {
+            channelSet = new HashSet<>();
+        }
+        // 获取我的channel
+        Set<Channel> me = getUserChannel(userId);
+        channelSet.removeAll(me);
+        return channelSet;
+    }
+
+    /**
+     * 获取群聊成员id 集合
+     * @param groupId
+     * @return
+     */
+    public static Set<Long> getGroupMemberIdSet(@NonNull Long groupId) {
+        return groupMemberMap.get(groupId);
     }
 
 

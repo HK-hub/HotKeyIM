@@ -1,9 +1,6 @@
 package com.hk.im.infrastructure.event.message.listener;
 
-import com.hk.im.client.service.ChatCommunicationService;
-import com.hk.im.client.service.GroupService;
-import com.hk.im.client.service.RocketMQService;
-import com.hk.im.client.service.UserService;
+import com.hk.im.client.service.*;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.bo.MessageRecordMemberBO;
@@ -12,7 +9,9 @@ import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.constant.MessageQueueConstants;
 import com.hk.im.domain.entity.ChatCommunication;
 import com.hk.im.domain.entity.Group;
+import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
+import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
@@ -46,9 +45,13 @@ import java.util.Objects;
 public class MessageEventHandler {
 
     @Resource
+    private UserService userService;
+    @Resource
     private UserManager userManager;
     @Resource
     private GroupService groupService;
+    @Resource
+    private GroupMemberService groupMemberService;
     @Resource
     private RocketMQService rocketMQService;
     @Resource
@@ -108,14 +111,17 @@ public class MessageEventHandler {
      */
     private MessageVO computedMessageRecordMember(MessageBO messageBO) {
 
-        /*Long senderId = messageBO.getSenderId();
+        Long senderId = messageBO.getSenderId();
         Long receiverId = messageBO.getReceiverId();
 
         // 获取发送者
         User sender = this.userService.getById(senderId);
         MessageRecordMemberBO senderMember = new MessageRecordMemberBO();
         MessageRecordMemberBO receiverMember = new MessageRecordMemberBO();
-        // 获取接收者：可能为群聊
+        UserVO friendVO = null;
+        GroupMember groupMember = null;
+
+                // 获取接收者：可能为群聊
         Integer chatType = messageBO.getChatType();
         if (CommunicationConstants.SessionType.PRIVATE.ordinal() == chatType) {
             // 私聊
@@ -124,13 +130,22 @@ public class MessageEventHandler {
                     .setUsername(receiver.getUsername())
                     .setRemarkName(receiver.getUsername())
                     .setAvatar(receiver.getMiniAvatar());
+            // 查询朋友信息
+            friendVO = this.userManager.findUserAndInfo(messageBO.getReceiverId());
+
         }else if (CommunicationConstants.SessionType.GROUP.ordinal() == chatType) {
             // 群聊
+            groupMember = this.groupMemberService.getTheGroupMember(receiverId, senderId);
+            // 设置发送者信息
             Group group = this.groupService.getById(receiverId);
+            // 可能为@ 消息
             receiverMember.setGroupId(group.getId())
                     .setAvatar(group.getGroupAvatar())
                     .setUsername(group.getGroupName())
                     .setRemarkName(group.getGroupName());
+            // 设置发送成员
+            senderMember.setRemarkName(groupMember.getMemberRemarkName());
+
         }
 
 
@@ -140,15 +155,14 @@ public class MessageEventHandler {
                 .setUsername(sender.getUsername());
 
         messageBO.setSenderMember(senderMember);
-        messageBO.setReceiverMember(receiverMember);*/
+        messageBO.setReceiverMember(receiverMember);
 
         // 转换为 VO
         MessageVO messageVO = MessageMapStructure.INSTANCE.boToVO(messageBO);
         UserVO userVO = this.userManager.findUserAndInfo(messageBO.getSenderId());
-        UserVO friendVO = this.userManager.findUserAndInfo(messageBO.getReceiverId());
 
-        // 计算 userVO 和 friendVO
-        messageVO.computedPrivateMessageVO(userVO, friendVO);
+        // 计算 userVO 和 friendVO 或者 GroupVO
+        messageVO.computedPrivateMessageVO(userVO, friendVO, groupMember);
 
         // 响应数据
         return messageVO;

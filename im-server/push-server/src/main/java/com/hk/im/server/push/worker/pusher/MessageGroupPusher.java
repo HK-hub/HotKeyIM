@@ -1,8 +1,12 @@
 package com.hk.im.server.push.worker.pusher;
 
-import com.hk.im.domain.bo.MessageBO;
+import com.hk.im.domain.vo.MessageVO;
+import com.hk.im.server.push.worker.MessageOfflineWorker;
+import com.hk.im.server.push.worker.MessageSynchronizer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * @author : HK意境
@@ -18,10 +22,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageGroupPusher {
 
+
+    @Resource
+    private MessageSynchronizer messageSynchronizer;
+    @Resource
+    private MessageOfflineWorker messageOfflineWorker;
+
+
     /**
      * 群聊推送消息
-     * @param messageBO
+     * @param messageVO
      */
-    public void pushMessage(MessageBO messageBO) {
+    public void pushMessage(MessageVO messageVO) {
+
+        // 将消息推送给在线用户
+        messageSynchronizer.synchronizeGroup(messageVO);
+
+        // 离线消息处理
+        messageOfflineWorker.processOfflineMessage(messageVO);
     }
 }

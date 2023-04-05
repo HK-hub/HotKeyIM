@@ -54,8 +54,8 @@ public class MetaDataConfig {
      */
     public static boolean epoll = false;
 
-    // 读空闲时间: 1小时
-    public static int READ_IDEL_TIME_OUT = 60;
+    // 读空闲时间: 2小时
+    public static int READ_IDEL_TIME_OUT = 120;
     public static int WRITE_IDEL_TIME_OUT;
     public static int ALL_IDEL_TIME_OUT;
     public static TimeUnit timeUnit = TimeUnit.MINUTES;

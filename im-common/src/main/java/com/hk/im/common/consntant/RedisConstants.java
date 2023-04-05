@@ -43,8 +43,8 @@ public class RedisConstants {
     // 用户
     public static final String LOGIN_USER_MAP = "login:user:map";
     public static final Long LOGIN_USER_TTL = 36000L;
-    // 用户 token 过期时间：3600 秒=1小时
-    public static final Long ACCESS_TOKEN_TTL = 3600L * 24;
+    // 用户 token 过期时间：12 小时
+    public static final Long ACCESS_TOKEN_TTL = 43200L;
 
     // 空数据 缓存时间
     public static final Long CACHE_NULL_TTL = 2L;
