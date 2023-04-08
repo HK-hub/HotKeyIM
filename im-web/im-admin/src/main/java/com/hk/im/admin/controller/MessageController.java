@@ -41,8 +41,8 @@ public class MessageController {
      * @param request
      * @return
      */
-    @GetMapping("/records/history")
-    public ResponseResult getCommunicationRecords(TalkRecordsRequest request) {
+    @PostMapping("/records/history")
+    public ResponseResult getCommunicationRecords(@RequestBody TalkRecordsRequest request) {
 
         return this.messageFlowService.getTalkRecordsByPage(request);
     }

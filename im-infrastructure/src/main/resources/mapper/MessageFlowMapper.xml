@@ -34,7 +34,7 @@
         select *
         from tb_message_flow
         where ((sender_id = #{po.senderId} and receiver_id = #{po.receiverId})
-           or (sender_id = #{po.receiverId} and receiver_id = #{po.senderId}))
+        or (sender_id = #{po.receiverId} and receiver_id = #{po.senderId}))
         <if test="po.sequence == 0">
             order by sequence desc limit #{po.limit};
         </if>
@@ -56,6 +56,59 @@
         <if test="po.sequence != 0">
             and `sequence` &lt; #{po.sequence}
             order by `sequence` limit #{po.limit};
+        </if>
+    </select>
+
+
+    <!-- 查询私聊历史聊天记录 -->
+    <select id="selectPrivateHistoryRecords" resultType="com.hk.im.domain.entity.MessageFlow">
+        select * from tb_message_flow
+        where ((sender_id = #{param.senderId} and receiver_id = #{param.receiverId})
+        or (sender_id = #{param.receiverId} and receiver_id = #{param.senderId}))
+        <if test="param.msgTypes != null and param.msgTypes.size() > 0">
+          and message_type in
+            <foreach collection="param.msgTypes" item="msgType" open="(" separator="," close=")">
+                #{msgType}
+            </foreach>
+        </if>
+        <if test="param.fromTime != null">
+            and create_time >= #{param.fromTime}
+        </if>
+        <if test="param.toTime != null">
+            and create_time &lt;= #{param.toTime}
+        </if>
+        <if test="param.sequence == 0">
+            order by sequence desc limit #{param.limit};
+        </if>
+        <if test="param.sequence != 0">
+            and `sequence` &lt; #{param.sequence}
+            order by `sequence` limit #{param.limit};
+        </if>
+    </select>
+
+
+    <!-- 查询群聊聊天历史记录 -->
+    <select id="selectGroupHistoryRecords" resultType="com.hk.im.domain.entity.MessageFlow">
+        select * from tb_message_flow
+        where receiver_id = #{param.receiverId}
+        <if test="param.senderId != null">
+            and sender_id = #{param.senderId}
+        </if>
+        <if test="param.msgTypes != 0">
+            and message_type = #{param.msgTypes}
+        </if>
+        <if test="param.fromTime != null">
+            and create_time >= #{param.fromTime}
+        </if>
+        <if test="param.toTime != null">
+            and create_time &lt;= #{param.toTime}
+        </if>
+        <if test="param.sequence == 0">
+            order by sequence desc limit #{param.limit};
+        </if>
+        <if test="param.sequence != 0">
+            and `sequence` &lt; #{param.sequence}
+            order by `sequence` limit #{param.limit};
         </if>
     </select>
 

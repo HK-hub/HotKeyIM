@@ -3,6 +3,7 @@ package com.hk.im.service.service;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.hk.im.client.service.*;
 import com.hk.im.common.consntant.MinioConstant;
 import com.hk.im.common.resp.ResponseResult;
@@ -11,6 +12,7 @@ import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.context.UserContextHolder;
+import com.hk.im.domain.dto.HistoryRecordsDTO;
 import com.hk.im.domain.dto.LatestMessageRecordDTO;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.Group;
@@ -31,6 +33,7 @@ import com.hk.im.infrastructure.mapper.MessageFlowMapper;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
 import com.hk.im.service.worker.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
@@ -214,47 +217,96 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
         }
 
         // 获取用户
-        String receiverId = request.getReceiverId();
+        if (StringUtils.isEmpty(request.getSenderId())) {
+            // 没有选择发送用户：发送者为登录用户
+            request.setSenderId(""+UserContextHolder.get().getId());
+        }
+        Long senderId = Long.valueOf(request.getSenderId());
+        Long receiverId = Long.valueOf(request.getReceiverId());
         // 这里只按照分页查找
         Integer currentPage = request.getCurrentPage();
         Integer needPages = request.getNeedPages();
         Integer direction = request.getDirection();
         Integer limit = Objects.isNull(request.getLimit()) ? MessageConstants.DEFAULT_RECORDS_LIMIT : request.getLimit();
 
-        // 封装查询条件
-        LambdaQueryChainWrapper<MessageFlow> queryWrapper = this.lambdaQuery();
+        // 查询消息成员信息
+        // 查询用户
+        UserVO userVO = this.userManager.findUserAndInfo(senderId);
+        UserVO friendVO = null;
+
+        // 查询消息记录
+        List<MessageFlow> messageFlowList = new ArrayList<>();
+
+        // 查找指定消息类型判断
+        if (CollectionUtils.isNotEmpty(request.getMsgTypes()) && request.getMsgTypes().size() == 1) {
+            // 判断是否为全部=0
+            if (request.getMsgTypes().get(0) == 0) {
+                request.setMsgTypes(Collections.emptyList());
+            }
+        }
 
         // 选择查找消息类型
         Integer talkType = request.getTalkType();
         if (CommunicationConstants.SessionType.PRIVATE.ordinal() == talkType) {
             // 好友私聊
-            // 参数校验
-            String senderId = request.getSenderId();
-            if (StringUtils.isEmpty(senderId)) {
-                return ResponseResult.FAIL("获取聊天记录失败!");
-            }
-
-            queryWrapper.eq(MessageFlow::getReceiverId, receiverId)
-                    .eq(MessageFlow::getSenderId, senderId);
+            messageFlowList =  this.messageFlowMapper.selectPrivateHistoryRecords(request);
+            friendVO = this.userManager.findUserAndInfo(receiverId);
 
         } else if (CommunicationConstants.SessionType.GROUP.ordinal() == talkType) {
             // 群聊
-            queryWrapper.eq(MessageFlow::getReceiverId, receiverId);
+            messageFlowList = this.messageFlowMapper.selectGroupHistoryRecords(request);
         }
 
         // 根据锚点进行前后查询
-        String anchor = request.getAnchor();
+        /*String anchor = request.getAnchor();
         if (StringUtils.isEmpty(anchor)) {
             // 没有设置锚点：可能没有聊天记录，可能会话已经被删除，则从数据库获取最新消息
             // TODO
             MessageFlow latestMessage = this.messageFlowMapper.getPrivateLatestMessageRecord(request.getSenderId(), receiverId);
         }
-        MessageFlow anchorMessage = this.getById(request.getAnchor());
+        MessageFlow anchorMessage = this.getById(request.getAnchor());*/
 
-        // 分页查找
-        Page<MessageFlow> page = queryWrapper.page(Page.of(currentPage, limit, false));
+        // 查询消息体
+        // 转换为MessageB: 查询消息体
+        UserVO finalFriendVO = friendVO;
+        List<MessageVO> messageVOList = messageFlowList.stream().map(flow -> {
+                    // 查询消息体
+                    ChatMessage message = this.chatMessageService.getById(flow.getMessageId());
+                    // 转换为 MessageBO
+                    MessageBO messageBO = MessageMapStructure.INSTANCE.toBO(flow, message);
+                    // 转换为MessageVO
+                    MessageVO messageVO = MessageMapStructure.INSTANCE.boToVO(messageBO);
+                    // 如果是私聊或者@群员消息->计算头像，id
+                    if (CommunicationConstants.SessionType.PRIVATE.ordinal() == talkType) {
+                        // 私聊
+                        messageVO.computedPrivateMessageVO(userVO, finalFriendVO, null);
+                    } else if (CommunicationConstants.SessionType.GROUP.ordinal() == talkType) {
+                        // 群聊
+                        // 查询发送者群员
+                        GroupMember groupMember = this.groupMemberService.getTheGroupMember(messageVO.getReceiverId(), messageVO.getSenderId());
+                        messageVO.computedPrivateMessageVO(userVO, null, groupMember);
+                    }
+                    return messageVO;
+                })
+                // 排序：按照 sequence 排序
+                .sorted(Comparator.comparing(MessageVO::getSequence)).toList();
 
-        return null;
+        // 获取最小的 sequence
+        MessageFlow minMessage = new MessageFlow().setSequence(0L).setMessageId(0L);
+        Optional<MessageFlow> minOptional = messageFlowList.stream()
+                .min(Comparator.comparingLong(MessageFlow::getSequence));
+        // 存在最小消息记录
+        if (minOptional.isPresent()) {
+            minMessage = minOptional.get();
+        }
+
+        // 响应数据
+        HistoryRecordsDTO recordDTO = new HistoryRecordsDTO().setMessageVOList(messageVOList)
+                .setLimit(limit)
+                .setSequence(minMessage.getSequence())
+                .setAnchorId(minMessage.getMessageId());
+
+        return ResponseResult.SUCCESS(recordDTO);
     }
 
 
