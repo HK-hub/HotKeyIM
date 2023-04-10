@@ -179,6 +179,12 @@ public class UserInfo implements Serializable {
     @TableField(value = "background")
     private String background;
 
+    /**
+     * 存储空间上线
+     */
+    @TableField(value = "storage")
+    private Long storage;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

@@ -25,6 +25,8 @@ public interface UserInfoService extends IService<UserInfo> {
      */
    public ResponseResult getUserInfo(Long userId, String token);
 
+   public UserInfo getUserInfo(Long userId);
+
 
     /**
      * 更新用户详细信息
