@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -119,7 +120,7 @@ public class OssServiceImpl implements OssService {
             System.out.println("删除失败");
         }
         SimpleDateFormat data = new SimpleDateFormat("yyyy/MM/dd");
-        Date gmtCreate = fileServiceOne.getGmtCreate();
+        LocalDateTime gmtCreate = fileServiceOne.getCreateTime();
         data.format(gmtCreate);
         //String filePath = new DateTime().toString("yyyy/MM/dd");
         String filePath = data.toString();
