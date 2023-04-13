@@ -29,5 +29,21 @@
         <module name="ruoyi-admin" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="chat-server" target="17" />
+      <module name="HotKeyIM" target="17" />
+      <module name="im-client" target="17" />
+      <module name="im-common" target="17" />
+      <module name="im-domain" target="17" />
+      <module name="im-flow" target="17" />
+      <module name="im-generator" target="17" />
+      <module name="im-infrastructure" target="17" />
+      <module name="im-server" target="17" />
+      <module name="im-system" target="17" />
+      <module name="im-web" target="17" />
+      <module name="push-server" target="17" />
+      <module name="server-common" target="17" />
+      <module name="web-common" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
