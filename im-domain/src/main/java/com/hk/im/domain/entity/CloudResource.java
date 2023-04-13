@@ -186,7 +186,7 @@ public class CloudResource implements Serializable {
 
         UNKNOWN,
         IMAGE,
-        VOICE,
+        AUDIO,
         VIDEO,
         COMPRESS,
         TEXT,
@@ -204,21 +204,46 @@ public class CloudResource implements Serializable {
      * @return
      */
     public static int getResourceType(String fileName) {
-        String suffix = FileNameUtil.getSuffix(fileName);
-        if (FileUtil.isImage(suffix)) {
+
+        if (FileUtil.isImage(fileName)) {
             return ResourceType.IMAGE.ordinal();
-        } else if (FileUtil.isVideo(suffix)) {
+        } else if (FileUtil.isVideo(fileName)) {
             return ResourceType.VIDEO.ordinal();
-        } else if (FileUtil.isVoice(suffix)) {
-            return ResourceType.VOICE.ordinal();
-        } else if (FileUtil.isCompress(suffix)) {
+        } else if (FileUtil.isVoice(fileName)) {
+            return ResourceType.AUDIO.ordinal();
+        } else if (FileUtil.isCompress(fileName)) {
             return ResourceType.COMPRESS.ordinal();
-        } else if (FileUtil.isText(suffix)){
+        } else if (FileUtil.isText(fileName)){
             return ResourceType.TEXT.ordinal();
-        } else if (FileUtil.isCode(suffix)){
+        } else if (FileUtil.isCode(fileName)){
             return ResourceType.CODE.ordinal();
         } else {
             return ResourceType.FILE.ordinal();
+        }
+    }
+
+
+    /**
+     * 获取云资源枚举类型
+     * @param fileName
+     * @return
+     */
+    public static ResourceType getResourceTypeEnum(String fileName) {
+
+        if (FileUtil.isImage(fileName)) {
+            return ResourceType.IMAGE;
+        } else if (FileUtil.isVideo(fileName)) {
+            return ResourceType.VIDEO;
+        } else if (FileUtil.isVoice(fileName)) {
+            return ResourceType.AUDIO;
+        } else if (FileUtil.isCompress(fileName)) {
+            return ResourceType.COMPRESS;
+        } else if (FileUtil.isText(fileName)){
+            return ResourceType.TEXT;
+        } else if (FileUtil.isCode(fileName)){
+            return ResourceType.CODE;
+        } else {
+            return ResourceType.FILE;
         }
     }
 

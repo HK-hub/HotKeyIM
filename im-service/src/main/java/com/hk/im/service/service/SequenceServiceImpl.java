@@ -8,12 +8,14 @@ import com.hk.im.client.service.SequenceService;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
+import com.hk.im.domain.bo.RoomNumber;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.entity.*;
 import com.hk.im.infrastructure.event.communication.event.RefreshSequenceEvent;
 import com.hk.im.infrastructure.mapper.SequenceMapper;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +41,7 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
     private MessageFlowService messageFlowService;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate<String, RoomNumber> redisTemplate;
     @Resource
     private FriendService friendService;
     @Resource
@@ -130,8 +133,9 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
                 messageFlow = new MessageFlow().setSequence(0L);
             }
             // 设置自增缓存: 8 小时
+            // TODO : 这里应该不设置过期时间，永久保存
             this.stringRedisTemplate.opsForValue()
-                    .set(key, String.valueOf(messageFlow.getSequence()), RedisConstants.SEQUENCE_TTL, TimeUnit.SECONDS);
+                    .set(key, String.valueOf(messageFlow.getSequence()));
         }
 
         // 按照步长自增
@@ -147,6 +151,41 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
                 new Sequence().setSenderId(senderId).setReceiverId(receiverId)));
 
         return ResponseResult.SUCCESS(nextId);
+    }
+
+
+    /**
+     * 获取一个房间号
+     * @param hostId
+     * @return
+     */
+    @Override
+    public ResponseResult getRoomId(Long hostId) {
+
+        // 采用Redis Set集合
+        Boolean flag = true;
+        RoomNumber roomNumber = null;
+        for (int i = 0; i < 900000 && flag; i++) {
+            roomNumber = this.redisTemplate.opsForSet().pop(RedisConstants.ROOM_NUMBER_KEY);
+            if (Objects.isNull(roomNumber)) {
+                roomNumber = new RoomNumber().setInUse(Boolean.TRUE);
+            }
+            Boolean inUse = roomNumber.getInUse();
+            if (BooleanUtils.isFalse(inUse)) {
+                // 没有使用 -> 使用
+                roomNumber.setInUse(Boolean.TRUE)
+                        .setHostId(hostId);
+                flag = false;
+            }
+            this.redisTemplate.opsForSet().add(RedisConstants.ROOM_NUMBER_KEY, roomNumber);
+        }
+
+        if (BooleanUtils.isTrue(flag)) {
+            // 未找到房间号
+            return ResponseResult.FAIL();
+        }
+
+        return ResponseResult.SUCCESS(roomNumber);
     }
 }
 

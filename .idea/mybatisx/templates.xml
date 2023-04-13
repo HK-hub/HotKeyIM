@@ -70,8 +70,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="MessageInvite" />
-                  <option name="tableName" value="tb_message_invite" />
+                  <option name="className" value="NoteAnnex" />
+                  <option name="tableName" value="tb_note_annex" />
                 </TableUIInfo>
               </list>
             </option>

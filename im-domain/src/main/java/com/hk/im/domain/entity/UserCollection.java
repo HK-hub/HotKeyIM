@@ -1,12 +1,11 @@
 package com.hk.im.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 
@@ -14,7 +13,15 @@ import lombok.Data;
  */
 @TableName(value ="tb_user_collection")
 @Data
+@Accessors(chain = true)
 public class UserCollection implements Serializable {
+
+    /**
+     * id
+     */
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
+
     /**
      * 用户id
      */
@@ -28,27 +35,27 @@ public class UserCollection implements Serializable {
     private Long collectibleId;
 
     /**
-     * 收藏品类型:1.表情包，2.说说，3.聊天记录
+     * 收藏品类型:1.表情包，2.说说，3.聊天记录，4.笔记文集
      */
-    @TableField(value = "type")
+    @TableField(value = "`type`")
     private Integer type;
 
     /**
      * 是否删除
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间
      */
-    @TableField(value = "create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
-    @TableField(value = "update_time")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @TableField(exist = false)
@@ -103,4 +110,15 @@ public class UserCollection implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+
+    // 收藏品类型:1.表情包，2.说说，3.聊天记录，4.笔记文集
+    public static enum CollectableType {
+        UNKOWN,
+        emotion,
+        post,
+        record,
+        note
+    }
+
 }

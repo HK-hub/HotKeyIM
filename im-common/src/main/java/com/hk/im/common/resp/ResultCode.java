@@ -20,6 +20,8 @@ public enum ResultCode {
     UNAUTHENTICATED(false, 102, "unauthenticated") ,
     USER_HAS_EXITS(false,104,"user has exits"),
     NO_SUCH_USER(false, 105, "no such user"),
+    // 不存在此资源
+    NO_SUCH_RESOURCE(false, 1106, "no such resource"),
     //资源禁止访问, 可以用来控制权限
     FORBIDDEN(false,403,"no permission"),
     // 资源未找到

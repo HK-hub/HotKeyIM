@@ -1,9 +1,11 @@
 package com.hk.im.domain.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author : HK意境
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-public class    TalkRecordsRequest {
+public class TalkRecordsRequest {
 
     // 会话ID
     private String communicationId;
@@ -35,7 +37,7 @@ public class    TalkRecordsRequest {
     private Integer talkType;
 
     // 消息类型：按照消息类型进行筛选
-    private Integer msgTypes;
+    private List<Integer> msgTypes;
 
     // 查询锚点：参数表示查询锚点，也就是作为查询起点的那条消息，查询结果不包含锚点。不能设置为null
     private String anchor;
@@ -47,7 +49,7 @@ public class    TalkRecordsRequest {
     private Integer direction = 1;
 
     // 当前多少页
-    private Integer currentPage;
+    private Integer currentPage = 1;
 
     // 请求目标页
     private Integer requestPage;
@@ -57,9 +59,11 @@ public class    TalkRecordsRequest {
 
 
     // 时间区间查找：开始时间
+    @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fromTime;
 
     // 时间区间查找：结束时间
+    @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime toTime;
 
     // 一页多少记录

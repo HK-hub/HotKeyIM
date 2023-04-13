@@ -1,7 +1,5 @@
 package com.hk.im.server.push.worker.pusher;
 
-import com.hk.im.domain.bo.MessageBO;
-import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.server.common.channel.UserChannelManager;
 import com.hk.im.server.push.worker.MessageOfflineWorker;
@@ -43,7 +41,7 @@ public class MessageFriendPusher {
         Set<Channel> channelSet = UserChannelManager.getUserChannel(messageVO.getReceiverId());
         if (CollectionUtils.isEmpty(channelSet)) {
             // 离线消息处理
-            this.messageOfflineWorker.doProcess(messageVO);
+            this.messageOfflineWorker.processOfflineMessage(messageVO);
             return;
         }
 

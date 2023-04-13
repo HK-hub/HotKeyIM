@@ -6,6 +6,8 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
+import com.hk.im.domain.request.CodeMessageRequest;
+import com.hk.im.domain.request.InviteVideoCallRequest;
 import com.hk.im.domain.request.TalkRecordsRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +41,8 @@ public class MessageController {
      * @param request
      * @return
      */
-    @GetMapping("/records/history")
-    public ResponseResult getCommunicationRecords(TalkRecordsRequest request) {
+    @PostMapping("/records/history")
+    public ResponseResult getCommunicationRecords(@RequestBody TalkRecordsRequest request) {
 
         return this.messageFlowService.getTalkRecordsByPage(request);
     }
@@ -91,6 +93,29 @@ public class MessageController {
     public ResponseResult sendAttachmentMessage(@RequestBody AttachmentMessage request) {
 
         return this.messageFlowService.sendAttachmentMessage(request);
+    }
+
+
+    /**
+     * 发送代码消息
+     * @param request
+     * @return
+     */
+    @PostMapping("/send/code")
+    public ResponseResult sendCodeMessage(@RequestBody CodeMessageRequest request) {
+        return this.messageFlowService.sendCodeMessage(request);
+    }
+
+
+    /**
+     * 发起视频通话
+     * @param request
+     * @return
+     */
+    @PostMapping("/send/video")
+    public ResponseResult sendVideoMessage(@RequestBody InviteVideoCallRequest request) {
+
+        return this.messageFlowService.sendVideoMessage(request);
     }
 
 

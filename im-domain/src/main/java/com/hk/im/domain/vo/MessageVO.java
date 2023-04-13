@@ -1,8 +1,11 @@
 package com.hk.im.domain.vo;
 
 import com.hk.im.domain.bo.MessageBO;
+import com.hk.im.domain.entity.GroupMember;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.util.Objects;
 
 /**
  * @author : HK意境
@@ -39,7 +42,14 @@ public class MessageVO extends MessageBO {
     protected String nickname;
 
 
-    public MessageVO computedPrivateMessageVO(UserVO userVO, UserVO friendVO) {
+    /**
+     *
+     * @param userVO
+     * @param friendVO
+     * @param groupMember
+     * @return
+     */
+    public MessageVO computedPrivateMessageVO(UserVO userVO, UserVO friendVO, GroupMember groupMember) {
 
         // 计算消息属主头像：如果消息发送者是当前登录用户，则头像为 当前登录用户头像；否则当前消息属主头像为friendVO头像
         if (this.senderId.equals(userVO.getId())) {
@@ -50,7 +60,7 @@ public class MessageVO extends MessageBO {
             this.setNickname(userVO.getUsername());
             this.setFriendRemark(userVO.getUsername());
             this.setSenderId(userVO.getId());
-        } else {
+        } else if (Objects.nonNull(friendVO)){
             // 好友是消息发送者
             this.setAvatar(friendVO.getMiniAvatar());
             this.setSender(friendVO);
@@ -58,6 +68,12 @@ public class MessageVO extends MessageBO {
             this.setNickname(friendVO.getUsername());
             this.setFriendRemark(friendVO.getUsername());
             this.setSenderId(friendVO.getId());
+        } else if(Objects.nonNull(groupMember)) {
+            this.setAvatar(groupMember.getMemberAvatar())
+                    .setSenderAvatar(groupMember.getMemberAvatar())
+                    .setNickname(groupMember.getMemberUsername())
+                    .setFriendRemark(groupMember.getMemberRemarkName())
+                    .setSenderId(groupMember.getMemberId());
         }
         return this;
     }

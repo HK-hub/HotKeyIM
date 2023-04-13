@@ -67,6 +67,15 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         return ResponseResult.SUCCESS(userId);
     }
 
+    @Override
+    public UserInfo getUserInfo(Long userId) {
+
+        UserInfo one = this.lambdaQuery()
+                .eq(UserInfo::getUserId, userId)
+                .one();
+        return one;
+    }
+
 
     /**
      * 更新用户详细信息

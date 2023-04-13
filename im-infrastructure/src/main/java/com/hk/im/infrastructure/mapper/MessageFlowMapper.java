@@ -3,6 +3,7 @@ package com.hk.im.infrastructure.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hk.im.domain.entity.MessageFlow;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
+import com.hk.im.domain.request.TalkRecordsRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -61,6 +62,20 @@ public interface MessageFlowMapper extends BaseMapper<MessageFlow> {
     @Select("select * from tb_message_flow where sender_id = #{senderId} " +
             "and receiver_id = #{receiverId} order by sequence desc limit 1")
     MessageFlow getPrivateLatestMessageRecord(@Param("senderId") String senderId, @Param("receiverId") String receiverId);
+
+    /**
+     * 查询私聊聊天历史记录
+     * @param request
+     * @return
+     */
+    List<MessageFlow> selectPrivateHistoryRecords(@Param("param") TalkRecordsRequest request);
+
+    /**
+     * 查询群聊聊天历史记录
+     * @param request
+     * @return
+     */
+    List<MessageFlow> selectGroupHistoryRecords(@Param("param") TalkRecordsRequest request);
 }
 
 

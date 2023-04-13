@@ -43,8 +43,8 @@ public class RedisConstants {
     // 用户
     public static final String LOGIN_USER_MAP = "login:user:map";
     public static final Long LOGIN_USER_TTL = 36000L;
-    // 用户 token 过期时间：3600 秒=1小时
-    public static final Long ACCESS_TOKEN_TTL = 3600L * 2;
+    // 用户 token 过期时间：12 小时
+    public static final Long ACCESS_TOKEN_TTL = 43200L;
 
     // 空数据 缓存时间
     public static final Long CACHE_NULL_TTL = 2L;
@@ -87,6 +87,10 @@ public class RedisConstants {
     // RSA 密钥
     public static final String RSA_KEY = "security:rsa:key:";
     public static final String UPLOAD_TOKEN = "upload:token:";
+
+
+    // 房间号集合
+    public static final String ROOM_NUMBER_KEY = "rtc:room:number:";
 
 
     /**

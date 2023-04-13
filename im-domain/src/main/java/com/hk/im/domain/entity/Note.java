@@ -1,24 +1,42 @@
 package com.hk.im.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
- * 
- * @TableName tb_note
+ * @ClassName : Note
+ * @author : HK意境
+ * @date : 2023/3/28 15:32
+ * @description :
+ * @Todo :
+ * @Bug :
+ * @Modified :
+ * @Version : 1.0
  */
 @TableName(value ="tb_note")
 @Data
+@Accessors(chain = true)
 public class Note implements Serializable {
     /**
      * 笔记id
      */
     @TableId(value = "id")
     private Long id;
+
+    /**
+     * 文章标题
+     */
+    @TableField(value = "title")
+    private String title;
+
+    @TableField(value = "summary")
+    private String summary;
 
     /**
      * markdown 格式的笔记内容
@@ -31,6 +49,12 @@ public class Note implements Serializable {
      */
     @TableField(value = "content")
     private String content;
+
+    /**
+     * 封面图片：第一张上传的图片
+     */
+    @TableField(value = "cover")
+    private String cover;
 
     /**
      * 作者id
@@ -54,18 +78,18 @@ public class Note implements Serializable {
      * 是否删除
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间
      */
-    @TableField(value = "create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
-    @TableField(value = "update_time")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @TableField(exist = false)

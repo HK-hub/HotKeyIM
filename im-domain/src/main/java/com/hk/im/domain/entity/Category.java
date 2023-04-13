@@ -1,12 +1,11 @@
 package com.hk.im.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -19,6 +18,7 @@ import javax.persistence.Table;
 @TableName(value ="tb_category")
 @Data
 @Table(name = "tb_category")
+@Accessors(chain = true)
 public class Category implements Serializable {
     /**
      * 分类id
@@ -47,6 +47,12 @@ public class Category implements Serializable {
     private String avatar;
 
     /**
+     * 分类类型：0.默认分类,1.普通，2.星标
+     */
+    @TableField(value = "`type`")
+    private Integer type;
+
+    /**
      * 分类说明
      */
     @TableField(value = "description")
@@ -56,18 +62,18 @@ public class Category implements Serializable {
      * 是否删除
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间
      */
-    @TableField(value = "create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
-    @TableField(value = "update_time")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @TableField(exist = false)
@@ -128,4 +134,14 @@ public class Category implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+
+    public static enum Type {
+
+        defaulted,
+        simple,
+        star,
+
+    }
+
 }

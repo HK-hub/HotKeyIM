@@ -5,14 +5,16 @@
 <mapper namespace="com.hk.im.infrastructure.mapper.NoteTagMapper">
 
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.NoteTag">
-            <result property="tagId" column="tag_id" jdbcType="BIGINT"/>
-            <result property="noteId" column="note_id" jdbcType="BIGINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="tagId" column="tag_id" jdbcType="BIGINT"/>
+        <result property="noteId" column="note_id" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        tag_id,note_id,create_time,
+        id,tag_id
+        ,note_id,create_time,
         update_time
     </sql>
 </mapper>

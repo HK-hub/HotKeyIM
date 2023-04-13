@@ -217,6 +217,16 @@ public interface MinioService {
     String putChatImage(MultipartFile image, String bucket, Long senderId);
 
     /**
+     * 上传笔记图片
+     * @param image
+     * @param bucket
+     * @param noteId
+     * @return
+     */
+    String putNoteImage(MultipartFile image, String bucket, Long noteId);
+
+
+    /**
      * 上传聊天附件
      * @param file
      * @param bucket
@@ -233,4 +243,13 @@ public interface MinioService {
      * @return
      */
     String putLocalFile(String mergeFilePath, String bucket, String hash);
+
+    /**
+     * 上传笔记附件
+     * @param file
+     * @param noteId
+     * @param bucket
+     * @return
+     */
+    String putNoteAnnex(MultipartFile file, String bucket, Long noteId);
 }
