@@ -24,7 +24,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "chat-message-group", topic = "chat-topic",
+@RocketMQMessageListener(consumerGroup = "location-message-group", topic = "chat-topic",
         selectorExpression = "LOCATION", selectorType = SelectorType.TAG)
 public class SendLocationMessageConsumer implements RocketMQListener<MessageVO>, InitializingBean {
 

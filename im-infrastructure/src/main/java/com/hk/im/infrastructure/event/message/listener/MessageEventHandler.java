@@ -100,7 +100,7 @@ public class MessageEventHandler {
         MessageConstants.ChatMessageType messageType = MessageConstants.ChatMessageType.values()[messageBO.getMessageType()];
         SendResult sendResult = this.rocketMQService.sendTagMsg(MessageQueueConstants.MessageConsumerTopic.chat_topic.topic,
                 messageType.name(), messageVO);
-        log.info("Sent message by rocketmq: {}", sendResult);
+        log.info("Sent message={}, by rocketmq result: {}", messageBO, sendResult);
     }
 
 
