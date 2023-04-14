@@ -8,6 +8,7 @@ import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.CodeMessageRequest;
 import com.hk.im.domain.request.InviteVideoCallRequest;
+import com.hk.im.domain.request.LocationMessageRequest;
 import com.hk.im.domain.request.TalkRecordsRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -116,6 +117,18 @@ public class MessageController {
     public ResponseResult sendVideoMessage(@RequestBody InviteVideoCallRequest request) {
 
         return this.messageFlowService.sendVideoMessage(request);
+    }
+
+
+    /**
+     * 发送位置消息
+     * @param request
+     * @return
+     */
+    @PostMapping("/send/location")
+    public ResponseResult sendLocationMessage(@RequestBody LocationMessageRequest request) {
+
+        return this.messageFlowService.sendLocationMessage(request);
     }
 
 

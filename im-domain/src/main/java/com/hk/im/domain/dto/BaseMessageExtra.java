@@ -19,6 +19,6 @@ public abstract class BaseMessageExtra {
         VOICE,
         VIDEO,
         FILE,
-
+        LOCATION,
     }
 }

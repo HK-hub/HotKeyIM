@@ -8,6 +8,7 @@ import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.server.common.constants.MessageTypeConstants;
 import com.hk.im.server.common.event.SimpleFileMessage;
 import com.hk.im.server.common.event.SimpleImageMessage;
+import com.hk.im.server.common.event.SimpleLocationMessage;
 import com.hk.im.server.common.event.SimpleTextMessage;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
@@ -33,6 +34,7 @@ public class MessageConverter {
             case IMAGE -> new SimpleImageMessage();
             case CODE ->  new SimpleFileMessage();
             case FILE ->  new SimpleFileMessage();
+            case LOCATION -> new SimpleLocationMessage();
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
     }

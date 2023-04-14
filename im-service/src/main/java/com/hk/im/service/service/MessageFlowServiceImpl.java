@@ -24,6 +24,7 @@ import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
 import com.hk.im.domain.request.CodeMessageRequest;
 import com.hk.im.domain.request.InviteVideoCallRequest;
+import com.hk.im.domain.request.LocationMessageRequest;
 import com.hk.im.domain.request.TalkRecordsRequest;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
@@ -79,6 +80,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     private CodeMessageWorker codeMessageWorker;
     @Resource
     private VideoMessageWorker videoMessageWorker;
+    @Resource
+    private LocationMessageWorker locationMessageWorker;
 
 
     /**
@@ -368,6 +371,18 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     public ResponseResult sendVideoMessage(InviteVideoCallRequest request) {
 
         return this.videoMessageWorker.inviteVideoCall(request);
+    }
+
+
+    /**
+     * 发送位置消息
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult sendLocationMessage(LocationMessageRequest request) {
+
+        return this.locationMessageWorker.sendMessage(request);
     }
 
 

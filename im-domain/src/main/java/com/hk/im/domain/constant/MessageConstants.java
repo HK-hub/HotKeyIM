@@ -91,6 +91,8 @@ public class MessageConstants {
         LINK,
         // 卡片消息
         CARD,
+        // 位置消息
+        LOCATION,
         // 转发消息
         FORWARD,
         // 语音通话

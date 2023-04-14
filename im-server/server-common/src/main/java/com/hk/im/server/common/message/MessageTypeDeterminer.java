@@ -1,9 +1,6 @@
 package com.hk.im.server.common.message;
 
-import com.hk.im.server.common.event.SimpleCodeMessage;
-import com.hk.im.server.common.event.SimpleFileMessage;
-import com.hk.im.server.common.event.SimpleImageMessage;
-import com.hk.im.server.common.event.SimpleTextMessage;
+import com.hk.im.server.common.event.*;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -41,6 +38,7 @@ public class MessageTypeDeterminer {
     public static Integer ImageMessageType = 2;
     public static Integer CodeMessageType = 3;
     public static Integer FileMessageType = 6;
+    public static Integer LocationMessageType = 10;
 
     static {
         messageClasses.put(PingMessageType, PingMessage.class);
@@ -49,7 +47,7 @@ public class MessageTypeDeterminer {
         messageClasses.put(ImageMessageType, SimpleImageMessage.class);
         messageClasses.put(FileMessageType, SimpleFileMessage.class);
         messageClasses.put(CodeMessageType, SimpleCodeMessage.class);
-
+        messageClasses.put(LocationMessageType, SimpleLocationMessage.class);
     }
 
 
