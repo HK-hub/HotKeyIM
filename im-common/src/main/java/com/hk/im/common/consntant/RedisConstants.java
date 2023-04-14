@@ -59,6 +59,12 @@ public class RedisConstants {
     public static final String CACHE_GROUP_KEY = "cache:group:";
     // 群聊缓存过期时间
     public static final Long CACHE_GROUP_TTL = 10L;
+
+    // 链接消息key
+    public static final String CACHE_URL_LINK_KEY = "cache:url:";
+    // 链接过期时间: 10分钟 = 60 * 10 seconds
+    public static final long CACHE_URL_LINK_TTL = 60 * 10;
+
     // 店铺下单锁key
     public static final String LOCK_SHOP_KEY = "lock:shop:";
     public static final Long LOCK_SHOP_TTL = 10L;
