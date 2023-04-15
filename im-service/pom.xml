@@ -106,6 +106,12 @@
             <artifactId>aliyun-sdk-vod-upload</artifactId>
             <version>1.4.11</version>
         </dependency>
+        <dependency>
+            <groupId>kim.wind</groupId>
+            <artifactId>sms-aggregation-spring-boot-starter</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>
