@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.hk.im.domain.annotation.MeiliSearchIndex;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,6 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode
+@MeiliSearchIndex
 public class MessageFlow implements Serializable {
     /**
      * 聊天消息表id

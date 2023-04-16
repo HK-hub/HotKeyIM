@@ -21,6 +21,7 @@ import com.hk.im.infrastructure.event.user.event.UserUpdatedEvent;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.UserMapper;
 import com.hk.im.infrastructure.mapstruct.UserMapStructure;
+import com.hk.im.service.util.SmsUtil;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -56,7 +57,8 @@ import java.util.Objects;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-
+    @Resource
+    private SmsUtil smsUtil;
     @Resource
     private RSAService rsaService;
     @Resource
@@ -101,34 +103,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         String code = null;
+        code = String.valueOf(NumberSource.getInstance().randomInt(1234, 9999));
+        // 确定主题
+        String subject = null;
+        if (Objects.equals(type, UserConstants.FIND_PASSWORD)) {
+            subject = "Hot Key IM聊天应用-找回账号密码验证码";
+        } else if (Objects.equals(type, UserConstants.LOGIN_OR_REGISTER)) {
+            subject = "Hot Key IM聊天应用-登陆注册验证码";
+        } else if (Objects.equals(type, UserConstants.CHANGE_PASSWORD)) {
+            subject = "Hot Key IM聊天应用-修改密码验证码";
+        } else {
+            // 非法类型
+            return ResponseResult.FAIL("对不起，您的操作非法!");
+        }
         // 如果是邮箱
         if (BooleanUtils.isTrue(!invalidEmail)) {
-            code = String.valueOf(NumberSource.getInstance().randomInt(1234, 9999));
-            String subject = null;
-            // 确定主题
-            if (Objects.equals(type, UserConstants.FIND_PASSWORD)) {
-                subject = "Hot Key IM聊天应用-找回账号密码验证码";
-            } else if (Objects.equals(type, UserConstants.LOGIN_OR_REGISTER)) {
-                subject = "Hot Key IM聊天应用-登陆注册验证码";
-            } else if (Objects.equals(type, UserConstants.CHANGE_PASSWORD)) {
-                subject = "Hot Key IM聊天应用-修改密码验证码";
-            } else {
-                // 非法类型
-                return ResponseResult.FAIL("对不起，您的操作非法!");
-            }
+
             String content = "<h2> 您的操作验证码如下：" + code + "</h2>";
             mailService.sendSimpleMail("3161880795@qq.com", "Hot Key IM 官方", account,
                     null, subject, content);
-
-            // 保存码
-            authorizationService.createAuthCode(type, account, code);
-            System.out.println("您的验证码已经发送了：" + code);
         } else {
-            // TODO
             // 发送手机号码
-            return ResponseResult.FAIL("暂不支持此操作!");
+            this.smsUtil.sendMessage(account, code);
         }
 
+        // 保存码
+        authorizationService.createAuthCode(type, account, code);
+        log.info("您的验证码已经发送了：{}", code);
         return ResponseResult.SUCCESS("您的验证码已经发送了!");
     }
 
@@ -270,6 +271,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             // 邮箱有效
             code = stringRedisTemplate.opsForValue().get(RedisConstants.LOGIN_CODE_KEY + email);
         } else {
+            // 手机号有效
             code = stringRedisTemplate.opsForValue().get(RedisConstants.LOGIN_CODE_KEY + phone);
         }
 

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.hk.im.domain.annotation.MeiliSearchIndex;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -17,6 +18,7 @@ import lombok.experimental.Accessors;
 @TableName(value ="tb_chat_message", autoResultMap = true)
 @Data
 @Accessors(chain = true)
+@MeiliSearchIndex
 public class ChatMessage implements Serializable {
     /**
      * 聊天消息表id

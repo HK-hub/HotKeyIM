@@ -68,3 +68,24 @@ rocketmq:
       group: chat-connect-group
     chat:
       group: chat-message-group
+
+
+# 短信
+sms:
+  # 短信服务商
+  supplier: alibaba
+  # 单账号每分钟最大发送
+  minute-max: 5
+  alibaba:
+    #阿里云的accessKey
+    accessKeyId: LTAI5tPkA8tAb66iz4oRf8JB
+    #阿里云的accessKeySecret
+    accessKeySecret: rouyfDItyxH08j9LkcViuxXhmrdjBA
+    #短信签名
+    signature: HotKeyIM
+    #模板ID 用于发送固定模板短信使用
+    templateId: SMS_276355622
+    #模板变量 上述模板的变量
+    templateName: code
+    #请求地址 默认为dysmsapi.aliyuncs.com 如无特殊改变可以不用设置
+    requestUrl: dysmsapi.aliyuncs.com

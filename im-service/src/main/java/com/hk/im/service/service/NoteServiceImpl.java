@@ -1,5 +1,6 @@
 package com.hk.im.service.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.hk.im.client.service.*;
