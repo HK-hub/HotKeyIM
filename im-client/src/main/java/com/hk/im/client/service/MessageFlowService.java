@@ -13,6 +13,8 @@ import com.hk.im.domain.request.InviteVideoCallRequest;
 import com.hk.im.domain.request.LocationMessageRequest;
 import com.hk.im.domain.request.TalkRecordsRequest;
 
+import java.util.List;
+
 /**
  * @ClassName : MessageFlowService
  * @author : HK意境
@@ -92,4 +94,13 @@ public interface MessageFlowService extends IService<MessageFlow> {
      * @return
      */
     ResponseResult sendLocationMessage(LocationMessageRequest request);
+
+    /**
+     * 确认消息
+     * @param receiverId
+     * @param ackMessageIdList
+     * @param senderId
+     * @return
+     */
+    ResponseResult ackChatMessage(Long senderId, Long receiverId, List<Long> ackMessageIdList);
 }

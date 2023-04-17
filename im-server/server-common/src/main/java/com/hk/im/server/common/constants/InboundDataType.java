@@ -24,7 +24,9 @@ public class InboundDataType {
     public static enum InboundEventTypeEnum {
 
         DEFAULT_EVENT("default-event"),
-        SIGNALING_EVENT("signaling-event")
+        SIGNALING_EVENT("signaling-event"),
+        HEAR_BEAT("heartbeat"),
+        EVENT_TALK_READ("event_talk_read")
 
         ,;
         private String event;

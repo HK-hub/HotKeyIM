@@ -1,8 +1,23 @@
 package com.hk.im.server.common.message;
 
-public class PingMessage extends AbstractMessage {
-    @Override
-    public int getMessageType() {
-        return MessageTypeDeterminer.PingMessageType;
-    }
+
+import lombok.Data;
+
+/**
+ * @ClassName : PingMessage
+ * @author : HK意境
+ * @date : 2023/4/17 21:25
+ * @description : pong
+ * @Todo :
+ * @Bug :
+ * @Modified :
+ * @Version : 1.0
+ */
+@Data
+public class PingMessage {
+
+    private String event = "heartbeat";
+
+    private String content = "ping";
+
 }

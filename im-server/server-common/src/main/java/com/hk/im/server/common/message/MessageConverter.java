@@ -52,4 +52,17 @@ public class MessageConverter {
     }
 
 
+    public static TextWebSocketFrame wrapperText(Object object) {
+
+        // 使用 Jackson 序列化
+        try {
+            return new TextWebSocketFrame(ObjectMapperUtil.OBJECT_MAPPER.writeValueAsString(object));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.hk.im.server.common.bound.input.InboundMessageData;
 import com.hk.im.server.common.constants.InboundDataType;
 import com.hk.im.server.signal.processor.BaseProcessor;
+import com.hk.im.server.signal.processor.message.MessageProcessor;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
@@ -32,12 +33,19 @@ public class WebSocketMessageHandler {
         String text = frame.text();
         InboundMessageData inboundMessageData = JSON.parseObject(text, InboundMessageData.class);
         InboundDataType.InboundEventTypeEnum eventType = ensureDataType(inboundMessageData);
+        log.info("InboundMessageData process:type={}, data={}", eventType.getEvent(), inboundMessageData);
         switch (eventType) {
             case DEFAULT_EVENT ->
                     log.info("Inbound data not matched event: {}", inboundMessageData);
             case SIGNALING_EVENT ->
                     // 信令事件
                     BaseProcessor.dispatchProcess(ctx, inboundMessageData);
+            case HEAR_BEAT ->
+                    // 心跳事件
+                    BaseProcessor.hearBeatMessage(ctx, inboundMessageData);
+            case EVENT_TALK_READ ->
+                    // 消息已读通知
+                    MessageProcessor.msgReadEvent(ctx,inboundMessageData);
 
         }
     }

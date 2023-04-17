@@ -41,8 +41,8 @@ public class MessageTypeDeterminer {
     public static Integer LocationMessageType = 10;
 
     static {
-        messageClasses.put(PingMessageType, PingMessage.class);
-        messageClasses.put(PongMessageType, PongMessage.class);
+        // messageClasses.put(PingMessageType, PingMessage.class);
+        // messageClasses.put(PongMessageType, PongMessage.class);
         messageClasses.put(TextMessageType, SimpleTextMessage.class);
         messageClasses.put(ImageMessageType, SimpleImageMessage.class);
         messageClasses.put(FileMessageType, SimpleFileMessage.class);

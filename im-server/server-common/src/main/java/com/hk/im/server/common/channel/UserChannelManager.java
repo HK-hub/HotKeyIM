@@ -210,6 +210,27 @@ public class UserChannelManager {
         }
     }
 
+    public static void writeAndFlush(@NonNull Long uid, @NonNull Object message) {
+        Set<Channel> channelSet = userChannelMap.get(uid);
+        if (CollectionUtils.isEmpty(channelSet) || channelSet.size() == 0) {
+            return;
+        }
+        // 发送消息
+        for (Channel channel : channelSet) {
+            // 通道还在线
+            if (channel.isActive()) {
+                // 构造消息
+                String jsonString = JSON.toJSONString(message);
+                TextWebSocketFrame textWebSocketFrame = new TextWebSocketFrame(jsonString);
+                // 发送消息
+                ChannelFuture channelFuture = channel.writeAndFlush(textWebSocketFrame);
+                channelFuture.addListener((ChannelFutureListener) future -> {
+                    log.debug("对uid：{}, 发送websocket消息：{}", uid, jsonString);
+                });
+            }
+        }
+    }
+
 
     /**
      * 向所属有用户发送消息，一般用于发送控制消息

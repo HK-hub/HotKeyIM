@@ -79,15 +79,12 @@ public class FindController {
     }
 
 
-
-
-
     /**
      * 关键字搜索发现好友：返回好友集合
      * @param request
      * @return
      */
-    @GetMapping("/friend/search")
+    @PostMapping("/friend/search")
     public ResponseResult searchFriend(@RequestBody FriendFindRequest request) {
 
         log.info("request={}", request);

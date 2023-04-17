@@ -1,5 +1,6 @@
 package com.hk.im.service.service;
 
+import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -37,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -383,6 +385,37 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     public ResponseResult sendLocationMessage(LocationMessageRequest request) {
 
         return this.locationMessageWorker.sendMessage(request);
+    }
+
+
+    /**
+     * 确认消息
+     * @param senderId
+     * @param receiverId
+     * @param ackMessageIdList
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult<List<Long>> ackChatMessage(Long senderId, Long receiverId, List<Long> ackMessageIdList) {
+
+        // 查询消息
+        List<MessageFlow> messageList = this.listByIds(ackMessageIdList);
+
+        // 过滤出属于发送者-接收者的消息：我确认收到你的消息，那么消息接收者是我，消息发送者是你
+        messageList = messageList.stream().filter(message -> message.getSenderId().equals(receiverId) && message.getReceiverId().equals(senderId)).toList();
+
+        // 确认消息接收状态
+        messageList.forEach(message -> message.setSignFlag(MessageConstants.SignStatsEnum.READ.ordinal()));
+
+        // 更新
+        boolean updateBatchById = this.updateBatchById(messageList);
+        if (BooleanUtils.isFalse(updateBatchById)) {
+            ResponseResult.FAIL();
+        }
+
+        // 回执确认收到的消息
+        return ResponseResult.SUCCESS(ackMessageIdList);
     }
 
 
