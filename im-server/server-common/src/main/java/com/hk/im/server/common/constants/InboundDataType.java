@@ -49,7 +49,7 @@ public class InboundDataType {
                 return value;
             }
         }
-        // 默认事件
+        // 默认事件Resp
         return InboundEventTypeEnum.DEFAULT_EVENT;
     }
 

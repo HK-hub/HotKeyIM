@@ -1,13 +1,18 @@
 package com.hk.im.server.signal.processor.message;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hk.im.client.service.MessageFlowService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.common.util.ObjectMapperUtil;
 import com.hk.im.domain.message.control.MessageAckCallBackDomain;
 import com.hk.im.domain.message.control.MessageAckDomain;
 import com.hk.im.infrastructure.util.SpringUtils;
 import com.hk.im.server.common.bound.input.InboundMessageData;
+import com.hk.im.server.common.bound.input.OutboundMessageData;
 import com.hk.im.server.common.channel.UserChannelManager;
+import com.hk.im.server.common.constants.InboundDataType;
+import com.hk.im.server.common.message.DataContainer;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,9 +59,17 @@ public class MessageProcessor {
         // 发送已读回执，通知发送方
         if (res.isSuccess()) {
             // 通知发送方已读
-            MessageAckCallBackDomain callBack = new MessageAckCallBackDomain().setIds(res.getData())
-                            .setSender_id(receiverId);
-            UserChannelManager.writeAndFlush(receiverId, callBack);
+            try {
+                List<String> messageIdList = res.getData().stream().map(String::valueOf).toList();
+                MessageAckCallBackDomain callBack = new MessageAckCallBackDomain().setIds(messageIdList)
+                        .setSender_id(String.valueOf(senderId)).setReceiver_id(String.valueOf(receiverId));
+                OutboundMessageData outbound = new OutboundMessageData()
+                        .setEvent(InboundDataType.InboundEventTypeEnum.EVENT_TALK_READ.getEvent())
+                        .setData(ObjectMapperUtil.OBJECT_MAPPER.writeValueAsString(callBack));
+                UserChannelManager.writeAndFlush(receiverId, outbound);
+            } catch (Exception e) {
+                log.info("send message ack read event failed: ", e);
+            }
         }
 
         return res.getData();

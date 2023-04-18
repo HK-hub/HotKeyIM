@@ -84,7 +84,7 @@ public class MessageFlow implements Serializable {
     /**
      * 是否撤回
      */
-    @TableField(value = "revoke")
+    @TableField(value = "`revoke`")
     private Boolean revoke;
 
     /**

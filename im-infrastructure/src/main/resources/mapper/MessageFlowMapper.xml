@@ -25,7 +25,7 @@
         id
         ,group_id,sender_id,
         receiver_id,chat_type,message_type,
-        message_id,sequence,send_status,sign_flag,revoke
+        message_id,`sequence`,send_status,sign_flag,`revoke`
         deleted,create_time,update_time
     </sql>
 

@@ -400,7 +400,9 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     public ResponseResult<List<Long>> ackChatMessage(Long senderId, Long receiverId, List<Long> ackMessageIdList) {
 
         // 查询消息
-        List<MessageFlow> messageList = this.listByIds(ackMessageIdList);
+        List<MessageFlow> messageList = this.lambdaQuery()
+                .in(MessageFlow::getMessageId, ackMessageIdList)
+                .list();
 
         // 过滤出属于发送者-接收者的消息：我确认收到你的消息，那么消息接收者是我，消息发送者是你
         messageList = messageList.stream().filter(message -> message.getSenderId().equals(receiverId) && message.getReceiverId().equals(senderId)).toList();

@@ -19,11 +19,11 @@ import java.util.List;
 @Accessors(chain = true)
 public class MessageAckCallBackDomain {
 
-    private List<Long> ids;
+    private List<String> ids;
 
-    private Long receiver_id;
+    private String receiver_id;
 
-    private Long sender_id;
+    private String sender_id;
 
 
 }
