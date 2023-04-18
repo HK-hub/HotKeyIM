@@ -6,8 +6,8 @@ import com.hk.im.domain.entity.UserInfo;
 import com.hk.im.domain.request.ChangeUserDetailRequest;
 
 /**
- * @ClassName : UserInfoService
  * @author : HK意境
+ * @ClassName : UserInfoService
  * @date : 2023/1/7 19:19
  * @description :
  * @Todo :
@@ -20,18 +20,23 @@ public interface UserInfoService extends IService<UserInfo> {
 
     /**
      * 获取用户信息
+     *
      * @param userId
+     *
      * @return
      */
-   public ResponseResult getUserInfo(Long userId, String token);
+    public ResponseResult getUserInfo(Long userId, String token);
 
-   public UserInfo getUserInfo(Long userId);
+    public UserInfo getUserInfo(Long userId);
 
 
     /**
      * 更新用户详细信息
+     *
      * @param request
+     *
      * @return
      */
-   public ResponseResult updateUserDetailInfo(ChangeUserDetailRequest request);
+    public ResponseResult updateUserDetailInfo(ChangeUserDetailRequest request);
+
 }

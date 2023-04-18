@@ -1,5 +1,6 @@
 package com.hk.im.infrastructure.mapstruct;
 
+import com.hk.im.domain.vo.UserProfile;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.entity.UserInfo;
@@ -29,6 +30,8 @@ public interface UserMapStructure {
     @Mapping(source = "userVO.username", target = "nickname")
     @Mapping(source = "userVO.id", target = "userId")
     public UserInfo toUserInfo(UserVO userVO);
+
+    public UserProfile toUserProfile(User user);
 
 }
 

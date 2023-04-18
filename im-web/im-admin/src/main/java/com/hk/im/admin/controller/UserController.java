@@ -225,6 +225,16 @@ public class UserController {
     }
 
 
+    /**
+     * 获取用户简单信息
+     * @param userId
+     * @return
+     */
+    @GetMapping("/profile")
+    public ResponseResult getUserProfile(@RequestParam("userId") Long userId) {
+
+        return this.userService.getUserProfile(userId);
+    }
 
 
 }

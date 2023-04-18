@@ -11,6 +11,7 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.common.util.*;
 import com.hk.im.domain.request.ForgetAccountRequest;
+import com.hk.im.domain.vo.UserProfile;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.domain.constant.UserConstants;
 import com.hk.im.domain.request.LoginOrRegisterRequest;
@@ -635,6 +636,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         return ResponseResult.SUCCESS("密码修改成功!");
+    }
+
+    /**
+     * 获取用户profile信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public ResponseResult getUserProfile(Long userId) {
+
+        User user = this.getById(userId);
+        UserProfile userProfile = UserMapStructure.INSTANCE.toUserProfile(user);
+
+        return ResponseResult.SUCCESS(userProfile);
     }
 
 

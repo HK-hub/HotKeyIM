@@ -56,4 +56,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     ResponseResult updateUserPassword(ForgetAccountRequest request);
+
+    /**
+     * 获取用户profile信息
+     * @param userId
+     * @return
+     */
+    ResponseResult getUserProfile(Long userId);
 }
