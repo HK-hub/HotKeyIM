@@ -6,10 +6,7 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
-import com.hk.im.domain.request.CodeMessageRequest;
-import com.hk.im.domain.request.InviteVideoCallRequest;
-import com.hk.im.domain.request.LocationMessageRequest;
-import com.hk.im.domain.request.TalkRecordsRequest;
+import com.hk.im.domain.request.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -131,5 +128,16 @@ public class MessageController {
         return this.messageFlowService.sendLocationMessage(request);
     }
 
+
+    /**
+     * 发起视频通话邀请
+     * @param request
+     * @return
+     */
+    @PostMapping("/send/video/call/invite")
+    public ResponseResult sendVideoCallInviteMessage(@RequestBody InviteVideoCallInviteRequest request) {
+
+        return this.messageFlowService.sendVideoInviteMessage(request);
+    }
 
 }

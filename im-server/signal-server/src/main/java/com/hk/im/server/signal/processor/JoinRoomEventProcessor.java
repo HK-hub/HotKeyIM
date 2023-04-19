@@ -2,7 +2,7 @@ package com.hk.im.server.signal.processor;
 
 import com.alibaba.fastjson2.JSON;
 import com.hk.im.server.common.bound.input.InboundMessageData;
-import com.hk.im.server.signal.cmd.JoinRoomEventMessage;
+import com.hk.im.server.common.event.signaling.JoinRoomEventMessage;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

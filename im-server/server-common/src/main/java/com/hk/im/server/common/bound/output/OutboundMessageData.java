@@ -1,4 +1,4 @@
-package com.hk.im.server.common.bound.input;
+package com.hk.im.server.common.bound.output;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

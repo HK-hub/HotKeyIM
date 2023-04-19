@@ -8,10 +8,7 @@ import com.hk.im.domain.entity.MessageFlow;
 import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
-import com.hk.im.domain.request.CodeMessageRequest;
-import com.hk.im.domain.request.InviteVideoCallRequest;
-import com.hk.im.domain.request.LocationMessageRequest;
-import com.hk.im.domain.request.TalkRecordsRequest;
+import com.hk.im.domain.request.*;
 
 import java.util.List;
 
@@ -103,4 +100,12 @@ public interface MessageFlowService extends IService<MessageFlow> {
      * @return
      */
     ResponseResult ackChatMessage(Long senderId, Long receiverId, List<Long> ackMessageIdList);
+
+    /**
+     * 发起视频通话邀请
+     * @param request
+     * @return
+     */
+    ResponseResult sendVideoInviteMessage(InviteVideoCallInviteRequest request);
+
 }

@@ -23,10 +23,7 @@ import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
-import com.hk.im.domain.request.CodeMessageRequest;
-import com.hk.im.domain.request.InviteVideoCallRequest;
-import com.hk.im.domain.request.LocationMessageRequest;
-import com.hk.im.domain.request.TalkRecordsRequest;
+import com.hk.im.domain.request.*;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
@@ -372,7 +369,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     @Override
     public ResponseResult sendVideoMessage(InviteVideoCallRequest request) {
 
-        return this.videoMessageWorker.inviteVideoCall(request);
+        // return this.videoMessageWorker.inviteVideoCall(request);
+        return null;
     }
 
 
@@ -418,6 +416,18 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
         // 回执确认收到的消息
         return ResponseResult.SUCCESS(ackMessageIdList);
+    }
+
+
+    /**
+     * 发起视频通话邀请
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult sendVideoInviteMessage(InviteVideoCallInviteRequest request) {
+
+        return this.videoMessageWorker.inviteVideoCall(request);
     }
 
 

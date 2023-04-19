@@ -21,7 +21,8 @@ public class MessageQueueConstants {
     public static enum MessageConsumerGroup {
 
         CONNECT_GROUP("chat-connect-group"),
-        CHAT_GROUP("chat-message-group")
+        CHAT_GROUP("chat-message-group"),
+        SIGNALING_GROUP("chat-signal-group")
         ;
 
         private String group;
@@ -36,7 +37,8 @@ public class MessageQueueConstants {
     @Getter
     public static enum MessageConsumerTopic {
         connect_topic("connect-topic"),
-        chat_topic("chat-topic")
+        chat_topic("chat-topic"),
+        signaling_topic("signaling-topic"),
         ;
 
         public String topic;
