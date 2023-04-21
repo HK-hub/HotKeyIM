@@ -1,11 +1,8 @@
 package com.hk.im.server.push.comsumer;
 
-import com.hk.im.domain.request.InviteVideoCallInviteRequest;
 import com.hk.im.domain.vo.MessageVO;
-import com.hk.im.server.common.event.signaling.JoinRoomEventMessage;
 import com.hk.im.server.push.worker.MessagePushWorker;
 import com.hk.im.server.push.worker.MessageSynchronizer;
-import com.hk.im.server.push.worker.signaling.SignalingEventPusher;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.annotation.SelectorType;
@@ -27,37 +24,34 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "signaling-video-group", topic = "signaling-topic",
-        selectorExpression = "start", selectorType = SelectorType.TAG)
-public class SendCodeMessageConsumer implements RocketMQListener<InviteVideoCallInviteRequest>, InitializingBean {
+@RocketMQMessageListener(consumerGroup = "code-message-group", topic = "chat-topic",
+        selectorExpression = "CODE", selectorType = SelectorType.TAG)
+public class SendCodeMessageConsumer implements RocketMQListener<MessageVO>, InitializingBean {
 
     @Resource
-    private SignalingEventPusher signalingEventPusher;
+    private MessagePushWorker messagePushWorker;
+    @Resource
+    private MessageSynchronizer messageSynchronizer;
 
     /**
-     * 消费消息
-     * @param request
+     * 发送消息
+     * @param messageVO
      */
     @Override
-    public void onMessage(InviteVideoCallInviteRequest request) {
+    public void onMessage(MessageVO messageVO) {
 
         // 日志记录
-        log.info("rocketmq on message(signaling:video request text): {}",  request);
+        log.info("rocketmq on message(chat message code): {}",  messageVO);
 
-        // 构建消息
-        Long dialer = Long.valueOf(request.getDialer());
-        Long listener = Long.valueOf(request.getListener());
-        String roomId = dialer < listener ? dialer + "-" + listener : listener + "-" + dialer;
-        JoinRoomEventMessage joinRoomEventMessage = new JoinRoomEventMessage().setRoomId(roomId).setType(request.getType())
-                .setReceiverId(request.getListener()).setUserId(request.getDialer());
-
+        // 进行消息同步
+         this.messageSynchronizer.synchronizeSelf(messageVO);
         // 进行推送消息
-        this.signalingEventPusher.pushVideoCallInvite(joinRoomEventMessage);
+         this.messagePushWorker.doProcess(messageVO);
     }
 
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        log.info("signaling consumer bean created");
+        log.info("sendMessage consumer bean created");
     }
 }

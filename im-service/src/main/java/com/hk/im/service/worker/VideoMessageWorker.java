@@ -13,6 +13,7 @@ import com.hk.im.domain.request.InviteVideoCallInviteRequest;
 import com.hk.im.domain.request.InviteVideoCallRequest;
 import com.hk.im.infrastructure.event.file.event.UploadFileEvent;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
+import com.hk.im.infrastructure.event.signaling.call.event.VideoCallInviteEvent;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
 import com.hk.im.infrastructure.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,7 @@ public class VideoMessageWorker {
     public ResponseResult inviteVideoCall(InviteVideoCallInviteRequest request) {
 
         // 参数校验
-        log.info("InviteVideoCall: {}", request);
+        log.info("Invite Video Call: {}", request);
         boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getCmd()) || StringUtils.isEmpty(request.getListener());
         if (BooleanUtils.isTrue(preCheck)) {
             // 校验失败
@@ -59,7 +60,7 @@ public class VideoMessageWorker {
         }
 
         // 发送视频通话邀请事件
-        this.applicationContext.publishEvent();
+        this.applicationContext.publishEvent(new VideoCallInviteEvent(this, request));
 
         // 发送消息成功
         return ResponseResult.SUCCESS(null).setMessage("消息发送成功!");

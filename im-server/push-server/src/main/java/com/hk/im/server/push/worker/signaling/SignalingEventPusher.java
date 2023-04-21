@@ -27,6 +27,7 @@ public class SignalingEventPusher {
 
     public void pushVideoCallInvite(JoinRoomEventMessage message) {
 
+        log.info("push Video Call Invite: {}", message);
         String receiverId = message.getReceiverId();
         OutboundMessageData outboundMessageData = new OutboundMessageData();
         try {

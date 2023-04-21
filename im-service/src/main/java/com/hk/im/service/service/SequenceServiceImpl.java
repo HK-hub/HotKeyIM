@@ -41,6 +41,7 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
     private MessageFlowService messageFlowService;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Resource
     private RedisTemplate<String, RoomNumber> redisTemplate;
     @Resource
     private FriendService friendService;
@@ -165,7 +166,7 @@ public class SequenceServiceImpl extends ServiceImpl<SequenceMapper, Sequence> i
         // 采用Redis Set集合
         Boolean flag = true;
         RoomNumber roomNumber = null;
-        for (int i = 0; i < 900000 && flag; i++) {
+        for (int i = 0; i < 900 && flag; i++) {
             roomNumber = this.redisTemplate.opsForSet().pop(RedisConstants.ROOM_NUMBER_KEY);
             if (Objects.isNull(roomNumber)) {
                 roomNumber = new RoomNumber().setInUse(Boolean.TRUE);
