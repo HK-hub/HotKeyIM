@@ -1,4 +1,4 @@
-package com.hk.im.flow.search.controller;
+package com.hk.im.admin.controller.data.search;
 
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.flow.search.service.MessageSearchService;
@@ -21,9 +21,8 @@ import javax.annotation.Resource;
  * @Version : 1.0
  */
 @Slf4j
-@CrossOrigin
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/meili/search")
 public class MeiliSearchController {
 
     @Resource

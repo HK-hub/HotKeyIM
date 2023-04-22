@@ -19,6 +19,14 @@ public interface GroupMapper extends BaseMapper<Group> {
 
     // 通过关键字查询群聊
     List<Group> searchGroupByKeyword(@Param("keyword") String keyword, @Param("categoryList") List<Integer> categoryList);
+
+    /**
+     * 通过关键字在用户加入群聊中查群聊列表
+     * @param groupIdList
+     * @param keyword
+     * @return
+     */
+    List<Group> selectGroupListByKeyword(@Param("groupIdList") List<Long> groupIdList, @Param("keyword") String keyword);
 }
 
 

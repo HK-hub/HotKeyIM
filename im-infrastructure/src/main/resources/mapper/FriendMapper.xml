@@ -54,5 +54,14 @@
           and relation = #{relation}
     </select>
 
+    <!-- 根据关键字查询好友 -->
+    <select id="selectFriendByKeyword" resultType="com.hk.im.domain.entity.Friend">
+        select * from tb_friend where
+        user_id = #{userId} and
+            (nickname like concat('%', #{keyword}, '%') or
+             remark_name like concat('%', #{keyword}, '%') or
+             remark_info like concat('%', #{keyword}, '%'))
+    </select>
+
 
 </mapper>

@@ -126,4 +126,19 @@ public interface FriendService extends IService<Friend> {
      * @return
      */
     Friend getFriendById(Long senderId, Long receiverId);
+
+    /**
+     * 获取好友vo 信息
+     * @param id
+     * @return
+     */
+    FriendVO getFriendVOById(Long id);
+
+    /**
+     * 通过关键字查询好友列表
+     * @param userId
+     * @param keyword
+     * @return
+     */
+    List<FriendVO> getUserFriendListByKeyword(Long userId, String keyword);
 }

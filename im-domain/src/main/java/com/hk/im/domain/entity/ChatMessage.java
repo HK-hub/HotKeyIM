@@ -83,6 +83,6 @@ public class ChatMessage implements Serializable {
 
 
     @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 13571536373L;
 
 }

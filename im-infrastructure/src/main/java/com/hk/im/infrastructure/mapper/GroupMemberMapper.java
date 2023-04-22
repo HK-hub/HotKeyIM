@@ -22,6 +22,9 @@ public interface GroupMemberMapper extends BaseMapper<GroupMember> {
     // 获取用户管理群聊
     public List<GroupMember> selectGroupManageGroupList(@Param("memberId") Long memberId);
 
+    // 查询用户加入的群聊列表
+    List<GroupMember> selectGroupJoinedGroupList(@Param("memberId") Long memberId);
+
     // 修改用户昵称
 
 }

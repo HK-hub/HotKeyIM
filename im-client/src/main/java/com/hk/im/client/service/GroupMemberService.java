@@ -97,4 +97,11 @@ public interface GroupMemberService extends IService<GroupMember> {
      * @return
      */
     GroupMember getTheGroupMember(Long groupId, Long memberId);
+
+    /**
+     * 获取用户加入群聊列表
+     * @param userId
+     * @return
+     */
+    List<GroupMember> getGroupMemberByUserId(Long userId);
 }

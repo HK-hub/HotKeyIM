@@ -108,4 +108,12 @@ public interface GroupService extends IService<Group> {
      * @return
      */
     ResponseResult getGroupDetailInfo(String groupId, String memberId);
+
+    /**
+     * 获取用户群聊列表
+     * @param userId
+     * @param keyword
+     * @return
+     */
+    List<GroupVO> getUserGroupListByKeyword(Long userId, String keyword);
 }

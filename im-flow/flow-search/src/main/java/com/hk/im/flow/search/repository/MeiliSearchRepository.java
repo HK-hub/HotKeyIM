@@ -38,7 +38,7 @@ public class MeiliSearchRepository<T> implements InitializingBean, DocumentOpera
 
     private static GsonJsonHandler jsonHandler = new GsonJsonHandler();
 
-    @Resource
+    @Resource(name = "meiliClient")
     private Client client;
 
 
@@ -205,7 +205,7 @@ public class MeiliSearchRepository<T> implements InitializingBean, DocumentOpera
      */
     private void initIndex() throws MeilisearchException {
         Class<? extends MeiliSearchRepository> aClass = getClass();
-        clazz = (Class<T>) ((ParameterizedType) clazz.getGenericSuperclass()).getActualTypeArguments()[0];
+        clazz = (Class<T>) ((ParameterizedType) aClass.getGenericSuperclass()).getActualTypeArguments()[0];
         MeiliSearchIndex annoIndex = clazz.getAnnotation(MeiliSearchIndex.class);
         // 索引名称
         String idx = annoIndex.index();
@@ -219,10 +219,12 @@ public class MeiliSearchRepository<T> implements InitializingBean, DocumentOpera
 
         // 获取或创建索引
         Index index ;
+        log.info("init meili search entity index:{}", idx);
         try {
             //如果不指定索引， 默认就使用表名称
             index = client.getIndex(idx);
         }catch (Exception e) {
+            log.info("client get index error:",e);
             index = null;
         }
         if (Objects.isNull(index)) {

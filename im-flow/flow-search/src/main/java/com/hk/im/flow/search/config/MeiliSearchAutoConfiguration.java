@@ -2,6 +2,7 @@ package com.hk.im.flow.search.config;
 
 import com.meilisearch.sdk.Client;
 import com.meilisearch.sdk.Config;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +21,6 @@ import javax.annotation.Resource;
  * @Version : 1.0
  */
 @Configuration
-@EnableConfigurationProperties(MeiliSearchProperties.class)
 public class MeiliSearchAutoConfiguration {
 
     @Resource
@@ -28,7 +28,7 @@ public class MeiliSearchAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(Client.class)
-    public Client client() {
+    public Client meiliClient() {
         return new Client(config());
     }
 

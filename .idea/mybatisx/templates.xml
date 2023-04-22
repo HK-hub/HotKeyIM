@@ -70,8 +70,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="NoteAnnex" />
-                  <option name="tableName" value="tb_note_annex" />
+                  <option name="className" value="Admin" />
+                  <option name="tableName" value="tb_admin" />
                 </TableUIInfo>
               </list>
             </option>

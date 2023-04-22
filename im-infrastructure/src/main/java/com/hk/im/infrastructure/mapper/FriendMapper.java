@@ -24,6 +24,9 @@ public interface FriendMapper extends BaseMapper<Friend> {
     // 检索所有可以邀请好友
     @Select("select * from tb_friend where user_id = #{userId} and `group` != '黑名单'")
     List<Friend> selectAllFriends(@Param("userId") String userId);
+
+    // 根据关键字查询好友
+    List<Friend> selectFriendByKeyword(@Param("userId") Long userId, @Param("keyword") String keyword);
 }
 
 

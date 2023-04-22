@@ -1,5 +1,6 @@
 package com.hk.im.client.service;
 
+import com.hk.im.domain.entity.Admin;
 import com.hk.im.domain.entity.User;
 
 /**
@@ -20,6 +21,8 @@ public interface AuthorizationService {
      * @return
      */
     public String createAuthToken(User user);
+
+    public String createAdminToken(Admin admin);
 
     /**
      * 删除用户 accessToken

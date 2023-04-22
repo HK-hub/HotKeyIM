@@ -44,4 +44,9 @@
     <select id="selectGroupManageGroupList" resultType="com.hk.im.domain.entity.GroupMember">
         select * from tb_group_member where member_id = #{memberId} and (member_role = 2 or member_role = 3)
     </select>
+
+    <!-- 查询用户加入群聊列表 -->
+    <select id="selectGroupJoinedGroupList" resultType="com.hk.im.domain.entity.GroupMember">
+        select * from tb_group_member where member_id = #{memberId}
+    </select>
 </mapper>

@@ -47,4 +47,21 @@
             </foreach>
         </if>
     </select>
+
+
+    <!-- 在用户加入群聊列表中通过关键字查询群聊 -->
+    <select id="selectGroupListByKeyword" resultType="com.hk.im.domain.entity.Group">
+        select * from tb_group
+        <where>
+            <if test="groupIdList != null and groupIdList.size() > 0">
+                id in
+                <foreach collection="groupIdList" item="item" index="index" open="(" close=")" separator=",">
+                    item
+                </foreach>
+                and
+            </if>
+            (group_name like concat('%', #{keyword}, '%') or
+            description  like concat('%', #{keyword}, '%'))
+        </where>
+    </select>
 </mapper>

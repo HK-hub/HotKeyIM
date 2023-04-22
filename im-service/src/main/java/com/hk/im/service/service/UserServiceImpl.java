@@ -398,6 +398,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     /**
+     * 获取用户 VO 信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public UserVO getUserVO(Long userId) {
+
+        UserVO userAndInfo = this.userManager.findUserAndInfo(userId);
+        return userAndInfo;
+    }
+
+
+    /**
      * 批量获取用户信息
      *
      * @param idList

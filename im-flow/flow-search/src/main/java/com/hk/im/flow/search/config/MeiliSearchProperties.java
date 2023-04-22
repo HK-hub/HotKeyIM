@@ -1,10 +1,9 @@
 package com.hk.im.flow.search.config;
 
-import com.meilisearch.sdk.Client;
-import com.meilisearch.sdk.Config;
+
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * @author : HK意境
@@ -17,12 +16,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @Version : 1.0
  */
 @Data
-@ConfigurationProperties(prefix = "ms")
+@Component
 public class MeiliSearchProperties {
 
-    private static String default_host = "http://47.120.6.12:7700";
+    public static String default_host = "http://47.120.6.12:7700";
 
     // meili search 的 url 地址
+    @Value("${ms.host}")
     private String host;
 
     //默认的认证的签名key

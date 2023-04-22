@@ -74,5 +74,10 @@
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hk.im</groupId>
+            <artifactId>flow-search</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

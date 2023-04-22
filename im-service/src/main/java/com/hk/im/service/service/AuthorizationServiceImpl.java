@@ -5,6 +5,7 @@ import com.hk.im.client.service.AuthorizationService;
 import com.hk.im.common.consntant.RedisConstants;
 import com.hk.im.common.util.JWTUtils;
 import com.hk.im.domain.constant.UserConstants;
+import com.hk.im.domain.entity.Admin;
 import com.hk.im.domain.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -36,6 +37,21 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         String key = RedisConstants.LOGIN_USER_KEY + user.getId();
         stringRedisTemplate.opsForValue().set(key, token,
                 RedisConstants.ACCESS_TOKEN_TTL, TimeUnit.SECONDS);
+        return token;
+    }
+
+    /**
+     * 创建管理员token
+     * @param admin
+     * @return
+     */
+    @Override
+    public String createAdminToken(Admin admin) {
+
+        String token = JWTUtils.createToken(String.valueOf(admin.getId()));
+        String key = RedisConstants.LOGIN_USER_KEY + admin.getId();
+        stringRedisTemplate.opsForValue().set(key, token,
+                RedisConstants.ACCESS_TOKEN_TTL / 2, TimeUnit.SECONDS);
         return token;
     }
 

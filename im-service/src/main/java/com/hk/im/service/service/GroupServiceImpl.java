@@ -503,6 +503,34 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     }
 
 
+    /**
+     * 获取用户群聊列表
+     * @param userId
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<GroupVO> getUserGroupListByKeyword(Long userId, String keyword) {
+
+        // 查询用户做群聊成员的列表
+        List<GroupMember> groupMembers = this.groupMemberService.getGroupMemberByUserId(userId);
+
+        // 按照关键字查询列表中的群聊
+        List<Long> groupIdList = groupMembers.stream().map(GroupMember::getGroupId).toList();
+        if (CollectionUtils.isEmpty(groupIdList)) {
+            // 加入群聊为空
+            return Collections.emptyList();
+        }
+
+        // 查询群聊
+        List<Group> groupList = this.groupMapper.selectGroupListByKeyword(groupIdList, keyword);
+        // 查询 VO 信息
+        List<GroupVO> groupVOList = groupList.stream().map(group -> this.getGroupVOById(group.getId())).toList();
+
+        return groupVOList;
+    }
+
+
 }
 
 

@@ -33,6 +33,9 @@ public interface UserService extends IService<User> {
 
     ResponseResult getUserAndInfo(Long id);
 
+    UserVO getUserVO(Long userId);
+
+
     ResponseResult getUserAndInfoList(List<Long> idList);
 
     ResponseResult updateUserAvatar(InputStream inputStream, User user) throws IOException;

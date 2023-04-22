@@ -411,6 +411,19 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
 
         return member;
     }
+
+
+    /**
+     * 获取用户群聊列表
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<GroupMember> getGroupMemberByUserId(Long userId) {
+
+        List<GroupMember> groupMemberList =  this.groupMemberMapper.selectGroupJoinedGroupList(userId);
+        return groupMemberList;
+    }
 }
 
 

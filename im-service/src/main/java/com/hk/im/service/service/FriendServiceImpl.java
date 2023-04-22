@@ -466,6 +466,41 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
     }
 
 
+    /**
+     * 获取好友 vo 信息
+     * @param id
+     * @return
+     */
+    @Override
+    public FriendVO getFriendVOById(Long id) {
+
+        Friend friend = this.getById(id);
+        // 获取 userVo 信息
+        UserVO userVO = this.userService.getUserVO(friend.getUserId());
+        FriendVO friendVO = FriendMapStructure.INSTANCE.toVO(friend, userVO);
+
+        return friendVO;
+    }
+
+
+    /**
+     * 通过关键字查询好友列表
+     * @param userId
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<FriendVO> getUserFriendListByKeyword(Long userId, String keyword) {
+
+        List<Friend> friendList =  this.friendMapper.selectFriendByKeyword(userId, keyword);
+
+        // 查询 friend 的 vo 信息
+        List<FriendVO> friendVOList = friendList.stream().map(friend -> this.getFriendVOById(friend.getId())).toList();
+
+        return friendVOList;
+    }
+
+
 }
 
 
