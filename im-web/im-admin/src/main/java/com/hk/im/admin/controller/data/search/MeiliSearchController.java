@@ -1,12 +1,11 @@
 package com.hk.im.admin.controller.data.search;
 
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.SearchDocumentRequest;
 import com.hk.im.flow.search.service.MessageSearchService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -36,6 +35,17 @@ public class MeiliSearchController {
     public ResponseResult fullSynchronizeChatMessage() {
 
         return this.messageSearchService.fullSyncMessage();
+    }
+
+    /**
+     * 查询
+     * @param request
+     * @return
+     */
+    @PostMapping("/search/chat")
+    public ResponseResult search(@RequestBody SearchDocumentRequest request) {
+
+        return this.messageSearchService.searchChatMessage(request);
     }
 
 

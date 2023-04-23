@@ -1,5 +1,6 @@
 package com.hk.im.flow.search.operation;
 
+import com.hk.im.domain.request.SearchDocumentRequest;
 import com.hk.im.flow.search.result.SearchResult;
 import com.meilisearch.sdk.SearchRequest;
 
@@ -43,7 +44,7 @@ public interface DocumentOperations<T> {
 
     public List<T> query(String query);
 
-    public List<T> query(SearchRequest searchRequest);
+    public List<T> query(SearchDocumentRequest searchRequest);
 
 
 }

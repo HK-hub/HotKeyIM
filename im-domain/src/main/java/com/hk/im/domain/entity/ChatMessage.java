@@ -8,8 +8,10 @@ import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.hk.im.domain.annotation.MeiliSearchIndex;
+import com.hk.im.domain.annotation.RedisSearch;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 
@@ -19,6 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @MeiliSearchIndex
+@RedisSearch(indexName = "ChatMessage")
 public class ChatMessage implements Serializable {
     /**
      * 聊天消息表id
@@ -73,12 +76,14 @@ public class ChatMessage implements Serializable {
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
 
