@@ -28,10 +28,20 @@ public class GroupSettingServiceImpl extends ServiceImpl<GroupSettingMapper, Gro
      * @return
      */
     @Override
-    public GroupSettingVO getGroupSetting(Long groupId) {
+    public GroupSettingVO getGroupSettingVO(Long groupId) {
         GroupSetting setting = this.getById(groupId);
         GroupSettingVO settingVO = GroupSettingMapStructure.INSTANCE.toVO(setting);
         return settingVO;
+    }
+
+    /**
+     * 获取群聊设置
+     * @param groupId
+     * @return
+     */
+    @Override
+    public GroupSetting getGroupSetting(Long groupId) {
+        return this.getById(groupId);
     }
 }
 

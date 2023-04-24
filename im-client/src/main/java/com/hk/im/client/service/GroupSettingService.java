@@ -15,5 +15,8 @@ public interface GroupSettingService extends IService<GroupSetting> {
      * @param groupId
      * @return
      */
-    GroupSettingVO getGroupSetting(Long groupId);
+    GroupSettingVO getGroupSettingVO(Long groupId);
+
+    GroupSetting getGroupSetting(Long groupId);
+
 }

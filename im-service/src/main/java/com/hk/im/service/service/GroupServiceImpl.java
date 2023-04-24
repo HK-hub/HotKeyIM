@@ -11,10 +11,7 @@ import com.hk.im.common.util.QRCodeUtil;
 import com.hk.im.domain.constant.GroupConstants;
 import com.hk.im.domain.constant.GroupMemberConstants;
 import com.hk.im.domain.entity.*;
-import com.hk.im.domain.request.CreateGroupRequest;
-import com.hk.im.domain.request.FriendFindRequest;
-import com.hk.im.domain.request.ModifyGroupInfoRequest;
-import com.hk.im.domain.request.SetGroupAdministratorRequest;
+import com.hk.im.domain.request.*;
 import com.hk.im.domain.vo.*;
 import com.hk.im.infrastructure.mapper.GroupMapper;
 import com.hk.im.infrastructure.mapstruct.GroupDetailMapStructure;
@@ -385,7 +382,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
             // 查询群员
             List<GroupMemberVO> memberVOList = this.groupMemberService.getGroupMemberList(group.getId());
             // 查询群设置
-            GroupSettingVO settingVO = this.groupSettingService.getGroupSetting(group.getId());
+            GroupSettingVO settingVO = this.groupSettingService.getGroupSettingVO(group.getId());
             // 查询群公告
             List<GroupAnnouncementVO> announcementVOList = this.groupAnnouncementService.getGroupAnnouncementList(group.getId());
             // 组装数据
@@ -528,6 +525,18 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         List<GroupVO> groupVOList = groupList.stream().map(group -> this.getGroupVOById(group.getId())).toList();
 
         return groupVOList;
+    }
+
+
+    /**
+     * 获取公开群组列表
+     * @param request
+     * @return
+     */
+    @Override
+    public List<Group> getPublicGroupList(UserFindPolicyRequest request) {
+
+        return this.groupMapper.selectPublicGroupList(request);
     }
 
 

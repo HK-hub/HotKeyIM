@@ -36,11 +36,21 @@ public class GroupApplyController {
      *
      * @return
      */
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseResult createGroupApply(@RequestBody @NonNull CreateGroupApplyRequest request) {
         return this.groupApplyService.createGroupApply(request);
     }
 
+    /**
+     * 获取群聊加群申请方式设置
+     * @param groupId
+     * @return
+     */
+    @GetMapping("/setting")
+    public ResponseResult getGroupApplySetting(@RequestParam("groupId") Long groupId) {
+
+        return this.groupApplyService.getGroupApplySetting(groupId);
+    }
 
     /**
      * 获取用户管理群聊加群申请单

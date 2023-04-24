@@ -64,4 +64,22 @@
             description  like concat('%', #{keyword}, '%'))
         </where>
     </select>
+
+    <!-- 查询公开群组 -->
+    <select id="selectPublicGroupList" resultType="com.hk.im.domain.entity.Group">
+        select g.id
+        ,g.group_account,g.group_name,
+        g.group_avatar,g.description,g.group_type,
+        g.qrcode,g.member_count,g.group_master,
+        g.create_time,g.update_time from tb_group as g
+        join tb_group_setting as setting on g.id = setting.group_id
+        <where>
+            setting.find_type = 1
+            <if test="param.name != null and param.name.length() > 0">
+                and ((group_name like concat('%', #{param.name}, '%'))
+                or (g.group_account = #{param.name}))
+            </if>
+            limit #{param.offset},#{param.size};
+        </where>
+    </select>
 </mapper>

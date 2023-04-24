@@ -140,9 +140,11 @@ public class FindController {
      * @return
      */
     @GetMapping("/group/public")
-    public ResponseResult publicGroup(@RequestBody UserFindPolicyRequest request) {
+    public ResponseResult publicGroup(UserFindPolicyRequest request) {
         return this.findService.getPublicGroups(request);
     }
+
+
 
 
 }

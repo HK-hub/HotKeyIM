@@ -42,4 +42,11 @@ public interface GroupApplyService extends IService<GroupApply> {
      * @return
      */
     ResponseResult handleGroupApply(ApplyHandleRequest request);
+
+    /**
+     * 获取群聊加群申请方式设置
+     * @param groupId
+     * @return
+     */
+    ResponseResult getGroupApplySetting(Long groupId);
 }

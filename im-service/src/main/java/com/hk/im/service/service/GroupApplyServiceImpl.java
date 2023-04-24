@@ -282,6 +282,25 @@ public class GroupApplyServiceImpl extends ServiceImpl<GroupApplyMapper, GroupAp
         return ResponseResult.SUCCESS("同意加群操作成功!");
     }
 
+
+    /**
+     * 获取群聊加群申请方式设置
+     *
+     * @param groupId
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult getGroupApplySetting(Long groupId) {
+
+        GroupSetting groupSetting = this.groupSettingService.lambdaQuery()
+                .select(GroupSetting::getJoinType, GroupSetting::getProblem)
+                .eq(GroupSetting::getGroupId, groupId)
+                .one();
+
+        return ResponseResult.SUCCESS(groupSetting);
+    }
+
 }
 
 

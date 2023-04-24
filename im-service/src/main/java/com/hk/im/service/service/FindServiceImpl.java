@@ -1,26 +1,21 @@
 package com.hk.im.service.service;
 
-import com.alibaba.fastjson.JSON;
 import com.hk.im.client.service.FindService;
 import com.hk.im.client.service.GroupService;
 import com.hk.im.client.service.GroupSettingService;
-import com.hk.im.common.consntant.RedisConstants;
+import com.hk.im.common.resp.PageResult;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.domain.constant.GroupConstants;
 import com.hk.im.domain.entity.Group;
-import com.hk.im.domain.entity.GroupSetting;
 import com.hk.im.domain.request.FriendFindRequest;
 import com.hk.im.domain.request.UserFindPolicyRequest;
+import com.hk.im.domain.vo.GroupSettingVO;
 import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.infrastructure.mapstruct.GroupMapStructure;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -56,29 +51,17 @@ public class FindServiceImpl implements FindService {
     public ResponseResult getPublicGroups(UserFindPolicyRequest request) {
 
         // 获取缓存的Group 数据
-        String key = RedisConstants.CACHE_GROUP_KEY + "public:";
+        /*String key = RedisConstants.CACHE_GROUP_KEY + "public:";
         String cacheGroupJsonString = this.stringRedisTemplate.opsForValue().get(key);
         if (StringUtils.isNotEmpty(cacheGroupJsonString)) {
             // 缓存群聊数据存在
             List<GroupVO> groupVOS = JSON.parseArray(cacheGroupJsonString, GroupVO.class);
             return ResponseResult.SUCCESS(groupVOS);
-        }
+        }*/
 
-        // 查询群聊设置为公开的群聊
-        List<GroupSetting> groupSettings = this.groupSettingService.lambdaQuery()
-                .eq(GroupSetting::getFindType, GroupConstants.GroupFindType.PUBLIC.ordinal())
-                .list();
-        if (CollectionUtils.isEmpty(groupSettings)) {
-            groupSettings = Collections.emptyList();
-        }
-
-        // 收集 groupId
-        List<Long> groupIdList = groupSettings.stream().map(GroupSetting::getGroupId).toList();
-        // 获取group群聊
-        List<Group> groupList = this.groupService.listByIds(groupIdList);
-        if (CollectionUtils.isEmpty(groupList)) {
-            groupList = Collections.emptyList();
-        }
+        // 查询公开群组
+        request.setOffset((request.getPage() - 1) * request.getSize());
+        List<Group> publicGroupList = this.groupService.getPublicGroupList(request);
 
         // 排序：按照群聊人数，群聊类型，群聊描述进行排序
         Comparator<GroupVO> comparator = Comparator.comparing(GroupVO::getMemberCount).reversed()
@@ -87,9 +70,12 @@ public class FindServiceImpl implements FindService {
                 .thenComparing(GroupVO::getDescription, String.CASE_INSENSITIVE_ORDER);
 
         // 转换为 VO 对象
-        List<GroupVO> groupVOS = groupList.stream()
-                .map(group -> GroupMapStructure.INSTANCE
-                        .toVO(group, null, null, null))
+        List<GroupVO> groupVOS = publicGroupList.stream()
+                .map(group -> {
+                    // 查询群聊设置
+                    GroupSettingVO groupSetting = this.groupSettingService.getGroupSettingVO(group.getId());
+                    return GroupMapStructure.INSTANCE.toVO(group, null, groupSetting, null);
+                })
                 .sorted(comparator)
                 .toList();
 
@@ -99,7 +85,8 @@ public class FindServiceImpl implements FindService {
                         RedisConstants.CACHE_GROUP_TTL, TimeUnit.MINUTES);*/
 
         // 响应数据
-        return ResponseResult.SUCCESS(groupVOS);
+        PageResult<GroupVO> pageResult = PageResult.of(groupVOS, request.getSize() <= groupVOS.size());
+        return ResponseResult.SUCCESS(pageResult);
     }
 
 

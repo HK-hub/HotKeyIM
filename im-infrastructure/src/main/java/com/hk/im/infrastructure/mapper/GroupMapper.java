@@ -3,6 +3,7 @@ package com.hk.im.infrastructure.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.request.ModifyGroupInfoRequest;
+import com.hk.im.domain.request.UserFindPolicyRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,6 +28,13 @@ public interface GroupMapper extends BaseMapper<Group> {
      * @return
      */
     List<Group> selectGroupListByKeyword(@Param("groupIdList") List<Long> groupIdList, @Param("keyword") String keyword);
+
+    /**
+     * 查询公开群组
+     * @param request
+     * @return
+     */
+    List<Group> selectPublicGroupList(@Param("param") UserFindPolicyRequest request);
 }
 
 

@@ -19,5 +19,15 @@ public class UserFindPolicyRequest {
 
     private String userId;
 
+    // 当前请求第几页
+    private Integer page = 1;
+
+    // 每页多少条
+    private Integer size = 19;
+
+    private Integer offset = 0;
+
+    private String name;
+
 
 }

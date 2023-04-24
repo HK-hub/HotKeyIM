@@ -3,10 +3,7 @@ package com.hk.im.client.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Group;
-import com.hk.im.domain.request.CreateGroupRequest;
-import com.hk.im.domain.request.FriendFindRequest;
-import com.hk.im.domain.request.ModifyGroupInfoRequest;
-import com.hk.im.domain.request.SetGroupAdministratorRequest;
+import com.hk.im.domain.request.*;
 import com.hk.im.domain.vo.GroupVO;
 
 import java.util.List;
@@ -116,4 +113,12 @@ public interface GroupService extends IService<Group> {
      * @return
      */
     List<GroupVO> getUserGroupListByKeyword(Long userId, String keyword);
+
+    /**
+     * 获取公开群组列表
+     * @param request
+     * @return
+     */
+    List<Group> getPublicGroupList(UserFindPolicyRequest request);
+
 }

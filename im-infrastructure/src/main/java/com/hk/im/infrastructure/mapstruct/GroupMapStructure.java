@@ -28,7 +28,7 @@ public interface GroupMapStructure {
 
     @Mapping(source = "group.groupAccount", target = "groupAccount")
     @Mapping(source = "group.createTime", target = "createTime")
-    public GroupVO toVO(Group group, List<GroupMemberVO> member, GroupSettingVO setting,
+    public GroupVO toVO(Group group, List<GroupMemberVO> member, GroupSettingVO groupSetting,
                         List<GroupAnnouncementVO> announcement);
 
 
