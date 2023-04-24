@@ -313,6 +313,37 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
 
     /**
+     * 转换为消息VO 对象
+     * @param messageFlow
+     * @return
+     */
+    @Override
+    public MessageVO convertToMessageVO(MessageFlow messageFlow) {
+
+        // 查询消息体
+        ChatMessage message = this.chatMessageService.getById(messageFlow.getMessageId());
+        // 转换为 MessageBO
+        MessageBO messageBO = MessageMapStructure.INSTANCE.toBO(messageFlow, message);
+        // 转换为MessageVO
+        MessageVO messageVO = MessageMapStructure.INSTANCE.boToVO(messageBO);
+
+        // 查询发送者
+        UserVO senderVO = this.userManager.findUserAndInfo(messageFlow.getSenderId());
+        // 判断是群聊还是私聊
+        if (CommunicationConstants.SessionType.PRIVATE.ordinal() == messageFlow.getChatType()) {
+            // 私聊:如果是私聊或者@群员消息->计算头像，id
+            UserVO friendVO = this.userManager.findUserAndInfo(messageFlow.getReceiverId());
+            messageVO.computedPrivateMessageVO(senderVO, friendVO, null);
+        } else if (CommunicationConstants.SessionType.GROUP.ordinal() == messageFlow.getChatType()) {
+            // 群聊: 查询发送者群员
+            GroupMember groupMember = this.groupMemberService.getTheGroupMember(messageVO.getReceiverId(), messageVO.getSenderId());
+            messageVO.computedPrivateMessageVO(senderVO, null, groupMember);
+        }
+        return messageVO;
+    }
+
+
+    /**
      * 发送文本消息
      *
      * @param message
@@ -429,6 +460,9 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
         return this.videoMessageWorker.inviteVideoCall(request);
     }
+
+
+
 
 
 }

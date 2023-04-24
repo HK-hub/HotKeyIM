@@ -1,6 +1,7 @@
 package com.hk.im.domain.vo;
 
 import com.hk.im.domain.annotation.MeiliSearchIndex;
+import com.hk.im.domain.annotation.RedisSearch;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.entity.GroupMember;
 import lombok.Data;
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Data
 @Accessors(chain = true)
 @MeiliSearchIndex
+@RedisSearch(indexName = "MessageVO")
 public class MessageVO extends MessageBO {
 
     // 消息发送者

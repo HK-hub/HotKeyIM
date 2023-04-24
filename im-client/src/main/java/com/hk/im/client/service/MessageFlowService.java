@@ -9,6 +9,7 @@ import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.*;
+import com.hk.im.domain.vo.MessageVO;
 
 import java.util.List;
 
@@ -47,6 +48,13 @@ public interface MessageFlowService extends IService<MessageFlow> {
      * @return
      */
     ResponseResult getTalkRecordsByPage(TalkRecordsRequest request);
+
+    /**
+     * 转换为消息VO对象
+     * @param messageFlow
+     * @return
+     */
+    MessageVO convertToMessageVO(MessageFlow messageFlow);
 
 
     /**
