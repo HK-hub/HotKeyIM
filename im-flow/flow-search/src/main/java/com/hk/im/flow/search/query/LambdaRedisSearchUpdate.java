@@ -6,18 +6,17 @@ import com.hk.im.domain.annotation.RedisSearchField;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.flow.search.redis.FieldsEntity;
 import com.hk.im.flow.search.redis.RedisSearchUtils;
+import io.redisearch.Document;
 import io.redisearch.Schema;
+import io.redisearch.client.AddOptions;
 import io.redisearch.client.Client;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import redis.clients.jedis.exceptions.JedisDataException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LambdaRedisSearchUpdate<T> {
 
@@ -37,14 +36,14 @@ public class LambdaRedisSearchUpdate<T> {
         } catch (JedisDataException e) {
             if (e.getMessage().equals("Unknown Index name")) {
                 // 说明没有 这个 index 要创建
-                if(!createindex()){
+                if(!createIndex()){
                     throw new RuntimeException("创建 索引失败");
                 }
             }
         }
     }
 
-    private boolean createindex() {
+    private boolean createIndex() {
         Schema schema = new Schema();
         List<FieldsEntity> entityFields = getEntityFields();
 
@@ -56,7 +55,7 @@ public class LambdaRedisSearchUpdate<T> {
                 schema.addNumericField(ent.getFieldName());
             }
         });
-        return client.createIndex(schema, Client.IndexOptions.Default());
+        return client.createIndex(schema, Client.IndexOptions.defaultOptions());
     }
 
     private List<FieldsEntity> getEntityFields() {
@@ -66,7 +65,7 @@ public class LambdaRedisSearchUpdate<T> {
         // 拿到该类
         Class<?> clz = t.getClass();
         // 获取实体类的所有属性，返回Field数组
-        Field[] fields = clz.getDeclaredFields();
+        Field[] fields = getAllFields(clz);
         for (Field field : fields) {
             Type genericType = field.getGenericType();
             String name = field.getName();
@@ -78,7 +77,7 @@ public class LambdaRedisSearchUpdate<T> {
                 FieldType parameterType ;
                 if(annotation.exist()){
                     String s = annotation.fieldName();
-                    if(!StringUtils.isEmpty(s)){
+                    if(StringUtils.isNotEmpty(s)){
                         name = s;
                     }
                     if(annotation.fieldType().equals(FieldType.AUTO)){
@@ -86,7 +85,7 @@ public class LambdaRedisSearchUpdate<T> {
                     }else{
                         parameterType = annotation.fieldType();
                     }
-                    FieldsEntitys.add(new FieldsEntity(parameterType,name));
+                    FieldsEntitys.add(new FieldsEntity(parameterType, name));
                 }
             }
 
@@ -106,17 +105,40 @@ public class LambdaRedisSearchUpdate<T> {
         throw new RuntimeException(t.getClass().getName() + "没找到 @RedisSearch 注解");
 
     }
+
     public boolean insert(String docId, T t) {
         Map<String, Object> documentByEntity = getDocumentByEntity(t);
-        return client.addDocument(docId, documentByEntity);
+        // 设置中文
+        // 设置中文编码
+        AddOptions addOptions = new AddOptions();
+        addOptions.setLanguage("chinese");
+        Document document = new Document(docId, documentByEntity);
+        return client.addDocument(document, addOptions);
     }
+
+
+    /**
+     * 获取本类及其父类的属性的方法
+     * @param clazz 当前类对象
+     * @return 字段数组
+     */
+    private static Field[] getAllFields(Class<?> clazz) {
+        List<Field> fieldList = new ArrayList<>();
+        while (clazz != null){
+            fieldList.addAll(Arrays.asList(clazz.getDeclaredFields()));
+            clazz = clazz.getSuperclass();
+        }
+        Field[] fields = new Field[fieldList.size()];
+        return fieldList.toArray(fields);
+    }
+
     private Map<String, Object> getDocumentByEntity(T t) {
 
         Map<String, Object> document = new HashMap<>();
         // 拿到该类
         Class<?> clz = t.getClass();
         // 获取实体类的所有属性，返回Field数组
-        Field[] fields = clz.getDeclaredFields();
+        Field[] fields = getAllFields(clz);
         for (Field field : fields) {
             String key = null;
             Object value = null;
@@ -130,7 +152,9 @@ public class LambdaRedisSearchUpdate<T> {
             RedisSearchField annotation = field.getAnnotation(RedisSearchField.class);
             if(annotation == null ){
                 key = field.getName();
-                document.put(key,value);
+                if (value != null) {
+                    document.put(key, value);
+                }
 
             }else if (annotation.exist()){
                 String s = annotation.fieldName();
@@ -139,7 +163,9 @@ public class LambdaRedisSearchUpdate<T> {
                 }else{
                     key=field.getName();
                 }
-                document.put(key,value);
+                if (value != null) {
+                    document.put(key, value);
+                }
             }
 
         }

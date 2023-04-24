@@ -1,9 +1,9 @@
 package com.hk.im.flow.search.redis;
 
 import io.redisearch.client.Client;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -80,8 +80,10 @@ public class RedisSearchUtils {
 
     private static Client createClient(String indexName) {
         int timeoutl = (int)timeout.getSeconds();
-        Client client = new Client(indexName, host, port, timeoutl, poolSize,password);
-        return client;
+        if (StringUtils.isNotEmpty(password)) {
+            return new Client(indexName, host, port, timeoutl, poolSize, password);
+        }
+        return new Client(indexName, host, port, timeoutl, poolSize);
     }
 
 }

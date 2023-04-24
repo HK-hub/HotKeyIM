@@ -6,6 +6,7 @@ import com.hk.im.client.service.MessageFlowService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.MessageFlow;
+import com.hk.im.domain.request.IncrementalSyncRequest;
 import com.hk.im.domain.request.SearchDocumentRequest;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.flow.search.query.LambdaRedisSearchQuery;
@@ -13,9 +14,11 @@ import com.hk.im.flow.search.query.LambdaRedisSearchUpdate;
 import com.hk.im.flow.search.repository.ChatMessageRepository;
 import com.meilisearch.sdk.SearchRequest;
 import com.meilisearch.sdk.model.MatchingStrategy;
+import io.redisearch.Document;
+import io.redisearch.SearchResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -88,14 +91,26 @@ public class MessageSearchService {
      */
     public ResponseResult searchChatMessage(SearchDocumentRequest request) {
 
-        SearchRequest searchRequest = new SearchRequest(request.getQ());
-        BeanUtils.copyProperties(request, searchRequest);
-        searchRequest.setMatchingStrategy(MatchingStrategy.LAST);
+        log.info("Searching chat message:request={}", request);
+
+        LambdaRedisSearchQuery<MessageVO> searchQuery = new LambdaRedisSearchQuery<>(new MessageVO());
+        SearchResult result = searchQuery.like(MessageVO::getContent, request.getQ())
+                .offset(request.getOffset())
+                .limit(request.getLimit())
+                .search();
+        log.info("Searching chat message:result={}", result);
+
+        // 解析查询结果
+        return ResponseResult.SUCCESS(result);
+    }
 
 
-        log.info("Searching chat message:request={}, searchRequest={}",request, searchRequest);
-        List<ChatMessage> messageList = this.chatMessageRepository.query(request);
-
-        return ResponseResult.SUCCESS(messageList);
+    /**
+     * 增量同步消息
+     * @param request
+     * @return
+     */
+    public ResponseResult incrementalSynchronizeChatMessage(IncrementalSyncRequest request) {
+        return null;
     }
 }

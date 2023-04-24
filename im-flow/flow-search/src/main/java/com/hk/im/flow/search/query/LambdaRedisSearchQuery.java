@@ -33,6 +33,8 @@ public class LambdaRedisSearchQuery<T> {
     private ColumnUtil columnUtil = new ColumnUtil();
 
     private StringBuffer search = new StringBuffer();
+    private Integer offset = 0;
+    private Integer limit = 10;
     private T t;
     Client client = null;
 
@@ -40,8 +42,9 @@ public class LambdaRedisSearchQuery<T> {
     public LambdaRedisSearchQuery(T t) {
         this.t = t;
         String indexName = getIndexName();
-        // client = new Client(indexName, "8.141.169.86", 56379, 500, 1);
+        // client = new Client(indexName, "149.127.219.216", 6379, 500, 1);
         client =  RedisSearchUtils.getClient(indexName);
+        // 索引
 
     }
 
@@ -194,7 +197,7 @@ public class LambdaRedisSearchQuery<T> {
 
     public LambdaRedisSearchQuery<T> lt(RedisFunction<T, ?> function, Double min) {
         String name = ColumnUtil.getName(function);
-//        @num:[-inf (10]
+        // @num:[-inf (10]
         search.append(FIELD_LEFT_BRACKETS)
                 .append(FIELD_PREFIX)
                 .append(name)
@@ -212,7 +215,7 @@ public class LambdaRedisSearchQuery<T> {
 
     public LambdaRedisSearchQuery<T> likeRight(RedisFunction<T, ?> function, Object value) {
         String name = ColumnUtil.getName(function);
-//        @name:john*
+        // @name:john*
         search.append(FIELD_LEFT_BRACKETS)
                 .append(FIELD_PREFIX)
                 .append(name)
@@ -226,17 +229,28 @@ public class LambdaRedisSearchQuery<T> {
 
     public LambdaRedisSearchQuery<T> like(RedisFunction<T, ?> function, Object value) {
         String name = ColumnUtil.getName(function);
-//        @name:john*
-//        search.append(FIELD_LEFT_BRACKETS)
-//                .append(FIELD_PREFIX)
-//                .append(name)
-//                .append(FIELD_VALUE_INTERVAL)
-//                .append(value)
-//                .append(STAR)
-//                .append(FIELD_RIGHT_BRACKETS)
-//                .append(BLANK);
 
-        search.append(value);
+        search.append(FIELD_LEFT_BRACKETS)
+                .append(FIELD_PREFIX)
+                .append(name)
+                .append(FIELD_VALUE_INTERVAL)
+                .append(STAR)
+                .append(value)
+                .append(STAR)
+                .append(FIELD_RIGHT_BRACKETS)
+                .append(BLANK);
+
+        // search.append(value);
+        return this;
+    }
+
+    public LambdaRedisSearchQuery<T> offset(Integer offset) {
+        this.offset = offset;
+        return this;
+    }
+
+    public LambdaRedisSearchQuery<T> limit(Integer limit) {
+        this.limit = limit;
         return this;
     }
 
@@ -250,12 +264,16 @@ public class LambdaRedisSearchQuery<T> {
 
     }
 
-    public void search() {
+    public SearchResult search() {
         String s = search.toString();
-        System.out.println(s);
-        Query query = new Query(s).limit(0, 10);
+        System.out.println("查询语句: " + s);
+        Query query = new Query(s)
+                .setLanguage("chinese") // 设置为中文编码
+                .limit(this.offset, this.limit);
+
         SearchResult result = client.search(query);
         printResult(result);
+        return result;
     }
 
 

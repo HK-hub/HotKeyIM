@@ -16,6 +16,7 @@ public enum FieldType {
         add("java.lang.String");
         add("java.lang.Char");
         add("java.time.LocalDateTime");
+        add("java.lang.Object");
         add("Char");
     }};
 
