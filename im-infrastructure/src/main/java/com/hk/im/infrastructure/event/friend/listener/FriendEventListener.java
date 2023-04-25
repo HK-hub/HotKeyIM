@@ -59,7 +59,6 @@ public class FriendEventListener {
     public void friendApplyHandler(ApplyHandleEvent event) {
         log.info("好友申请处理事件：{}", event.getData());
 
-
         ApplyHandleRequest request = event.getData();
         String applyId = request.getApplyId();
         FriendApply apply = friendApplyMapper.selectById(applyId);

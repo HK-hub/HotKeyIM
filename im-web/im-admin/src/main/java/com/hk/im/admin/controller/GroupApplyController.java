@@ -9,6 +9,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author : HK意境
@@ -37,7 +38,7 @@ public class GroupApplyController {
      * @return
      */
     @PostMapping("/create")
-    public ResponseResult createGroupApply(@RequestBody @NonNull CreateGroupApplyRequest request) {
+    public ResponseResult createGroupApply(@RequestBody CreateGroupApplyRequest request) throws Exception {
         return this.groupApplyService.createGroupApply(request);
     }
 
@@ -60,8 +61,20 @@ public class GroupApplyController {
      * @return
      */
     @GetMapping("/list")
-    public ResponseResult getGroupApplyList(@RequestParam("userId") @NonNull String userId) {
+    public ResponseResult getGroupApplyList(@RequestParam("userId") String userId) {
         return this.groupApplyService.getUserGroupApplyList(userId);
+    }
+
+    /**
+     * 获取用户管理群聊加群申请单
+     *
+     * @param userId
+     *
+     * @return
+     */
+    @GetMapping("/list/group")
+    public ResponseResult getGroupApplyList(@RequestParam("userId") Long userId, @RequestParam("groupId") Long groupId) {
+        return this.groupApplyService.getTheGroupApplyList(userId, groupId);
     }
 
 

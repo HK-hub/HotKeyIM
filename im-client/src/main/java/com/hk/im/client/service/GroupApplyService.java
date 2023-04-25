@@ -7,6 +7,8 @@ import com.hk.im.domain.request.ApplyHandleRequest;
 import com.hk.im.domain.request.CreateGroupApplyRequest;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * @ClassName : GroupApplyService
  * @author : HK意境
@@ -25,7 +27,7 @@ public interface GroupApplyService extends IService<GroupApply> {
      * @param request
      * @return
      */
-    ResponseResult createGroupApply(CreateGroupApplyRequest request);
+    public ResponseResult createGroupApply(CreateGroupApplyRequest request) throws Exception;
 
 
     /**
@@ -33,7 +35,15 @@ public interface GroupApplyService extends IService<GroupApply> {
      * @param userId
      * @return
      */
-    ResponseResult getUserGroupApplyList(String userId);
+    public ResponseResult getUserGroupApplyList(String userId);
+
+    /**
+     * 获取指定群聊加群申请
+     * @param userId
+     * @param groupId
+     * @return
+     */
+    public ResponseResult getTheGroupApplyList(Long userId, Long groupId);
 
 
     /**
@@ -41,12 +51,12 @@ public interface GroupApplyService extends IService<GroupApply> {
      * @param request
      * @return
      */
-    ResponseResult handleGroupApply(ApplyHandleRequest request);
+    public ResponseResult handleGroupApply(ApplyHandleRequest request);
 
     /**
      * 获取群聊加群申请方式设置
      * @param groupId
      * @return
      */
-    ResponseResult getGroupApplySetting(Long groupId);
+    public ResponseResult getGroupApplySetting(Long groupId);
 }

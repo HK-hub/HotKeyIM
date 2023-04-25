@@ -8,7 +8,9 @@ import com.hk.im.client.service.UserService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.GroupMemberConstants;
+import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.Friend;
+import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.InviteGroupMemberRequest;
@@ -17,12 +19,14 @@ import com.hk.im.domain.request.MemberRemarkNameRequest;
 import com.hk.im.domain.request.RemoveGroupMemberRequest;
 import com.hk.im.domain.vo.GroupMemberVO;
 import com.hk.im.domain.vo.GroupVO;
+import com.hk.im.infrastructure.event.group.event.JoinGroupEvent;
 import com.hk.im.infrastructure.mapper.GroupMemberMapper;
 import com.hk.im.infrastructure.mapstruct.GroupMemberMapStructure;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +57,8 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
     private GroupService groupService;
     @Resource
     private FriendService friendService;
+    @Resource
+    private ApplicationContext applicationContext;
 
     /**
      * 踢出群聊
@@ -303,14 +309,18 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         GroupMember member = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, userId);
         if (Objects.nonNull(member)) {
             // 已经加入群聊
-            return ResponseResult.FAIL("你已经是群聊成员，无需重复加入!")
-                    .setMessage("你已经是群聊成员，无需重复加入!");
+            return ResponseResult.FAIL("已经是群聊成员，无需重复加入!")
+                    .setMessage("已经是群聊成员，无需重复加入!");
         }
+
+        // 查询群聊
+        Group group = this.groupService.getById(groupId);
 
         // 不是群员，加群
         User user = this.userService.getById(userId);
         member = new GroupMember()
                 .setGroupId(Long.valueOf(groupId))
+                .setGroupAccount(group.getGroupAccount())
                 .setMemberId(Long.valueOf(userId))
                 .setMemberUsername(user.getUsername())
                 .setMemberAvatar(user.getMiniAvatar())
@@ -321,6 +331,12 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         if (BooleanUtils.isFalse(save)) {
             return ResponseResult.FAIL("加群失败");
         }
+
+        // TODO 加群成功，发送事件
+        Long handlerId = UserContextHolder.get().getId();
+        request.setHandlerId(String.valueOf(handlerId)).setOperation(1);
+        this.applicationContext.publishEvent(new JoinGroupEvent(this, request));
+
         return ResponseResult.SUCCESS("加入群聊成功!");
     }
 

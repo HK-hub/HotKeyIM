@@ -77,7 +77,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
             request.setInitialGroupMembers(new ArrayList<>());
         }
 
-        // 群主设置
+        // 群主设置: 此处需要注意 群主重复添加的问题
         request.getInitialGroupMembers().add(masterId);
 
         // 准备数据
@@ -147,8 +147,12 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
             return ResponseResult.FAIL("群聊不存在!");
         }
 
+        // 待添加成员去重
+        HashSet<Long> memberIdSet = new HashSet<>(groupMembers);
+
+
         // 构造数据
-        List<GroupMember> memberList = groupMembers.stream().map(userId -> {
+        List<GroupMember> memberList = memberIdSet.stream().map(userId -> {
             User user = this.userService.getById(userId);
             GroupMember groupMember = new GroupMember();
             groupMember.setGroupId(group.getId())
@@ -157,6 +161,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
                     .setMemberId(userId)
                     .setMemberAvatar(user.getMiniAvatar())
                     .setMemberUsername(user.getUsername())
+                    .setMemberRemarkName(user.getUsername())
                     .setMemberRole(GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal());
             // 群员身份设置
             if (Objects.equals(userId, group.getGroupMaster())) {

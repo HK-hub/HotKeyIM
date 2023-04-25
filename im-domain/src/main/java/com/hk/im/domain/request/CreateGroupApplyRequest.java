@@ -20,7 +20,6 @@ public class CreateGroupApplyRequest {
 
     private String userId;
 
-    @NonNull
     private String groupId;
 
     // 申请信息: 答案或备注信息等

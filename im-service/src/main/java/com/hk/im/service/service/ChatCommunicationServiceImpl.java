@@ -142,7 +142,7 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
 
         } else if (type == 2) {
             // 群聊
-            name = receiverId + "-" + receiverId;
+            name = senderId + "-" + receiverId;
         }*/
         if (sessionType == CommunicationConstants.SessionType.GROUP) {
             name = request.getReceiverId();

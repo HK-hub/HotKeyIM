@@ -18,6 +18,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class JoinGroupRequest {
 
+    // 加群申请发起人
     private String userId;
 
     private String groupId;
