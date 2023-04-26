@@ -81,7 +81,7 @@ public class GroupController {
      * @param request
      * @return
      */
-    @PutMapping("/info")
+    @PostMapping("/info/base/edit")
     public ResponseResult modifyGroupInfo(@RequestBody ModifyGroupInfoRequest request) {
         return this.groupService.updateGroupInfo(request);
     }

@@ -1,13 +1,16 @@
 package com.hk.im.domain.request;
 
+import com.hk.im.domain.entity.GroupMember;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * @author : HK意境
  * @ClassName : RemoveGroupMemberRequest
  * @date : 2023/1/20 21:42
- * @description :
+ * @description : 踢出群聊
  * @Todo :
  * @Bug :
  * @Modified :
@@ -18,13 +21,15 @@ import lombok.experimental.Accessors;
 public class RemoveGroupMemberRequest {
 
     // 群id
-    private String groupId;
+    private Long groupId;
 
     // 被操作用户id
-    private String memberId;
+    private List<Long> memberIdList;
 
     // 操作执行者：群主， 管理员
-    private String operatorId;
+    private Long operatorId;
+
+    private List<GroupMember> memberList;
 
 
 }

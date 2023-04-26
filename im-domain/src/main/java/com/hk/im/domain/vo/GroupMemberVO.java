@@ -62,6 +62,11 @@ public class GroupMemberVO {
     private Integer status;
 
     /**
+     * 是否禁言
+     */
+    private Boolean muted;
+
+    /**
      * 创建时间(加群时间)
      */
     private LocalDateTime createTime;

@@ -13,13 +13,12 @@ import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
-import com.hk.im.domain.request.InviteGroupMemberRequest;
-import com.hk.im.domain.request.JoinGroupRequest;
-import com.hk.im.domain.request.MemberRemarkNameRequest;
-import com.hk.im.domain.request.RemoveGroupMemberRequest;
+import com.hk.im.domain.request.*;
+import com.hk.im.domain.request.group.AssignMemberManagePermissionRequest;
 import com.hk.im.domain.vo.GroupMemberVO;
 import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.infrastructure.event.group.event.JoinGroupEvent;
+import com.hk.im.infrastructure.event.group.event.LeaveGroupEvent;
 import com.hk.im.infrastructure.mapper.GroupMemberMapper;
 import com.hk.im.infrastructure.mapstruct.GroupMemberMapStructure;
 import lombok.extern.slf4j.Slf4j;
@@ -71,45 +70,55 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
     @Override
     public ResponseResult removeGroupMember(RemoveGroupMemberRequest request) {
         // 参数校验
-        String groupId = request.getGroupId();
-        String operatorId = request.getOperatorId();
-        String memberId = request.getMemberId();
+        Long groupId = request.getGroupId();
+        Long operatorId = request.getOperatorId();
+        List<Long> memberIdList = request.getMemberIdList();
 
-        if (StringUtils.isEmpty(groupId) || StringUtils.isEmpty(operatorId) || StringUtils.isEmpty(memberId)) {
+        if (Objects.isNull(groupId) || Objects.isNull(operatorId) || CollectionUtils.isEmpty(memberIdList)) {
             // 请求参数不完整
             return ResponseResult.FAIL("移除群员失败!，操作信息不完整!").setResultCode(ResultCode.BAD_REQUEST);
         }
 
         // 权限校验
-        GroupMember operatorMember = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, operatorId);
+        GroupMember operatorMember = this.getTheGroupMember(groupId, operatorId);
         if (Objects.isNull(operatorMember)) {
             // 操作者不是群员
             return ResponseResult.FAIL("操作者非该群成员!").setResultCode(ResultCode.NO_SUCH_USER);
         }
 
         // 只有群主或管理员能可以踢人
-        if (Objects.equals(operatorMember.getMemberRole(), GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal())) {
+        GroupMemberConstants.GroupMemberRole operatorRole = GroupMemberConstants.GroupMemberRole.values()[operatorMember.getMemberRole()];
+        if (operatorRole != GroupMemberConstants.GroupMemberRole.ADMIN && operatorRole != GroupMemberConstants.GroupMemberRole.MASTER) {
             // 普通成员，无权
             return ResponseResult.FAIL("非常抱歉您不是管理员!").setResultCode(ResultCode.NO_PERMISSION);
         }
 
-        // 被踢出者是否是群员
-        GroupMember groupMember = this.groupMemberMapper.getGroupMemberByGroupIdAndMemberId(groupId, operatorId);
-        if (Objects.isNull(groupMember)) {
-            return ResponseResult.FAIL("该成员不是群成员!").setResultCode(ResultCode.NO_SUCH_USER);
-        }
+        // 收集将会被踢出的群员
+        List<GroupMember> groupMemberByIdList = this.getGroupMemberByIdList(groupId, memberIdList);
+        // 收集有权限踢出的群员
+        List<GroupMember> canToRemoteMemberList = groupMemberByIdList.stream().filter(member -> {
+            // 比较两者的角色权限
+            GroupMemberConstants.GroupMemberRole memberRole = GroupMemberConstants.GroupMemberRole.values()[member.getMemberRole()];
+            // admin = 2; master = 3: 只要群员角色 < 操作者角色值 就代表有权限
+            return operatorRole.ordinal() > memberRole.ordinal();
+        }).toList();
 
         // 踢出
-        boolean remove = this.removeById(groupMember);
+        boolean remove = this.removeBatchByIds(canToRemoteMemberList);
         if (BooleanUtils.isFalse(remove)) {
             // 移除失败
-            return ResponseResult.FAIL("移除该成员失败!").setResultCode(ResultCode.SERVER_BUSY);
+            return ResponseResult.FAIL("移除成员失败!").setResultCode(ResultCode.SERVER_BUSY);
         }
 
         // TODO 发布事件，消息
+        RemoveGroupMemberRequest leaveRequest = new RemoveGroupMemberRequest()
+                .setGroupId(groupId)
+                .setMemberList(canToRemoteMemberList)
+                .setOperatorId(operatorId);
+        this.applicationContext.publishEvent(new LeaveGroupEvent(this, leaveRequest));
 
         // 响应数据
-        return ResponseResult.SUCCESS(groupMember).setMessage("移除该成员成功!");
+        return ResponseResult.SUCCESS(canToRemoteMemberList.size()).setMessage("移除该成员成功!");
     }
 
 
@@ -288,6 +297,24 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         return memberIdList;
     }
 
+
+    /**
+     * 获取指定群聊指定群员
+     * @param groupId
+     * @param memberIdList
+     * @return
+     */
+    @Override
+    public List<GroupMember> getGroupMemberByIdList(Long groupId, List<Long> memberIdList) {
+
+        List<GroupMember> groupMemberList = this.lambdaQuery()
+                .eq(GroupMember::getGroupId, groupId)
+                .in(GroupMember::getMemberId, memberIdList)
+                .eq(GroupMember::getStatus, 1)
+                .list();
+        return groupMemberList;
+    }
+
     /**
      * 无条件加入群聊
      * @param request
@@ -440,6 +467,190 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         List<GroupMember> groupMemberList =  this.groupMemberMapper.selectGroupJoinedGroupList(userId);
         return groupMemberList;
     }
+
+
+    /**
+     * 分配或移除群员的管理权限
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult manageGroupMemberPermission(AssignMemberManagePermissionRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getGroupId()) || Objects.isNull(request.getPuppetId()) || Objects.isNull(request.getOperation());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL().setMessage("请填写完整的分配信息!");
+        }
+
+        // 素材
+        Long groupId = request.getGroupId();
+        Long handlerId = request.getHandlerId();
+        Long puppetId = request.getPuppetId();
+        Integer operation = request.getOperation();
+
+        // 处理者是否有权限
+        GroupMember handler = this.getTheGroupMember(groupId, handlerId);
+        if (Objects.isNull(handler)) {
+            // 不是本群人员
+            return ResponseResult.FAIL().setMessage("抱歉你无权管理群聊管!");
+        }
+
+        // 查询权限
+        GroupMemberConstants.GroupMemberRole handlerRole = GroupMemberConstants.GroupMemberRole.values()[handler.getMemberRole()];
+        if (handlerRole == GroupMemberConstants.GroupMemberRole.DEFAULT
+                || handlerRole == GroupMemberConstants.GroupMemberRole.SIMPLE) {
+            // 无权
+            return ResponseResult.FAIL().setMessage("抱歉你无权管理群聊管!");
+        }
+
+        // 查看被操纵者是否群员
+        GroupMember groupMember = this.getTheGroupMember(groupId, puppetId);
+        if (Objects.isNull(groupMember)) {
+            // 不是本群成员
+            return ResponseResult.FAIL().setMessage("该用户非群成员!");
+        }
+
+        // 获取现在傀儡的权限
+        GroupMemberConstants.GroupMemberRole memberRole = GroupMemberConstants.GroupMemberRole.values()[groupMember.getMemberRole()];
+        GroupMemberConstants.GroupMemberRole targetRole = GroupMemberConstants.GroupMemberRole.SIMPLE;
+        // 操作者有权限，傀儡是群员：执行操作
+        if (operation == 1) {
+            // 分配管理员
+            if (memberRole == GroupMemberConstants.GroupMemberRole.ADMIN || memberRole == GroupMemberConstants.GroupMemberRole.MASTER) {
+                // 已经是管理员了
+                return ResponseResult.SUCCESS().setMessage("已经具有管理员权限了,无需重复分配!");
+            }
+
+            // 查看管理员人数
+            Boolean enableAssign = this.enableAssignManagePermission(request);
+            // 设置为管理员
+            targetRole = GroupMemberConstants.GroupMemberRole.ADMIN;
+        } else if (operation == 0) {
+            // 取消管理员权限
+            if (memberRole != GroupMemberConstants.GroupMemberRole.ADMIN && memberRole != GroupMemberConstants.GroupMemberRole.MASTER) {
+                // 非管理员
+                return ResponseResult.SUCCESS().setMessage("该成员非管理员!");
+            }
+            // 取消管理员
+            targetRole = GroupMemberConstants.GroupMemberRole.SIMPLE;
+        }
+
+        // 更新权限
+        boolean update = this.lambdaUpdate()
+                .eq(GroupMember::getId, groupMember.getId())
+                .set(GroupMember::getMemberRole, targetRole.ordinal())
+                .update();
+        if (BooleanUtils.isFalse(update)) {
+            return ResponseResult.FAIL().setMessage("操作失败!");
+        }
+
+        // 成功
+        return ResponseResult.SUCCESS().setMessage("操作成功!");
+    }
+
+
+    /**
+     * 是否允许分配管理员权限
+     * @param request
+     * @return
+     */
+    @Override
+    public Boolean enableAssignManagePermission(AssignMemberManagePermissionRequest request) {
+
+        // QQ 群管理员数量规则：200人->5管理员；500人->15管理员；1000人->15管理员；2000人->20管理员
+        // 更多QQ群规则：https://kf.qq.com/faq/161223mI3eI3161223IvA3me.html
+
+        // 统计群聊人数
+
+
+        return null;
+    }
+
+
+    /**
+     * 判断群员是否具有管理员权限
+     * @param groupId
+     * @param userId
+     * @return
+     */
+    @Override
+    public Boolean checkMemberHasManagePermission(Long groupId, Long userId) {
+
+        // 获取群员
+        GroupMember groupMember = this.getTheGroupMember(groupId, userId);
+        if (Objects.isNull(groupMember)) {
+            // 非本群成员
+            return Boolean.FALSE;
+        }
+
+        // 判断权限
+        // 查询权限
+        GroupMemberConstants.GroupMemberRole handlerRole = GroupMemberConstants.GroupMemberRole.values()[groupMember.getMemberRole()];
+        if (handlerRole == GroupMemberConstants.GroupMemberRole.ADMIN
+                || handlerRole == GroupMemberConstants.GroupMemberRole.MASTER) {
+            // 具有管理员权限
+            return Boolean.TRUE;
+        }
+
+        // 无权
+        return Boolean.FALSE;
+    }
+
+
+    /**
+     * 退出群聊
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult quitTheGroup(QuitGroupRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getGroupId()) || Objects.isNull(request.getMemberId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 素材
+        Long memberId = request.getMemberId();
+        Long groupId = request.getGroupId();
+
+        // 获取群员
+        GroupMember groupMember = this.getTheGroupMember(groupId, memberId);
+        if (Objects.isNull(groupMember)) {
+            // 群员不存在
+            return ResponseResult.FAIL().setMessage("群员不存在!");
+        }
+
+        // 是否为群主
+        Integer memberRole = groupMember.getMemberRole();
+        if (GroupMemberConstants.GroupMemberRole.MASTER.ordinal() == memberRole) {
+            // 群主不能退出群聊
+            return ResponseResult.FAIL().setMessage("抱歉，群主退群须先转让群聊!");
+        }
+
+        // 退群
+        boolean remove = this.removeById(groupMember);
+        if (BooleanUtils.isFalse(remove)) {
+            // 移除失败
+            return ResponseResult.FAIL("退出群聊失败!").setResultCode(ResultCode.SERVER_BUSY);
+        }
+
+        // TODO 退群成功，发布事件，消息
+        RemoveGroupMemberRequest leaveRequest = new RemoveGroupMemberRequest()
+                .setGroupId(groupId).setMemberIdList(List.of(memberId)).setMemberList(List.of(groupMember))
+                .setOperatorId(memberId);
+        this.applicationContext.publishEvent(new LeaveGroupEvent(this, leaveRequest));
+
+        // 响应数据
+        return ResponseResult.SUCCESS("退群群聊成功").setMessage("退群群聊成功!");
+    }
+
+
 }
 
 

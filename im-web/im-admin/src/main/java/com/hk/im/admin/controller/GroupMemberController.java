@@ -2,10 +2,8 @@ package com.hk.im.admin.controller;
 
 import com.hk.im.client.service.GroupMemberService;
 import com.hk.im.common.resp.ResponseResult;
-import com.hk.im.domain.request.InviteGroupMemberRequest;
-import com.hk.im.domain.request.JoinGroupRequest;
-import com.hk.im.domain.request.MemberRemarkNameRequest;
-import com.hk.im.domain.request.RemoveGroupMemberRequest;
+import com.hk.im.domain.request.*;
+import com.hk.im.domain.request.group.AssignMemberManagePermissionRequest;
 import com.hk.im.domain.vo.GroupMemberVO;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,12 +40,23 @@ public class GroupMemberController {
      * @param request
      * @return
      */
-    @DeleteMapping("/remove")
-    public ResponseResult removeGroupMember(@NotNull @RequestBody RemoveGroupMemberRequest request) {
+    @PostMapping("/remove")
+    public ResponseResult removeGroupMember(@RequestBody RemoveGroupMemberRequest request) {
 
         return this.groupMemberService.removeGroupMember(request);
     }
 
+
+    /**
+     * 退出群聊
+     * @param request
+     * @return
+     */
+    @PostMapping("/quit")
+    public ResponseResult quitGroup(@RequestBody QuitGroupRequest request) {
+
+        return this.groupMemberService.quitTheGroup(request);
+    }
 
     /**
      * 邀请用户加群
@@ -94,6 +103,18 @@ public class GroupMemberController {
 
         List<GroupMemberVO> groupMemberList = this.groupMemberService.getGroupMemberList(Long.valueOf(groupId));
         return ResponseResult.SUCCESS(groupMemberList);
+    }
+
+
+    /**
+     * 分配和管理 成员的管理员权限
+     * @param request
+     * @return
+     */
+    @PostMapping("/member/manage/assign")
+    public ResponseResult assignGroupMemberManagePermission(@RequestBody AssignMemberManagePermissionRequest request) {
+
+        return this.groupMemberService.manageGroupMemberPermission(request);
     }
 
 }

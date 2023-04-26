@@ -88,6 +88,12 @@ public class GroupMember implements Serializable {
     private Integer status;
 
     /**
+     * 是否禁言：true:禁言，false:没有禁言
+     */
+    @TableField(value = "muted")
+    private Boolean muted;
+
+    /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)

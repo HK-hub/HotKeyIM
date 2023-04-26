@@ -5,31 +5,34 @@
 <mapper namespace="com.hk.im.infrastructure.mapper.GroupMemberMapper">
 
     <resultMap id="BaseResultMap" type="com.hk.im.domain.entity.GroupMember">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="groupId" column="group_id" jdbcType="BIGINT"/>
-            <result property="groupAccount" column="group_account" jdbcType="BIGINT"/>
-            <result property="memberId" column="member_id" jdbcType="BIGINT"/>
-            <result property="memberUsername" column="member_username" jdbcType="VARCHAR"/>
-            <result property="memberRemarkName" column="member_remark_name" jdbcType="VARCHAR"/>
-            <result property="memberAvatar" column="member_avatar" jdbcType="VARCHAR"/>
-            <result property="memberRole" column="member_role" jdbcType="INTEGER"/>
-            <result property="groupCategory" column="group_category" jdbcType="VARCHAR"/>
-            <result property="gagTime" column="gag_time" jdbcType="TIMESTAMP"/>
-            <result property="lastAckMessage" column="last_ack_message" jdbcType="BIGINT"/>
-            <result property="status" column="status" jdbcType="INTEGER"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="groupId" column="group_id" jdbcType="BIGINT"/>
+        <result property="groupAccount" column="group_account" jdbcType="BIGINT"/>
+        <result property="memberId" column="member_id" jdbcType="BIGINT"/>
+        <result property="memberUsername" column="member_username" jdbcType="VARCHAR"/>
+        <result property="memberRemarkName" column="member_remark_name" jdbcType="VARCHAR"/>
+        <result property="memberAvatar" column="member_avatar" jdbcType="VARCHAR"/>
+        <result property="memberRole" column="member_role" jdbcType="INTEGER"/>
+        <result property="groupCategory" column="group_category" jdbcType="VARCHAR"/>
+        <result property="gagTime" column="gag_time" jdbcType="TIMESTAMP"/>
+        <result property="lastAckMessage" column="last_ack_message" jdbcType="BIGINT"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="muted" column="muted" jdbcType="BOOLEAN"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,group_id,group_account,
+        id
+        ,group_id,group_account,
         member_id,member_username,member_remark_name,
         member_avatar,member_role,group_category,
-        gag_time,last_ack_message,status,create_time,
+        gag_time,last_ack_message,status,muted,create_time,
         update_time
     </sql>
     <select id="getGroupMemberByGroupIdAndMemberId" resultType="com.hk.im.domain.entity.GroupMember">
-        select <include refid="Base_Column_List"/>
+        select
+        <include refid="Base_Column_List"/>
         from tb_group_member
         <where>
             group_id = #{groupId} and member_id = #{memberId}
@@ -37,16 +40,23 @@
     </select>
 
     <select id="selectGroupMemberList" resultType="com.hk.im.domain.entity.GroupMember">
-        select * from tb_group_member where group_id = #{groupId};
+        select *
+        from tb_group_member
+        where group_id = #{groupId};
     </select>
 
 
     <select id="selectGroupManageGroupList" resultType="com.hk.im.domain.entity.GroupMember">
-        select * from tb_group_member where member_id = #{memberId} and (member_role = 2 or member_role = 3)
+        select *
+        from tb_group_member
+        where member_id = #{memberId}
+          and (member_role = 2 or member_role = 3)
     </select>
 
     <!-- 查询用户加入群聊列表 -->
     <select id="selectGroupJoinedGroupList" resultType="com.hk.im.domain.entity.GroupMember">
-        select * from tb_group_member where member_id = #{memberId}
+        select *
+        from tb_group_member
+        where member_id = #{memberId}
     </select>
 </mapper>

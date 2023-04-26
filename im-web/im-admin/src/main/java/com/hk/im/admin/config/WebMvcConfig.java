@@ -30,6 +30,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(logInterceptor())
                 .addPathPatterns("/**");
         // token 拦截器
+        registry.addInterceptor(userLoginInterceptor())
+                .addPathPatterns("/**")
+                //开放登录, 注册，忘记密码, 验证码, 生产用户
+                .excludePathPatterns("/**/search/**")
+                .excludePathPatterns("/**/login")
+                .excludePathPatterns("/**/register")
+                .excludePathPatterns("/**/forget")
+                .excludePathPatterns("/**/code")
+                .excludePathPatterns("/**/generate")
+                // 开发系统监控
+                .excludePathPatterns("/**/actuator/**");
     }
 
 
@@ -56,7 +67,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
     }
 
-    // @Bean
+    @Bean
     public UserLoginInterceptor userLoginInterceptor() {
         return new UserLoginInterceptor();
     }

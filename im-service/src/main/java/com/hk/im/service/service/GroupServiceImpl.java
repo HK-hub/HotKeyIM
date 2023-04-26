@@ -354,8 +354,24 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult updateGroupInfo(ModifyGroupInfoRequest request) {
 
-        Integer effected = this.groupMapper.updateGroupInfo(request);
-        return null;
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || StringUtils.isEmpty(request.getGroupId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL("请选择修改的群聊!");
+        }
+
+        // 修改群聊信息
+        boolean update = this.lambdaUpdate()
+                .eq(Group::getId, request.getGroupId())
+                .set(Group::getGroupName, request.getGroupName())
+                .set(Group::getDescription, request.getDescription())
+                .set(Group::getGroupAvatar, request.getAvatar())
+                .set(Group::getGroupType, request.getCategory())
+                .update();
+        // 修改群设置信息
+
+        return ResponseResult.SUCCESS();
     }
 
 

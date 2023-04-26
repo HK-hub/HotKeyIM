@@ -3,10 +3,8 @@ package com.hk.im.client.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.GroupMember;
-import com.hk.im.domain.request.InviteGroupMemberRequest;
-import com.hk.im.domain.request.JoinGroupRequest;
-import com.hk.im.domain.request.MemberRemarkNameRequest;
-import com.hk.im.domain.request.RemoveGroupMemberRequest;
+import com.hk.im.domain.request.*;
+import com.hk.im.domain.request.group.AssignMemberManagePermissionRequest;
 import com.hk.im.domain.vo.GroupMemberVO;
 
 import java.util.List;
@@ -60,6 +58,14 @@ public interface GroupMemberService extends IService<GroupMember> {
     List<GroupMember> getGroupMemberIdList(Long groupId);
 
     /**
+     * 获取指定群聊指定群员
+     * @param groupId
+     * @param memberIdList
+     * @return
+     */
+    List<GroupMember> getGroupMemberByIdList(Long groupId, List<Long> memberIdList);
+
+    /**
      * 加入群聊
      * @param request
      * @return
@@ -104,4 +110,33 @@ public interface GroupMemberService extends IService<GroupMember> {
      * @return
      */
     List<GroupMember> getGroupMemberByUserId(Long userId);
+
+    /**
+     * 管理群员的管理员权限
+     * @param request
+     * @return
+     */
+    public ResponseResult manageGroupMemberPermission(AssignMemberManagePermissionRequest request);
+
+    /**
+     * 是否允许分配管理员权限
+     * @param request
+     * @return
+     */
+    public Boolean enableAssignManagePermission(AssignMemberManagePermissionRequest request);
+
+    /**
+     * 判断群员是否具有管理员权限
+     * @param groupId
+     * @param userId
+     * @return
+     */
+    Boolean checkMemberHasManagePermission(Long groupId, Long userId);
+
+    /**
+     * 退出群聊
+     * @param request
+     * @return
+     */
+    ResponseResult quitTheGroup(QuitGroupRequest request);
 }

@@ -36,7 +36,7 @@ public class GroupAnnouncement implements Serializable {
     /**
      * 群公告类型：1.普通公告，2.置顶公告, 3.新人公告
      */
-    @TableField(value = "type")
+    @TableField(value = "`type`")
     private Integer type;
 
     /**
@@ -58,10 +58,16 @@ public class GroupAnnouncement implements Serializable {
     private String content;
 
     /**
+     * 是否置顶：true:置顶，false:非置顶
+     */
+    @TableField(value = "top")
+    private Boolean top;
+
+    /**
      * 是否删除
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间

@@ -8,6 +8,7 @@ import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.JoinGroupRequest;
 import com.hk.im.infrastructure.event.group.event.JoinGroupEvent;
+import com.hk.im.infrastructure.event.group.event.LeaveGroupEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -55,6 +56,18 @@ public class GroupEventListener {
                 .setGroupId(joinGroup.getGroupId())
                 .setReceiverId(joinGroup.getGroupId());
         this.messageFlowService.sendTextMessage(textMessage);
+
+    }
+
+
+    /**
+     * 用户离开群聊事件：踢出群聊，退出群聊
+     * @param event
+     */
+    @Async
+    @EventListener
+    public void memberLeaveGroup(LeaveGroupEvent event) {
+
 
     }
 

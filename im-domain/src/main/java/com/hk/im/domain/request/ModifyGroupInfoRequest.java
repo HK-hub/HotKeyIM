@@ -21,16 +21,20 @@ public class ModifyGroupInfoRequest {
 
     private String groupName;
 
-    // 群描述
+    /**
+     * 群描述
+     */
     private String description;
 
     private String location;
 
     // 群分类
-    private String category;
+    private Integer category;
 
     // 群标签
     private String tags;
 
+    // 群头像
+    private String avatar;
 
 }

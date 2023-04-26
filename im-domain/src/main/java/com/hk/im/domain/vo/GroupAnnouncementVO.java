@@ -45,6 +45,11 @@ public class GroupAnnouncementVO {
     private Long author;
 
     /**
+     * 作者名称
+     */
+    private String authorName;
+
+    /**
      * 公告标题
      */
     private String title;
@@ -57,7 +62,13 @@ public class GroupAnnouncementVO {
     /**
      * 是否删除
      */
-    private Integer deleted;
+    private Boolean deleted;
+
+    /**
+     * 是否置顶
+     */
+    private Boolean top;
+
 
     /**
      * 创建时间

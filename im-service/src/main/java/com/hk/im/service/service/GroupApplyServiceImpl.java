@@ -259,7 +259,7 @@ public class GroupApplyServiceImpl extends ServiceImpl<GroupApplyMapper, GroupAp
                 }).toList();
 
         // 响应数据
-        return ResponseResult.SUCCESS(groupApplyList);
+        return ResponseResult.SUCCESS(groupApplyVOList);
     }
 
 
@@ -309,7 +309,7 @@ public class GroupApplyServiceImpl extends ServiceImpl<GroupApplyMapper, GroupAp
                 return ResponseResult.FAIL("拒绝加群操作失败!");
             }
             // TODO 拒绝加群，发送事件
-            this.applicationContext.publishEvent(new ApplyHandleEvent(this, request));
+            // this.applicationContext.publishEvent(new ApplyHandleEvent(this, request));
             // 响应
             return ResponseResult.SUCCESS("拒绝加群处理成功!");
         }
