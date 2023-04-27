@@ -91,4 +91,9 @@ public class UserVO {
      */
     private String signature;
 
+    /**
+     * 好友分组id
+     */
+    private String groupId;
+
 }

@@ -98,11 +98,11 @@ public interface FriendService extends IService<Friend> {
 
     /**
      * 获取用户指定分组的好友
-     * @param valueOf
-     * @param id
+     * @param userId
+     * @param groupId
      * @return
      */
-    ResponseResult getUserFriendByGroup(Long valueOf, Long id);
+    ResponseResult getUserFriendByGroup(Long userId, Long groupId);
 
     /**
      * 根据id获取用户指定好友

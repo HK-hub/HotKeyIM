@@ -10,6 +10,7 @@
             <result property="friendId" column="friend_id" jdbcType="BIGINT"/>
             <result property="relation" column="relation" jdbcType="INTEGER"/>
             <result property="group" column="`group`" jdbcType="VARCHAR"/>
+        <result property="groupId" column="group_id" jdbcType="BIGINT"/>
             <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
             <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
             <result property="remarkName" column="remark_name" jdbcType="VARCHAR"/>
@@ -23,7 +24,7 @@
 
     <sql id="Base_Column_List">
         id,user_id,friend_id,
-        relation,`group`,avatar,nickname,remark_name,
+        relation,`group`,group_id,avatar,nickname,remark_name,
         remark_info,robot,disturb,top,create_time,update_time
     </sql>
 

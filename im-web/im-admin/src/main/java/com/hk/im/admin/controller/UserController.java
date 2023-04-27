@@ -1,5 +1,6 @@
 package com.hk.im.admin.controller;
 
+import com.hk.im.client.service.FriendGroupService;
 import com.hk.im.client.service.FriendService;
 import com.hk.im.client.service.UserInfoService;
 import com.hk.im.client.service.UserService;
@@ -49,8 +50,14 @@ public class UserController {
     private UserInfoService userInfoService;
     @Resource
     private FriendService friendService;
+    @Resource
+    private FriendGroupService friendGroupService;
 
-
+    /**
+     * 获取用户信息
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseResult getUserById(@PathVariable(name = "id") String id) {
         ResponseResult result = userService.getUserAndInfo(Long.valueOf(id));
@@ -72,14 +79,16 @@ public class UserController {
 
         // 查询当前用登录用户与搜索用户之间关系
         User user = UserContextHolder.get();
-        Friend relationship = this.friendService.isFriendRelationship(Long.valueOf(userId), user.getId());
+        Friend relationship = this.friendService.isFriendRelationship(user.getId(), Long.valueOf(userId));
 
         // 设置好友关系
         UserVO searchUser = (UserVO) result.getData();
-        searchUser.setStatus(2);
-        if (Objects.isNull(relationship)) {
+        searchUser.setStatus(1);
+        if (Objects.nonNull(relationship)) {
             // 不是好友关系
-            searchUser.setStatus(1);
+            searchUser.setStatus(2);
+            // 查询分组
+            searchUser.setGroupId(String.valueOf(relationship.getGroupId()));
         }
         return result;
     }
