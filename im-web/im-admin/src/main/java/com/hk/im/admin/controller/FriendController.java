@@ -7,6 +7,7 @@ import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.ModifyFriendInfoRequest;
 import com.hk.im.domain.request.ModifyFriendStatusRequest;
+import com.hk.im.domain.request.friend.ModifyFriendGroupRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -67,8 +68,19 @@ public class FriendController {
      * @return
      */
     @PostMapping("/modify/group")
-    public ResponseResult modifyFriendGroup(@RequestBody ModifyFriendInfoRequest request) {
-        return this.friendService.updateFriendInfo(request);
+    public ResponseResult modifyFriendGroup(@RequestBody ModifyFriendGroupRequest request) {
+
+        return this.friendService.modifyFriendGroup(request);
+    }
+
+    /**
+     * 获取用户分组信息
+     * @return
+     */
+    @GetMapping("/group/list")
+    public ResponseResult getUserFriendGroupList() {
+
+        return this.friendService.getUserFriendGroupList();
     }
 
     /**

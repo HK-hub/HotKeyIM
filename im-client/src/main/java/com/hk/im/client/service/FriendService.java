@@ -9,6 +9,7 @@ import com.hk.im.domain.entity.FriendGroup;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.ModifyFriendInfoRequest;
 import com.hk.im.domain.request.ModifyFriendStatusRequest;
+import com.hk.im.domain.request.friend.ModifyFriendGroupRequest;
 import com.hk.im.domain.vo.FriendVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -141,4 +142,18 @@ public interface FriendService extends IService<Friend> {
      * @return
      */
     List<FriendVO> getUserFriendListByKeyword(Long userId, String keyword);
+
+
+    /**
+     * 获取用户好友分组列表
+     * @return
+     */
+    ResponseResult getUserFriendGroupList();
+
+    /**
+     * 修改好友分组信息
+     * @param request
+     * @return
+     */
+    ResponseResult modifyFriendGroup(ModifyFriendGroupRequest request);
 }

@@ -8,11 +8,13 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.constant.UserConstants;
+import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.FriendGroup;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.ModifyFriendInfoRequest;
 import com.hk.im.domain.request.ModifyFriendStatusRequest;
+import com.hk.im.domain.request.friend.ModifyFriendGroupRequest;
 import com.hk.im.domain.response.FriendListResponse;
 import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.UserVO;
@@ -468,7 +470,9 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 获取好友 vo 信息
+     *
      * @param id
+     *
      * @return
      */
     @Override
@@ -485,19 +489,86 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
     /**
      * 通过关键字查询好友列表
+     *
      * @param userId
      * @param keyword
+     *
      * @return
      */
     @Override
     public List<FriendVO> getUserFriendListByKeyword(Long userId, String keyword) {
 
-        List<Friend> friendList =  this.friendMapper.selectFriendByKeyword(userId, keyword);
+        List<Friend> friendList = this.friendMapper.selectFriendByKeyword(userId, keyword);
 
         // 查询 friend 的 vo 信息
         List<FriendVO> friendVOList = friendList.stream().map(friend -> this.getFriendVOById(friend.getId())).toList();
 
         return friendVOList;
+    }
+
+
+    /**
+     * 获取用户好友分组列表
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult getUserFriendGroupList() {
+
+        Long userId = UserContextHolder.get().getId();
+        return this.friendGroupService.getUserAllGroup(userId);
+    }
+
+
+    /**
+     * 修改好友分组信息
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult modifyFriendGroup(ModifyFriendGroupRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getGroupId()) || Objects.isNull(request.getFriendId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 修改分组
+        Long friendId = request.getFriendId();
+        Long groupId = request.getGroupId();
+
+        // 查看好友
+        Long userId = UserContextHolder.get().getId();
+        Friend friend = this.getFriendById(userId, friendId);
+        if (Objects.isNull(friend)) {
+            // 好友不存在
+            return ResponseResult.FAIL().setMessage("好友不存在");
+        }
+
+        // 查看分组
+        FriendGroup oldGroup = this.friendGroupService.getById(friend.getGroupId());
+        FriendGroup newGroup = this.friendGroupService.getById(groupId);
+
+        if (Objects.isNull(newGroup)) {
+            // 分组不存在
+            return ResponseResult.FAIL().setMessage("分组不存在");
+        }
+
+        if (BooleanUtils.isFalse(Objects.equals(groupId, oldGroup.getId()))) {
+            // 更新分组
+            friend.setGroup(newGroup.getName())
+                    .setGroupId(groupId);
+            boolean updateFriend = this.updateById(friend);
+            // 更新分组人数
+            // 4.3 更新好友old分组数量
+            boolean oldCountUpdate = this.friendGroupService.updateById(oldGroup.setCount(oldGroup.getCount() - 1));
+            // 4.4 更新new分组好友数量
+            boolean newCountUpdate = this.friendGroupService.updateById(newGroup.setCount(newGroup.getCount() + 1));
+        }
+
+        return ResponseResult.SUCCESS();
     }
 
 
