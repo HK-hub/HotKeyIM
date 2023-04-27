@@ -15,6 +15,9 @@ import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.entity.User;
 import com.hk.im.domain.request.*;
 import com.hk.im.domain.request.group.AssignMemberManagePermissionRequest;
+import com.hk.im.domain.request.group.DismissGroupRequest;
+import com.hk.im.domain.request.group.EditMemberForbiddenStateRequest;
+import com.hk.im.domain.request.group.HandoverMasterRequest;
 import com.hk.im.domain.vo.GroupMemberVO;
 import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.infrastructure.event.group.event.JoinGroupEvent;
@@ -432,6 +435,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         boolean exists = this.lambdaQuery()
                 .eq(GroupMember::getGroupId, groupId)
                 .eq(GroupMember::getMemberId, friendId)
+                .eq(GroupMember::getStatus, 1)
                 .exists();
 
         return exists;
@@ -450,6 +454,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         GroupMember member = this.lambdaQuery()
                 .eq(GroupMember::getGroupId, groupId)
                 .eq(GroupMember::getMemberId, memberId)
+                .eq(GroupMember::getStatus, 1)
                 .one();
 
         return member;
@@ -648,6 +653,163 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
 
         // 响应数据
         return ResponseResult.SUCCESS("退群群聊成功").setMessage("退群群聊成功!");
+    }
+
+
+    /**
+     * 转让群主
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult handoverGroupMaster(HandoverMasterRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getGroupId()) || Objects.isNull(request.getMemberId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 素材
+        Long groupId = request.getGroupId();
+        Long memberId = request.getMemberId();
+        Long userId = request.getUserId();
+        if (Objects.isNull(userId)) {
+            userId = UserContextHolder.get().getId();
+        }
+
+        // 判断是否群主
+        GroupMember master = this.getTheGroupMember(groupId, userId);
+        if (Objects.isNull(master)) {
+            // 非群员
+            return ResponseResult.FAIL().setMessage("抱歉你无权转让群聊!");
+        }
+
+        // 判断是否群主
+        GroupMemberConstants.GroupMemberRole masterRole = GroupMemberConstants.GroupMemberRole.values()[master.getMemberRole()];
+        if (masterRole != GroupMemberConstants.GroupMemberRole.MASTER) {
+            // 不是群主
+            return ResponseResult.FAIL().setMessage("抱歉你无权转让群聊!");
+        }
+
+        // 是群主，查询群员信息
+        GroupMember member = this.getTheGroupMember(groupId, memberId);
+        if (Objects.isNull(member)) {
+            // 不是群员
+            return ResponseResult.FAIL().setMessage("抱歉该用户不是群员!");
+        }
+
+        // 进行转让
+        this.updateById(master.setMemberRole(GroupMemberConstants.GroupMemberRole.ADMIN.ordinal()));
+        this.updateById(member.setMemberRole(GroupMemberConstants.GroupMemberRole.MASTER.ordinal()));
+
+        return ResponseResult.SUCCESS();
+    }
+
+
+    /**
+     * 编辑群员禁言状态
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult editGroupMemberForbidden(EditMemberForbiddenStateRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getGroupId()) || Objects.isNull(request.getMemberId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 素材
+        Long groupId = request.getGroupId();
+        Long memberId = request.getMemberId();
+        Long handlerId = request.getHandlerId();
+        if (Objects.isNull(handlerId)) {
+            handlerId = UserContextHolder.get().getId();
+        }
+
+        // 获取操作者
+        GroupMember handler = this.getTheGroupMember(groupId, handlerId);
+        if (Objects.isNull(handler)) {
+            // 操作者不是群成员
+            return ResponseResult.FAIL().setMessage("抱歉你不是群成员!");
+        }
+        GroupMember member = this.getTheGroupMember(groupId, memberId);
+        if (Objects.isNull(member)) {
+            // 群员不存在
+            return ResponseResult.FAIL().setMessage("抱歉该用户不是群成员!");
+        }
+
+        // 操作者是否有权限
+        GroupMemberConstants.GroupMemberRole handlerRole = GroupMemberConstants.GroupMemberRole.values()[handler.getMemberRole()];
+        GroupMemberConstants.GroupMemberRole memberRole = GroupMemberConstants.GroupMemberRole.values()[member.getMemberRole()];
+
+        if (handlerRole.ordinal() <= memberRole.ordinal()) {
+            // 权限不足
+            return ResponseResult.FAIL().setMessage("抱歉你无权禁言该群员!");
+        }
+
+        // 根据操作进行禁言 or 解除
+        boolean update = false;
+        if (request.getMode() == 1) {
+            // 禁言
+            member.setMuted(Boolean.TRUE).setGagTime(request.getForbiddenDateTime());
+            update = this.updateById(member);
+        } else if (request.getMode() == 2) {
+            // 解除禁言
+            member.setMuted(Boolean.FALSE).setGagTime(request.getForbiddenDateTime());
+            update = this.updateById(member);
+        } else {
+            return ResponseResult.FAIL().setMessage("操作失败!");
+        }
+
+        if (BooleanUtils.isFalse(update)) {
+            // 禁言失败
+            return ResponseResult.FAIL().setMessage("操作失败!");
+        }
+
+        return ResponseResult.SUCCESS();
+    }
+
+
+    /**
+     * 解散群聊
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult dismissGroup(DismissGroupRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getGroupId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        Long groupId = request.getGroupId();
+        Long operatorId = request.getOperatorId();
+
+        if (Objects.isNull(operatorId)) {
+            operatorId = UserContextHolder.get().getId();
+        }
+
+        // 是否群主
+        GroupMember master = this.getTheGroupMember(groupId, operatorId);
+        if (Objects.isNull(master)) {
+            return ResponseResult.FAIL().setMessage("抱歉你不是群主!");
+        }
+
+        // TODO 是群主，删除群聊：删除全部群员，群会话，群消息，群设置，群公告等
+
+        // TODO 发送事件
+
+
+        return null;
     }
 
 

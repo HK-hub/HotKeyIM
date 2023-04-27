@@ -5,6 +5,9 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.GroupMember;
 import com.hk.im.domain.request.*;
 import com.hk.im.domain.request.group.AssignMemberManagePermissionRequest;
+import com.hk.im.domain.request.group.DismissGroupRequest;
+import com.hk.im.domain.request.group.EditMemberForbiddenStateRequest;
+import com.hk.im.domain.request.group.HandoverMasterRequest;
 import com.hk.im.domain.vo.GroupMemberVO;
 
 import java.util.List;
@@ -139,4 +142,27 @@ public interface GroupMemberService extends IService<GroupMember> {
      * @return
      */
     ResponseResult quitTheGroup(QuitGroupRequest request);
+
+    /**
+     * 转让群主
+     * @param request
+     * @return
+     */
+    ResponseResult handoverGroupMaster(HandoverMasterRequest request);
+
+
+    /**
+     * 禁言群员
+     * @param request
+     * @return
+     */
+    ResponseResult editGroupMemberForbidden(EditMemberForbiddenStateRequest request);
+
+
+    /**
+     * 解散群聊
+     * @param request
+     * @return
+     */
+    ResponseResult dismissGroup(DismissGroupRequest request);
 }
