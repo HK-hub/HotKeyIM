@@ -5,6 +5,7 @@ import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.FriendGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.domain.request.FriendGroupRequest;
+import com.hk.im.domain.request.friend.EditFriendGroupListRequest;
 
 /**
  * @ClassName : FriendGroupService
@@ -60,4 +61,10 @@ public interface FriendGroupService extends IService<FriendGroup> {
      */
     ResponseResult moveFriendGroup(FriendGroupRequest request);
 
+    /**
+     * 编辑好友分组列表
+     * @param request
+     * @return
+     */
+    ResponseResult editFriendGroupList(EditFriendGroupListRequest request);
 }

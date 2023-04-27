@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.client.service.FriendGroupService;
 import com.hk.im.client.service.FriendService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.entity.FriendGroup;
 import com.hk.im.domain.request.FriendGroupRequest;
+import com.hk.im.domain.request.friend.EditFriendGroupListRequest;
 import com.hk.im.infrastructure.mapper.FriendGroupMapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
@@ -308,6 +310,55 @@ public class FriendGroupServiceImpl extends ServiceImpl<FriendGroupMapper, Frien
         }
 
         return ResponseResult.SUCCESS("移动分组成功!");
+    }
+
+
+    /**
+     * 编辑好友分组列表
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult editFriendGroupList(EditFriendGroupListRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getFriendGroupList());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 参数校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 新的分组列表存在，但是可能为空集
+        List<FriendGroup> newGroupList = request.getFriendGroupList();
+
+        // 查询现在的好友分组
+        Long userId = request.getUserId();
+        if (Objects.isNull(userId)) {
+            userId = UserContextHolder.get().getId();
+        }
+        List<FriendGroup> oldGroupList = this.lambdaQuery().eq(FriendGroup::getUserId, userId).list();
+
+        // 对传入的分组先进性创建操作：
+        List<FriendGroup> waitCreateGroupList = newGroupList.stream().filter(group -> group.getId() == 0).toList();
+
+        // 创建分组
+        for (FriendGroup group : waitCreateGroupList) {
+            FriendGroup friendGroup = new FriendGroup();
+            friendGroup.setName(group.getName())
+                            .setUserId(userId).setCount(0);
+            boolean save = this.save(friendGroup);
+        }
+
+        // 对比传入的分组进行更新操作：
+        List<FriendGroup> waitUpdateGroupList = newGroupList.stream().filter(group -> group.getId() != 0).toList();
+        for (FriendGroup group : waitUpdateGroupList) {
+            this.updateById(group);
+        }
+
+        // TODO 对比传入的分组进行删除操作：
+
+        return ResponseResult.SUCCESS();
     }
 
 
