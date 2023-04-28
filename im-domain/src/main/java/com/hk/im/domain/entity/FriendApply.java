@@ -2,7 +2,6 @@ package com.hk.im.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -68,7 +67,6 @@ public class FriendApply implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -98,7 +99,7 @@ public class MessageOfflineWorker {
         List<GroupMember> offlineGroupMemberIdList = groupMemberIdList.stream()
                 // 在线群员id集合不包括当前群员，将会被选择出来
                 .filter(member -> !onlineGroupMemberIdList.contains(member.getMemberId()))
-                .toList();
+                .collect(Collectors.toList());
         // 更新未读消息
         for (GroupMember member : offlineGroupMemberIdList) {
             // 查询会话

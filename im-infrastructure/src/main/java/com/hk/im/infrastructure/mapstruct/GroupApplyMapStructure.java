@@ -28,6 +28,7 @@ public interface GroupApplyMapStructure {
     @Mapping(source = "groupApply.status", target = "status")
     @Mapping(source = "groupApply.createTime", target = "createTime")
     @Mapping(source = "userVO", target = "senderVO")
+    @Mapping(source = "groupApply.groupId", target = "groupId")
     public GroupApplyVO toVO(GroupApply groupApply, GroupVO groupVO, UserVO userVO);
 
 

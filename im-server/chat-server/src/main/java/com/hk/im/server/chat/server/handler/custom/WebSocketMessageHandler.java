@@ -24,6 +24,7 @@ public class WebSocketMessageHandler {
 
     /**
      * 处理业务消息
+     *
      * @param ctx
      * @param frame
      */
@@ -35,17 +36,21 @@ public class WebSocketMessageHandler {
         InboundDataType.InboundEventTypeEnum eventType = ensureDataType(inboundMessageData);
         log.info("InboundMessageData process:type={}, data={}", eventType.getEvent(), inboundMessageData);
         switch (eventType) {
-            case DEFAULT_EVENT ->
-                    log.info("Inbound data not matched event: {}", inboundMessageData);
-            case SIGNALING_EVENT ->
-                    // 信令事件
-                    BaseProcessor.dispatchProcess(ctx, inboundMessageData);
-            case HEAR_BEAT ->
-                    // 心跳事件
-                    BaseProcessor.hearBeatMessage(ctx, inboundMessageData);
-            case EVENT_TALK_READ ->
-                    // 消息已读通知
-                    MessageProcessor.msgReadEvent(ctx,inboundMessageData);
+            case DEFAULT_EVENT:
+                log.info("Inbound data not matched event: {}", inboundMessageData);
+                break;
+            case SIGNALING_EVENT:
+                // 信令事件
+                BaseProcessor.dispatchProcess(ctx, inboundMessageData);
+                break;
+            case HEAR_BEAT:
+                // 心跳事件
+                BaseProcessor.hearBeatMessage(ctx, inboundMessageData);
+                break;
+            case EVENT_TALK_READ:
+                // 消息已读通知
+                MessageProcessor.msgReadEvent(ctx, inboundMessageData);
+                break;
 
         }
     }
@@ -53,7 +58,9 @@ public class WebSocketMessageHandler {
 
     /**
      * 确定流入消息类型
+     *
      * @param inboundMessageData
+     *
      * @return
      */
     public static InboundDataType.InboundEventTypeEnum ensureDataType(InboundMessageData inboundMessageData) {
@@ -62,7 +69,6 @@ public class WebSocketMessageHandler {
         InboundDataType.InboundEventTypeEnum eventType = InboundDataType.getEventType(event);
         return eventType;
     }
-
 
 
 }

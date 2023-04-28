@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -100,7 +101,7 @@ public class CloudResourceServiceImpl extends ServiceImpl<CloudResourceMapper, C
         // 查询文件分片上传情况
         List<SplitUpload> uploadSliceList = this.splitUploadService.getFileUploadSliceList(request);
         // 获取已经上传的分片索引
-        List<Integer> splitIndexList = uploadSliceList.stream().map(SplitUpload::getSplitIndex).toList();
+        List<Integer> splitIndexList = uploadSliceList.stream().map(SplitUpload::getSplitIndex).collect(Collectors.toList());
 
         // 计算分片总数
         // int slices = (int) Math.ceil(1.0 * size / sliceFileSize);

@@ -169,7 +169,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
                 groupMember.setMemberRole(GroupMemberConstants.GroupMemberRole.MASTER.ordinal());
             }
             return groupMember;
-        }).toList();
+        }).collect(Collectors.toList());
 
         // 保存成员
         boolean saveBatch = this.groupMemberService.saveBatch(memberList);
@@ -394,7 +394,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
             memberList = Collections.emptyList();
         }
         // 加入的群聊id
-        List<Long> groupIdList = memberList.stream().map(GroupMember::getGroupId).toList();
+        List<Long> groupIdList = memberList.stream().map(GroupMember::getGroupId).collect(Collectors.toList());
         // 查询群聊
         List<Group> groupList = this.listByIds(groupIdList);
 
@@ -410,7 +410,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
             GroupVO groupVO = GroupMapStructure.INSTANCE.toVO(group, memberVOList, settingVO, announcementVOList);
             // 响应数据
             return groupVO;
-        }).toList();
+        }).collect(Collectors.toList());
 
         // 响应数据
         return ResponseResult.SUCCESS(groupVOList);
@@ -534,7 +534,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         List<GroupMember> groupMembers = this.groupMemberService.getGroupMemberByUserId(userId);
 
         // 按照关键字查询列表中的群聊
-        List<Long> groupIdList = groupMembers.stream().map(GroupMember::getGroupId).toList();
+        List<Long> groupIdList = groupMembers.stream().map(GroupMember::getGroupId).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(groupIdList)) {
             // 加入群聊为空
             return Collections.emptyList();
@@ -543,7 +543,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         // 查询群聊
         List<Group> groupList = this.groupMapper.selectGroupListByKeyword(groupIdList, keyword);
         // 查询 VO 信息
-        List<GroupVO> groupVOList = groupList.stream().map(group -> this.getGroupVOById(group.getId())).toList();
+        List<GroupVO> groupVOList = groupList.stream().map(group -> this.getGroupVOById(group.getId())).collect(Collectors.toList());
 
         return groupVOList;
     }

@@ -36,6 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -224,7 +225,7 @@ public class SplitUploadServiceImpl extends ServiceImpl<SplitUploadMapper, Split
         // 转换为List: 按照分片名称排序
         List<File> sliceList = Arrays.stream(slices)
                 .sorted(Comparator.comparing(file -> Integer.valueOf(file.getName())))
-                .toList();
+                .collect(Collectors.toList());
 
         // 进行合并
         String mergeFilePath = null;
@@ -316,7 +317,7 @@ public class SplitUploadServiceImpl extends ServiceImpl<SplitUploadMapper, Split
         // 根据 spit_index 去重
         splitUploadList = splitUploadList.stream()
                 .filter(distinctByKey(SplitUpload::getSplitIndex))
-                .toList();
+                .collect(Collectors.toList());
 
         return splitUploadList;
     }

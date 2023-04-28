@@ -261,7 +261,7 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
         }
 
         // 组装信息
-        List<Long> acceptorIdList = applyList.stream().map(FriendApply::getAcceptorId).toList();
+        List<Long> acceptorIdList = applyList.stream().map(FriendApply::getAcceptorId).collect(Collectors.toList());
         List<UserVO> userAndInfoList = (List<UserVO>) this.userService.getUserAndInfoList(acceptorIdList).getData();
         Map<Long, UserVO> userVOMap = userAndInfoList.stream().collect(Collectors.toMap(UserVO::getId, value -> value));
 
@@ -270,7 +270,7 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
             FriendApplyVO applyVO = FriendApplyMapStructure.INSTANCE.toVO(apply,
                     null, userVOMap.get(apply.getAcceptorId()));
             return applyVO;
-        }).toList();
+        }).collect(Collectors.toList());
 
 
         return ResponseResult.SUCCESS(friendApplyVOS);
@@ -302,7 +302,7 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
 
 
         // 组装信息
-        List<Long> senderList = applyList.stream().map(FriendApply::getSenderId).toList();
+        List<Long> senderList = applyList.stream().map(FriendApply::getSenderId).collect(Collectors.toList());
         List<UserVO> userAndInfoList = (List<UserVO>) this.userService.getUserAndInfoList(senderList).getData();
         Map<Long, UserVO> userVOMap = userAndInfoList.stream().collect(Collectors.toMap(UserVO::getId, value -> value));
 
@@ -312,7 +312,7 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
                     userVOMap.get(apply.getSenderId()), null);
 
             return applyVO;
-        }).toList();
+        }).collect(Collectors.toList());
 
         return ResponseResult.SUCCESS(friendApplyVOS);
     }
@@ -450,7 +450,7 @@ public class FriendApplyServiceImpl extends ServiceImpl<FriendApplyMapper, Frien
         }
 
         // 收集用户id 列表
-        List<Long> userIdList = userList.stream().map(User::getId).toList();
+        List<Long> userIdList = userList.stream().map(User::getId).collect(Collectors.toList());
 
         // 查询 info 信息，组装 vo
         Map<Long, UserInfo> userInfoMap = this.userInfoService.listByIds(userIdList).stream()

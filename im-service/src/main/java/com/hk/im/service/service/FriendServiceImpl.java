@@ -121,7 +121,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
                 }).list();
 
         // 根据 friendId 查询好友用户信息 UserVO
-        List<Long> friendIdList = friendList.stream().map(Friend::getFriendId).toList();
+        List<Long> friendIdList = friendList.stream().map(Friend::getFriendId).collect(Collectors.toList());
         // 批量查询好友信息
         ResponseResult result = this.userService.getUserAndInfoList(friendIdList);
         if (BooleanUtils.isFalse(result.isSuccess())) {
@@ -175,7 +175,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
                 }).list();
 
         // 根据 friendId 查询好友用户信息 UserVO
-        List<Long> friendIdList = friendList.stream().map(Friend::getFriendId).toList();
+        List<Long> friendIdList = friendList.stream().map(Friend::getFriendId).collect(Collectors.toList());
         // 批量查询好友信息
         ResponseResult result = this.userService.getUserAndInfoList(friendIdList);
         if (BooleanUtils.isFalse(result.isSuccess())) {
@@ -230,7 +230,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
         // 黑名单不为空
         // 转换为 VO
-        List<Long> blackIdList = blackerList.stream().map(Friend::getFriendId).toList();
+        List<Long> blackIdList = blackerList.stream().map(Friend::getFriendId).collect(Collectors.toList());
         // 批量查询好友信息
         ResponseResult blackResult = this.userService.getUserAndInfoList(blackIdList);
 
@@ -241,7 +241,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
             List<FriendVO> list = blackerVOList.stream().map(
                             blackerVO -> FriendMapStructure.INSTANCE.toVO(friendMap.get(blackerVO.getId()), blackerVO))
-                    .sorted(Comparator.comparingInt(FriendVO::getStatus)).toList();
+                    .sorted(Comparator.comparingInt(FriendVO::getStatus)).collect(Collectors.toList());
 
             result = ResponseResult.SUCCESS(list);
         }
@@ -447,7 +447,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
                         .thenComparing(Friend::getUpdateTime).reversed()
                         .thenComparing(Friend::getRemarkName, String.CASE_INSENSITIVE_ORDER)
                         .thenComparing(Friend::getNickname, String.CASE_INSENSITIVE_ORDER))
-                .toList();
+                .collect(Collectors.toList());
 
         return enableInviteFriendList;
     }
@@ -501,7 +501,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
         List<Friend> friendList = this.friendMapper.selectFriendByKeyword(userId, keyword);
 
         // 查询 friend 的 vo 信息
-        List<FriendVO> friendVOList = friendList.stream().map(friend -> this.getFriendVOById(friend.getId())).toList();
+        List<FriendVO> friendVOList = friendList.stream().map(friend -> this.getFriendVOById(friend.getId())).collect(Collectors.toList());
 
         return friendVOList;
     }

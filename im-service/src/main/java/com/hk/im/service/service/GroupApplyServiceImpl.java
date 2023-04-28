@@ -193,7 +193,7 @@ public class GroupApplyServiceImpl extends ServiceImpl<GroupApplyMapper, GroupAp
                     UserVO userVO = UserMapStructure.INSTANCE.toVo(user, null);
                     // 转换为 VO
                     return GroupApplyMapStructure.INSTANCE.toVO(apply, groupVO, userVO);
-                }).toList();
+                }).collect(Collectors.toList());
 
         if (CollectionUtils.isEmpty(groupApplyVOList)) {
             groupApplyVOList = Collections.emptyList();
@@ -256,7 +256,7 @@ public class GroupApplyServiceImpl extends ServiceImpl<GroupApplyMapper, GroupAp
                     UserVO userVO = UserMapStructure.INSTANCE.toVo(user, null);
                     // 转换为 VO
                     return GroupApplyMapStructure.INSTANCE.toVO(apply, groupVO, userVO);
-                }).toList();
+                }).collect(Collectors.toList());
 
         // 响应数据
         return ResponseResult.SUCCESS(groupApplyVOList);

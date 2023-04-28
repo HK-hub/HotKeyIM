@@ -28,15 +28,28 @@ public class MessageConverter {
 
         MessageConstants.ChatMessageType type = MessageConstants.ChatMessageType.values()[messageType];
 
+        AbstractMessage message = null;
         // 返回消息类型
-        return switch (type) {
-            case TEXT -> new SimpleTextMessage();
-            case IMAGE -> new SimpleImageMessage();
-            case CODE ->  new SimpleFileMessage();
-            case FILE ->  new SimpleFileMessage();
-            case LOCATION -> new SimpleLocationMessage();
-            default -> throw new IllegalStateException("Unexpected value: " + type);
-        };
+        switch (type) {
+            case TEXT :
+                message = new SimpleTextMessage();
+                break;
+            case IMAGE :
+                message = new SimpleImageMessage();
+                break;
+            case CODE :
+                message = new SimpleFileMessage();
+                break;
+            case FILE :
+                message = new SimpleFileMessage();
+                break;
+            case LOCATION :
+                message = new SimpleLocationMessage();
+                break;
+            default :
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
+        return message;
     }
 
 

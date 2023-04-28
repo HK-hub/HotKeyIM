@@ -92,15 +92,19 @@ public class SignFilter implements Filter {
         boolean accept;
         SortedMap<String, String> paramMap;
         switch (httpRequest.getMethod()) {
-            case "GET" -> {
+            case "GET": {
                 paramMap = HttpDataUtil.getUrlParams(requestWrapper);
                 accept = SignUtil.verifySign(paramMap, requestHeader);
+                break;
             }
-            case "POST" -> {
+            case "POST": {
                 paramMap = HttpDataUtil.getBodyParams(requestWrapper);
                 accept = SignUtil.verifySign(paramMap, requestHeader);
+                break;
             }
-            default -> accept = true;
+            default:
+                accept = true;
+                break;
         }
         if (accept) {
             filterChain.doFilter(requestWrapper, servletResponse);

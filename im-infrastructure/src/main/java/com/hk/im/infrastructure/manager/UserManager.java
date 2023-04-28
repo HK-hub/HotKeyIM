@@ -101,7 +101,7 @@ public class UserManager {
         List<UserVO> userVOList = userList.stream().map(user -> {
             UserVO userVO = UserMapStructure.INSTANCE.toVo(user, userInfoMap.get(user.getId()));
             return userVO;
-        }).toList();
+        }).collect(Collectors.toList());
 
         return userVOList;
     }

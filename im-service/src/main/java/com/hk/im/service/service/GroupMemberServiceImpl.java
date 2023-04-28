@@ -36,6 +36,7 @@ import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -104,7 +105,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
             GroupMemberConstants.GroupMemberRole memberRole = GroupMemberConstants.GroupMemberRole.values()[member.getMemberRole()];
             // admin = 2; master = 3: 只要群员角色 < 操作者角色值 就代表有权限
             return operatorRole.ordinal() > memberRole.ordinal();
-        }).toList();
+        }).collect(Collectors.toList());
 
         // 踢出
         boolean remove = this.removeBatchByIds(canToRemoteMemberList);
@@ -187,7 +188,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
                     .setGroupId(Long.valueOf(groupId))
                     .setMemberRole(GroupMemberConstants.GroupMemberRole.SIMPLE.ordinal());
             return member;
-        }).toList();
+        }).collect(Collectors.toList());
 
         // 批量拉入
         boolean save = this.saveBatch(inviteeMemberList);
@@ -278,7 +279,7 @@ public class GroupMemberServiceImpl extends ServiceImpl<GroupMemberMapper, Group
         // 转换
         List<GroupMemberVO> memberVOList = groupMemberList.stream()
                 .map(GroupMemberMapStructure.INSTANCE::toVO)
-                .toList();
+                .collect(Collectors.toList());
         return memberVOList;
     }
 

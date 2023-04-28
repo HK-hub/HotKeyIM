@@ -15,6 +15,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -58,7 +59,7 @@ public class MessageProcessor {
         if (res.isSuccess()) {
             // 通知发送方已读
             try {
-                List<String> messageIdList = res.getData().stream().map(String::valueOf).toList();
+                List<String> messageIdList = res.getData().stream().map(String::valueOf).collect(Collectors.toList());
                 MessageAckCallBackDomain callBack = new MessageAckCallBackDomain().setIds(messageIdList)
                         .setSender_id(String.valueOf(senderId)).setReceiver_id(String.valueOf(receiverId));
                 OutboundMessageData outbound = new OutboundMessageData()

@@ -32,13 +32,24 @@ public class FileUtil {
      */
     public static boolean checkFileSize(Long len, int size, String unit) {
 
-        double fileSize = switch (unit.toUpperCase()) {
-            case "B" -> (double) len;
-            case "K" -> (double) len / 1024;
-            case "M" -> (double) len / 1048576;
-            case "G" -> (double) len / 1073741824;
-            default -> 0;
-        };
+        double fileSize = 0;
+        switch (unit.toUpperCase()) {
+            case "B":
+                fileSize = (double) len;
+                break;
+            case "K":
+                fileSize = (double) len / 1024;
+                break;
+            case "M":
+                fileSize = (double) len / 1048576;
+                break;
+            case "G":
+                fileSize = (double) len / 1073741824;
+                break;
+            default:
+                fileSize = 0;
+                break;
+        }
         return !(fileSize > size);
     }
 
@@ -140,7 +151,9 @@ public class FileUtil {
 
     /**
      * 判断是否为图片
+     *
      * @param fileName
+     *
      * @return
      */
     public static boolean isImage(String fileName) {
@@ -198,7 +211,6 @@ public class FileUtil {
 
         return true;
     }
-
 
 
 }

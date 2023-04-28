@@ -44,6 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.InputStream;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -181,7 +182,7 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
                     return messageVO;
                 })
                 // 排序：按照 sequence 排序
-                .sorted(Comparator.comparing(MessageVO::getSequence)).toList();
+                .sorted(Comparator.comparing(MessageVO::getSequence)).collect(Collectors.toList());
 
         // 获取最小的 sequence
         MessageFlow minMessage = new MessageFlow().setSequence(0L).setMessageId(0L);
@@ -291,7 +292,7 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
                     return messageVO;
                 })
                 // 排序：按照 sequence 排序
-                .sorted(Comparator.comparing(MessageVO::getSequence)).toList();
+                .sorted(Comparator.comparing(MessageVO::getSequence)).collect(Collectors.toList());
 
         // 获取最小的 sequence
         MessageFlow minMessage = new MessageFlow().setSequence(0L).setMessageId(0L);
@@ -434,7 +435,7 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
                 .list();
 
         // 过滤出属于发送者-接收者的消息：我确认收到你的消息，那么消息接收者是我，消息发送者是你
-        messageList = messageList.stream().filter(message -> message.getSenderId().equals(receiverId) && message.getReceiverId().equals(senderId)).toList();
+        messageList = messageList.stream().filter(message -> message.getSenderId().equals(receiverId) && message.getReceiverId().equals(senderId)).collect(Collectors.toList());
 
         // 确认消息接收状态
         messageList.forEach(message -> message.setSignFlag(MessageConstants.SignStatsEnum.READ.ordinal()));

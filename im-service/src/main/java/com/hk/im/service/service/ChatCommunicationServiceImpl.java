@@ -36,6 +36,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -282,7 +283,7 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
             }
             // 组合
             return CommunicationMapStructure.INSTANCE.toVO(talk, friend, group);
-        }).toList();
+        }).collect(Collectors.toList());
 
         // 设置其余属性
         voList.forEach(vo -> {
@@ -311,7 +312,7 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
                 .thenComparing(ChatCommunicationVO::getUnreadCount).reversed()
                 .thenComparing(ChatCommunicationVO::getOnline).reversed();
         // 进行排序
-        voList = voList.stream().sorted(comparator).toList();
+        voList = voList.stream().sorted(comparator).collect(Collectors.toList());
 
         // 响应数据
         return ResponseResult.SUCCESS(voList);

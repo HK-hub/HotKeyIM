@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import javax.swing.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -63,7 +64,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
             // 查询tag 标签对应的文章数量
             int count = this.getTagMappingArticleCount(tag.getId());
             return NoteTagMapStructure.INSTANCE.toVO(tag, count);
-        }).toList();
+        }).collect(Collectors.toList());
 
         return ResponseResult.SUCCESS(tagVOS);
     }
@@ -83,10 +84,10 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         List<NoteTag> noteTagList = this.noteTagService.lambdaQuery()
                 .eq(NoteTag::getNoteId, noteId)
                 .list();
-        List<Long> tagIdList = noteTagList.stream().map(NoteTag::getTagId).toList();
+        List<Long> tagIdList = noteTagList.stream().map(NoteTag::getTagId).collect(Collectors.toList());
 
         // 获取标签
-        List<Tag> tagList = tagIdList.stream().map(this::getById).toList();
+        List<Tag> tagList = tagIdList.stream().map(this::getById).collect(Collectors.toList());
 
         return tagList;
     }

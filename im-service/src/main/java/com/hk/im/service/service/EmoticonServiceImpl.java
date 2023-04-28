@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName : EmoticonServiceImpl
@@ -52,7 +53,7 @@ public class EmoticonServiceImpl extends ServiceImpl<EmoticonMapper, Emoticon>
                     // 组装成BO
                     return EmoticonMapStructure.INSTANCE.toBO(emoticon, collectEmoticon);
                 }).sorted(Comparator.comparing(EmoticonBO::getUpdateTime).reversed())
-                .toList();
+                .collect(Collectors.toList());
 
         // 响应数据
         return ResponseResult.SUCCESS(emoticonBOList);

@@ -98,7 +98,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
             // 检查是否有收藏的
             if (CollectionUtils.isNotEmpty(collectedNoteList)) {
                 // 提取笔记id
-                List<Long> noteIdList = collectedNoteList.stream().map(UserCollection::getCollectibleId).toList();
+                List<Long> noteIdList = collectedNoteList.stream().map(UserCollection::getCollectibleId).collect(Collectors.toList());
                 // 获取收藏笔记集合
                 noteList = this.noteMapper.selectCollectedNoteList(noteIdList, request);
             }
@@ -113,7 +113,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
             // 检查该标签下是否有笔记
             if (CollectionUtils.isNotEmpty(noteTagList)) {
                 // 提取 笔记id
-                List<Long> noteIdList = noteTagList.stream().map(NoteTag::getNoteId).toList();
+                List<Long> noteIdList = noteTagList.stream().map(NoteTag::getNoteId).collect(Collectors.toList());
                 // 查询标签下笔记集合
                 noteList = this.noteMapper.selectNoteListByTag(noteIdList, request);
             }
@@ -131,7 +131,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
                 })
                 // 排序：按照最新编辑时间排序
                 .sorted(Comparator.comparing(NoteVO::getUpdateTime).reversed())
-                .toList();
+                .collect(Collectors.toList());
 
         // 响应数据
         return ResponseResult.SUCCESS(noteVOList);
@@ -459,7 +459,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
                 .list();
 
         // 清空当前用户回收站文章
-        List<Long> noteIdList = list.stream().map(Note::getId).toList();
+        List<Long> noteIdList = list.stream().map(Note::getId).collect(Collectors.toList());
         boolean remove = this.removeBatchByIds(noteIdList);
 
         return ResponseResult.SUCCESS(remove);

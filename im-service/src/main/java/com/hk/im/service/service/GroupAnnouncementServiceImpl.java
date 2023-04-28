@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName : GroupAnnouncementServiceImpl
@@ -67,7 +68,7 @@ public class GroupAnnouncementServiceImpl extends ServiceImpl<GroupAnnouncementM
                     announcementVO.setAuthorName(theGroupMember.getMemberRemarkName());
                     return announcementVO;
                 })
-                .toList();
+                .collect(Collectors.toList());
 
         return announcementVOList;
     }

@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -70,7 +71,7 @@ public class MessageSearchService {
                         return this.messageFlowService.convertToMessageVO(flow);
                     }).sorted(Comparator.comparing(MessageVO::getCreateTime).reversed()
                             .thenComparingLong(MessageVO::getSequence).reversed())
-                    .toList();
+                    .collect(Collectors.toList());
             // 保存到 RedisSearch
             for (MessageVO messageVO : messageVOList) {
                 boolean insert = searchUpdate.insert(String.valueOf(messageVO.getId()), messageVO);

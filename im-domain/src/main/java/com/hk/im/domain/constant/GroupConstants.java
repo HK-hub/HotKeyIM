@@ -80,19 +80,42 @@ public class GroupConstants {
      */
     public static GroupCategory getGroupCategory(String category) {
 
-        GroupCategory type = switch (category) {
-            case "未知" -> DEFAULT;
-            case "兴趣爱好" -> INTERESTING;
-            case "行业交流" -> INDUSTRY;
-            case "生活休闲" -> LIFE_AND_LEISURE;
-            case "学习考试" -> LEARN_AND_EXAM;
-            case "娱乐游戏" -> ENTERTAINMENT;
-            case "品牌产品" -> BRAND_PRODUCT;
-            case "粉丝" -> FANS;
-            case "同学同事" -> CLASSMATES_AND_COLLEAGUES;
-            case "家校师生" -> PARENTS_CAMPUS_TEACHER_STUDENT;
-            default -> DEFAULT;
-        };
+        GroupCategory type = null;
+        switch (category) {
+            case "未知" :
+                type = DEFAULT;
+                break;
+            case "兴趣爱好" :
+                type = INTERESTING;
+                break;
+            case "行业交流" :
+                type = INDUSTRY;
+                break;
+            case "生活休闲" :
+                type = LIFE_AND_LEISURE;
+                break;
+            case "学习考试" :
+                type = LEARN_AND_EXAM;
+                break;
+            case "娱乐游戏" :
+                type = ENTERTAINMENT;
+                break;
+            case "品牌产品" :
+                type = BRAND_PRODUCT;
+                break;
+            case "粉丝" :
+                type = FANS;
+                break;
+            case "同学同事" :
+                type = CLASSMATES_AND_COLLEAGUES;
+                break;
+            case "家校师生" :
+                type = PARENTS_CAMPUS_TEACHER_STUDENT;
+                break;
+            default :
+                type = DEFAULT;
+                break;
+        }
 
         return type;
     }

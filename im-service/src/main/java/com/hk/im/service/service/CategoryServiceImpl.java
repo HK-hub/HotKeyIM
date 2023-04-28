@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -72,7 +73,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
             return CategoryMapStructure.INSTANCE.toVO(category, count);
         })
             // 排序：按照创建时间从大到小排序
-            .sorted(Comparator.comparing(CategoryVO::getCreateTime).reversed()).toList();
+            .sorted(Comparator.comparing(CategoryVO::getCreateTime).reversed()).collect(Collectors.toList());
 
 
         return ResponseResult.SUCCESS(categoryVOS);
@@ -142,7 +143,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
             Category category = this.lambdaQuery().eq(Category::getId, note.getCategoryId())
                     .one();
             return NoteMapStructure.INSTANCE.toVO(note, category, null);
-        }).toList();
+        }).collect(Collectors.toList());
 
         return noteVOList;
     }

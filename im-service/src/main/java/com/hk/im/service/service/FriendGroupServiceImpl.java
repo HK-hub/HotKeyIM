@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName : FriendGroupServiceImpl
@@ -340,7 +341,7 @@ public class FriendGroupServiceImpl extends ServiceImpl<FriendGroupMapper, Frien
         List<FriendGroup> oldGroupList = this.lambdaQuery().eq(FriendGroup::getUserId, userId).list();
 
         // 对传入的分组先进性创建操作：
-        List<FriendGroup> waitCreateGroupList = newGroupList.stream().filter(group -> group.getId() == 0).toList();
+        List<FriendGroup> waitCreateGroupList = newGroupList.stream().filter(group -> group.getId() == 0).collect(Collectors.toList());
 
         // 创建分组
         for (FriendGroup group : waitCreateGroupList) {
@@ -351,7 +352,7 @@ public class FriendGroupServiceImpl extends ServiceImpl<FriendGroupMapper, Frien
         }
 
         // 对比传入的分组进行更新操作：
-        List<FriendGroup> waitUpdateGroupList = newGroupList.stream().filter(group -> group.getId() != 0).toList();
+        List<FriendGroup> waitUpdateGroupList = newGroupList.stream().filter(group -> group.getId() != 0).collect(Collectors.toList());
         for (FriendGroup group : waitUpdateGroupList) {
             this.updateById(group);
         }

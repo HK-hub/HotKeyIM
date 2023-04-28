@@ -58,7 +58,7 @@ public class WebExceptionAdvice {
         BaseException exceptionResult = new CommonException(ResultCode.SERVER_BUSY);
         // exceptionResult.setExceptionObject(e);
         exceptionResult.setMessage(e.getMessage());
-        exceptionResult.setCauses(Objects.toString(e,"unknown error"));
+        exceptionResult.setCauses(Objects.toString(e.getCause(),"unknown error"));
 
         // 日志记录，链路追踪
         log.error("runtime exception:",e);

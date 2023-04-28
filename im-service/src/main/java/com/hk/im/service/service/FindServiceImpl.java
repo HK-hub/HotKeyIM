@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author : HK意境
@@ -77,7 +78,7 @@ public class FindServiceImpl implements FindService {
                     return GroupMapStructure.INSTANCE.toVO(group, null, groupSetting, null);
                 })
                 .sorted(comparator)
-                .toList();
+                .collect(Collectors.toList());
 
         // 进行缓存: 公开群聊
         /*this.stringRedisTemplate.opsForValue()
@@ -104,7 +105,7 @@ public class FindServiceImpl implements FindService {
         // 封装为VO
         List<GroupVO> groupVOS = groupList.stream()
                 .map(group -> GroupMapStructure.INSTANCE.toVO(group, null, null, null))
-                .toList();
+                .collect(Collectors.toList());
 
         // 响应
         return ResponseResult.SUCCESS(groupVOS);
