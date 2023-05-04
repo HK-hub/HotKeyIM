@@ -58,6 +58,10 @@ public class MessageConstants {
         CONNECT("connect"),
         // 普通聊天消息
         CHAT("event_talk"),
+        // control 控制消息
+        CONTROL("control_event"),
+        // 撤回消息事件
+        REVOKE("event_talk_revoke"),
         ;
 
         private String event;

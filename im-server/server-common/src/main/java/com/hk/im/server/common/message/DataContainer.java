@@ -33,4 +33,6 @@ public class DataContainer implements Serializable {
     // 扩展
     protected String extra;
 
+    protected String data;
+
 }

@@ -1,5 +1,7 @@
 package com.hk.im.server.push.worker.control;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.hk.im.common.util.ObjectMapperUtil;
 import com.hk.im.domain.constant.CommunicationConstants;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.entity.MessageFlow;
@@ -38,14 +40,20 @@ public class ControlSynchronizer {
      * @param revokeMessageVO
      */
     @Async("asyncServiceExecutor")
-    public void synchronizeFriend(RevokeMessageVO revokeMessageVO) {
+    public void synchronizeFriend(RevokeMessageVO revokeMessageVO) throws JsonProcessingException {
 
         log.info("synchronize revoke command to friend: {}", revokeMessageVO);
         MessageFlow flow = revokeMessageVO.getFlow();
-        Set<Channel> channel = UserChannelManager.getUserChannel(flow.getReceiverId());
+        Set<Channel> channelSet = UserChannelManager.getUserChannel(flow.getReceiverId());
 
+        // 构建消息数据
+        DataContainer dataContainer = new DataContainer();
+        dataContainer.setEvent(MessageConstants.MessageEventType.REVOKE.getEvent())
+                .setData(ObjectMapperUtil.OBJECT_MAPPER.writeValueAsString(revokeMessageVO));
         // 推送
-
+        for (Channel channel : channelSet) {
+            channel.writeAndFlush(MessageConverter.wrapperText(dataContainer));
+        }
     }
 
 
@@ -54,7 +62,7 @@ public class ControlSynchronizer {
      * @param revokeMessageVO
      */
     @Async("asyncServiceExecutor")
-    public void synchronizeGroup(RevokeMessageVO revokeMessageVO) {
+    public void synchronizeGroup(RevokeMessageVO revokeMessageVO) throws JsonProcessingException {
 
         log.info("synchronize revoke command to group: {}", revokeMessageVO);
 
@@ -63,12 +71,22 @@ public class ControlSynchronizer {
         // 获取到群聊成员Channel：在线群员
         Set<Channel> groupChannel = UserChannelManager.getGroupChannel(groupId);
 
-        // 推送给在线成员
-
+        // 构建消息数据
+        DataContainer dataContainer = new DataContainer();
+        dataContainer.setEvent(MessageConstants.MessageEventType.REVOKE.getEvent())
+                .setData(ObjectMapperUtil.OBJECT_MAPPER.writeValueAsString(revokeMessageVO));
+        // 推送给在线群员
+        for (Channel channel : groupChannel) {
+            channel.writeAndFlush(MessageConverter.wrapperText(dataContainer));
+        }
     }
 
 
-    public void synchronizedRevoke(RevokeMessageVO revokeMessageVO) {
+    /**
+     * 撤回消息
+     * @param revokeMessageVO
+     */
+    public void synchronizedRevoke(RevokeMessageVO revokeMessageVO) throws JsonProcessingException {
 
         MessageFlow flow = revokeMessageVO.getFlow();
         Integer chatType = flow.getChatType();

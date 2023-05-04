@@ -39,6 +39,10 @@ public class RevokeMessageConsumer implements RocketMQListener<RevokeMessageVO> 
         log.info("on revoke message consumer: {}", revokeMessageVO);
 
         // 将撤回消息同步给对方
-        controlSynchronizer.synchronizedRevoke(revokeMessageVO);
+        try {
+            controlSynchronizer.synchronizedRevoke(revokeMessageVO);
+        } catch (Exception e) {
+            log.error("on revoke message consumer synchronized error:", e);
+        }
     }
 }
