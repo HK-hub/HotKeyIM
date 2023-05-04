@@ -11,6 +11,7 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.common.resp.ResultCode;
 import com.hk.im.domain.bo.MessageBO;
 import com.hk.im.domain.constant.CommunicationConstants;
+import com.hk.im.domain.constant.GroupMemberConstants;
 import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.dto.HistoryRecordsDTO;
@@ -24,8 +25,11 @@ import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
 import com.hk.im.domain.request.*;
+import com.hk.im.domain.request.message.RevokeMessageRequest;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
+import com.hk.im.domain.vo.message.RevokeMessageVO;
+import com.hk.im.infrastructure.event.message.event.RevokeChatMessageEvent;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapper.MessageFlowMapper;
@@ -43,6 +47,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -82,6 +87,8 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     private VideoMessageWorker videoMessageWorker;
     @Resource
     private LocationMessageWorker locationMessageWorker;
+    @Resource
+    private ApplicationContext applicationContext;
 
 
     /**
@@ -463,7 +470,119 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
     }
 
 
+    /**
+     * 撤回消息
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult revokeMessage(RevokeMessageRequest request) {
+        
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getMessageId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
 
+        // 素材
+        Long messageId = request.getMessageId();
+        Long handlerId = request.getHandlerId();
+        if (Objects.isNull(handlerId)) {
+            handlerId = UserContextHolder.get().getId();
+        }
+
+        // 校验消息是否存在
+        // ChatMessage message = this.chatMessageService.getById(messageId);
+        MessageFlow messageFlow = this.lambdaQuery()
+                .eq(MessageFlow::getMessageId, messageId)
+                .eq(MessageFlow::getDeleted, Boolean.FALSE)
+                .one();
+        if (Objects.isNull(messageFlow)) {
+            // 消息不存在撤回失败
+            return ResponseResult.FAIL().setMessage("消息不存在!");
+        }
+
+        // 消息类型
+        Integer chatType = messageFlow.getChatType();
+        CommunicationConstants.SessionType talkType = CommunicationConstants.SessionType.values()[chatType];
+
+        // 撤回者昵称
+        String revokeUserNickname = null;
+        // 根据消息聊天类型进行撤回
+        if (talkType == CommunicationConstants.SessionType.PRIVATE) {
+            // 私聊：检查处理的消息发送者是否自己的
+            boolean myMessage = messageFlow.getSenderId().equals(handlerId);
+            if (BooleanUtils.isFalse(myMessage)) {
+                // 不是自己的消息
+                return ResponseResult.FAIL().setMessage("无法撤回对方发送的消息!");
+            }
+
+            // 发送时间是否超过2分钟
+            LocalDateTime createTime = messageFlow.getCreateTime();
+            LocalDateTime now = LocalDateTime.now().minusMinutes(2);
+
+            if (now.isAfter(createTime)) {
+                // 超过2分钟了
+                return ResponseResult.FAIL().setMessage("消息发送超过2分钟,无法撤回!");
+            }
+
+            // 自己的消息执行撤回逻辑：查询撤回者的昵称
+            revokeUserNickname = "你";
+
+        } else if (talkType == CommunicationConstants.SessionType.GROUP) {
+            // 群聊： 处理人员是否本人或具有管理员权限
+            Long groupId = messageFlow.getReceiverId();
+            GroupMember member = this.groupMemberService.getTheGroupMember(groupId, handlerId);
+            if (Objects.isNull(member)) {
+                // 非本群成员
+                return ResponseResult.FAIL().setMessage("您非本群成员,无权撤回!");
+            }
+
+            // 校验本人
+            boolean myMessage = Objects.equals(messageFlow.getSenderId(), handlerId);
+
+            // 时间校验
+            LocalDateTime createTime = messageFlow.getCreateTime();
+            LocalDateTime now = LocalDateTime.now().minusMinutes(2);
+            boolean after = now.isAfter(createTime);
+
+            // 校验权限
+            GroupMemberConstants.GroupMemberRole role = GroupMemberConstants.GroupMemberRole.values()[member.getMemberRole()];
+            boolean hasPermission = role == GroupMemberConstants.GroupMemberRole.ADMIN || role == GroupMemberConstants.GroupMemberRole.MASTER;
+
+            // 是否有权撤回: 本人 并且可以撤回 或者 有权限撤回
+            boolean enableRevoke = (myMessage && after) || hasPermission;
+            if (BooleanUtils.isFalse(enableRevoke)) {
+                // 无权，超时
+                return ResponseResult.FAIL().setMessage("抱歉您无法撤回消息!");
+            }
+
+            // 查询撤回者的昵称
+            GroupMember groupMember = this.groupMemberService.getTheGroupMember(messageFlow.getReceiverId(), handlerId);
+            revokeUserNickname = groupMember.getMemberRemarkName();
+        }
+
+        // 执行撤回消息逻辑
+        messageFlow.setRevoke(Boolean.TRUE)
+                .setSignFlag(MessageConstants.SignStatsEnum.REVOKE.ordinal());
+        boolean update = this.updateById(messageFlow);
+        if (BooleanUtils.isFalse(update)) {
+            // 撤回失败
+            return ResponseResult.FAIL();
+        }
+
+        // 发送撤回消息事件
+        RevokeMessageVO revokeMessageVO = new RevokeMessageVO();
+        revokeMessageVO.setFlow(messageFlow)
+                .setRevoker(handlerId).setNickname(revokeUserNickname);
+        // 发送事件
+        this.applicationContext.publishEvent(new RevokeChatMessageEvent(this, revokeMessageVO));
+
+        // 响应结果
+        return ResponseResult.SUCCESS();
+    }
 
 
 }

@@ -9,6 +9,7 @@ import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.*;
+import com.hk.im.domain.request.message.RevokeMessageRequest;
 import com.hk.im.domain.vo.MessageVO;
 
 import java.util.List;
@@ -116,4 +117,10 @@ public interface MessageFlowService extends IService<MessageFlow> {
      */
     ResponseResult sendVideoInviteMessage(InviteVideoCallInviteRequest request);
 
+    /**
+     * 撤回消息
+     * @param request
+     * @return
+     */
+    ResponseResult revokeMessage(RevokeMessageRequest request);
 }

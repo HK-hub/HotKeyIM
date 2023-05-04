@@ -14,6 +14,8 @@ import com.hk.im.domain.entity.User;
 import com.hk.im.domain.vo.GroupVO;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
+import com.hk.im.domain.vo.message.RevokeMessageVO;
+import com.hk.im.infrastructure.event.message.event.RevokeChatMessageEvent;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
 import com.hk.im.infrastructure.manager.UserManager;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
@@ -60,6 +62,10 @@ public class MessageEventHandler {
     private ApplicationContext applicationContext;
 
 
+    /**
+     * 发送消息事件监听
+     * @param event
+     */
     @Async
     @EventListener
     public void onSendMessage(SendChatMessageEvent event) {
@@ -101,6 +107,24 @@ public class MessageEventHandler {
         SendResult sendResult = this.rocketMQService.sendTagMsg(MessageQueueConstants.MessageConsumerTopic.chat_topic.topic,
                 messageType.name(), messageVO);
         log.info("Sent message={}, by rocketmq result: {}", messageBO, sendResult);
+    }
+
+
+    /**
+     * 撤回消息监听
+     * @param event
+     */
+    @Async
+    @EventListener
+    public void onRevokeMessage(RevokeChatMessageEvent event) {
+
+        RevokeMessageVO revokeMessageVO = event.getData();
+        log.info("revoke message event handler: {}", revokeMessageVO);
+        // 发送撤回消息 到 MQ
+        SendResult sendResult = this.rocketMQService.sendTagMsg(MessageQueueConstants.MessageConsumerTopic.control_topic.topic,
+                MessageQueueConstants.MessageConsumerTag.control_tag.tag, revokeMessageVO);
+        log.info("Sent revoke command ={}, by rocketmq result: {}", revokeMessageVO, sendResult);
+
     }
 
 
@@ -167,6 +191,8 @@ public class MessageEventHandler {
         // 响应数据
         return messageVO;
     }
+
+
 
 
 }

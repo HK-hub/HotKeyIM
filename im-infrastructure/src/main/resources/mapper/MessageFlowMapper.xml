@@ -65,6 +65,7 @@
         select * from tb_message_flow
         where ((sender_id = #{param.senderId} and receiver_id = #{param.receiverId})
         or (sender_id = #{param.receiverId} and receiver_id = #{param.senderId}))
+        and `revoke` = false
         <if test="param.msgTypes != null and param.msgTypes.size() > 0">
           and message_type in
             <foreach collection="param.msgTypes" item="msgType" open="(" separator="," close=")">
@@ -91,6 +92,7 @@
     <select id="selectGroupHistoryRecords" resultType="com.hk.im.domain.entity.MessageFlow">
         select * from tb_message_flow
         where receiver_id = #{param.receiverId}
+        and `revoke` = false
         <if test="param.senderId != null">
             and sender_id = #{param.senderId}
         </if>

@@ -39,6 +39,7 @@ public class MessageQueueConstants {
         connect_topic("connect-topic"),
         chat_topic("chat-topic"),
         signaling_topic("signaling-topic"),
+        control_topic("control-topic")
         ;
 
         public String topic;
@@ -50,7 +51,8 @@ public class MessageQueueConstants {
     @Getter
     public static enum MessageConsumerTag {
         connect_tag("connect-tag"),
-        chat_tag("chat-tag")
+        chat_tag("chat-tag"),
+        control_tag("control-topic")
         ;
 
         public String tag;
