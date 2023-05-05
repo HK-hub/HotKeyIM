@@ -570,9 +570,9 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
         // 执行撤回消息逻辑
         RevokeMessageExtra extra = new RevokeMessageExtra()
-                .setHandlerId(handlerId).setUsername(revokeUserNickname)
-                .setCreateTime(LocalDateTime.now());
-        message.setExtra(extra);
+                .setHandlerId(handlerId).setUsername(revokeUserNickname);
+                //.setCreateTime(LocalDateTime.now());
+        message.setExtra(extra).setUpdateTime(LocalDateTime.now());
         messageFlow.setRevoke(Boolean.TRUE)
                 .setSignFlag(MessageConstants.SignStatsEnum.REVOKE.ordinal());
         // 更新

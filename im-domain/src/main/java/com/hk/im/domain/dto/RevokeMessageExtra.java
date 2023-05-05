@@ -1,5 +1,6 @@
 package com.hk.im.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -32,6 +33,7 @@ public class RevokeMessageExtra {
     /**
      * 撤回时间
      */
+    @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
 }

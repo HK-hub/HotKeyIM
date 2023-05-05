@@ -69,7 +69,7 @@ public class ControlSynchronizer {
         MessageFlow flow = revokeMessageVO.getFlow();
         Long groupId = flow.getReceiverId();
         // 获取到群聊成员Channel：在线群员
-        Set<Channel> groupChannel = UserChannelManager.getGroupChannel(groupId);
+        Set<Channel> groupChannel = UserChannelManager.getGroupChannelExcludeMe(groupId, revokeMessageVO.getRevoker());
 
         // 构建消息数据
         DataContainer dataContainer = new DataContainer();

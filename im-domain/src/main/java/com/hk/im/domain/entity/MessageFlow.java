@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hk.im.domain.annotation.MeiliSearchIndex;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,24 +27,28 @@ public class MessageFlow implements Serializable {
      * 聊天消息表id
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**
      * 群id,如果是群聊的话
      */
     @TableField(value = "group_id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long groupId;
 
     /**
      * 消息发送者id
      */
     @TableField(value = "sender_id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long senderId;
 
     /**
      * 消息接收者id(用户id或群id)
      */
     @TableField(value = "receiver_id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long receiverId;
 
     /**
@@ -61,6 +68,7 @@ public class MessageFlow implements Serializable {
      * 聊天消息id
      */
     @TableField(value = "message_id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long messageId;
 
     /**
@@ -97,12 +105,14 @@ public class MessageFlow implements Serializable {
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     @TableField(exist = false)

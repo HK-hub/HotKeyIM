@@ -1,5 +1,7 @@
 package com.hk.im.domain.vo.message;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hk.im.domain.entity.MessageFlow;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -24,6 +26,7 @@ public class RevokeMessageVO {
     private String nickname;
 
     // 撤回者
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long revoker;
 
 }
