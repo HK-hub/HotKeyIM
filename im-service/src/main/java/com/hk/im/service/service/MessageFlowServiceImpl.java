@@ -16,6 +16,7 @@ import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.dto.HistoryRecordsDTO;
 import com.hk.im.domain.dto.LatestMessageRecordDTO;
+import com.hk.im.domain.dto.RevokeMessageExtra;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.Group;
 import com.hk.im.domain.entity.GroupMember;
@@ -504,6 +505,9 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
             return ResponseResult.FAIL().setMessage("消息不存在!");
         }
 
+        // 查询消息实体
+        ChatMessage message = this.chatMessageService.getById(messageId);
+
         // 消息类型
         Integer chatType = messageFlow.getChatType();
         CommunicationConstants.SessionType talkType = CommunicationConstants.SessionType.values()[chatType];
@@ -565,10 +569,16 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
         }
 
         // 执行撤回消息逻辑
+        RevokeMessageExtra extra = new RevokeMessageExtra()
+                .setHandlerId(handlerId).setUsername(revokeUserNickname)
+                .setCreateTime(LocalDateTime.now());
+        message.setExtra(extra);
         messageFlow.setRevoke(Boolean.TRUE)
                 .setSignFlag(MessageConstants.SignStatsEnum.REVOKE.ordinal());
-        boolean update = this.updateById(messageFlow);
-        if (BooleanUtils.isFalse(update)) {
+        // 更新
+        boolean updateFlow = this.updateById(messageFlow);
+        boolean updateMessage = this.chatMessageService.updateById(message);
+        if (BooleanUtils.isFalse(updateFlow) || BooleanUtils.isFalse(updateMessage)) {
             // 撤回失败
             return ResponseResult.FAIL();
         }

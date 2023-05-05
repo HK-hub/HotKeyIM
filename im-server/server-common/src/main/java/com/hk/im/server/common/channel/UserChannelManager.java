@@ -139,7 +139,6 @@ public class UserChannelManager {
      * @param groupId
      * @return
      */
-    @Nullable
     public static Set<Channel> getGroupChannel(@NonNull Long groupId) {
         Set<Channel> channelSet = userChannelMap.get(groupId);
         if (CollectionUtils.isEmpty(channelSet)) {
