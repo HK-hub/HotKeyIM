@@ -14,6 +14,7 @@
 
     <modules>
         <module>flow-search</module>
+        <module>flow-data</module>
     </modules>
 
     <properties>

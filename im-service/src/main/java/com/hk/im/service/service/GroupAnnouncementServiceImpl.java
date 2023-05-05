@@ -65,7 +65,8 @@ public class GroupAnnouncementServiceImpl extends ServiceImpl<GroupAnnouncementM
                     // 查询作者
                     GroupMember theGroupMember = this.groupMemberService.getTheGroupMember(groupId, notice.getAuthor());
                     GroupAnnouncementVO announcementVO = GroupAnnouncementMapStructure.INSTANCE.toVO(notice);
-                    announcementVO.setAuthorName(theGroupMember.getMemberRemarkName());
+                    announcementVO.setAuthorName(theGroupMember.getMemberUsername())
+                            .setAvatar(theGroupMember.getMemberAvatar());
                     return announcementVO;
                 })
                 .collect(Collectors.toList());

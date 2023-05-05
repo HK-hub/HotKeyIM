@@ -8,16 +8,14 @@ import com.hk.im.domain.constant.MessageConstants;
 import com.hk.im.domain.entity.ChatMessage;
 import com.hk.im.domain.entity.MessageFlow;
 import com.hk.im.domain.message.chat.TextMessage;
+import com.hk.im.flow.data.sensitive.service.SensitiveWordService;
 import com.hk.im.infrastructure.event.message.event.SendChatMessageEvent;
-import com.hk.im.infrastructure.manager.UserManager;
-import com.hk.im.infrastructure.mapper.MessageFlowMapper;
 import com.hk.im.infrastructure.mapstruct.MessageMapStructure;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 import java.util.Objects;
 
@@ -35,7 +33,8 @@ import java.util.Objects;
 @Component
 public class TextMessageWorker {
 
-
+    @Resource
+    private SensitiveWordService sensitiveWordService;
     @Resource
     private ApplicationContext applicationContext;
     @Resource
@@ -70,6 +69,9 @@ public class TextMessageWorker {
         Long receiverId = Long.valueOf(message.getReceiverId());
         String text = message.getText();
         Integer talkType = message.getTalkType();
+
+        // 文本消息脱敏
+        text = this.sensitiveWordService.sensitiveWords(text);
 
         // 保存消息
         ChatMessage chatMessage = new ChatMessage()

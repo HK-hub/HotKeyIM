@@ -50,6 +50,11 @@ public class GroupAnnouncementVO {
     private String authorName;
 
     /**
+     * 作者头像
+     */
+    private String avatar;
+
+    /**
      * 公告标题
      */
     private String title;

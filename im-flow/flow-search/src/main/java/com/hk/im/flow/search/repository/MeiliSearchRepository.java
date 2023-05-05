@@ -177,20 +177,20 @@ public class MeiliSearchRepository<T> implements InitializingBean, DocumentOpera
         return taskInfo.getTaskUid();
     }
 
-        @Override
-        public List<T> query(String query) {
-            SearchResult<T> tSearchResult = new SearchResult<>();
-            try{
-                // 构建url:
-                String url = this.config.getHostUrl() + "/indexes/" + this.indexName + "/search";
-                SearchRequest sr = SearchRequest.builder().q(query).build();
-                ResponseEntity<SearchResult> response = this.restTemplate.postForEntity(url, sr, SearchResult.class);
-                tSearchResult = response.getBody();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            return tSearchResult.getHits();
+    @Override
+    public List<T> query(String query) {
+        SearchResult<T> tSearchResult = new SearchResult<>();
+        try{
+            // 构建url:
+            String url = this.config.getHostUrl() + "/indexes/" + this.indexName + "/search";
+            SearchRequest sr = SearchRequest.builder().q(query).build();
+            ResponseEntity<SearchResult> response = this.restTemplate.postForEntity(url, sr, SearchResult.class);
+            tSearchResult = response.getBody();
+        }catch(Exception e){
+            e.printStackTrace();
         }
+        return tSearchResult.getHits();
+    }
 
     @Override
     public List<T> query(SearchDocumentRequest searchRequest) {
