@@ -9,6 +9,7 @@ import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.*;
+import com.hk.im.domain.request.message.DeleteRecordsRequest;
 import com.hk.im.domain.request.message.RevokeMessageRequest;
 import com.hk.im.domain.vo.MessageVO;
 
@@ -123,4 +124,6 @@ public interface MessageFlowService extends IService<MessageFlow> {
      * @return
      */
     ResponseResult revokeMessage(RevokeMessageRequest request);
+
+    ResponseResult deleteMessageRecords(DeleteRecordsRequest request);
 }

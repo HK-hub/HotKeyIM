@@ -7,6 +7,7 @@ import com.hk.im.domain.message.chat.AttachmentMessage;
 import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.request.*;
+import com.hk.im.domain.request.message.DeleteRecordsRequest;
 import com.hk.im.domain.request.message.RevokeMessageRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +69,17 @@ public class MessageController {
     public ResponseResult revokeMessage(@RequestBody RevokeMessageRequest request) {
 
         return this.messageFlowService.revokeMessage(request);
+    }
+
+    /**
+     * 删除聊天消息
+     * @param request
+     * @return
+     */
+    @PostMapping("/delete/message")
+    public ResponseResult deleteMessageRecords(@RequestBody DeleteRecordsRequest request) {
+
+        return this.messageFlowService.deleteMessageRecords(request);
     }
 
     /**

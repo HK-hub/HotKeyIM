@@ -70,8 +70,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Admin" />
-                  <option name="tableName" value="tb_admin" />
+                  <option name="className" value="UserDeleteMessage" />
+                  <option name="tableName" value="tb_user_delete_message" />
                 </TableUIInfo>
               </list>
             </option>

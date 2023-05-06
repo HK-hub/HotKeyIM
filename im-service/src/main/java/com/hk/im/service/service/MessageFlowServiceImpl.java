@@ -26,6 +26,7 @@ import com.hk.im.domain.message.chat.ImageMessage;
 import com.hk.im.domain.message.chat.TextMessage;
 import com.hk.im.domain.po.PrivateRecordsSelectPO;
 import com.hk.im.domain.request.*;
+import com.hk.im.domain.request.message.DeleteRecordsRequest;
 import com.hk.im.domain.request.message.RevokeMessageRequest;
 import com.hk.im.domain.vo.MessageVO;
 import com.hk.im.domain.vo.UserVO;
@@ -592,6 +593,21 @@ public class MessageFlowServiceImpl extends ServiceImpl<MessageFlowMapper, Messa
 
         // 响应结果
         return ResponseResult.SUCCESS();
+    }
+
+    /**
+     * 删除聊天记录
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult deleteMessageRecords(DeleteRecordsRequest request) {
+
+        // 参数校验
+
+
+
+        return null;
     }
 
 
