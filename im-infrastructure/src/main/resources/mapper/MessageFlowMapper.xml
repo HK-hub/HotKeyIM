@@ -96,8 +96,11 @@
         <if test="param.senderId != null">
             and sender_id = #{param.senderId}
         </if>
-        <if test="param.msgTypes != 0">
-            and message_type = #{param.msgTypes}
+        <if test="param.msgTypes != null and param.msgTypes.size() > 0">
+            and message_type in
+            <foreach collection="param.msgTypes" item="msgType" open="(" separator="," close=")">
+                #{msgType}
+            </foreach>
         </if>
         <if test="param.fromTime != null">
             and create_time >= #{param.fromTime}
