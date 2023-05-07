@@ -18,6 +18,7 @@ import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
 import com.hk.im.domain.request.talk.RemoveTalkRequest;
+import com.hk.im.domain.request.talk.SetTalkDisturbRequest;
 import com.hk.im.domain.vo.ChatCommunicationVO;
 import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.GroupVO;
@@ -505,7 +506,6 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         }
 
         // 素材
-        Long friendId = request.getFriendId();
         Long talkId = request.getTalkId();
         Long userId = request.getUserId();
         if (Objects.isNull(userId)) {
@@ -536,6 +536,60 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         }
 
         // 移除会话成功
+        return ResponseResult.SUCCESS();
+    }
+
+
+    /**
+     * 开启或关闭消息免打扰
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult setTalkDisturb(SetTalkDisturbRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getReceiverId()) || Objects.isNull(request.getTalkId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL();
+        }
+
+        // 素材
+        Long userId = request.getUserId();
+        if (Objects.isNull(userId)) {
+            userId = UserContextHolder.get().getId();
+        }
+        Long talkId = request.getTalkId();
+        Long receiverId = request.getReceiverId();
+
+        // 查询会话是否存在
+        ChatCommunication talk = this.getById(talkId);
+        if (Objects.isNull(talk)) {
+            // 通过会话id获取会话失败 -> 尝试通过会话属性获取
+            talk = this.existsChatCommunication(userId, receiverId);
+        }
+
+        if (Objects.isNull(talk)) {
+            // 会话不存在
+            return ResponseResult.FAIL().setMessage("会话不存在!");
+        }
+
+        // 会话存在，比对是否会话属主
+        if (!Objects.equals(userId, talk.getBelongUserId())) {
+            // 会话不属于当前用户
+            return ResponseResult.FAIL().setMessage("当前会话不属于您!");
+        }
+
+        // 会话属于您，修改是否打扰
+        talk.setDisturb(request.getDisturb());
+        boolean update = this.updateById(talk);
+
+        if (BooleanUtils.isFalse(update)) {
+            // 修改打扰状态失败
+            return ResponseResult.FAIL();
+        }
+
         return ResponseResult.SUCCESS();
     }
 }

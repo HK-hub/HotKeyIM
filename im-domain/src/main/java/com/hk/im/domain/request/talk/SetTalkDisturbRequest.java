@@ -5,8 +5,8 @@ import lombok.experimental.Accessors;
 
 /**
  * @author : HK意境
- * @ClassName : RemoveTalkRequest
- * @date : 2023/5/7 20:55
+ * @ClassName : SetTalkDisturbRequest
+ * @date : 2023/5/7 22:00
  * @description :
  * @Todo :
  * @Bug :
@@ -15,22 +15,34 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class RemoveTalkRequest {
+public class SetTalkDisturbRequest {
 
     /**
      * 用户id
      */
-    public Long userId;
+    private Long userId;
 
     /**
-     * 好友或群聊id
+     * 接收者id:好友或群聊
      */
     private Long receiverId;
+
+
+    /**
+     * 会话类型
+     */
+    private Integer talkType;
 
 
     /**
      * 会话id
      */
     private Long talkId;
+
+
+    /**
+     * 是否运行打扰: 1.允许打扰，0.不允许打扰
+     */
+    private Boolean disturb;
 
 }

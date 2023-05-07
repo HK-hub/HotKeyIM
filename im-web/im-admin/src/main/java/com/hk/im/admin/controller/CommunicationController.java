@@ -6,6 +6,7 @@ import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
 import com.hk.im.domain.request.talk.RemoveTalkRequest;
+import com.hk.im.domain.request.talk.SetTalkDisturbRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -90,6 +91,19 @@ public class CommunicationController {
 
         return this.chatCommunicationService.removeUserTalk(request);
     }
+
+
+    /**
+     * 设置消息免打扰
+     * @param request
+     * @return
+     */
+    @PostMapping("/disturb")
+    public ResponseResult setTalkDisturb(@RequestBody SetTalkDisturbRequest request) {
+
+        return this.chatCommunicationService.setTalkDisturb(request);
+    }
+
 
 
 }

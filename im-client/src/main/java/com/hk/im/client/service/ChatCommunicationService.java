@@ -8,6 +8,7 @@ import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
 import com.hk.im.domain.request.talk.RemoveTalkRequest;
+import com.hk.im.domain.request.talk.SetTalkDisturbRequest;
 
 /**
  * @ClassName : ChatCommunicationService
@@ -97,4 +98,12 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
      * @return
      */
     ResponseResult removeUserTalk(RemoveTalkRequest request);
+
+
+    /**
+     * 消息免打扰
+     * @param request
+     * @return
+     */
+    ResponseResult setTalkDisturb(SetTalkDisturbRequest request);
 }
