@@ -2,6 +2,7 @@ package com.hk.im.infrastructure.event.user.listener;
 
 import com.hk.im.client.service.CategoryService;
 import com.hk.im.client.service.FriendService;
+import com.hk.im.client.service.RobotService;
 import com.hk.im.client.service.UserService;
 import com.hk.im.domain.constant.FriendConstants;
 import com.hk.im.domain.entity.*;
@@ -14,12 +15,14 @@ import com.hk.im.infrastructure.mapper.FriendMapper;
 import com.hk.im.infrastructure.mapper.UserInfoMapper;
 import com.hk.im.infrastructure.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author : HK意境
@@ -47,6 +50,8 @@ public class UserEventListener {
     private FriendService friendService;
     @Resource
     private CategoryService categoryService;
+    @Resource
+    private RobotService robotService;
 
     /**
      * 用户更新事件
@@ -102,6 +107,30 @@ public class UserEventListener {
                 .setName("默认分类")
                 .setDescription("默认分类");
         this.categoryService.save(category);
+
+        // 添加聊天机器人为好友
+        // 1.查询可用机器人
+        List<Robot> robots = this.robotService.getAllEnableRobot();
+        if (CollectionUtils.isEmpty(robots)) {
+            // 没有可用机器人
+            return;
+        }
+        // 随机选择一个
+        long index = user.getId() % robots.size();
+        Robot robot = robots.get((int) index);
+        // 2.查询机器人信息
+        UserInfo robotInfo = this.userInfoMapper.getUserInfoByUserId(robot.getUserId());
+
+        // 添加机器人为好友
+        Friend robotFriend = new Friend()
+                .setFriendId(robotInfo.getUserId())
+                .setUserId(user.getId())
+                .setRemarkName(robot.getRobotName())
+                .setNickname(robot.getRobotName())
+                .setAvatar(robot.getLogo())
+                .setRelation(FriendConstants.FriendRelationship.FRIEND.ordinal());
+        // 保存：
+        this.friendMapper.insert(robotFriend);
 
     }
 

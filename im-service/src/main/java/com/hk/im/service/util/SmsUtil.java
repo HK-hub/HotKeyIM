@@ -34,6 +34,7 @@ public class SmsUtil {
     public String sendMessage(String phone, String code) {
 
         SmsResponse smsResponse = sms.sendMessage(phone, code);
+        log.info("send message response: {}", smsResponse);
         return code;
     }
 

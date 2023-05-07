@@ -17,6 +17,7 @@ import com.hk.im.domain.entity.Friend;
 import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
+import com.hk.im.domain.request.talk.RemoveTalkRequest;
 import com.hk.im.domain.vo.ChatCommunicationVO;
 import com.hk.im.domain.vo.FriendVO;
 import com.hk.im.domain.vo.GroupVO;
@@ -91,11 +92,16 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         Long senderId = Long.valueOf(userId);
 
         // 获取会话，判断会话是否存在
-        boolean talkResult = this.existsChatCommunication(senderId,
+        ChatCommunication talkResult = this.existsChatCommunication(senderId,
                 receiverId);
-        if (BooleanUtils.isTrue(talkResult)) {
+        if (Objects.nonNull(talkResult)) {
             // 会话已经存在
-            return ResponseResult.SUCCESS("会话已经存在了!");
+            // 判断是否逻辑删除了会话
+            if (BooleanUtils.isTrue(talkResult.getDeleted())) {
+                // 逻辑删除了，需要进行恢复
+                this.updateById(talkResult.setDeleted(Boolean.FALSE));
+            }
+            return ResponseResult.SUCCESS();
         }
 
         // 会话不存在，创建
@@ -115,10 +121,10 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         } else if (sessionType == CommunicationConstants.SessionType.PRIVATE){
             // 好友会话类型
             // 查看是否存在
-            boolean exists = this.existsChatCommunication(receiverId, senderId);
-            if (BooleanUtils.isFalse(exists)) {
+            ChatCommunication talkTwo = this.existsChatCommunication(receiverId, senderId);
+            if (Objects.isNull(talkTwo)) {
                 // 会话不存在，创建会话
-                ChatCommunication talkTwo = new ChatCommunication()
+                talkTwo = new ChatCommunication()
                         .setBelongUserId(receiverId)
                         .setSenderId(receiverId)
                         .setReceiverId(senderId)
@@ -207,14 +213,14 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
      * @return
      */
     @Override
-    public boolean existsChatCommunication(Long senderId, Long receiverId) {
+    public ChatCommunication existsChatCommunication(Long senderId, Long receiverId) {
         // 判断是否存在
-        boolean exists = this.lambdaQuery()
+        ChatCommunication talk = this.lambdaQuery()
                 .eq(ChatCommunication::getSenderId, senderId)
                 .eq(ChatCommunication::getReceiverId, receiverId)
-                .exists();
+                .one();
 
-        return exists;
+        return talk;
     }
 
     /**
@@ -258,6 +264,7 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
         // 获取原始会话数据
         List<ChatCommunication> communicationList = this.lambdaQuery()
                 .eq(ChatCommunication::getSenderId, userId)
+                .eq(ChatCommunication::getDeleted, Boolean.FALSE)
                 // TODO 此处已经修改为双向会话关系
                 /*.or(wrapper -> {
                     wrapper.eq(ChatCommunication::getReceiverId, userId);
@@ -479,6 +486,57 @@ public class ChatCommunicationServiceImpl extends ServiceImpl<ChatCommunicationM
                 .one();
 
         return talk;
+    }
+
+
+    /**
+     * 移除会话
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult removeUserTalk(RemoveTalkRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getTalkId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL(ResultCode.BAD_REQUEST);
+        }
+
+        // 素材
+        Long friendId = request.getFriendId();
+        Long talkId = request.getTalkId();
+        Long userId = request.getUserId();
+        if (Objects.isNull(userId)) {
+            userId = UserContextHolder.get().getId();
+        }
+
+        // 查询会话
+        ChatCommunication talk = this.getById(talkId);
+        if (Objects.isNull(talk)) {
+            // 会话已经删除了
+            return ResponseResult.SUCCESS();
+        }
+
+        // 是否具有删除权限
+        boolean equals = Objects.equals(userId, talk.getBelongUserId());
+        if (BooleanUtils.isFalse(equals)) {
+            // 会话不是本人的
+            return ResponseResult.FAIL();
+        }
+
+        // 进行逻辑删除会话
+        talk.setDeleted(Boolean.TRUE);
+        boolean update = this.updateById(talk);
+
+        if (BooleanUtils.isFalse(update)) {
+            // 移除会话失败
+            return ResponseResult.FAIL();
+        }
+
+        // 移除会话成功
+        return ResponseResult.SUCCESS();
     }
 }
 

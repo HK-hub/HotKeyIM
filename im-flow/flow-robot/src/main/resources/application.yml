@@ -1,0 +1,4 @@
+chatgpt:
+  #api-key. It can be generated here https://platform.openai.com/account/api-keys
+  api-key: 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
+# some more properties(model,max-tokens...etc.) have default values. Also you can config them here.

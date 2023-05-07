@@ -10,10 +10,10 @@
             <result property="robotName" column="robot_name" jdbcType="VARCHAR"/>
             <result property="describe" column="describe" jdbcType="VARCHAR"/>
             <result property="logo" column="logo" jdbcType="VARCHAR"/>
-            <result property="enableTalk" column="enable_talk" jdbcType="TINYINT"/>
+            <result property="enableTalk" column="enable_talk" jdbcType="BOOLEAN"/>
             <result property="status" column="status" jdbcType="TINYINT"/>
             <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+            <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>

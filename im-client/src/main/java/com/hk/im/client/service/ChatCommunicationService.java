@@ -7,6 +7,7 @@ import com.hk.im.domain.entity.ChatCommunication;
 import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
+import com.hk.im.domain.request.talk.RemoveTalkRequest;
 
 /**
  * @ClassName : ChatCommunicationService
@@ -34,7 +35,7 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
      * @param receiverId
      * @return
      */
-    boolean existsChatCommunication(Long senderId, Long receiverId);
+    ChatCommunication existsChatCommunication(Long senderId, Long receiverId);
 
     /**
      * 获取会话
@@ -89,4 +90,11 @@ public interface ChatCommunicationService extends IService<ChatCommunication> {
      * @return
      */
     ChatCommunication getMyselfCommunication(Long senderId);
+
+    /**
+     * 移除会话
+     * @param request
+     * @return
+     */
+    ResponseResult removeUserTalk(RemoveTalkRequest request);
 }

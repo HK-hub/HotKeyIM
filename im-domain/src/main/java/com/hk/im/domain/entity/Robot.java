@@ -51,7 +51,7 @@ public class Robot implements Serializable {
      * 可发送消息[0:否;1:是;]
      */
     @TableField(value = "enable_talk")
-    private Integer enableTalk;
+    private Boolean enableTalk;
 
     /**
      * 状态[-1:已删除;0:正常;1:已禁用;]
@@ -69,7 +69,7 @@ public class Robot implements Serializable {
      * 是否删除:0:false,1.true
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间

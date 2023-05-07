@@ -5,6 +5,7 @@ import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.request.ClearUnreadRequest;
 import com.hk.im.domain.request.CreateCommunicationRequest;
 import com.hk.im.domain.request.TopTalkRequest;
+import com.hk.im.domain.request.talk.RemoveTalkRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,6 +77,18 @@ public class CommunicationController {
 
         return this.chatCommunicationService.clearUnreadMessage(request);
 
+    }
+
+
+    /**
+     * 移除会话
+     * @param request
+     * @return
+     */
+    @PostMapping("/remove")
+    public ResponseResult removeCommunication(@RequestBody RemoveTalkRequest request) {
+
+        return this.chatCommunicationService.removeUserTalk(request);
     }
 
 
