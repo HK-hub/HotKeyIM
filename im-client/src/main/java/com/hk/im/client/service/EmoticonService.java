@@ -3,6 +3,7 @@ package com.hk.im.client.service;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.Emoticon;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hk.im.domain.request.emoticon.CollectUserEmoticonRequest;
 
 /**
  * @ClassName : EmoticonService
@@ -23,4 +24,12 @@ public interface EmoticonService extends IService<Emoticon> {
      * @return
      */
     ResponseResult getUserEmoticonList(String userId);
+
+
+    /**
+     * 收藏用户表情包
+     * @param request
+     * @return
+     */
+    ResponseResult collectUserEmoticon(CollectUserEmoticonRequest request);
 }
