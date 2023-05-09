@@ -58,5 +58,15 @@ public class EmoticonController {
     }
 
 
+    /**
+     * 移除用户收藏表情包
+     * @param emoticonId 表情id
+     * @return
+     */
+    @DeleteMapping("/remove/collect}")
+    public ResponseResult removeCollectEmoticon(@RequestParam("emoticonId") Long emoticonId) {
+
+        return this.emoticonService.removeUserCollectEmoticon(emoticonId);
+    }
 
 }

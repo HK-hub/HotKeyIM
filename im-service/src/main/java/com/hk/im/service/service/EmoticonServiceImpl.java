@@ -120,6 +120,46 @@ public class EmoticonServiceImpl extends ServiceImpl<EmoticonMapper, Emoticon>
         // 响应成功
         return ResponseResult.SUCCESS();
     }
+
+
+    /**
+     * 移除用户收藏标签
+     * @param emoticonId
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult removeUserCollectEmoticon(Long emoticonId) {
+
+        // 参数校验
+        if (Objects.isNull(emoticonId)) {
+            return ResponseResult.FAIL();
+        }
+
+        // 获取当前用户
+        Long userId = UserContextHolder.get().getId();
+
+        // 查询表情
+        CollectEmoticon collectEmoticon = this.collectEmoticonService.getUserCollectEmoticon(userId, emoticonId);
+        if (Objects.isNull(collectEmoticon)) {
+            return ResponseResult.FAIL().setMessage("表情包不存在!");
+        }
+
+        // 删除收藏表情包关系
+        boolean remove = this.collectEmoticonService.removeUserCollectEmoticon(collectEmoticon);
+        if (BooleanUtils.isFalse(remove)) {
+            // 移除关系失败
+            return ResponseResult.FAIL();
+        }
+        // 移除表情包
+        remove = this.removeById(emoticonId);
+        if (BooleanUtils.isFalse(remove)) {
+            // 移除表情包
+            return ResponseResult.FAIL();
+        }
+
+        return ResponseResult.SUCCESS();
+    }
 }
 
 

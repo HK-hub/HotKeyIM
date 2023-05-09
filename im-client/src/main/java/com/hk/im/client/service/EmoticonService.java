@@ -32,4 +32,7 @@ public interface EmoticonService extends IService<Emoticon> {
      * @return
      */
     ResponseResult collectUserEmoticon(CollectUserEmoticonRequest request);
+
+
+    ResponseResult removeUserCollectEmoticon(Long emoticonId);
 }
