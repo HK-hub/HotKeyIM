@@ -8,40 +8,28 @@ import lombok.Data;
 
 /**
  * 用户个人标签
- * @TableName tb_personal_tag
+ * @TableName tb_user_personal_tag
  */
-@TableName(value ="tb_personal_tag")
+@TableName(value ="tb_user_personal_tag")
 @Data
-public class PersonalTag implements Serializable {
+public class UserPersonalTag implements Serializable {
     /**
      * 
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id")
     private Long id;
 
     /**
-     * 标签名称，最多8个中文字符长度
+     * 标签id
      */
-    @TableField(value = "name")
-    private String name;
+    @TableField(value = "tag_id")
+    private Long tagId;
 
     /**
-     * 标签描述
+     * 用户id
      */
-    @TableField(value = "description")
-    private String description;
-
-    /**
-     * 类型字段，保留使用
-     */
-    @TableField(value = "type")
-    private Integer type;
-
-    /**
-     * 标签引用计数
-     */
-    @TableField(value = "count")
-    private Integer count;
+    @TableField(value = "user_id")
+    private Long userId;
 
     /**
      * 
@@ -61,6 +49,7 @@ public class PersonalTag implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -75,15 +64,13 @@ public class PersonalTag implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        PersonalTag other = (PersonalTag) that;
+        UserPersonalTag other = (UserPersonalTag) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-            && (this.getCount() == null ? other.getCount() == null : this.getCount().equals(other.getCount()))
-            && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()))
+            && (this.getTagId() == null ? other.getTagId() == null : this.getTagId().equals(other.getTagId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()));
     }
 
     @Override
@@ -91,13 +78,11 @@ public class PersonalTag implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
-        result = prime * result + ((getCount() == null) ? 0 : getCount().hashCode());
-        result = prime * result + ((getDeleted() == null) ? 0 : getDeleted().hashCode());
+        result = prime * result + ((getTagId() == null) ? 0 : getTagId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getDeleted() == null) ? 0 : getDeleted().hashCode());
         return result;
     }
 
@@ -108,13 +93,11 @@ public class PersonalTag implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", description=").append(description);
-        sb.append(", type=").append(type);
-        sb.append(", count=").append(count);
-        sb.append(", deleted=").append(deleted);
+        sb.append(", tagId=").append(tagId);
+        sb.append(", userId=").append(userId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", deleted=").append(deleted);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -1,9 +1,9 @@
-package com.hk.im.domain.entity.service.impl;
+package com.hk.im.service.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hk.im.client.service.PersonalTagService;
 import com.hk.im.domain.entity.PersonalTag;
-import com.hk.im.domain.entity.service.PersonalTagService;
-import com.hk.im.domain.entity.mapper.PersonalTagMapper;
+import com.hk.im.infrastructure.mapper.PersonalTagMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PersonalTagServiceImpl extends ServiceImpl<PersonalTagMapper, PersonalTag>
-    implements PersonalTagService{
+    implements PersonalTagService {
 
 }
 
