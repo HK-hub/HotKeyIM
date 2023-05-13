@@ -165,3 +165,4 @@ public class MessageController {
     }
 
 }
+// jmeter -n -t templates/group.jmx -l testplan/group/result/result.txt -e -o testplan/group/webreport

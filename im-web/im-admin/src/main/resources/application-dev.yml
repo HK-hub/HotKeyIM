@@ -49,13 +49,6 @@ spring:
 
 
 # mybatis plus 日志
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-logging:
-  level:
-    com.chz.mapper: debug
 
 
 # rocketMQ

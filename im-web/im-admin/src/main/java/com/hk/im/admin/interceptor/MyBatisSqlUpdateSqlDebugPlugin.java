@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-@Component
-@Intercepts({@Signature(type = org.apache.ibatis.executor.Executor.class, method = "update", args = {MappedStatement.class, Object.class})})
+// @Component
+// @Intercepts({@Signature(type = org.apache.ibatis.executor.Executor.class, method = "update", args = {MappedStatement.class, Object.class})})
 @Slf4j
 public class MyBatisSqlUpdateSqlDebugPlugin implements Interceptor {
 

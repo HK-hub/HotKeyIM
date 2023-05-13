@@ -15,8 +15,8 @@ import java.util.Properties;
  *
  * @author be_insighted
  */
-@Intercepts({@Signature(type = org.apache.ibatis.executor.Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
-@Component
+// @Intercepts({@Signature(type = org.apache.ibatis.executor.Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
+// @Component
 @Slf4j
 public class MyBatisSqlQuerySqlDebugPlugin implements Interceptor {
  
