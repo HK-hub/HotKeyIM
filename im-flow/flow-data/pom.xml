@@ -22,6 +22,48 @@
             <artifactId>sensitive-word</artifactId>
             <version>0.2.1</version>
         </dependency>
+
+        <!-- Flink Connector 连接器基础包 -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-base</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+
+        <!-- Flink CDC MySQL 源 -->
+        <dependency>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-sql-connector-mysql-cdc</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
+        <!-- Flink的DataStream数据流API -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-java_2.12</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+
+        <!-- Flink 的Java 客户端 -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-clients_2.12</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+
+        <!-- Flink 的Web UI,端口8081，默认未开启 -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-runtime-web_2.12</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+
+        <!-- Flink 的Table API&SQL程序可以连接到其他外部系统，用于读写批处理和流式表 -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-runtime_2.12</artifactId>
+            <version>1.14.0</version>
+        </dependency>
     </dependencies>
 
 </project>

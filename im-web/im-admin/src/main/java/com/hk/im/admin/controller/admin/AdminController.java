@@ -26,7 +26,6 @@ import javax.annotation.Resource;
 @RequestMapping("/manage")
 public class AdminController {
 
-
     @Resource
     private AdminService adminService;
 
