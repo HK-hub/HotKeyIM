@@ -49,8 +49,6 @@ public class MeiliSearchRepository<T> implements InitializingBean, DocumentOpera
 
     private static GsonJsonHandler jsonHandler = new GsonJsonHandler();
 
-    @Resource(name = "meiliClient")
-    private Client client;
     @Resource
     private Config config;
     @Resource

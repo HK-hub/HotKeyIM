@@ -44,6 +44,11 @@
             <version>1.14.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-java</artifactId>
+            <version>1.14.0</version>
+        </dependency>
         <!-- Flink 的Java 客户端 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -64,6 +69,12 @@
             <artifactId>flink-table-runtime_2.12</artifactId>
             <version>1.14.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.hk.im</groupId>
+            <artifactId>flow-search</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 </project>
