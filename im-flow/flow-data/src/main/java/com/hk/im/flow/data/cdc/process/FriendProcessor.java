@@ -106,11 +106,7 @@ public class FriendProcessor implements RecordProcessor<Friend>{
     public void init() {
         // 初始化 index
         try {
-            this.index = client.getIndex("friend");
-            if (Objects.isNull(index)) {
-                client.createIndex("friend");
-                this.index = this.client.getIndex("friend");
-            }
+            this.index = client.index("friend");
         } catch (MeilisearchException e) {
             log.info("get or create index failed: {}, {}", "friend", e);
         }

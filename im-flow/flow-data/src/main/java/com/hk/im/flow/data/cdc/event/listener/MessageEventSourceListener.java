@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 
 /**
  * @author : HK意境
- * @ClassName : MessageEventListener
+ * @ClassName : MessageEventSourceListener
  * @date : 2023/5/15 19:11
  * @description :
  * @Todo :
@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class MessageEventListener {
+public class MessageEventSourceListener {
 
 
     @Resource

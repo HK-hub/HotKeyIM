@@ -10,6 +10,7 @@ import com.hk.im.flow.data.cdc.event.events.info.UserInfoEvent;
 import com.hk.im.flow.data.cdc.event.events.message.MessageEvent;
 import com.hk.im.flow.data.cdc.event.events.note.NoteEvent;
 import com.hk.im.flow.data.cdc.event.events.user.UserEvent;
+import com.hk.im.infrastructure.util.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
@@ -33,7 +34,6 @@ import java.util.Objects;
 @Component
 public class CustomSink extends RichSinkFunction<String> {
 
-    @Resource
     private ApplicationContext applicationContext;
 
     @Override
@@ -52,7 +52,7 @@ public class CustomSink extends RichSinkFunction<String> {
         // OP字段：增删改查，四个取值
         // 对于U操作，其数据部分同时包括了Before和After
         log.info(">>>:{}", json);
-
+        this.applicationContext = SpringUtils.getApplicationContext();
         // 序列化
         JSONObject jsonObject = JSON.parseObject(json);
 

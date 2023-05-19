@@ -105,11 +105,7 @@ public class MemberProcessor implements RecordProcessor<GroupMember>{
     public void init() {
         // 初始化 index
         try {
-            this.index = client.getIndex("member");
-            if (Objects.isNull(index)) {
-                client.createIndex("member");
-                this.index = this.client.getIndex("member");
-            }
+            this.index = client.index("member");
         } catch (MeilisearchException e) {
             log.info("get or create index failed: {}, {}", "member", e);
         }

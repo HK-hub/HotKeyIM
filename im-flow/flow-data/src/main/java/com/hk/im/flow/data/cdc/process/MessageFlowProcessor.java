@@ -133,11 +133,7 @@ public class MessageFlowProcessor implements RecordProcessor<MessageFlow>{
     public void init() {
         // 初始化 index
         try {
-            this.index = client.getIndex("message");
-            if (Objects.isNull(index)) {
-                client.createIndex("message");
-                this.index = this.client.getIndex("message");
-            }
+            this.index = client.index("message");
         } catch (MeilisearchException e) {
             log.info("get or create index failed: {}, {}", "message", e);
         }

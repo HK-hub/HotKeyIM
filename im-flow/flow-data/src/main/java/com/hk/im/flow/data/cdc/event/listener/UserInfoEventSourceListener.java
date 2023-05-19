@@ -2,7 +2,6 @@ package com.hk.im.flow.data.cdc.event.listener;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.hk.im.flow.data.cdc.event.events.info.UserInfoEvent;
-import com.hk.im.flow.data.cdc.event.events.note.NoteEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author : HK意境
- * @ClassName : MessageEventListener
+ * @ClassName : MessageEventSourceListener
  * @date : 2023/5/15 19:11
  * @description :
  * @Todo :
@@ -20,18 +19,18 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class NoteEventListener {
+public class UserInfoEventSourceListener {
 
 
     /**
      * 消息创建
-     * @param noteEvent
+     * @param userInfoEvent
      */
     @Async
     @EventListener
-    public void onEvent(NoteEvent noteEvent) {
-        log.info("onEvent: {}", noteEvent);
-        JSONObject jsonObject = noteEvent.getData();
+    public void onEvent(UserInfoEvent userInfoEvent) {
+        log.info("onEvent: {}", userInfoEvent);
+        JSONObject jsonObject = userInfoEvent.getData();
 
 
     }
