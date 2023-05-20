@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 用户个人标签
@@ -12,11 +13,12 @@ import lombok.Data;
  */
 @TableName(value ="tb_user_personal_tag")
 @Data
+@Accessors(chain = true)
 public class UserPersonalTag implements Serializable {
     /**
      * 
      */
-    @TableId(value = "id")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -35,7 +37,7 @@ public class UserPersonalTag implements Serializable {
      * 
      */
     @TableField(value = "deleted")
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 创建时间

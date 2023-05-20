@@ -10,7 +10,7 @@
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+            <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
     </resultMap>
 
     <sql id="Base_Column_List">
