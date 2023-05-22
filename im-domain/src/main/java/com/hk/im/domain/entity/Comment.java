@@ -64,6 +64,12 @@ public class Comment implements Serializable {
     private String content;
 
     /**
+     * 评论类型：0.评论文章，1.评论用户
+     */
+    @TableField(value = "`type`")
+    private Integer type;
+
+    /**
      * 是否删除
      */
     @TableField(value = "deleted")

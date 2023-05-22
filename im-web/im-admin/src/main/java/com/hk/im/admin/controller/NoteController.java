@@ -189,4 +189,16 @@ public class NoteController {
         return this.noteService.cleanRecycleBinNoteList();
     }
 
+    /**
+     * 发布文章到空间
+     * @param request
+     * @return
+     */
+    @PostMapping("/article/publish")
+    public ResponseResult publishNoteToZone(@RequestBody PublishNoteRequest request) {
+
+        return this.noteService.publishAndShareNote(request);
+    }
+
+
 }

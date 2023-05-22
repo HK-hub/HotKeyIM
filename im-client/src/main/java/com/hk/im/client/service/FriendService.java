@@ -67,6 +67,12 @@ public interface FriendService extends IService<Friend> {
      */
     ResponseResult getUserFriendListV2(Long userId);
 
+    /**
+     * 仅仅只获取好友列表
+     * @param userId
+     * @return
+     */
+    List<Friend> getFriendListByUserId(Long userId);
 
     /**
      * 获取用户的黑名单列表

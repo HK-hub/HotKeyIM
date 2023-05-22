@@ -61,6 +61,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
     private MinioService minioService;
     @Resource
     private NoteAnnexService noteAnnexService;
+    @Resource
+    private UserZoneService userZoneService;
 
     /**
      * 获取用户文集列表
@@ -572,6 +574,53 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
 
         return ResponseResult.SUCCESS(annex.getUrl());
     }
+
+
+    /**
+     * 分享发布文章
+     * @param request
+     * @return
+     */
+    @Override
+    public ResponseResult publishAndShareNote(PublishNoteRequest request) {
+
+        // 参数校验
+        boolean preCheck = Objects.isNull(request) || Objects.isNull(request.getNoteId());
+        if (BooleanUtils.isTrue(preCheck)) {
+            // 校验失败
+            return ResponseResult.FAIL().setMessage("文章未保存或已删除!");
+        }
+
+        // 用户
+        Long userId = request.getUserId();
+        if (Objects.isNull(userId)) {
+            userId = UserContextHolder.get().getId();
+        }
+
+        // 查询是否发布
+        UserZone zoneNote = this.userZoneService.getPublishedNote(userId, request.getNoteId());
+        if (Objects.nonNull(zoneNote)) {
+            // 已经发布了，返回发布成功
+            return ResponseResult.SUCCESS(zoneNote).setMessage("已经发布笔记说说!");
+        }
+
+        // 发布说说
+        zoneNote = new UserZone();
+        zoneNote.setNoteId(request.getNoteId())
+                .setUserId(userId)
+                .setPlanTime(request.getPlanTime());
+        // 保存发布
+        boolean save = this.userZoneService.save(zoneNote);
+        if (BooleanUtils.isFalse(save)) {
+            // 保存失败
+            return ResponseResult.FAIL();
+        }
+
+        // 保存成功
+        return ResponseResult.SUCCESS(zoneNote);
+    }
+
+
 
 
 }

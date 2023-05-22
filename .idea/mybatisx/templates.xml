@@ -70,8 +70,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="UserPersonalTag" />
-                  <option name="tableName" value="tb_user_personal_tag" />
+                  <option name="className" value="UserZone" />
+                  <option name="tableName" value="tb_user_zone" />
                 </TableUIInfo>
               </list>
             </option>

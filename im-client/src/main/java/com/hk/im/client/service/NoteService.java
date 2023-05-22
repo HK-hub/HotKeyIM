@@ -132,4 +132,11 @@ public interface NoteService extends IService<Note> {
      * @return
      */
     ResponseResult downloadNoteAnnex(String annexId);
+
+    /**
+     * 分享发布文章
+     * @param request
+     * @return
+     */
+    ResponseResult publishAndShareNote(PublishNoteRequest request);
 }

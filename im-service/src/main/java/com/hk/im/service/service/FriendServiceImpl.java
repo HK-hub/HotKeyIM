@@ -210,6 +210,26 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend>
 
 
     /**
+     * 仅仅只获取好友列表
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Friend> getFriendListByUserId(Long userId) {
+
+        LambdaQueryChainWrapper<Friend> queryWrapper = this.lambdaQuery();
+        // 构造查询条件，进行查询
+        List<Friend> friendList = queryWrapper.eq(Friend::getUserId, userId)
+                .and(wrapper -> {
+                    wrapper.eq(Friend::getRelation, FriendConstants.FriendRelationship.FRIEND.ordinal())
+                            .or()
+                            .eq(Friend::getRelation, FriendConstants.FriendRelationship.CAREFUL.ordinal());
+                }).list();
+        return friendList;
+    }
+
+
+    /**
      * 获取用户的黑名单列表
      *
      * @param userId
