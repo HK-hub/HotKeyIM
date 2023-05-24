@@ -2,11 +2,14 @@ package com.hk.im.service.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hk.im.client.service.FriendService;
+import com.hk.im.client.service.NoteService;
 import com.hk.im.client.service.UserZoneService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.context.UserContextHolder;
 import com.hk.im.domain.entity.Friend;
+import com.hk.im.domain.entity.Note;
 import com.hk.im.domain.entity.UserZone;
+import com.hk.im.domain.request.zone.EditNoteRequest;
 import com.hk.im.domain.request.zone.GetObservableNotesRequest;
 import com.hk.im.infrastructure.mapper.UserZoneMapper;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,8 @@ public class UserZoneServiceImpl extends ServiceImpl<UserZoneMapper, UserZone>
     private  UserZoneMapper userZoneMapper;
     @Resource
     private FriendService friendService;
+    @Resource
+    private NoteService noteService;
 
     /**
      * 获取发布的笔记说说
@@ -93,10 +98,20 @@ public class UserZoneServiceImpl extends ServiceImpl<UserZoneMapper, UserZone>
         // 根据时间进行倒叙排序
         List<UserZone> userZoneList = this.userZoneMapper.selectObservableZoneNoteList(request, friendIdList);
 
-        // 查询
-        return null;
+        // 查询笔记
+        List<Long> noteIdList = userZoneList.stream().map(UserZone::getNoteId).collect(Collectors.toList());
+        List<Note> noteList = this.noteService.listByIds(noteIdList);
+
+        // TODO 转换: 作者信息，评论信息，点赞信息，收藏信息，转发信息
+
+
+        return ResponseResult.SUCCESS(noteList);
     }
 
+    @Override
+    public ResponseResult editNoteComment(EditNoteRequest request) {
+        return null;
+    }
 
 
 }

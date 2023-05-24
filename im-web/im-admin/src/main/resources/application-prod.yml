@@ -1,0 +1,84 @@
+# 数据源配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      url: jdbc:mysql://47.108.146.141:3306/hk_im?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      username: root
+      password: 123456
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 600000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: admin
+        login-password: admin
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+
+
+# mybatis plus 日志
+
+
+# rocketMQ
+rocketmq:
+  name-server: 47.108.146.141:9876
+  producer:
+    group: hkim-producer-group
+  consumer:
+    connect:
+      group: chat-connect-group
+    chat:
+      group: chat-message-group
+
+
+# 短信
+sms:
+  # 短信服务商
+  supplier: alibaba
+  # 单账号每分钟最大发送
+  minute-max: 5
+  alibaba:
+    #阿里云的accessKey
+    accessKeyId: LTAI5tPkA8tAb66iz4oRf8JB
+    #阿里云的accessKeySecret
+    accessKeySecret: rouyfDItyxH08j9LkcViuxXhmrdjBA
+    #短信签名
+    signature: HotKeyIM
+    #模板ID 用于发送固定模板短信使用
+    templateId: SMS_276355622
+    #模板变量 上述模板的变量
+    templateName: code
+    #请求地址 默认为dysmsapi.aliyuncs.com 如无特殊改变可以不用设置
+    requestUrl: dysmsapi.aliyuncs.com

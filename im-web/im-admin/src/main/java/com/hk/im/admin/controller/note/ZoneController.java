@@ -2,6 +2,7 @@ package com.hk.im.admin.controller.note;
 
 import com.hk.im.client.service.UserZoneService;
 import com.hk.im.common.resp.ResponseResult;
+import com.hk.im.domain.request.zone.EditNoteRequest;
 import com.hk.im.domain.request.zone.GetObservableNotesRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,19 @@ public class ZoneController {
     public ResponseResult getUserObservableNotes(@RequestBody GetObservableNotesRequest request) {
 
         return this.userZoneService.getObservableNotes(request);
+    }
+
+
+    /**
+     * 编辑笔记聊天评论
+     * @param request
+     * @return
+     */
+    @PostMapping("/note/comment")
+    public ResponseResult editNoteComment(@RequestBody EditNoteRequest request) {
+
+
+        return this.userZoneService.editNoteComment(request);
     }
 
 }

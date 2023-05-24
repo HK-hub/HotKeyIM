@@ -3,6 +3,7 @@ package com.hk.im.client.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hk.im.common.resp.ResponseResult;
 import com.hk.im.domain.entity.UserZone;
+import com.hk.im.domain.request.zone.EditNoteRequest;
 import com.hk.im.domain.request.zone.GetObservableNotesRequest;
 
 import java.util.List;
@@ -40,4 +41,12 @@ public interface UserZoneService extends IService<UserZone> {
      * @return
      */
     ResponseResult getObservableNotes(GetObservableNotesRequest request);
+
+
+    /**
+     * 编辑说说评论
+     * @param request
+     * @return
+     */
+    ResponseResult editNoteComment(EditNoteRequest request);
 }

@@ -59,7 +59,7 @@ public class CacheConfig implements InitializingBean {
 
         // 是否存在 房间号集合
         Boolean exists = this.redisTemplate.hasKey(RedisConstants.ROOM_NUMBER_KEY);
-        if (BooleanUtils.isFalse(exists)) {
+        if (BooleanUtils.isTrue(exists)) {
             // 不存在, 放入缓存: 房间号：100 000 - 900 000
             RoomNumber[] roomNumbers = new RoomNumber[900000];
             for (int i = 0; i < 900000; i++) {

@@ -32,7 +32,9 @@ import javax.annotation.Resource;
 @Component
 public class MySqlSourceComponent implements ApplicationRunner {
 
-    private String host = "localhost";
+    @Value("${flink.cdc.source.host}")
+    private String host;
+
     private int port = 3306;
 
     @Value("${spring.datasource.druid.username}")
