@@ -36,7 +36,7 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<WebSocketF
 
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame msg) {
 
     }
 
@@ -104,6 +104,7 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<WebSocketF
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         // 异常处理
+        log.error("client message handler exception:", cause);
         cause.printStackTrace();
         // 关闭连接，移除channel
         ctx.channel().close();
