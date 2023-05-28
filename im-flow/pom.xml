@@ -16,6 +16,7 @@
         <module>flow-search</module>
         <module>flow-data</module>
         <module>flow-robot</module>
+        <module>flow-sentinel</module>
     </modules>
 
     <properties>

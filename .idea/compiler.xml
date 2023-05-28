@@ -11,6 +11,7 @@
         <module name="ruoyi-system" />
         <module name="im-infrastructure" />
         <module name="flow-search" />
+        <module name="flow-sentinel" />
         <module name="flow-robot" />
         <module name="push-server" />
         <module name="ruoyi-generator" />

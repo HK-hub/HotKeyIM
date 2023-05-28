@@ -78,8 +78,8 @@ public class MySqlSourceComponent implements ApplicationRunner {
         configuration.setInteger(RestOptions.PORT, 8081);
         StreamExecutionEnvironment executionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment(configuration);
 
-        // 检查点间隔时间
-        executionEnvironment.enableCheckpointing(5000);
+        // 检查点间隔时间 10s
+        executionEnvironment.enableCheckpointing(5000 * 2);
         DataStreamSink<String> sink = executionEnvironment.fromSource(mySqlSource, WatermarkStrategy.noWatermarks(), "MySQL Source")
                 .addSink(this.customSink);
 

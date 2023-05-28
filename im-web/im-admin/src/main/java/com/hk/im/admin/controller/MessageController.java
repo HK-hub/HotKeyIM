@@ -1,5 +1,7 @@
 package com.hk.im.admin.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.hk.flow.sentinel.handler.SendMessageBlockedHandler;
 import com.hk.im.client.service.ChatMessageService;
 import com.hk.im.client.service.MessageFlowService;
 import com.hk.im.common.resp.ResponseResult;
@@ -87,6 +89,7 @@ public class MessageController {
      * @param message
      * @return
      */
+    @SentinelResource(value = "sendTextMessage", blockHandler = "handleTextBlock", blockHandlerClass = {SendMessageBlockedHandler.class})
     @PostMapping("/send/text")
     public ResponseResult sendTextMessage(@RequestBody TextMessage message) {
 
@@ -99,6 +102,7 @@ public class MessageController {
      * @param request
      * @return {@link ImageMessage}
      */
+    @SentinelResource(value = "sendImageMessage", blockHandler = "handleImageBlock", blockHandlerClass = {SendMessageBlockedHandler.class})
     @PostMapping("/send/image")
     public ResponseResult sendImageMessage(ImageMessage request) {
 
@@ -111,6 +115,7 @@ public class MessageController {
      * @param request
      * @return
      */
+    @SentinelResource(value = "sendFileMessage", blockHandler = "handleFileBlock", blockHandlerClass = {SendMessageBlockedHandler.class})
     @PostMapping("/send/file")
     public ResponseResult sendAttachmentMessage(@RequestBody AttachmentMessage request) {
 
@@ -123,6 +128,7 @@ public class MessageController {
      * @param request
      * @return
      */
+    @SentinelResource(value = "sendCodeMessage", blockHandler = "handleCodeBlock", blockHandlerClass = {SendMessageBlockedHandler.class})
     @PostMapping("/send/code")
     public ResponseResult sendCodeMessage(@RequestBody CodeMessageRequest request) {
         return this.messageFlowService.sendCodeMessage(request);
@@ -165,4 +171,3 @@ public class MessageController {
     }
 
 }
-// jmeter -n -t templates/group.jmx -l testplan/group/result/result.txt -e -o testplan/group/webreport

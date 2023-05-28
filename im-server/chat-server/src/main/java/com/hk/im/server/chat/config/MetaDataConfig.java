@@ -132,6 +132,7 @@ public class MetaDataConfig {
 
 
     public static void check() {
+
         log.info("chat server address:{}", address);
         log.info("chat server port:{}", port);
         log.info("chat server serializer:{}", serializer);

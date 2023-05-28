@@ -80,7 +80,7 @@ public class WebSocketConnectHandler {
         log.info("the FullHttpRequest new uri={}", request.uri());
         if (!Objects.equals(request.uri(), MetaDataConfig.path)) {
             // 请求路径错误: 关闭连接
-            log.info("the websocket path is error: expect {}, but provide {}", request.uri(), MetaDataConfig.path);
+            log.info("the websocket path is error: expect {}, but provide {}", MetaDataConfig.path, request.uri());
             ctx.channel().close();
         }
 
